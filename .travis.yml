@@ -1,0 +1,25 @@
+services:
+  - docker
+
+matrix:
+  include:
+    - language: java
+      before_script:
+        - cd backend
+      fast_finish: true
+      script:
+        - ./gradlew test --no-daemon --no-watch-fs
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+      directories:
+        - $HOME/.gradle/caches/
+        - $HOME/.gradle/wrapper/
+        
+    - language: node.js
+      node_js: "12.0"
+      before_script:
+        - cd frontend
+      script:
+        - npm install
+        - npm run test
