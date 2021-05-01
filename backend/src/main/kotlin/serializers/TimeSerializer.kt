@@ -32,11 +32,11 @@ object LocalDateSerializer {
     override val descriptor = PrimitiveSerialDescriptor("LocalDate", PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: LocalDate) {
-        encoder.encodeString(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(value))
+        encoder.encodeString(DateTimeFormatter.ISO_LOCAL_DATE.format(value))
     }
 
     override fun deserialize(decoder: Decoder): LocalDate {
-        return LocalDate.parse(decoder.decodeString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        return LocalDate.parse(decoder.decodeString(), DateTimeFormatter.ISO_LOCAL_DATE)
     }
 }
 
