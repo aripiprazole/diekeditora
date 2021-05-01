@@ -4,3 +4,7 @@ server:
 spring:
   r2dbc:
     url: r2dbc:h2:mem:///database;DATABASE_TO_UPPER=false
+
+  output:
+    ansi:
+      enabled: ALWAYS

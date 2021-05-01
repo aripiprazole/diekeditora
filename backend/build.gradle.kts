@@ -46,7 +46,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
 
     implementation("org.slf4j:slf4j-api:1.7.25")
-    implementation("ch.qos.logback:logback-classic")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("org.fusesource.jansi:jansi:1.18")
 
     implementation("io.r2dbc:r2dbc-postgresql")
@@ -58,6 +58,8 @@ dependencies {
     testImplementation(kotlin("test-junit5"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+
+    testImplementation("io.github.serpro69:kotlin-faker:1.4.1")
 
     testRuntimeOnly("com.h2database:h2")
     testImplementation("io.r2dbc:r2dbc-h2")

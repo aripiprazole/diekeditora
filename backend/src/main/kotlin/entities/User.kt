@@ -1,43 +1,30 @@
-@file:UseSerializers(
-    UUIDSerializer::class,
-    InstantSerializer::class,
-    LocalDateTimeSerializer::class,
-    LocalDateSerializer::class
-)
-
 package com.lorenzoog.diekeditora.entities
 
-import com.lorenzoog.diekeditora.serializers.InstantSerializer
-import com.lorenzoog.diekeditora.serializers.LocalDateSerializer
-import com.lorenzoog.diekeditora.serializers.LocalDateTimeSerializer
-import com.lorenzoog.diekeditora.serializers.UUIDSerializer
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import kotlinx.serialization.UseSerializers
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
-import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 
-@Table("users")
+@Table(""""user"""")
 @Serializable
 data class User(
     @Id
     @Transient
-    val id: Long = 0,
-    val uid: UUID = UUID.randomUUID(),
-    val name: String,
+    val id: @Contextual UUID? = null,
     val username: String,
+    val name: String,
     val email: String,
     @Transient
     val password: String = "",
-    val birthday: LocalDate,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
-    val updatedAt: LocalDateTime? = null,
-    val emailVerifiedAt: LocalDateTime? = null,
-    val deletedAt: Instant? = null,
+    val birthday: @Contextual LocalDate,
+    val createdAt: @Contextual LocalDateTime = LocalDateTime.now(),
+    val updatedAt: @Contextual LocalDateTime? = null,
+    val emailVerifiedAt: @Contextual LocalDateTime? = null,
+    val deletedAt: @Contextual LocalDateTime? = null,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -45,7 +32,6 @@ data class User(
 
         other as User
 
-        if (uid != other.uid) return false
         if (name != other.name) return false
         if (username != other.username) return false
         if (email != other.email) return false
@@ -59,8 +45,7 @@ data class User(
     }
 
     override fun hashCode(): Int {
-        var result = uid.hashCode()
-        result = 31 * result + name.hashCode()
+        var result = name.hashCode()
         result = 31 * result + username.hashCode()
         result = 31 * result + email.hashCode()
         result = 31 * result + birthday.hashCode()
@@ -69,17 +54,5 @@ data class User(
         result = 31 * result + (emailVerifiedAt?.hashCode() ?: 0)
         result = 31 * result + (deletedAt?.hashCode() ?: 0)
         return result
-    }
-
-    override fun toString(): String {
-        return "User(uid=$uid" +
-            ", name='$name'" +
-            ", username='$username'" +
-            ", email='$email'" +
-            ", birthday=$birthday" +
-            ", createdAt=$createdAt" +
-            ", updatedAt=$updatedAt" +
-            ", emailVerifiedAt=$emailVerifiedAt" +
-            ", deletedAt=$deletedAt)"
     }
 }
