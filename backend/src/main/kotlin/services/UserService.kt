@@ -1,10 +1,11 @@
 package com.lorenzoog.diekeditora.services
 
+import com.lorenzoog.diekeditora.dtos.Page
 import com.lorenzoog.diekeditora.entities.User
 import com.lorenzoog.diekeditora.repositories.UserRepository
 import com.lorenzoog.diekeditora.utils.logger
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
@@ -18,10 +19,15 @@ class UserService(val repository: UserRepository) {
         log.trace("Successfully deleted user with id ${user.id}")
     }
 
-    suspend fun findPaginated(page: Int): Flow<User> {
-        return repository.findAll(page).also {
-            log.trace("Successfully retrieved ${it.count()} users in page $page")
-        }
+    suspend fun findPaginated(page: Int): Page<User> {
+        return Page(
+            totalCount = 0,
+            totalPages = 0,
+            items = repository
+                .findAll(page)
+                .also { log.trace("Successfully retrieved ${it.count()} users in page $page") }
+                .toList()
+        )
     }
 
     suspend fun findByUsername(username: String): User? {
