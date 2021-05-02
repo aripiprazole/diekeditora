@@ -8,9 +8,9 @@ buildscript {
 plugins {
     id("org.springframework.boot") version "2.4.4"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.4.31"
-    kotlin("plugin.serialization") version "1.4.31"
-    kotlin("plugin.spring") version "1.4.31"
+    kotlin("jvm") version "1.4.32"
+    kotlin("plugin.serialization") version "1.4.32"
+    kotlin("plugin.spring") version "1.4.32"
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     id("io.gitlab.arturbosch.detekt") version "1.16.0"
     application
@@ -37,7 +37,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("io.springfox:springfox-boot-starter:3.0.0")
 
-    implementation("com.apurebase:kgraphql:0.17.7")
+    implementation("com.expediagroup:graphql-kotlin-spring-server:4.1.0")
+
+    implementation("io.github.classgraph:classgraph:4.8.105")
 
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 

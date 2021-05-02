@@ -1,12 +1,12 @@
 package com.lorenzoog.diekeditora.resources
 
+import com.lorenzoog.diekeditora.dtos.Page
 import com.lorenzoog.diekeditora.entities.User
 import com.lorenzoog.diekeditora.services.UserService
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
-import kotlinx.coroutines.flow.Flow
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -26,9 +26,9 @@ import java.time.LocalDateTime
 class UserResource(val userService: UserService) {
     @GetMapping
     @ApiParam("The target page", name = "page")
-    @ApiOperation("Finds all users in the specified page", response = Flow::class)
+    @ApiOperation("Finds all users in the specified page", response = Page::class)
     @ApiResponses(ApiResponse(code = 200, message = "All users in the page requested"))
-    suspend fun index(@RequestParam(defaultValue = "1") page: Int): Flow<User> {
+    suspend fun index(@RequestParam(defaultValue = "1") page: Int): Page<User> {
         return userService.findPaginated(page)
     }
 
