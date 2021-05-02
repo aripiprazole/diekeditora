@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration
 class SerializerConfig {
     @Bean
     fun json(): Json = Json {
+        encodeDefaults = false
         ignoreUnknownKeys = true
         serializersModule = SerializersModule {
             contextual(LocalDateSerializer)

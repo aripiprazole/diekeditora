@@ -1,6 +1,8 @@
 package com.lorenzoog.diekeditora.entities
 
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
+import com.lorenzoog.diekeditora.dtos.Secret
+import com.lorenzoog.diekeditora.dtos.asSecret
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -14,25 +16,31 @@ import java.util.UUID
 @Serializable
 data class User(
     @Id
-    @Transient
     @GraphQLIgnore
-    val id: @Contextual UUID? = null,
+    @Transient
+    val id: UUID? = null,
     val username: String,
     val name: String,
     val email: String,
-    @Transient
     @GraphQLIgnore
-    val password: String? = null,
+    val password: Secret = Secret.None,
     val birthday: @Contextual LocalDate,
     val createdAt: @Contextual LocalDateTime = LocalDateTime.now(),
     val updatedAt: @Contextual LocalDateTime? = null,
     val emailVerifiedAt: @Contextual LocalDateTime? = null,
     val deletedAt: @Contextual LocalDateTime? = null,
 ) : Entity {
+    @GraphQLIgnore
     fun withUsername(username: String?): User = copy(username = username ?: this.username)
+
+    @GraphQLIgnore
     fun withName(name: String?): User = copy(name = name ?: this.name)
+
+    @GraphQLIgnore
     fun withEmail(email: String?): User = copy(email = email ?: this.email)
-    fun withPassword(password: String?) = copy(password = password ?: this.password)
+
+    @GraphQLIgnore
+    fun withPassword(password: String?) = copy(password = password?.asSecret() ?: this.password)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
