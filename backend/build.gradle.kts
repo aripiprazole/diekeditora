@@ -1,3 +1,5 @@
+import com.lorenzoog.diekeditora.build.Deps
+
 buildscript {
     repositories {
         mavenCentral()
@@ -13,6 +15,7 @@ plugins {
     kotlin("plugin.spring") version "1.4.32"
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     id("io.gitlab.arturbosch.detekt") version "1.16.0"
+    id("composite-build")
     application
 }
 
@@ -28,43 +31,44 @@ repositories {
 }
 
 dependencies {
-    ktlintRuleset("com.pinterest:ktlint:0.41.0")
+    ktlintRuleset(Deps.Pinterest.Ktlint)
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.31")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.31")
+    implementation(Deps.Kotlin.Stdlib)
+    implementation(Deps.Kotlin.Reflect)
 
-    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("io.springfox:springfox-boot-starter:3.0.0")
+    implementation(Deps.SpringBoot.DataR2dbc)
+    implementation(Deps.SpringBoot.Webflux)
+    implementation(Deps.Springfox.Starter)
 
-    implementation("com.expediagroup:graphql-kotlin-spring-server:4.1.0")
+    implementation(Deps.ExpediaGroup.GraphQLKotlinSpringServer)
 
-    implementation("io.github.classgraph:classgraph:4.8.105")
+    implementation(Deps.Classgraph.Classgraph)
 
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+    implementation(Deps.Reactor.Core)
+    implementation(Deps.Reactor.Kotlin)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
+    implementation(Deps.Kotlinx.SerializationJson)
+    implementation(Deps.Kotlinx.CoroutinesCore)
+    implementation(Deps.Kotlinx.CoroutinesJdk8)
+    implementation(Deps.Kotlinx.CoroutinesReactor)
 
-    implementation("org.slf4j:slf4j-api:1.7.25")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
-    implementation("org.fusesource.jansi:jansi:1.18")
+    implementation(Deps.Slf4j.Api)
+    implementation(Deps.Logback.Classic)
+    implementation(Deps.Fusesource.Jansi)
 
-    implementation("io.r2dbc:r2dbc-postgresql")
-    runtimeOnly("org.postgresql:postgresql")
+    implementation(Deps.R2dbc.PostgreSQL)
+    runtimeOnly(Deps.PostgreSQL.PostgreSQL)
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("io.projectreactor:reactor-test")
+    testImplementation(Deps.SpringBoot.Test)
+    testImplementation(Deps.Reactor.Test)
 
-    testImplementation(kotlin("test-junit5"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+    testImplementation(Deps.JUnit.JupiterApi)
+    testRuntimeOnly(Deps.JUnit.JupiterEngine)
 
-    testImplementation("io.github.serpro69:kotlin-faker:1.4.1")
+    testImplementation(Deps.Serpro69.KotlinFaker)
 
-    testRuntimeOnly("com.h2database:h2")
-    testImplementation("io.r2dbc:r2dbc-h2")
+    testRuntimeOnly(Deps.H2Database.H2)
+    testImplementation(Deps.R2dbc.H2)
 }
 
 ktlint {
