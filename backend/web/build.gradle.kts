@@ -1,13 +1,14 @@
 import com.lorenzoog.diekeditora.build.Deps
 
 plugins {
-    application
+    id("org.springframework.boot")
 }
 
 dependencies {
     implementation(project(":domain"))
     implementation(project(":app"))
     implementation(project(":infra"))
+    implementation(project(":shared"))
 
     runtimeOnly(Deps.PostgreSQL.PostgreSQL)
 
@@ -20,8 +21,4 @@ dependencies {
     testRuntimeOnly(Deps.H2Database.H2)
     testImplementation(Deps.R2dbc.H2)
     testImplementation(Deps.Serpro69.KotlinFaker)
-}
-
-application {
-    mainClass.set("com.lorenzoog.diekeditora.web.DiekEditoraAppKt")
 }

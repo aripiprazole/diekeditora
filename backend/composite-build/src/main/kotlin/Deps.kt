@@ -8,6 +8,7 @@ object Deps {
     }
 
     object Kotlin {
+        const val TestJUnit5 = "org.jetbrains.kotlin:kotlin-test-junit5:1.5.0"
         const val Stdlib = "org.jetbrains.kotlin:kotlin-reflect:1.5.0"
         const val Reflect = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.0"
     }
@@ -38,10 +39,6 @@ object Deps {
 
     object Logback {
         const val Classic = "ch.qos.logback:logback-classic:1.2.3"
-    }
-
-    object Springfox {
-        const val Starter = "io.springfox:springfox-boot-starter:3.0.0"
     }
 
     object ExpediaGroup {
