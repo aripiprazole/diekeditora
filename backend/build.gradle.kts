@@ -31,7 +31,6 @@ allprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
     apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
-    apply(plugin = "org.springframework.boot")
     apply(plugin = "composite-build")
 
     group = "com.lorenzoog.diekeditora"
@@ -53,7 +52,6 @@ allprojects {
 
         implementation(Deps.SpringBoot.DataR2dbc)
         implementation(Deps.SpringBoot.Webflux)
-        implementation(Deps.Springfox.Starter)
 
         implementation(Deps.AxonFramework.Core)
         implementation(Deps.AxonFramework.KotlinExtension)
@@ -68,6 +66,7 @@ allprojects {
 
         implementation(Deps.Slf4j.Api)
 
+        testImplementation(Deps.Kotlin.TestJUnit5)
         testImplementation(Deps.SpringBoot.Test)
         testImplementation(Deps.Reactor.Test)
         testImplementation(Deps.AxonFramework.Test)
