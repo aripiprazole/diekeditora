@@ -52,6 +52,12 @@ object Deps {
         const val Classgraph = "io.github.classgraph:classgraph:4.8.105"
     }
 
+    object AxonFramework {
+        const val Core = "org.axonframework:axon-core:4.0-M2"
+        const val Test = "org.axonframework:axon-test:4.5"
+        const val KotlinExtension = "org.axonframework.extensions.kotlin:axon-kotlin:0.1.0"
+    }
+
     object Reactor {
         const val Test = "io.projectreactor:reactor-test:3.4.5"
         const val Kotlin = "io.projectreactor.kotlin:reactor-kotlin-extensions:1.1.3"
