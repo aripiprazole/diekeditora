@@ -83,8 +83,8 @@ allprojects {
         buildUponDefaultConfig = true
         allRules = false
 
-        config = files("$projectDir/config/detekt.yml")
-        baseline = file("$projectDir/config/baseline.xml")
+        config = files("${rootProject.projectDir}/config/detekt.yml")
+        baseline = file("${rootProject.projectDir}/config/baseline.xml")
 
         reports {
             html.enabled = true
