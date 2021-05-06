@@ -3,14 +3,13 @@ import com.lorenzoog.diekeditora.build.Deps
 buildscript {
     repositories {
         mavenCentral()
-        jcenter()
     }
 }
 
 plugins {
-    kotlin("jvm") version "1.5.0"
-    kotlin("plugin.serialization") version "1.5.0"
-    kotlin("plugin.spring") version "1.5.0"
+    kotlin("jvm") version "1.4.32"
+    kotlin("plugin.serialization") version "1.4.32"
+    kotlin("plugin.spring") version "1.4.32"
     id("org.springframework.boot") version "2.4.4"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
@@ -43,7 +42,6 @@ allprojects {
 
     repositories {
         mavenCentral()
-        jcenter()
     }
 
     dependencies {
@@ -98,7 +96,13 @@ allprojects {
             kotlinOptions {
                 freeCompilerArgs = listOf("-Xjsr305=strict", "-Xopt-in=kotlin.RequiresOptIn")
                 jvmTarget = "11"
-                languageVersion = "1.5"
+            }
+        }
+
+        compileTestKotlin {
+            kotlinOptions {
+                freeCompilerArgs = listOf("-Xjsr305=strict", "-Xopt-in=kotlin.RequiresOptIn")
+                jvmTarget = "11"
             }
         }
 
