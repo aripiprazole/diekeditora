@@ -14,9 +14,9 @@ object Deps {
     }
 
     object Kotlinx {
-        const val CoroutinesReactor = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.5.0-RC"
-        const val CoroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-RC"
-        const val CoroutinesJdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.5.0-RC"
+        const val CoroutinesReactor = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.4.3"
+        const val CoroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
+        const val CoroutinesJdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.3"
         const val SerializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0"
     }
 
