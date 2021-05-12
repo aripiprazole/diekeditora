@@ -8,9 +8,9 @@ object Deps {
     }
 
     object Kotlin {
-        const val TestJUnit5 = "org.jetbrains.kotlin:kotlin-test-junit5:1.5.0"
-        const val Stdlib = "org.jetbrains.kotlin:kotlin-reflect:1.5.0"
-        const val Reflect = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.0"
+        const val TestJUnit5 = "org.jetbrains.kotlin:kotlin-test-junit5:1.4.32"
+        const val Stdlib = "org.jetbrains.kotlin:kotlin-reflect:1.4.32"
+        const val Reflect = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32"
     }
 
     object Kotlinx {
@@ -53,6 +53,8 @@ object Deps {
         const val Core = "org.axonframework:axon-core:4.0-M2"
         const val Test = "org.axonframework:axon-test:4.5"
         const val KotlinExtension = "org.axonframework.extensions.kotlin:axon-kotlin:0.1.0"
+        const val Spring = "org.axonframework:axon-spring:4.5"
+        const val SpringBootAutoConfigure = "org.axonframework:axon-spring-boot-autoconfigure:4.5"
     }
 
     object Reactor {

@@ -2,11 +2,12 @@ import com.lorenzoog.diekeditora.build.Deps
 
 plugins {
     id("org.springframework.boot")
+    kotlin("plugin.spring")
+    application
 }
 
 dependencies {
     implementation(project(":domain"))
-    implementation(project(":app"))
     implementation(project(":infra"))
     implementation(project(":shared"))
 

@@ -1,12 +1,16 @@
 package com.lorenzoog.diekeditora.domain.user
 
 import kotlinx.serialization.Serializable
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 
 @Serializable(with = UserSerializer::class)
+@Table("\"user\"")
 data class User(
+    @Id
     val id: UUID? = null,
     val name: String,
     val email: String,

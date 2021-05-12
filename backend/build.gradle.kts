@@ -26,10 +26,10 @@ dependencies {
 
 allprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
-    apply(plugin = "org.jetbrains.kotlin.plugin.spring")
     apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
-    apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "io.gitlab.arturbosch.detekt")
+    apply(plugin = "io.spring.dependency-management")
     apply(plugin = "composite-build")
 
     group = "com.lorenzoog.diekeditora"
@@ -42,6 +42,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -50,9 +51,6 @@ allprojects {
 
         implementation(Deps.SpringBoot.DataR2dbc)
         implementation(Deps.SpringBoot.Webflux)
-
-        implementation(Deps.AxonFramework.Core)
-        implementation(Deps.AxonFramework.KotlinExtension)
 
         implementation(Deps.Reactor.Core)
         implementation(Deps.Reactor.Kotlin)
