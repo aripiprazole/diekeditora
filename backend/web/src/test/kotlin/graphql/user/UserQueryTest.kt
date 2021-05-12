@@ -1,6 +1,7 @@
 package com.lorenzoog.diekeditora.web.graphql.user
 
 import com.expediagroup.graphql.server.types.GraphQLResponse
+import com.lorenzoog.diekeditora.domain.page.Page
 import com.lorenzoog.diekeditora.domain.user.User
 import com.lorenzoog.diekeditora.infra.repositories.UserRepository
 import com.lorenzoog.diekeditora.web.factories.UserFactory
@@ -10,8 +11,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
@@ -63,12 +62,12 @@ class UserQueryTest(
         userRepository.save(userFactory.create())
 
         val page = 1
-        val users = userRepository.findAll(page).toList().onEach {
+        val pageSize = 15
+        val users = userRepository.findAll(page, pageSize).toList().onEach {
             assertNotNull(it.emailVerifiedAt)
             assertNull(it.updatedAt)
             assertNull(it.deletedAt)
         }
-        val pageable = PageRequest.of(1, 15)
 
         client
             .request(
@@ -91,7 +90,7 @@ class UserQueryTest(
             .expectBody<GraphQLResponse<Page<User>>>()
             .isEqualTo(
                 GraphQLResponse(
-                    data = PageImpl(users, pageable, userRepository.estimateTotalUsers())
+                    data = Page.of(users, pageSize, page, userRepository.estimateTotalUsers())
                 )
             )
     }

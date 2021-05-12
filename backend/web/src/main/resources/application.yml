@@ -12,7 +12,6 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
-
 logging:
   level:
     root: ${LOG_LEVEL:info}

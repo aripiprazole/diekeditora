@@ -1,13 +1,17 @@
 package com.lorenzoog.diekeditora.domain.user
 
-import org.springframework.data.domain.Page
+import com.lorenzoog.diekeditora.domain.page.Page
+import org.springframework.stereotype.Service
 
+@Service
 interface UserService {
     suspend fun findUserByUsername(username: String): User?
 
-    suspend fun findPaginatedUsers(page: Int = 1): Page<User>
+    suspend fun findPaginatedUsers(page: Int = 1, pageSize: Int = 15): Page<User>
 
-    suspend fun save(user: User)
+    suspend fun updateUserByUsername(username: String, user: User): User?
+
+    suspend fun save(user: User): User
 
     suspend fun delete(user: User)
 }

@@ -1,5 +1,6 @@
 package com.lorenzoog.diekeditora.web.resources
 
+import com.lorenzoog.diekeditora.domain.page.Page
 import com.lorenzoog.diekeditora.domain.user.User
 import com.lorenzoog.diekeditora.infra.repositories.UserRepository
 import com.lorenzoog.diekeditora.web.factories.UserFactory
@@ -10,9 +11,6 @@ import kotlinx.serialization.Serializable
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageImpl
-import org.springframework.data.domain.PageRequest
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
@@ -31,22 +29,21 @@ class UserResourceTests(
     fun `test should retrieve paginated users`(): Unit = runBlocking {
         userRepository.save(userFactory.create())
 
-        val page = 1
-        val users = userRepository.findAll(page).toList().onEach {
-            assertNotNull(it.emailVerifiedAt)
+        val pageNumber = 1
+        val pageSize = 15
+        val users = userRepository.findAll(pageNumber, pageSize).toList().onEach {
             assertNull(it.updatedAt)
             assertNull(it.deletedAt)
         }
-        val pageable = PageRequest.of(1, 15)
 
-        client.get().uri("/users", mapOf("page" to 1))
+        val page = Page.of(users, pageSize, pageNumber, userRepository.estimateTotalUsers())
+
+        client.get().uri("/users?page=$pageNumber")
             .exchange()
             .expectStatus().isOk
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
             .expectBody<Page<User>>()
-            .isEqualTo(
-                PageImpl(users, pageable, userRepository.estimateTotalUsers())
-            )
+            .isEqualTo(page)
     }
 
     @Test
