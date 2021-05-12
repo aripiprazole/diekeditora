@@ -15,7 +15,6 @@ dependencies {
 
     implementation(Deps.R2dbc.PostgreSQL)
     implementation(Deps.Classgraph.Classgraph)
-    implementation(Deps.ExpediaGroup.GraphQLKotlinSpringServer)
     implementation(Deps.Logback.Classic)
     implementation(Deps.Fusesource.Jansi)
 

@@ -21,7 +21,10 @@ logging:
       - info
     com.expediagroup.graphql.server.spring.NonFederatedSchemaAutoConfiguration: error
     com.expediagroup.graphql: error
+    notprivacysafe.graphql.GraphQL: info
 
 graphql:
   packages:
+    - com.lorenzoog.diekeditora.domain
     - com.lorenzoog.diekeditora.web
+    - graphql.relay

@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalSerializationApi::class)
 
-package com.lorenzoog.diekeditora.web.serializers
+package com.lorenzoog.diekeditora.domain.serializers
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializer

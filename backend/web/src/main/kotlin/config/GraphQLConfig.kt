@@ -1,10 +1,13 @@
 package com.lorenzoog.diekeditora.web.config
 
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
+import graphql.relay.Connection
+import graphql.relay.Relay
 import graphql.schema.Coercing
-import graphql.schema.GraphQLScalarType
+import graphql.schema.GraphQLScalarType.newScalar
+import graphql.schema.GraphQLSchema
 import graphql.schema.GraphQLType
-import graphql.schema.GraphQLTypeReference
+import graphql.schema.GraphQLTypeReference.typeRef
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.json.Json
@@ -14,19 +17,20 @@ import kotlinx.serialization.serializerOrNull
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import kotlin.reflect.KType
+import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.jvm.jvmErasure
+import kotlin.reflect.typeOf
 
 @Configuration
-@OptIn(ExperimentalSerializationApi::class)
+@OptIn(ExperimentalSerializationApi::class, ExperimentalStdlibApi::class)
 class GraphQLConfig(val json: Json) {
     @Bean
     fun hooks(): SchemaGeneratorHooks = GenerateKotlinSerializationGraphQLTypesHook()
 
-    @OptIn(ExperimentalStdlibApi::class)
     inner class GenerateKotlinSerializationGraphQLTypesHook : SchemaGeneratorHooks {
-        private val scalarCache = mutableMapOf<String, GraphQLScalarType>()
-
-        private val unitScalar = GraphQLScalarType.newScalar()
+        private val relay = Relay()
+        private val scalarCache = mutableMapOf<String, GraphQLType>()
+        private val unitScalar = newScalar()
             .name("Void")
             .coercing(object : Coercing<Unit, Unit> {
                 override fun serialize(dataFetcherResult: Any?): Unit = Unit
@@ -35,48 +39,72 @@ class GraphQLConfig(val json: Json) {
             })
             .build()
 
-        override fun willGenerateGraphQLType(type: KType): GraphQLType? = runCatching {
-            val serializer = json.serializersModule.serializerOrNull(type)
-            val descriptor = serializer?.descriptor
+        override fun willBuildSchema(builder: GraphQLSchema.Builder): GraphQLSchema.Builder {
+            return builder.additionalType(Relay.pageInfoType)
+        }
+
+        @Suppress("Detekt.ReturnCount")
+        override fun willGenerateGraphQLType(type: KType): GraphQLType? {
+            val name = type.jvmErasure.simpleName.orEmpty()
+
+            // connection type
+            if (type.isSubtypeOf(typeOf<Connection<*>>())) {
+                val genericType = requireNotNull(type.arguments.first().type)
+                val typeName = genericType.jvmErasure.simpleName.orEmpty()
+                val edgeType = relay.edgeType(typeName, typeRef(typeName), null, emptyList())
+
+                return relay.connectionType(name, edgeType, emptyList())
+            }
 
             // return default unit scalar
-            if (type.jvmErasure == Unit::class) {
+            if (type.isSubtypeOf(typeOf<Unit>())) {
                 return unitScalar
             }
+
+            val serializer = json.serializersModule.serializerOrNull(type)
+            val descriptor = serializer?.descriptor
 
             // skip builtin serializers
             if (descriptor?.serialName.orEmpty().startsWith("kotlin")) {
                 return null
             }
 
-            when (descriptor?.kind) {
-                is PrimitiveKind.BOOLEAN -> scalarType(type, String::toBoolean)
-                is PrimitiveKind.LONG -> scalarType(type, String::toLong)
-                is PrimitiveKind.INT -> scalarType(type, String::toInt)
-                is PrimitiveKind.STRING -> scalarType(type) { it }
-                is PrimitiveKind.CHAR -> scalarType(type) { it.toCharArray().first() }
-                is PrimitiveKind.SHORT -> scalarType(type, String::toShort)
-                is PrimitiveKind.BYTE -> scalarType(type, String::toByte)
-                is PrimitiveKind.FLOAT -> scalarType(type, String::toFloat)
-                is PrimitiveKind.DOUBLE -> scalarType(type, String::toDouble)
-                else -> null
-            }
-        }.getOrNull()
-
-        private fun <T : Any> scalarType(type: KType, transform: (String) -> T): GraphQLType {
-            val serializer = requireNotNull(json.serializersModule.serializer(type))
-            val name = type.jvmErasure.simpleName.orEmpty()
-
             // creates a reference if it already exists
             scalarCache[name]?.let {
-                return GraphQLTypeReference(name)
+                return typeRef(name)
             }
 
-            return GraphQLScalarType.newScalar()
+            return when (descriptor?.kind) {
+                is PrimitiveKind.BOOLEAN -> buildScalar(name, type, String::toBoolean)
+                is PrimitiveKind.LONG -> buildScalar(name, type, String::toLong)
+                is PrimitiveKind.INT -> buildScalar(name, type, String::toInt)
+                is PrimitiveKind.STRING -> buildScalar(name, type) { it }
+                is PrimitiveKind.CHAR -> buildScalar(name, type) { it.toCharArray().first() }
+                is PrimitiveKind.SHORT -> buildScalar(name, type, String::toShort)
+                is PrimitiveKind.BYTE -> buildScalar(name, type, String::toByte)
+                is PrimitiveKind.FLOAT -> buildScalar(name, type, String::toFloat)
+                is PrimitiveKind.DOUBLE -> buildScalar(name, type, String::toDouble)
+                else -> null
+            }
+        }
+
+        private fun <T : Any> buildScalar(
+            name: String,
+            type: KType,
+            transform: (String) -> T
+        ): GraphQLType {
+            val serializer = requireNotNull(json.serializersModule.serializer(type))
+
+            return newScalar()
                 .name(type.jvmErasure.simpleName)
                 .coercing(object : Coercing<Any, Any> {
                     override fun serialize(value: Any): Any {
-                        return transform(json.encodeToJsonElement(serializer, value).jsonPrimitive.content)
+                        return transform(
+                            json.encodeToJsonElement(
+                                serializer,
+                                value
+                            ).jsonPrimitive.content
+                        )
                     }
 
                     override fun parseValue(input: Any): Any? {
