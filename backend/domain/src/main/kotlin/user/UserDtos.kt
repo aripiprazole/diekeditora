@@ -1,11 +1,13 @@
 package com.lorenzoog.diekeditora.domain.user
 
 import kotlinx.serialization.Contextual
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Serializable
+@SerialName("UserRequestDto")
 data class UserRequestDto(
     val name: String,
     val username: String,
@@ -19,6 +21,7 @@ data class UserRequestDto(
 )
 
 @Serializable
+@SerialName("UserResponseDto")
 data class UserResponseDto(
     val name: String,
     val username: String,

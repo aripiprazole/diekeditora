@@ -11,4 +11,6 @@ spring:
 
 graphql:
   packages:
+    - com.lorenzoog.diekeditora.domain
     - com.lorenzoog.diekeditora.web
+    - graphql.relay

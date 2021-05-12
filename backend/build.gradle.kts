@@ -60,6 +60,8 @@ allprojects {
         implementation(Deps.Kotlinx.CoroutinesJdk8)
         implementation(Deps.Kotlinx.CoroutinesReactor)
 
+        implementation(Deps.ExpediaGroup.GraphQLKotlinSpringServer)
+
         implementation(Deps.Slf4j.Api)
 
         testImplementation(Deps.Kotlin.TestJUnit5)

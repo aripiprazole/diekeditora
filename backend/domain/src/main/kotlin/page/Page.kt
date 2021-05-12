@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Page<T : Any>(
+    val items: List<T>,
     val next: Int? = null,
     val previous: Int? = null,
-    val items: List<T>,
     val size: Int,
     val totalPages: Long,
     val totalItems: Long,
@@ -16,9 +16,9 @@ data class Page<T : Any>(
             val totalPages = totalItems * size
 
             return Page(
+                items,
                 next = (current + 1).takeIf { it <= totalPages },
                 previous = (current - 1).takeIf { it > 1 },
-                items,
                 size,
                 totalPages,
                 totalItems

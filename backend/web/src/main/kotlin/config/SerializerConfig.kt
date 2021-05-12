@@ -1,11 +1,10 @@
 package com.lorenzoog.diekeditora.web.config
 
-import com.lorenzoog.diekeditora.web.serializers.InstantSerializer
-import com.lorenzoog.diekeditora.web.serializers.LocalDateSerializer
-import com.lorenzoog.diekeditora.web.serializers.LocalDateTimeSerializer
+import com.lorenzoog.diekeditora.domain.config.AnySerializersModule
+import com.lorenzoog.diekeditora.domain.config.GraphQLSerializersModule
+import com.lorenzoog.diekeditora.domain.config.JavaSerializersModule
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.contextual
+import kotlinx.serialization.modules.plus
 import org.springframework.boot.autoconfigure.AutoConfigureBefore
 import org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration
 import org.springframework.context.annotation.Bean
@@ -18,10 +17,6 @@ class SerializerConfig {
     fun json(): Json = Json {
         encodeDefaults = false
         ignoreUnknownKeys = true
-        serializersModule = SerializersModule {
-            contextual(LocalDateSerializer)
-            contextual(LocalDateTimeSerializer)
-            contextual(InstantSerializer)
-        }
+        serializersModule = GraphQLSerializersModule + JavaSerializersModule + AnySerializersModule
     }
 }
