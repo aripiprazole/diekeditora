@@ -1,10 +1,12 @@
 @file:OptIn(ExperimentalStdlibApi::class)
 
-package com.lorenzoog.diekeditora.web.graphql.user
+package com.lorenzoog.diekeditora.web.tests.graphql.user
 
 import com.lorenzoog.diekeditora.domain.user.User
 import com.lorenzoog.diekeditora.domain.user.UserCreateDto
-import com.lorenzoog.diekeditora.web.graphql.TestQuery
+import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserInput
+import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserPayload
+import com.lorenzoog.diekeditora.web.tests.graphql.TestQuery
 import graphql.relay.DefaultConnection
 import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf
@@ -12,18 +14,20 @@ import kotlin.reflect.typeOf
 object UserQuery : TestQuery<UserQuery.Variables, User>(typeOf<User>()) {
     private const val username = "\$username"
 
+    override val queryName = "user"
     override val operationName = "UserQuery"
-
     override val query = """
-        mutation UserQuery($username: String) {
-            name
-            username
-            email
-            birthday
-            createdAt
-            updatedAt
-            emailVerifiedAt
-            deletedAt
+        query UserQuery($username: String!) {
+            user(username: $username) {
+                name
+                username
+                email
+                birthday
+                createdAt
+                updatedAt
+                emailVerifiedAt
+                deletedAt
+            }
         }
     """.trimIndent()
 
@@ -36,10 +40,10 @@ object UsersQuery : TestQuery<UsersQuery.Variables, DefaultConnection<User>>(
 ) {
     private const val page = "\$page"
 
+    override val queryName = "users"
     override val operationName = "UsersQuery"
-
     override val query = """
-        mutation UsersQuery($page: Int) {
+        query UsersQuery($page: Int!) {
             users(page: $page) {
                 pageInfo {
                     startCursor
@@ -72,10 +76,10 @@ object UsersQuery : TestQuery<UsersQuery.Variables, DefaultConnection<User>>(
 object CreateUserMutation : TestQuery<UserCreateDto, UpdateUserPayload>(
     typeOf<UpdateUserPayload>()
 ) {
+    override val queryName = "createUser"
     override val operationName = "CreateUser"
-
     override val query = """
-        query CreateUser($input: CreateUserInput) {
+        query CreateUser($input: CreateUserInput!) {
             createUser(input: $input) {
                 name,
                 username,
@@ -92,10 +96,10 @@ object CreateUserMutation : TestQuery<UserCreateDto, UpdateUserPayload>(
 object UpdateUserMutation : TestQuery<UpdateUserInput, UpdateUserPayload>(
     typeOf<UpdateUserPayload>()
 ) {
+    override val queryName = "updateUser"
     override val operationName = "UpdateUser"
-
     override val query = """
-        query UpdateUser($input: UpdateUserInput) {
+        query UpdateUser($input: UpdateUserInput!) {
             updateUser(input: $input) {
                 name,
                 username,
@@ -112,19 +116,11 @@ object UpdateUserMutation : TestQuery<UpdateUserInput, UpdateUserPayload>(
 object DeleteUserMutation : TestQuery<UpdateUserInput, UpdateUserPayload>(
     typeOf<UpdateUserPayload>()
 ) {
-    override val operationName = "UpdateUser"
-
+    override val queryName = "deleteUser"
+    override val operationName = "DeleteUser"
     override val query = """
-        query UpdateUser($input: UpdateUserInput) {
-            updateUser(input: $input) {
-                name,
-                username,
-                email,
-                createdAt,
-                emailVerifiedAt,
-                deletedAt,
-                updatedAt,
-            }
+        mutation DeleteUser($input: DeleteUserInput!) {
+            deleteUser(input: $input)
         }
     """.trimIndent()
 }
