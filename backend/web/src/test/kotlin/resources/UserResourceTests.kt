@@ -2,6 +2,7 @@ package com.lorenzoog.diekeditora.web.resources
 
 import com.lorenzoog.diekeditora.domain.page.Page
 import com.lorenzoog.diekeditora.domain.user.User
+import com.lorenzoog.diekeditora.domain.user.UserCreateDto
 import com.lorenzoog.diekeditora.infra.repositories.UserRepository
 import com.lorenzoog.diekeditora.web.factories.UserFactory
 import kotlinx.coroutines.flow.toList
@@ -31,12 +32,11 @@ class UserResourceTests(
 
         val pageNumber = 1
         val pageSize = 15
-        val users = userRepository.findAll(pageNumber, pageSize).toList().onEach {
-            assertNull(it.updatedAt)
-            assertNull(it.deletedAt)
-        }
+        val users = userRepository.findAll(pageNumber, pageSize).toList()
 
         val page = Page.of(users, pageSize, pageNumber, userRepository.estimateTotalUsers())
+
+        println(page.items.first().createdAt)
 
         client.get().uri("/users?page=$pageNumber")
             .exchange()
@@ -102,24 +102,12 @@ class UserResourceTests(
 
     @Test
     fun `test should update an user by requests body`(): Unit = runBlocking {
-        @Serializable
-        data class Data(
-            val username: String,
-            val email: String,
-            val name: String,
-            val password: String,
-            val birthday: @Contextual LocalDate
-        )
-
         var user = userFactory.create().let { userRepository.save(it) }
         val newUser = userFactory.create()
         val id = requireNotNull(user.id) { "User's id must be not null" }
 
-        val value = newUser.run {
-            Data(username, email, name, requireNotNull(password), birthday)
-        }
-
-        client.patch().uri("/users/${user.username}").bodyValue(value)
+        client.patch().uri("/users/${user.username}")
+            .bodyValue(UserCreateDto.from(newUser))
             .exchange()
             .expectStatus().isNoContent
 

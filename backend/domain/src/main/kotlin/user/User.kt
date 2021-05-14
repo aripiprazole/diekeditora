@@ -27,6 +27,16 @@ data class User(
     val deletedAt: LocalDateTime? = null,
     val emailVerifiedAt: LocalDateTime? = null,
 ) {
+    fun update(user: User): User {
+        return copy(
+            username = user.username,
+            name = user.name,
+            email = user.email,
+            password = user.password,
+            updatedAt = LocalDateTime.now()
+        )
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

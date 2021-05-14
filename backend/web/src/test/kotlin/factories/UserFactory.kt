@@ -16,7 +16,7 @@ class UserFactory(val faker: Faker) : Factory<User> {
             email = faker.internet.email(),
             birthday = LocalDate.now(),
             password = generateRandomString(16),
-            emailVerifiedAt = LocalDateTime.now()
+            emailVerifiedAt = LocalDateTime.now(),
         )
     }
 }

@@ -27,18 +27,6 @@ object UserSerializer {
     }
 
     override fun deserialize(decoder: Decoder): User {
-        val dto = decoder.decodeSerializableValue(UserRequestDto.serializer())
-
-        return User(
-            name = dto.name,
-            email = dto.email,
-            username = dto.username,
-            password = dto.password,
-            birthday = dto.birthday,
-            createdAt = dto.createdAt,
-            updatedAt = dto.updatedAt,
-            deletedAt = dto.updatedAt,
-            emailVerifiedAt = dto.emailVerifiedAt
-        )
+        return decoder.decodeSerializableValue(UserCreateDto.serializer()).toUser()
     }
 }

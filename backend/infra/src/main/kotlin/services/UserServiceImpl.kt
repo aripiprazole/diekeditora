@@ -28,19 +28,20 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
     }
 
     override suspend fun updateUserByUsername(username: String, user: User): User? {
-        val databaseUser = user.takeIf { it.id != null }
+        val target = user.takeIf { it.id != null }
             ?: findUserByUsername(username)
             ?: return null
 
-        val target = user.copy(id = databaseUser.id, updatedAt = LocalDateTime.now())
-
-        return userRepository.save(target).also {
+        return userRepository.save(target.update(user)).also {
             log.trace("Successfully updated user %s", user)
         }
     }
 
     override suspend fun save(user: User): User {
-        val target = user.copy(emailVerifiedAt = LocalDateTime.now())
+        val target = user.copy(
+            createdAt = LocalDateTime.now(),
+            emailVerifiedAt = LocalDateTime.now()
+        )
 
         return userRepository.save(target).also {
             log.trace("Successfully saved user %s into database", user)
