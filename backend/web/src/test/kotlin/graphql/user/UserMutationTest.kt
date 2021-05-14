@@ -1,8 +1,9 @@
 package com.lorenzoog.diekeditora.web.graphql.user
 
+import com.lorenzoog.diekeditora.domain.user.UserCreateDto
 import com.lorenzoog.diekeditora.infra.repositories.UserRepository
 import com.lorenzoog.diekeditora.web.factories.UserFactory
-import com.lorenzoog.diekeditora.web.utils.request
+import com.lorenzoog.diekeditora.web.utils.graphQL
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,37 +28,17 @@ class UserMutationTest(
         val password = user.password
         val birthday = user.birthday
 
-        client.request(
-            """
-            mutation {
-               createUser(
-                   name: $name,
-                   username: $username,
-                   email: $email,
-                   password: $password,
-                   birthday: $birthday
-               ) {
-                   name
-                   username
-                   email
-                   birthday
-                   createdAt
-                   updatedAt
-                   emailVerifiedAt
-                   deletedAt
-               }
+        user = client
+            .graphQL(CreateUserMutation) {
+                variables = UserCreateDto.from(user)
             }
-            """.trimIndent()
-        )
-
-        user = requireNotNull(userRepository.findByUsername(username)) {
-            "User must be not null"
-        }
+            .user.let(::assertNotNull)
 
         assertEquals(name, user.name)
         assertEquals(username, user.username)
         assertEquals(email, user.email)
         assertEquals(password, user.password)
+        assertEquals(birthday, user.birthday)
         assertNotNull(user.updatedAt)
         assertNotNull(user.emailVerifiedAt)
     }
@@ -72,23 +53,11 @@ class UserMutationTest(
         val email = newUser.email
         val password = newUser.password
 
-        client.request(
-            """
-            mutation {
-               updateUser(
-                   target: ${user.username},
-                   name: $name,
-                   username: $username,
-                   email: $email,
-                   password: $password
-               ) {}
+        user = client
+            .graphQL(UpdateUserMutation) {
+                variables = UpdateUserInput(user.username, UserCreateDto.from(newUser))
             }
-            """.trimIndent()
-        )
-
-        user = requireNotNull(userRepository.findByUsername(username)) {
-            "User must be not null"
-        }
+            .user.let(::assertNotNull)
 
         assertEquals(name, user.name)
         assertEquals(username, user.username)
