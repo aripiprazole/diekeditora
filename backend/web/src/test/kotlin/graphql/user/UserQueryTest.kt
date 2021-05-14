@@ -1,8 +1,8 @@
-package com.lorenzoog.diekeditora.web.graphql.user
+package com.lorenzoog.diekeditora.web.tests.graphql.user
 
 import com.lorenzoog.diekeditora.infra.repositories.UserRepository
-import com.lorenzoog.diekeditora.web.factories.UserFactory
-import com.lorenzoog.diekeditora.web.utils.graphQL
+import com.lorenzoog.diekeditora.web.tests.factories.UserFactory
+import com.lorenzoog.diekeditora.web.tests.utils.graphQL
 import graphql.relay.SimpleListConnection
 import graphql.schema.DataFetchingEnvironmentImpl.newDataFetchingEnvironment
 import kotlinx.coroutines.flow.toList
@@ -31,7 +31,7 @@ class UserQueryTest(
 
         val original = SimpleListConnection(items).get(newDataFetchingEnvironment().build())
 
-        val connection = client.graphQL(UsersQuery) {
+        val connection = client.graphQL(json, UsersQuery) {
             variables = UsersQuery.Variables(pageNumber)
         }
 
@@ -57,7 +57,7 @@ class UserQueryTest(
 
         assertEquals(
             user,
-            client.graphQL(UserQuery) {
+            client.graphQL(json, UserQuery) {
                 variables = UserQuery.Variables(user.username)
             }
         )

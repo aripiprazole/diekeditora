@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.web.factories
+package com.lorenzoog.diekeditora.web.tests.factories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

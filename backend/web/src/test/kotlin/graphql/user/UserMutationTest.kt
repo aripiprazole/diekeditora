@@ -1,10 +1,12 @@
-package com.lorenzoog.diekeditora.web.graphql.user
+package com.lorenzoog.diekeditora.web.tests.graphql.user
 
 import com.lorenzoog.diekeditora.domain.user.UserCreateDto
 import com.lorenzoog.diekeditora.infra.repositories.UserRepository
-import com.lorenzoog.diekeditora.web.factories.UserFactory
-import com.lorenzoog.diekeditora.web.utils.graphQL
+import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserInput
+import com.lorenzoog.diekeditora.web.tests.factories.UserFactory
+import com.lorenzoog.diekeditora.web.tests.utils.graphQL
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -14,6 +16,7 @@ import kotlin.test.assertNotNull
 
 @SpringBootTest
 class UserMutationTest(
+    @Autowired private val json: Json,
     @Autowired private val userRepository: UserRepository,
     @Autowired private val client: WebTestClient,
     @Autowired private val userFactory: UserFactory,
@@ -29,7 +32,7 @@ class UserMutationTest(
         val birthday = user.birthday
 
         user = client
-            .graphQL(CreateUserMutation) {
+            .graphQL(json, CreateUserMutation) {
                 variables = UserCreateDto.from(user)
             }
             .user.let(::assertNotNull)
@@ -54,7 +57,7 @@ class UserMutationTest(
         val password = newUser.password
 
         user = client
-            .graphQL(UpdateUserMutation) {
+            .graphQL(json, UpdateUserMutation) {
                 variables = UpdateUserInput(user.username, UserCreateDto.from(newUser))
             }
             .user.let(::assertNotNull)

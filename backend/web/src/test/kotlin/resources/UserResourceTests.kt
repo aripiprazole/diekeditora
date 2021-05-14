@@ -1,10 +1,10 @@
-package com.lorenzoog.diekeditora.web.resources
+package com.lorenzoog.diekeditora.web.tests.resources
 
 import com.lorenzoog.diekeditora.domain.page.Page
 import com.lorenzoog.diekeditora.domain.user.User
 import com.lorenzoog.diekeditora.domain.user.UserCreateDto
 import com.lorenzoog.diekeditora.infra.repositories.UserRepository
-import com.lorenzoog.diekeditora.web.factories.UserFactory
+import com.lorenzoog.diekeditora.web.tests.factories.UserFactory
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Contextual
