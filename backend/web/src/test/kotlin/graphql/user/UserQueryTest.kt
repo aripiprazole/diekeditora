@@ -2,23 +2,21 @@ package com.lorenzoog.diekeditora.web.tests.graphql.user
 
 import com.lorenzoog.diekeditora.infra.repositories.UserRepository
 import com.lorenzoog.diekeditora.web.tests.factories.UserFactory
-import com.lorenzoog.diekeditora.web.tests.utils.graphQL
+import com.lorenzoog.diekeditora.web.tests.graphql.GraphQLTestClient
+import com.lorenzoog.diekeditora.web.tests.graphql.request
 import graphql.relay.SimpleListConnection
 import graphql.schema.DataFetchingEnvironmentImpl.newDataFetchingEnvironment
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.web.reactive.server.WebTestClient
 import kotlin.test.assertEquals
 
 @SpringBootTest
 class UserQueryTest(
-    @Autowired private val json: Json,
     @Autowired private val userRepository: UserRepository,
-    @Autowired private val client: WebTestClient,
+    @Autowired private val client: GraphQLTestClient,
     @Autowired private val userFactory: UserFactory,
 ) {
     @Test
@@ -31,7 +29,7 @@ class UserQueryTest(
 
         val original = SimpleListConnection(items).get(newDataFetchingEnvironment().build())
 
-        val connection = client.graphQL(json, UsersQuery) {
+        val connection = client.request(UsersQuery) {
             variables = UsersQuery.Variables(pageNumber)
         }
 
@@ -57,7 +55,7 @@ class UserQueryTest(
 
         assertEquals(
             user,
-            client.graphQL(json, UserQuery) {
+            client.request(UserQuery) {
                 variables = UserQuery.Variables(user.username)
             }
         )
