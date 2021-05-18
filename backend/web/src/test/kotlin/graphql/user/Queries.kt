@@ -4,6 +4,7 @@ package com.lorenzoog.diekeditora.web.tests.graphql.user
 
 import com.lorenzoog.diekeditora.domain.user.User
 import com.lorenzoog.diekeditora.domain.user.UserCreateDto
+import com.lorenzoog.diekeditora.web.graphql.user.DeleteUserInput
 import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserInput
 import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserPayload
 import com.lorenzoog.diekeditora.web.tests.graphql.TestQuery
@@ -73,47 +74,57 @@ object UsersQuery : TestQuery<UsersQuery.Variables, DefaultConnection<User>>(
     data class Variables(val page: Int)
 }
 
-object CreateUserMutation : TestQuery<UserCreateDto, UpdateUserPayload>(
+object CreateUserMutation : TestQuery<CreateUserMutation.Variables, UpdateUserPayload>(
     typeOf<UpdateUserPayload>()
 ) {
     override val queryName = "createUser"
     override val operationName = "CreateUser"
     override val query = """
-        query CreateUser($input: CreateUserInput!) {
+        mutation CreateUser($input: UserInput!) {
             createUser(input: $input) {
-                name,
-                username,
-                email,
-                createdAt,
-                emailVerifiedAt,
-                deletedAt,
-                updatedAt,
+                user {
+                    name
+                    username
+                    email
+                    createdAt
+                    emailVerifiedAt
+                    deletedAt
+                    updatedAt
+                }
             }
         }
     """.trimIndent()
+
+    @Serializable
+    data class Variables(val input: UserCreateDto)
 }
 
-object UpdateUserMutation : TestQuery<UpdateUserInput, UpdateUserPayload>(
+object UpdateUserMutation : TestQuery<UpdateUserMutation.Variables, UpdateUserPayload>(
     typeOf<UpdateUserPayload>()
 ) {
     override val queryName = "updateUser"
     override val operationName = "UpdateUser"
     override val query = """
-        query UpdateUser($input: UpdateUserInput!) {
+        mutation UpdateUser($input: UpdateUserInput!) {
             updateUser(input: $input) {
-                name,
-                username,
-                email,
-                createdAt,
-                emailVerifiedAt,
-                deletedAt,
-                updatedAt,
+                user {
+                    name
+                    username
+                    email
+                    createdAt
+                    emailVerifiedAt
+                    deletedAt
+                    updatedAt
+                }
             }
         }
     """.trimIndent()
+
+    @Serializable
+    data class Variables(val input: UpdateUserInput)
 }
 
-object DeleteUserMutation : TestQuery<UpdateUserInput, UpdateUserPayload>(
+object DeleteUserMutation : TestQuery<DeleteUserMutation.Variables, UpdateUserPayload>(
     typeOf<UpdateUserPayload>()
 ) {
     override val queryName = "deleteUser"
@@ -123,4 +134,7 @@ object DeleteUserMutation : TestQuery<UpdateUserInput, UpdateUserPayload>(
             deleteUser(input: $input)
         }
     """.trimIndent()
+    
+    @Serializable
+    data class Variables(val input: DeleteUserInput)
 }

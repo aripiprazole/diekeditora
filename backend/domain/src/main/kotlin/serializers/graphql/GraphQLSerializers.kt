@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalSerializationApi::class)
 
-package com.lorenzoog.diekeditora.domain.serializers
+package com.lorenzoog.diekeditora.domain.serializers.graphql
 
 import com.expediagroup.graphql.server.types.GraphQLRequest
 import com.expediagroup.graphql.server.types.GraphQLResponse
