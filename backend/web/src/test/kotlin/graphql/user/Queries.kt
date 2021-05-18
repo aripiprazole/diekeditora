@@ -3,7 +3,7 @@
 package com.lorenzoog.diekeditora.web.tests.graphql.user
 
 import com.lorenzoog.diekeditora.domain.user.User
-import com.lorenzoog.diekeditora.domain.user.UserCreateDto
+import com.lorenzoog.diekeditora.domain.user.UserInput
 import com.lorenzoog.diekeditora.web.graphql.user.DeleteUserInput
 import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserInput
 import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserPayload
@@ -96,7 +96,7 @@ object CreateUserMutation : TestQuery<CreateUserMutation.Variables, UpdateUserPa
     """.trimIndent()
 
     @Serializable
-    data class Variables(val input: UserCreateDto)
+    data class Variables(val input: UserInput)
 }
 
 object UpdateUserMutation : TestQuery<UpdateUserMutation.Variables, UpdateUserPayload>(
@@ -134,7 +134,7 @@ object DeleteUserMutation : TestQuery<DeleteUserMutation.Variables, UpdateUserPa
             deleteUser(input: $input)
         }
     """.trimIndent()
-    
+
     @Serializable
     data class Variables(val input: DeleteUserInput)
 }

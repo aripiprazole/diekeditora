@@ -2,7 +2,7 @@ package com.lorenzoog.diekeditora.web.tests.resources
 
 import com.lorenzoog.diekeditora.domain.page.Page
 import com.lorenzoog.diekeditora.domain.user.User
-import com.lorenzoog.diekeditora.domain.user.UserCreateDto
+import com.lorenzoog.diekeditora.domain.user.UserInput
 import com.lorenzoog.diekeditora.infra.repositories.UserRepository
 import com.lorenzoog.diekeditora.web.tests.factories.UserFactory
 import kotlinx.coroutines.flow.toList
@@ -107,7 +107,7 @@ class UserResourceTests(
         val id = requireNotNull(user.id) { "User's id must be not null" }
 
         client.patch().uri("/users/${user.username}")
-            .bodyValue(UserCreateDto.from(newUser))
+            .bodyValue(UserInput.from(newUser))
             .exchange()
             .expectStatus().isNoContent
 
