@@ -1,6 +1,5 @@
 package com.lorenzoog.diekeditora.domain.user
 
-import com.expediagroup.graphql.generator.annotations.GraphQLName
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -8,9 +7,8 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Serializable
-@SerialName("UserCreateDto")
-@GraphQLName("UserInput")
-data class UserCreateDto(
+@SerialName("UserInput")
+data class UserInput(
     val name: String,
     val username: String,
     val email: String,
@@ -28,8 +26,8 @@ data class UserCreateDto(
     }
 
     companion object {
-        fun from(user: User): UserCreateDto {
-            return UserCreateDto(
+        fun from(user: User): UserInput {
+            return UserInput(
                 name = user.name,
                 username = user.username,
                 email = user.email,
@@ -41,9 +39,8 @@ data class UserCreateDto(
 }
 
 @Serializable
-@SerialName("UserResponseDto")
-@GraphQLName("UserPayload")
-data class UserResponseDto(
+@SerialName("UserPayload")
+data class UserPayload(
     val name: String,
     val username: String,
     val email: String,

@@ -3,7 +3,7 @@ package com.lorenzoog.diekeditora.web.graphql.user
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
 import com.lorenzoog.diekeditora.domain.user.User
-import com.lorenzoog.diekeditora.domain.user.UserCreateDto
+import com.lorenzoog.diekeditora.domain.user.UserInput
 import com.lorenzoog.diekeditora.domain.user.UserService
 import kotlinx.serialization.Serializable
 import org.springframework.stereotype.Component
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 @Component
 class UserMutation(private val userService: UserService) : Mutation {
     @GraphQLDescription("Creates an user with the provided data")
-    suspend fun createUser(input: UserCreateDto): CreateUserPayload {
+    suspend fun createUser(input: UserInput): CreateUserPayload {
         val user = input.toUser()
 
         return CreateUserPayload(userService.save(user))
@@ -38,7 +38,7 @@ class UserMutation(private val userService: UserService) : Mutation {
 data class DeleteUserInput(val username: String)
 
 @Serializable
-data class UpdateUserInput(val username: String, val data: UserCreateDto)
+data class UpdateUserInput(val username: String, val data: UserInput)
 
 @Serializable
 data class CreateUserPayload(val user: User)

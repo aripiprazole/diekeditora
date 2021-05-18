@@ -9,10 +9,10 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializer(forClass = User::class)
 object UserSerializer {
-    override val descriptor = UserResponseDto.serializer().descriptor
+    override val descriptor = UserPayload.serializer().descriptor
 
     override fun serialize(encoder: Encoder, value: User) {
-        val serializable = UserResponseDto(
+        val serializable = UserPayload(
             value.name,
             value.username,
             value.email,
@@ -23,10 +23,10 @@ object UserSerializer {
             value.emailVerifiedAt
         )
 
-        encoder.encodeSerializableValue(UserResponseDto.serializer(), serializable)
+        encoder.encodeSerializableValue(UserPayload.serializer(), serializable)
     }
 
     override fun deserialize(decoder: Decoder): User {
-        return decoder.decodeSerializableValue(UserCreateDto.serializer()).toUser()
+        return decoder.decodeSerializableValue(UserInput.serializer()).toUser()
     }
 }
