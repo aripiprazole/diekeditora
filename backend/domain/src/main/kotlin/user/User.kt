@@ -48,10 +48,6 @@ data class User(
         if (email != other.email) return false
         if (username != other.username) return false
         if (birthday != other.birthday) return false
-        if (createdAt != other.createdAt) return false
-        if (updatedAt != other.updatedAt) return false
-        if (deletedAt != other.deletedAt) return false
-        if (emailVerifiedAt != other.emailVerifiedAt) return false
 
         return true
     }
