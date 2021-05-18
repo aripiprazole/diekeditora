@@ -45,21 +45,21 @@ class GraphQLConfig(val json: Json) {
 
         @Suppress("Detekt.ReturnCount")
         override fun willGenerateGraphQLType(type: KType): GraphQLType? {
-            val name = type.jvmErasure.simpleName.orEmpty()
-
             // connection type
             if (type.isSubtypeOf(typeOf<Connection<*>>())) {
-                val genericType = requireNotNull(type.arguments.first().type)
-                val typeName = genericType.jvmErasure.simpleName.orEmpty()
-                val edgeType = relay.edgeType(typeName, typeRef(typeName), null, emptyList())
+                val generic = requireNotNull(type.arguments.first().type)
+                val name = generic.jvmErasure.simpleName.orEmpty()
+                val edge = relay.edgeType(name, typeRef(name), null, emptyList())
 
-                return relay.connectionType(name, edgeType, emptyList())
+                return relay.connectionType(name, edge, emptyList())
             }
 
             // return default unit scalar
             if (type.isSubtypeOf(typeOf<Unit>())) {
                 return unitScalar
             }
+
+            val name = type.jvmErasure.simpleName.orEmpty()
 
             val serializer = json.serializersModule.serializerOrNull(type)
             val descriptor = serializer?.descriptor

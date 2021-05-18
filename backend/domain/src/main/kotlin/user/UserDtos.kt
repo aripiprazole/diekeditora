@@ -1,5 +1,6 @@
 package com.lorenzoog.diekeditora.domain.user
 
+import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLName
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
@@ -9,16 +10,24 @@ import java.time.LocalDateTime
 
 @Serializable
 @SerialName("UserCreateDto")
-@GraphQLName("UserCreateInput")
+@GraphQLName("UserInput")
 data class UserCreateDto(
     val name: String,
     val username: String,
     val email: String,
     val password: String? = null,
     val birthday: @Contextual LocalDate,
-    val createdAt: @Contextual LocalDateTime = LocalDateTime.now(),
+
+    @GraphQLIgnore
+    val createdAt: @Contextual LocalDateTime? = LocalDateTime.now(),
+
+    @GraphQLIgnore
     val updatedAt: @Contextual LocalDateTime? = null,
+
+    @GraphQLIgnore
     val deletedAt: @Contextual LocalDateTime? = null,
+
+    @GraphQLIgnore
     val emailVerifiedAt: @Contextual LocalDateTime? = null,
 ) {
     fun toUser(): User {
@@ -28,7 +37,9 @@ data class UserCreateDto(
             username = username,
             password = password,
             birthday = birthday,
-            createdAt = createdAt,
+            createdAt = createdAt ?: throw IllegalArgumentException(
+                "createdAt could not be null when creating an entity"
+            ),
             updatedAt = updatedAt,
             deletedAt = deletedAt,
             emailVerifiedAt = emailVerifiedAt,
@@ -50,6 +61,7 @@ data class UserCreateDto(
 
 @Serializable
 @SerialName("UserResponseDto")
+@GraphQLName("UserPayload")
 data class UserResponseDto(
     val name: String,
     val username: String,

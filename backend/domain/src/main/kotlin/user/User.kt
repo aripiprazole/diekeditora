@@ -27,6 +27,7 @@ data class User(
     val deletedAt: LocalDateTime? = null,
     val emailVerifiedAt: LocalDateTime? = null,
 ) {
+    @GraphQLIgnore
     fun update(user: User): User {
         return copy(
             username = user.username,

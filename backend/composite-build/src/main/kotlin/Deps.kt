@@ -17,7 +17,7 @@ object Deps {
         const val CoroutinesReactor = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.4.3"
         const val CoroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
         const val CoroutinesJdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.3"
-        const val SerializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0"
+        const val SerializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
     }
 
     object Slf4j {

@@ -1,5 +1,6 @@
 package com.lorenzoog.diekeditora.web.tests.graphql.user
 
+import com.expediagroup.graphql.server.types.GraphQLServerResponse
 import com.lorenzoog.diekeditora.domain.user.UserCreateDto
 import com.lorenzoog.diekeditora.infra.repositories.UserRepository
 import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserInput
@@ -31,7 +32,9 @@ class UserMutationTest(
 
         user = client
             .request(CreateUserMutation) {
-                variables = UserCreateDto.from(user)
+                variables = CreateUserMutation.Variables(
+                    input = UserCreateDto.from(user).copy(createdAt = null),
+                )
             }
             .user.let(::assertNotNull)
 
@@ -56,7 +59,9 @@ class UserMutationTest(
 
         user = client
             .request(UpdateUserMutation) {
-                variables = UpdateUserInput(user.username, UserCreateDto.from(newUser))
+                variables = UpdateUserMutation.Variables(
+                    input = UpdateUserInput(user.username, UserCreateDto.from(newUser)),
+                )
             }
             .user.let(::assertNotNull)
 
