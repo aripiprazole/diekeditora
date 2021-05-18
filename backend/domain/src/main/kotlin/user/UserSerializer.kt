@@ -23,6 +23,8 @@ object UserSerializer {
             value.emailVerifiedAt
         )
 
+        println("PAYLOAD $serializable")
+
         encoder.encodeSerializableValue(UserPayload.serializer(), serializable)
     }
 

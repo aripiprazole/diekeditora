@@ -26,7 +26,6 @@ class UserMutationTest(
         val name = user.name
         val username = user.username
         val email = user.email
-        val password = user.password
         val birthday = user.birthday
 
         user = client
@@ -35,15 +34,12 @@ class UserMutationTest(
                     input = UserInput.from(user),
                 )
             }
-            .user.let(::assertNotNull)
+            .user
 
         assertEquals(name, user.name)
         assertEquals(username, user.username)
         assertEquals(email, user.email)
-        assertEquals(password, user.password)
         assertEquals(birthday, user.birthday)
-        assertNotNull(user.updatedAt)
-        assertNotNull(user.emailVerifiedAt)
     }
 
     @Test
@@ -54,7 +50,6 @@ class UserMutationTest(
         val name = newUser.name
         val username = newUser.username
         val email = newUser.email
-        val password = newUser.password
 
         user = client
             .request(UpdateUserMutation) {
@@ -67,8 +62,5 @@ class UserMutationTest(
         assertEquals(name, user.name)
         assertEquals(username, user.username)
         assertEquals(email, user.email)
-        assertEquals(password, user.password)
-        assertNotNull(user.updatedAt)
-        assertNotNull(user.emailVerifiedAt)
     }
 }

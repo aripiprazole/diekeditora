@@ -108,10 +108,18 @@ class GraphQLConfig(val json: Json) {
                     }
 
                     override fun parseValue(input: Any): Any? {
+                        if (serializer.descriptor.kind == PrimitiveKind.STRING) {
+                            return json.decodeFromString(serializer, """"$input"""")
+                        }
+
                         return json.decodeFromString(serializer, input.toString())
                     }
 
                     override fun parseLiteral(input: Any): Any? {
+                        if (serializer.descriptor.kind == PrimitiveKind.STRING) {
+                            return json.decodeFromString(serializer, """"$input"""")
+                        }
+
                         return json.decodeFromString(serializer, input.toString())
                     }
                 })

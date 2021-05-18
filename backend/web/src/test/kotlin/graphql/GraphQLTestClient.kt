@@ -1,10 +1,14 @@
 package com.lorenzoog.diekeditora.web.tests.graphql
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -27,11 +31,19 @@ inline fun <reified V, reified R : Any> GraphQLTestClient.request(
         .returnResult().responseBody!!
         .decodeToString()
 
-    val response = json.parseToJsonElement(string)
-    val data = response.jsonObject["data"]!!.jsonObject[query.queryName]!!
+    val response = json.decodeFromString<JsonObject>(string)
+    val data = response["data"]?.jsonObject ?: run {
+        val errors = response["errors"]!!.jsonArray
 
-    return json.decodeFromJsonElement(data)
+        throw GraphQLException(errors.map { it.jsonObject["message"]!!.jsonPrimitive.content })
+    }
+
+    return json.decodeFromJsonElement(data[query.queryName]!!)
 }
+
+class GraphQLException(errors: List<String>) : Exception(
+    "Request failed with: ${errors.joinToString(", ")}"
+)
 
 class GraphQLRequestBuilder<V, R : Any>(testQuery: TestQuery<V, R>) {
     var query: String? = testQuery.query

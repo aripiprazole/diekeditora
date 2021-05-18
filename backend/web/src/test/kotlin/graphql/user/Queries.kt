@@ -4,6 +4,7 @@ package com.lorenzoog.diekeditora.web.tests.graphql.user
 
 import com.lorenzoog.diekeditora.domain.user.User
 import com.lorenzoog.diekeditora.domain.user.UserInput
+import com.lorenzoog.diekeditora.web.graphql.user.CreateUserPayload
 import com.lorenzoog.diekeditora.web.graphql.user.DeleteUserInput
 import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserInput
 import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserPayload
@@ -74,8 +75,8 @@ object UsersQuery : TestQuery<UsersQuery.Variables, DefaultConnection<User>>(
     data class Variables(val page: Int)
 }
 
-object CreateUserMutation : TestQuery<CreateUserMutation.Variables, UpdateUserPayload>(
-    typeOf<UpdateUserPayload>()
+object CreateUserMutation : TestQuery<CreateUserMutation.Variables, CreateUserPayload>(
+    typeOf<CreateUserPayload>()
 ) {
     override val queryName = "createUser"
     override val operationName = "CreateUser"
@@ -87,6 +88,7 @@ object CreateUserMutation : TestQuery<CreateUserMutation.Variables, UpdateUserPa
                     username
                     email
                     createdAt
+                    birthday
                     emailVerifiedAt
                     deletedAt
                     updatedAt
@@ -111,6 +113,7 @@ object UpdateUserMutation : TestQuery<UpdateUserMutation.Variables, UpdateUserPa
                     name
                     username
                     email
+                    birthday
                     createdAt
                     emailVerifiedAt
                     deletedAt
