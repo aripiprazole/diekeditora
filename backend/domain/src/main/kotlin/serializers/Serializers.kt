@@ -1,15 +1,11 @@
-package com.lorenzoog.diekeditora.domain.config
+package com.lorenzoog.diekeditora.domain.serializers
 
 import com.expediagroup.graphql.server.types.GraphQLResponse
-import com.lorenzoog.diekeditora.domain.serializers.graphql.GraphQLRequestSerializer
-import com.lorenzoog.diekeditora.domain.serializers.graphql.GraphQLResponseSerializer
-import com.lorenzoog.diekeditora.domain.serializers.InstantSerializer
-import com.lorenzoog.diekeditora.domain.serializers.LocalDateSerializer
-import com.lorenzoog.diekeditora.domain.serializers.LocalDateTimeSerializer
-import com.lorenzoog.diekeditora.domain.serializers.UUIDSerializer
 import com.lorenzoog.diekeditora.domain.serializers.graphql.DefaultConnectionSerializer
 import com.lorenzoog.diekeditora.domain.serializers.graphql.DefaultEdgeSerializer
 import com.lorenzoog.diekeditora.domain.serializers.graphql.DefaultPageInfoSerializer
+import com.lorenzoog.diekeditora.domain.serializers.graphql.GraphQLRequestSerializer
+import com.lorenzoog.diekeditora.domain.serializers.graphql.GraphQLResponseSerializer
 import com.lorenzoog.diekeditora.domain.user.User
 import graphql.relay.Connection
 import graphql.relay.DefaultConnection
