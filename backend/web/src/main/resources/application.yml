@@ -1,0 +1,30 @@
+server:
+  port: ${PORT:8080}
+
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    name: ${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+logging:
+  level:
+    root: ${LOG_LEVEL:info}
+    org.springframework.web:
+      - error
+      - warn
+      - info
+    com.expediagroup.graphql.server.spring.NonFederatedSchemaAutoConfiguration: error
+    com.expediagroup.graphql: error
+    notprivacysafe.graphql.GraphQL: error
+
+graphql:
+  packages:
+    - com.lorenzoog.diekeditora.domain
+    - com.lorenzoog.diekeditora.web
+    - graphql.relay
