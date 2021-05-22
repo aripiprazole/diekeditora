@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.domain.auth
+package com.lorenzoog.diekeditora.domain.session
 
 import com.lorenzoog.diekeditora.domain.user.User
 

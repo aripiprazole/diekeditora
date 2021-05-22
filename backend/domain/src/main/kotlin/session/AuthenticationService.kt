@@ -1,13 +1,13 @@
-package com.lorenzoog.diekeditora.domain.auth
+package com.lorenzoog.diekeditora.domain.session
 
 import com.lorenzoog.diekeditora.domain.user.User
 
-interface AuthService {
+interface AuthenticationService {
     suspend fun register(user: User): Session
 
     suspend fun login(
         username: String,
         password: String,
-        provider: AuthProvider
+        provider: SessionProvider
     ): Session
 }
