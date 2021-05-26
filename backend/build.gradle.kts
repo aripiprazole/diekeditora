@@ -1,4 +1,5 @@
-import com.lorenzoog.diekeditora.build.Deps
+import com.lorenzoog.diekeditora.build.kotlin
+import com.lorenzoog.diekeditora.build.libs
 
 buildscript {
     repositories {
@@ -21,7 +22,12 @@ group = "com.lorenzoog"
 version = "0.0.1-SNAPSHOT"
 
 dependencies {
-    ktlintRuleset(Deps.Pinterest.Ktlint)
+    ktlintRuleset(libs.pinterest.ktlint)
+}
+
+tasks.wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+    gradleVersion = "7.0.2"
 }
 
 allprojects {
@@ -46,30 +52,29 @@ allprojects {
     }
 
     dependencies {
-        implementation(Deps.Kotlin.Stdlib)
-        implementation(Deps.Kotlin.Reflect)
+        implementation(kotlin.stdlibJdk8)
+        implementation(kotlin.reflect)
 
-        implementation(Deps.SpringBoot.DataR2dbc)
-        implementation(Deps.SpringBoot.Webflux)
+        implementation(libs.springBoot.dataR2dbc)
+        implementation(libs.springBoot.webflux)
 
-        implementation(Deps.Reactor.Core)
-        implementation(Deps.Reactor.Kotlin)
+        implementation(libs.reactor.core)
+        implementation(libs.reactor.kotlin)
 
-        implementation(Deps.Kotlinx.SerializationJson)
-        implementation(Deps.Kotlinx.CoroutinesCore)
-        implementation(Deps.Kotlinx.CoroutinesJdk8)
-        implementation(Deps.Kotlinx.CoroutinesReactor)
+        implementation(libs.kotlinx.serializationJson)
+        implementation(libs.kotlinx.coroutinesCore)
+        implementation(libs.kotlinx.coroutinesJdk8)
+        implementation(libs.kotlinx.coroutinesReactor)
 
-        implementation(Deps.ExpediaGroup.GraphQLKotlinSpringServer)
+        implementation(libs.expediaGroup.graphQLKotlinSpringServer)
 
-        implementation(Deps.Slf4j.Api)
+        implementation(libs.slf4j.api)
 
-        testImplementation(Deps.Kotlin.TestJUnit5)
-        testImplementation(Deps.SpringBoot.Test)
-        testImplementation(Deps.Reactor.Test)
-        testImplementation(Deps.AxonFramework.Test)
-        testImplementation(Deps.JUnit.JupiterApi)
-        testRuntimeOnly(Deps.JUnit.JupiterEngine)
+        testImplementation(kotlin.testJUnit5)
+        testImplementation(libs.springBoot.test)
+        testImplementation(libs.reactor.test)
+        testImplementation(libs.junit.jupiterApi)
+        testRuntimeOnly(libs.junit.jupiterEngine)
     }
 
     ktlint {

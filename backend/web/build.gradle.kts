@@ -1,4 +1,5 @@
-import com.lorenzoog.diekeditora.build.Deps
+import com.lorenzoog.diekeditora.build.libs
+import com.lorenzoog.diekeditora.build.projects
 
 plugins {
     id("org.springframework.boot")
@@ -7,18 +8,20 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation(project(":infra"))
-    implementation(project(":shared"))
+    implementation(projects.domain)
+    implementation(projects.infra)
+    implementation(projects.shared)
 
-    runtimeOnly(Deps.PostgreSQL.PostgreSQL)
+    implementation(libs.springBoot.security)
 
-    implementation(Deps.R2dbc.PostgreSQL)
-    implementation(Deps.Classgraph.Classgraph)
-    implementation(Deps.Logback.Classic)
-    implementation(Deps.Fusesource.Jansi)
+    runtimeOnly(libs.postgresql.postgresql)
 
-    testRuntimeOnly(Deps.H2Database.H2)
-    testImplementation(Deps.R2dbc.H2)
-    testImplementation(Deps.Serpro69.KotlinFaker)
+    implementation(libs.r2dbc.postgresql)
+    implementation(libs.classgraph.classgraph)
+    implementation(libs.logback.classic)
+    implementation(libs.fusesource.jansi)
+
+    testRuntimeOnly(libs.h2database.h2)
+    testImplementation(libs.r2dbc.h2)
+    testImplementation(libs.serpro69.kotlinFaker)
 }
