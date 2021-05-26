@@ -1,3 +1,5 @@
+import com.lorenzoog.diekeditora.build.projects
+
 dependencies {
-    implementation(project(":shared"))
+    implementation(projects.shared)
 }

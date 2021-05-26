@@ -1,82 +1,107 @@
+@file:Suppress("EXPERIMENTAL_FEATURE_WARNING", "unused")
+
 package com.lorenzoog.diekeditora.build
 
-object Deps {
-    object SpringBoot {
-        const val Webflux = "org.springframework.boot:spring-boot-starter-webflux:2.4.5"
-        const val DataR2dbc = "org.springframework.boot:spring-boot-starter-data-r2dbc:2.4.5"
-        const val Test = "org.springframework.boot:spring-boot-starter-test:2.4.5"
+import org.gradle.api.artifacts.dsl.DependencyHandler
+import org.gradle.kotlin.dsl.kotlin
+import org.gradle.kotlin.dsl.project
+
+val DependencyHandler.kotlin get() = KotlinDependencies(this)
+val DependencyHandler.projects get() = ProjectDependencies(this)
+val DependencyHandler.libs get() = Libs()
+
+inline class KotlinDependencies(private val handler: DependencyHandler) {
+    val stdlibJdk8 get() = handler.kotlin("stdlib-jdk8")
+    val reflect get() = handler.kotlin("reflect")
+    val testJUnit5 get() = handler.kotlin("test-junit5")
+}
+
+inline class ProjectDependencies(private val handler: DependencyHandler) {
+    val web get() = handler.project(":web")
+    val infra get() = handler.project(":infra")
+    val shared get() = handler.project(":shared")
+    val domain get() = handler.project(":domain")
+}
+
+class Libs {
+    val kotlinx = Kotlinx()
+    val postgresql = Postgresql()
+    val springBoot = SpringBoot()
+    val slf4j = Slf4j()
+    val reactor = Reactor()
+    val expediaGroup = ExpediaGroup()
+    val junit = JUnit()
+    val pinterest = Pinterest()
+    val r2dbc = R2dbc()
+    val classgraph = Classgraph()
+    val logback = Logback()
+    val fusesource = Fusesource()
+    val h2database = H2database()
+    val serpro69 = Serpro69()
+
+    class Serpro69 {
+        val kotlinFaker = "io.github.serpro69:kotlin-faker:1.4.1"
     }
 
-    object Kotlin {
-        const val TestJUnit5 = "org.jetbrains.kotlin:kotlin-test-junit5:1.4.32"
-        const val Stdlib = "org.jetbrains.kotlin:kotlin-reflect:1.4.32"
-        const val Reflect = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32"
+    class H2database {
+        val h2 = "com.h2database:h2:1.4.200"
     }
 
-    object Kotlinx {
-        const val CoroutinesReactor = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.4.3"
-        const val CoroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
-        const val CoroutinesJdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.3"
-        const val SerializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
+    class Fusesource {
+        val jansi = "org.fusesource.jansi:jansi:1.18"
     }
 
-    object Slf4j {
-        const val Api = "org.slf4j:slf4j-api:1.7.25"
+    class Logback {
+        val classic = "ch.qos.logback:logback-classic:1.2.3"
     }
 
-    object PostgreSQL {
-        const val PostgreSQL = "org.postgresql:postgresql:42.2.20"
+    class Pinterest {
+        val ktlint = "com.pinterest:ktlint:0.41.0"
     }
 
-    object R2dbc {
-        const val H2 = "io.r2dbc:r2dbc-h2:0.8.4.RELEASE"
-        const val PostgreSQL = "io.r2dbc:r2dbc-postgresql:0.8.7.RELEASE"
+    class JUnit {
+        val jupiterApi = "org.junit.jupiter:junit-jupiter-api:5.6.0"
+        val jupiterEngine = "org.junit.jupiter:junit-jupiter-engine:5.6.0"
     }
 
-    object Fusesource {
-        const val Jansi = "org.fusesource.jansi:jansi:1.18"
+    class ExpediaGroup {
+        val graphQLKotlinSpringServer = "com.expediagroup:graphql-kotlin-spring-server:4.1.0"
     }
 
-    object Logback {
-        const val Classic = "ch.qos.logback:logback-classic:1.2.3"
+    class Reactor {
+        val test = "io.projectreactor:reactor-test:3.4.5"
+        val kotlin = "io.projectreactor.kotlin:reactor-kotlin-extensions:1.1.3"
+        val core = "io.projectreactor:reactor-core:3.4.5"
     }
 
-    object ExpediaGroup {
-        const val GraphQLKotlinSpringServer = "com.expediagroup:graphql-kotlin-spring-server:4.1.0"
+    class Postgresql {
+        val postgresql = "org.postgresql:postgresql:42.2.20"
     }
 
-    object Classgraph {
-        const val Classgraph = "io.github.classgraph:classgraph:4.8.105"
+    class SpringBoot {
+        val security = "org.springframework.boot:spring-boot-starter-security"
+        val webflux = "org.springframework.boot:spring-boot-starter-webflux:2.4.5"
+        val dataR2dbc = "org.springframework.boot:spring-boot-starter-data-r2dbc:2.4.5"
+        val test = "org.springframework.boot:spring-boot-starter-test:2.4.5"
     }
 
-    object AxonFramework {
-        const val Core = "org.axonframework:axon-core:4.0-M2"
-        const val Test = "org.axonframework:axon-test:4.5"
-        const val KotlinExtension = "org.axonframework.extensions.kotlin:axon-kotlin:0.1.0"
-        const val Spring = "org.axonframework:axon-spring:4.5"
-        const val SpringBootAutoConfigure = "org.axonframework:axon-spring-boot-autoconfigure:4.5"
+    class Slf4j {
+        val api = "org.slf4j:slf4j-api:1.7.25"
     }
 
-    object Reactor {
-        const val Test = "io.projectreactor:reactor-test:3.4.5"
-        const val Kotlin = "io.projectreactor.kotlin:reactor-kotlin-extensions:1.1.3"
-        const val Core = "io.projectreactor:reactor-core:3.4.5"
+    class Kotlinx {
+        val coroutinesReactor = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.4.3"
+        val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
+        val coroutinesJdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.3"
+        val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
     }
 
-    object Pinterest {
-        const val Ktlint = "com.pinterest:ktlint:0.41.0"
+    class Classgraph {
+        val classgraph = "io.github.classgraph:classgraph:4.8.105"
     }
 
-    object JUnit {
-        const val JupiterApi = "org.junit.jupiter:junit-jupiter-api:5.6.0"
-        const val JupiterEngine = "org.junit.jupiter:junit-jupiter-engine:5.6.0"
-    }
-
-    object Serpro69 {
-        const val KotlinFaker = "io.github.serpro69:kotlin-faker:1.4.1"
-    }
-
-    object H2Database {
-        const val H2 = "com.h2database:h2:1.4.200"
+    class R2dbc {
+        val h2 = "io.r2dbc:r2dbc-h2:0.8.4.RELEASE"
+        val postgresql = "io.r2dbc:r2dbc-postgresql:0.8.7.RELEASE"
     }
 }

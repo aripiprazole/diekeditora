@@ -1,12 +1,13 @@
-import com.lorenzoog.diekeditora.build.Deps
+import com.lorenzoog.diekeditora.build.libs
+import com.lorenzoog.diekeditora.build.projects
 
 plugins {
     kotlin("plugin.spring")
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation(project(":shared"))
+    implementation(projects.domain)
+    implementation(projects.shared)
 
-    implementation(Deps.SpringBoot.DataR2dbc)
+    implementation(libs.springBoot.dataR2dbc)
 }
