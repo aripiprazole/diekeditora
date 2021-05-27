@@ -13,6 +13,9 @@ dependencies {
     implementation(projects.shared)
 
     implementation(libs.springBoot.security)
+    implementation(libs.springBoot.actuator)
+    implementation(libs.springBoot.securityOAuth2ResourceServer)
+    implementation(libs.springSecurity.oauth2Client)
 
     runtimeOnly(libs.postgresql.postgresql)
 
