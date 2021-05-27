@@ -38,6 +38,7 @@ class Libs {
     val fusesource = Fusesource()
     val h2database = H2database()
     val serpro69 = Serpro69()
+    val springSecurity = SpringSecurity()
 
     class Serpro69 {
         val kotlinFaker = "io.github.serpro69:kotlin-faker:1.4.1"
@@ -80,9 +81,16 @@ class Libs {
 
     class SpringBoot {
         val security = "org.springframework.boot:spring-boot-starter-security"
+        val actuator = "org.springframework.boot:spring-boot-starter-actuator"
+        val securityOAuth2ResourceServer =
+            "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
         val webflux = "org.springframework.boot:spring-boot-starter-webflux:2.4.5"
         val dataR2dbc = "org.springframework.boot:spring-boot-starter-data-r2dbc:2.4.5"
         val test = "org.springframework.boot:spring-boot-starter-test:2.4.5"
+    }
+
+    class SpringSecurity {
+        val oauth2Client = "org.springframework.security:spring-security-oauth2-client:5.5.0"
     }
 
     class Slf4j {
