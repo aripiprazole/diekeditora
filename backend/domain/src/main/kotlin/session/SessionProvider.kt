@@ -1,6 +1,14 @@
 package com.lorenzoog.diekeditora.domain.session
 
-sealed class SessionProvider
+import kotlinx.serialization.Serializable
 
-object OAuthProvider : SessionProvider()
-object JwtProvider : SessionProvider()
+@Serializable
+enum class SessionProvider {
+    Google, Facebook, Github, Twitter, Jwt;
+
+    companion object {
+        fun of(name: String?): SessionProvider {
+            TODO()
+        }
+    }
+}
