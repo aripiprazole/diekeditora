@@ -21,7 +21,7 @@ import java.net.URI
 @RequestMapping("/users")
 class UserResource(val userService: UserService) {
     @GetMapping
-    suspend fun index(@RequestParam(defaultValue = "0") page: Int): Page<User> {
+    suspend fun index(@RequestParam(defaultValue = "1") page: Int): Page<User> {
         return userService.findPaginatedUsers(page)
     }
 
