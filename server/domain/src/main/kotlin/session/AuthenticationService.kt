@@ -1,6 +1,6 @@
-package com.lorenzoog.diekeditora.domain.session
+package com.diekeditora.domain.session
 
-import com.lorenzoog.diekeditora.domain.user.User
+import com.diekeditora.domain.user.User
 
 interface AuthenticationService {
     suspend fun register(user: User): Session

@@ -1,6 +1,6 @@
-package com.lorenzoog.diekeditora.domain.permission
+package com.diekeditora.domain.permission
 
-import com.lorenzoog.diekeditora.domain.user.User
+import com.diekeditora.domain.user.User
 
 interface PermissionService {
     suspend fun hasPermission(user: User, permission: String): Boolean

@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.web.auth
+package com.diekeditora.web.auth
 
 import kotlinx.coroutines.reactor.mono
 import org.springframework.security.authorization.AuthorizationDecision

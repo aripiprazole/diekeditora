@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.web.config
+package com.diekeditora.web.config
 
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import graphql.relay.Connection

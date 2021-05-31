@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.domain.session
+package com.diekeditora.domain.session
 
 import kotlinx.serialization.Serializable
 

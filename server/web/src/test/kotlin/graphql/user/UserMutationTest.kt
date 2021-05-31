@@ -1,11 +1,11 @@
-package com.lorenzoog.diekeditora.web.tests.graphql.user
+package com.diekeditora.web.tests.graphql.user
 
-import com.lorenzoog.diekeditora.domain.user.UserInput
-import com.lorenzoog.diekeditora.infra.repositories.UserRepository
-import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserInput
-import com.lorenzoog.diekeditora.web.tests.factories.UserFactory
-import com.lorenzoog.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.lorenzoog.diekeditora.web.tests.graphql.request
+import com.diekeditora.domain.user.UserInput
+import com.diekeditora.infra.repositories.UserRepository
+import com.diekeditora.web.graphql.user.UpdateUserInput
+import com.diekeditora.web.tests.factories.UserFactory
+import com.diekeditora.web.tests.graphql.GraphQLTestClient
+import com.diekeditora.web.tests.graphql.request
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

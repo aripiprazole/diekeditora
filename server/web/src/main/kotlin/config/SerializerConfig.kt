@@ -1,8 +1,8 @@
-package com.lorenzoog.diekeditora.web.config
+package com.diekeditora.web.config
 
-import com.lorenzoog.diekeditora.domain.serializers.AnySerializersModule
-import com.lorenzoog.diekeditora.domain.serializers.GraphQLSerializersModule
-import com.lorenzoog.diekeditora.domain.serializers.JavaSerializersModule
+import com.diekeditora.domain.serializers.AnySerializersModule
+import com.diekeditora.domain.serializers.GraphQLSerializersModule
+import com.diekeditora.domain.serializers.JavaSerializersModule
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.plus
 import org.springframework.boot.autoconfigure.AutoConfigureBefore

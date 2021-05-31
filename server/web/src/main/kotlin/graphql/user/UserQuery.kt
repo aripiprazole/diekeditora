@@ -1,9 +1,9 @@
-package com.lorenzoog.diekeditora.web.graphql.user
+package com.diekeditora.web.graphql.user
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Query
-import com.lorenzoog.diekeditora.domain.user.User
-import com.lorenzoog.diekeditora.domain.user.UserService
+import com.diekeditora.domain.user.User
+import com.diekeditora.domain.user.UserService
 import graphql.relay.Connection
 import graphql.relay.SimpleListConnection
 import graphql.schema.DataFetchingEnvironment

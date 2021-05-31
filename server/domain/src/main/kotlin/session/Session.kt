@@ -1,7 +1,7 @@
-package com.lorenzoog.diekeditora.domain.session
+package com.diekeditora.domain.session
 
-import com.lorenzoog.diekeditora.domain.connection.Social
-import com.lorenzoog.diekeditora.domain.user.User
+import com.diekeditora.domain.connection.Social
+import com.diekeditora.domain.user.User
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -13,6 +13,6 @@ dependencies {
 gradlePlugin {
     plugins.register("composite-build") {
         id = "composite-build"
-        implementationClass = "com.lorenzoog.diekeditora.build.BuildSrc"
+        implementationClass = "com.diekeditora.build.BuildSrc"
     }
 }

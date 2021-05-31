@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.web.tests.graphql
+package com.diekeditora.web.tests.graphql
 
 import kotlin.reflect.KType
 

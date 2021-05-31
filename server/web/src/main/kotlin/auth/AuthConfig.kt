@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.web.auth
+package com.diekeditora.web.auth
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

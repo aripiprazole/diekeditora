@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.web.tests.graphql
+package com.diekeditora.web.tests.graphql
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString

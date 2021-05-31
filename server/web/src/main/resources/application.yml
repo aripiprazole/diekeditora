@@ -42,6 +42,6 @@ logging:
 
 graphql:
   packages:
-    - com.lorenzoog.diekeditora.domain
-    - com.lorenzoog.diekeditora.web
+    - com.diekeditora.domain
+    - com.diekeditora.web
     - graphql.relay

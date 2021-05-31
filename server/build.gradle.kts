@@ -1,5 +1,5 @@
-import com.lorenzoog.diekeditora.build.kotlin
-import com.lorenzoog.diekeditora.build.libs
+import com.diekeditora.build.kotlin
+import com.diekeditora.build.libs
 
 buildscript {
     repositories {
@@ -18,7 +18,7 @@ plugins {
     id("composite-build")
 }
 
-group = "com.lorenzoog"
+group = "com.diekeditora"
 version = "0.0.1-SNAPSHOT"
 
 dependencies {
@@ -38,7 +38,7 @@ allprojects {
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "composite-build")
 
-    group = "com.lorenzoog.diekeditora"
+    group = "com.diekeditora"
     version = rootProject.version
 
     java {

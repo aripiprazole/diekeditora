@@ -1,6 +1,6 @@
-package com.lorenzoog.diekeditora.domain.user
+package com.diekeditora.domain.user
 
-import com.lorenzoog.diekeditora.domain.page.Page
+import com.diekeditora.domain.page.Page
 import org.springframework.stereotype.Service
 
 @Service

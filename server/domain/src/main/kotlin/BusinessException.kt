@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.domain
+package com.diekeditora.domain
 
 class BusinessException(
     override val message: String,

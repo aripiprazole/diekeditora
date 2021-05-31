@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.web.tests.config
+package com.diekeditora.web.tests.config
 
 import kotlinx.serialization.json.Json
 import org.springframework.context.ApplicationContext
