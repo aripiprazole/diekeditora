@@ -1,4 +1,4 @@
-rootProject.name = "backend"
+rootProject.name = "server"
 
 include("web")
 include("domain")
