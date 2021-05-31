@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.web.tests.config
+package com.diekeditora.web.tests.config
 
 import io.github.serpro69.kfaker.Faker
 import io.github.serpro69.kfaker.FakerConfig

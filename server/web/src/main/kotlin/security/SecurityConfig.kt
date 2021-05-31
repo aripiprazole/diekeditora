@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.web.security
+package com.diekeditora.web.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

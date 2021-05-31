@@ -1,5 +1,5 @@
-import com.lorenzoog.diekeditora.build.libs
-import com.lorenzoog.diekeditora.build.projects
+import com.diekeditora.build.libs
+import com.diekeditora.build.projects
 
 plugins {
     kotlin("plugin.spring")

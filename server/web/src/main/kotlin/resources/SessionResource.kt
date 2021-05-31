@@ -1,8 +1,8 @@
-package com.lorenzoog.diekeditora.web.resources
+package com.diekeditora.web.resources
 
-import com.lorenzoog.diekeditora.domain.session.Session
-import com.lorenzoog.diekeditora.domain.session.SessionService
-import com.lorenzoog.diekeditora.domain.user.User
+import com.diekeditora.domain.session.Session
+import com.diekeditora.domain.session.SessionService
+import com.diekeditora.domain.user.User
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse
 import org.springframework.web.bind.annotation.GetMapping

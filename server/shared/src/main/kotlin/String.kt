@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.shared
+package com.diekeditora.shared
 
 import kotlin.random.Random
 

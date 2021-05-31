@@ -1,6 +1,6 @@
-package com.lorenzoog.diekeditora.domain.permission
+package com.diekeditora.domain.permission
 
-import com.lorenzoog.diekeditora.domain.page.Page
+import com.diekeditora.domain.page.Page
 
 interface RoleService {
     suspend fun findPaginatedRoles(page: Int = 1): Page<Role>

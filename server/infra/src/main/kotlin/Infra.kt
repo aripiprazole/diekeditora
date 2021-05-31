@@ -1,1 +1,1 @@
-package com.lorenzoog.diekeditora.infra
+package com.diekeditora.infra

@@ -1,6 +1,6 @@
-package com.lorenzoog.diekeditora.infra.repositories
+package com.diekeditora.infra.repositories
 
-import com.lorenzoog.diekeditora.domain.user.User
+import com.diekeditora.domain.user.User
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.repository.kotlin.CoroutineSortingRepository

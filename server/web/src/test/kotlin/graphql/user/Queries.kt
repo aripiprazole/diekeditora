@@ -1,14 +1,14 @@
 @file:OptIn(ExperimentalStdlibApi::class)
 
-package com.lorenzoog.diekeditora.web.tests.graphql.user
+package com.diekeditora.web.tests.graphql.user
 
-import com.lorenzoog.diekeditora.domain.user.User
-import com.lorenzoog.diekeditora.domain.user.UserInput
-import com.lorenzoog.diekeditora.web.graphql.user.CreateUserPayload
-import com.lorenzoog.diekeditora.web.graphql.user.DeleteUserInput
-import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserInput
-import com.lorenzoog.diekeditora.web.graphql.user.UpdateUserPayload
-import com.lorenzoog.diekeditora.web.tests.graphql.TestQuery
+import com.diekeditora.domain.user.User
+import com.diekeditora.domain.user.UserInput
+import com.diekeditora.web.graphql.user.CreateUserPayload
+import com.diekeditora.web.graphql.user.DeleteUserInput
+import com.diekeditora.web.graphql.user.UpdateUserInput
+import com.diekeditora.web.graphql.user.UpdateUserPayload
+import com.diekeditora.web.tests.graphql.TestQuery
 import graphql.relay.DefaultConnection
 import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf

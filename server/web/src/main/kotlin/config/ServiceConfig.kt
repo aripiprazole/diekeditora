@@ -1,9 +1,9 @@
-package com.lorenzoog.diekeditora.web.config
+package com.diekeditora.web.config
 
-import com.lorenzoog.diekeditora.infra.repositories.UserRepository
-import com.lorenzoog.diekeditora.infra.services.AuthenticationServiceImpl
-import com.lorenzoog.diekeditora.infra.services.SessionServiceImpl
-import com.lorenzoog.diekeditora.infra.services.UserServiceImpl
+import com.diekeditora.infra.repositories.UserRepository
+import com.diekeditora.infra.services.AuthenticationServiceImpl
+import com.diekeditora.infra.services.SessionServiceImpl
+import com.diekeditora.infra.services.UserServiceImpl
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

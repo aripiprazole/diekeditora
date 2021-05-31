@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.web.config
+package com.diekeditora.web.config
 
 import io.r2dbc.spi.ConnectionFactory
 import org.springframework.context.annotation.Bean

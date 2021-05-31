@@ -1,10 +1,10 @@
-package com.lorenzoog.diekeditora.infra.services
+package com.diekeditora.infra.services
 
-import com.lorenzoog.diekeditora.domain.session.AuthenticationService
-import com.lorenzoog.diekeditora.domain.session.Session
-import com.lorenzoog.diekeditora.domain.session.SessionProvider
-import com.lorenzoog.diekeditora.domain.user.User
-import com.lorenzoog.diekeditora.shared.logger
+import com.diekeditora.domain.session.AuthenticationService
+import com.diekeditora.domain.session.Session
+import com.diekeditora.domain.session.SessionProvider
+import com.diekeditora.domain.user.User
+import com.diekeditora.shared.logger
 
 class AuthenticationServiceImpl() : AuthenticationService {
     private val log by logger()

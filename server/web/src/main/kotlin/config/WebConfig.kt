@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.web.config
+package com.diekeditora.web.config
 
 import kotlinx.serialization.json.Json
 import org.springframework.context.annotation.Configuration

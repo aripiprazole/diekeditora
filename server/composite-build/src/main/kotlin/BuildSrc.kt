@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.build
+package com.diekeditora.build
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

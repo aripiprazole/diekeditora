@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.domain.permission
+package com.diekeditora.domain.permission
 
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import kotlinx.serialization.SerialName

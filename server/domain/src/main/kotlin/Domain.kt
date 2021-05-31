@@ -1,1 +1,1 @@
-package com.lorenzoog.diekeditora.domain
+package com.diekeditora.domain

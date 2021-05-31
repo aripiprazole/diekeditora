@@ -1,6 +1,6 @@
-package com.lorenzoog.diekeditora.web.auth
+package com.diekeditora.web.auth
 
-import com.lorenzoog.diekeditora.domain.session.SessionService
+import com.diekeditora.domain.session.SessionService
 import kotlinx.coroutines.reactor.mono
 import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository

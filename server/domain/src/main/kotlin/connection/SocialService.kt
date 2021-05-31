@@ -1,6 +1,6 @@
-package com.lorenzoog.diekeditora.domain.connection
+package com.diekeditora.domain.connection
 
-import com.lorenzoog.diekeditora.domain.user.User
+import com.diekeditora.domain.user.User
 
 interface SocialService {
     suspend fun findAllSocialsByUser(user: User): Set<Social>

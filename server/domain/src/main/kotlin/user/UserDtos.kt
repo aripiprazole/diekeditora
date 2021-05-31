@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.domain.user
+package com.diekeditora.domain.user
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName

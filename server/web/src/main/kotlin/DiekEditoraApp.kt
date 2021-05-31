@@ -1,4 +1,4 @@
-package com.lorenzoog.diekeditora.web
+package com.diekeditora.web
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -8,8 +8,8 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 
 @SpringBootApplication
 @EnableWebFluxSecurity
-@EnableR2dbcRepositories("com.lorenzoog.diekeditora.infra")
-@ComponentScan("com.lorenzoog.diekeditora.domain", "com.lorenzoog.diekeditora.web")
+@EnableR2dbcRepositories("com.diekeditora.infra")
+@ComponentScan("com.diekeditora.domain", "com.diekeditora.web")
 class DiekEditoraApp
 
 fun main(args: Array<String>) {

@@ -1,10 +1,10 @@
-package com.lorenzoog.diekeditora.infra.services
+package com.diekeditora.infra.services
 
-import com.lorenzoog.diekeditora.domain.page.Page
-import com.lorenzoog.diekeditora.domain.user.User
-import com.lorenzoog.diekeditora.domain.user.UserService
-import com.lorenzoog.diekeditora.infra.repositories.UserRepository
-import com.lorenzoog.diekeditora.shared.logger
+import com.diekeditora.domain.page.Page
+import com.diekeditora.domain.user.User
+import com.diekeditora.domain.user.UserService
+import com.diekeditora.infra.repositories.UserRepository
+import com.diekeditora.shared.logger
 import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime

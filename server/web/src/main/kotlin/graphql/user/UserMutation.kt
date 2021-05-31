@@ -1,10 +1,10 @@
-package com.lorenzoog.diekeditora.web.graphql.user
+package com.diekeditora.web.graphql.user
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
-import com.lorenzoog.diekeditora.domain.user.User
-import com.lorenzoog.diekeditora.domain.user.UserInput
-import com.lorenzoog.diekeditora.domain.user.UserService
+import com.diekeditora.domain.user.User
+import com.diekeditora.domain.user.UserInput
+import com.diekeditora.domain.user.UserService
 import kotlinx.serialization.Serializable
 import org.springframework.stereotype.Component
 

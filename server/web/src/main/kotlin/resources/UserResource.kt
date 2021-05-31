@@ -1,9 +1,9 @@
-package com.lorenzoog.diekeditora.web.resources
+package com.diekeditora.web.resources
 
-import com.lorenzoog.diekeditora.domain.page.Page
-import com.lorenzoog.diekeditora.domain.user.User
-import com.lorenzoog.diekeditora.domain.user.UserService
-import com.lorenzoog.diekeditora.web.utils.toResponseEntity
+import com.diekeditora.domain.page.Page
+import com.diekeditora.domain.user.User
+import com.diekeditora.domain.user.UserService
+import com.diekeditora.web.utils.toResponseEntity
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

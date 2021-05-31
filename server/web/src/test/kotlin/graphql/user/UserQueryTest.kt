@@ -1,9 +1,9 @@
-package com.lorenzoog.diekeditora.web.tests.graphql.user
+package com.diekeditora.web.tests.graphql.user
 
-import com.lorenzoog.diekeditora.infra.repositories.UserRepository
-import com.lorenzoog.diekeditora.web.tests.factories.UserFactory
-import com.lorenzoog.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.lorenzoog.diekeditora.web.tests.graphql.request
+import com.diekeditora.infra.repositories.UserRepository
+import com.diekeditora.web.tests.factories.UserFactory
+import com.diekeditora.web.tests.graphql.GraphQLTestClient
+import com.diekeditora.web.tests.graphql.request
 import graphql.relay.SimpleListConnection
 import graphql.schema.DataFetchingEnvironmentImpl.newDataFetchingEnvironment
 import kotlinx.coroutines.flow.toList
