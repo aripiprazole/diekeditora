@@ -16,7 +16,6 @@ import org.springframework.security.web.server.ServerAuthenticationEntryPoint
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler
-import org.springframework.security.web.server.authorization.AuthorizationWebFilter
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers
 import org.springframework.web.cors.CorsConfiguration
@@ -25,10 +24,7 @@ import reactor.core.publisher.Mono
 
 @Configuration
 @EnableWebFluxSecurity
-class SecurityConfig(
-    val authorizationFilter: AuthorizationWebFilter,
-    val authenticationFilter: AuthenticationWebFilter,
-) {
+class SecurityConfig(val authenticationFilter: AuthenticationWebFilter) {
     private val generalCorsConfig = CorsConfiguration().apply {
         addAllowedOrigin("*")
         addAllowedMethod("*")
@@ -43,7 +39,6 @@ class SecurityConfig(
         logout { disable() }
 
         addFilterAt(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
-        addFilterAt(authorizationFilter, SecurityWebFiltersOrder.AUTHORIZATION)
 
         authorizeExchange {
             authorize(pathMatchers("/users", "/users/**"), hasAuthority("users.view"))
@@ -52,8 +47,6 @@ class SecurityConfig(
             authorize(pathMatchers(DELETE, "/users/**"), hasAuthority("users.update"))
 
             authorize("/session", authenticated)
-            authorize("/sign-in", permitAll)
-            authorize("/sign-up", permitAll)
             authorize("/oauth2/authorization/*", permitAll)
 
             authorize(anyExchange, authenticated)

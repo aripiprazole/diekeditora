@@ -1,20 +1,29 @@
 package com.diekeditora.web.auth
 
-import com.diekeditora.domain.session.SessionService
+import com.diekeditora.domain.user.UserService
+import com.diekeditora.shared.await
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.reactor.mono
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken
 import org.springframework.stereotype.Component
 
 @Component
-class AuthenticationManager(val sessionService: SessionService) : ReactiveAuthenticationManager {
+class AuthenticationManager(
+    val auth: FirebaseAuth,
+    val userService: UserService,
+) : ReactiveAuthenticationManager {
     override fun authenticate(authentication: Authentication) = mono<Authentication> {
-        println("Authentication $authentication")
+        if (authentication !is BearerTokenAuthenticationToken) {
+            throw AccessDeniedException("Invalid token type ${authentication::class.simpleName}")
+        }
 
-        val token = authentication.principal.toString()
-//        val user = sessionService.getSession(token)
+        val token = auth.verifyIdTokenAsync(authentication.token).await()
+        val user = userService.findUserByEmail(token.email)
 
-        UsernamePasswordAuthenticationToken(token, null, emptyList())
+        UsernamePasswordAuthenticationToken(user, token, emptyList())
     }
 }

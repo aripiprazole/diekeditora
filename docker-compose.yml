@@ -3,11 +3,11 @@ version: '3'
 services:
   backend:
     build:
-      context: ./backend
+      context: ./server
     volumes:
-      - ./backend:/var/backend
-    env_file:
-      - backend/.env
+      - ./server:/var/server
+    depends_on:
+      - app_db
     networks:
       - diekeditora
 
@@ -23,11 +23,9 @@ services:
     networks:
       - diekeditora
 
-  postgres:
+  app_db:
     image: postgres:13.2
     restart: always
-    env_file:
-      - backend/.env
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USERNAME}

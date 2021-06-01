@@ -55,6 +55,8 @@ allprojects {
         implementation(kotlin.stdlibJdk8)
         implementation(kotlin.reflect)
 
+        implementation(libs.google.common)
+
         implementation(libs.springBoot.dataR2dbc)
         implementation(libs.springBoot.webflux)
 

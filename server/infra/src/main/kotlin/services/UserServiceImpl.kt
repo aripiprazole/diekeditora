@@ -19,6 +19,12 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
         }
     }
 
+    override suspend fun findUserByEmail(email: String): User? {
+        return userRepository.findByEmail(email).also {
+            log.trace("Successfully found user by %s by its email", it)
+        }
+    }
+
     override suspend fun findPaginatedUsers(page: Int, pageSize: Int): Page<User> {
         val users = userRepository.findAll(page, pageSize).toList()
 
