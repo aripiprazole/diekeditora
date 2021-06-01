@@ -6,7 +6,6 @@ import org.springframework.http.HttpMethod.DELETE
 import org.springframework.http.HttpMethod.POST
 import org.springframework.http.HttpMethod.PUT
 import org.springframework.http.HttpStatus
-import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder
 import org.springframework.security.config.web.server.ServerHttpSecurity
@@ -14,8 +13,6 @@ import org.springframework.security.config.web.server.invoke
 import org.springframework.security.web.server.SecurityWebFilterChain
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter
-import org.springframework.security.web.server.authentication.ServerAuthenticationConverter
-import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers
 import org.springframework.web.cors.CorsConfiguration
@@ -50,20 +47,6 @@ class SecurityConfig(val authenticationFilter: AuthenticationWebFilter) {
             authorize("/oauth2/authorization/*", permitAll)
 
             authorize(anyExchange, authenticated)
-        }
-
-        oauth2Login {
-            authenticationFailureHandler = ServerAuthenticationFailureHandler { a, exception ->
-                TODO()
-            }
-
-            authenticationConverter = ServerAuthenticationConverter {
-                TODO()
-            }
-
-            authenticationManager = ReactiveAuthenticationManager {
-                TODO()
-            }
         }
 
         anonymous {
