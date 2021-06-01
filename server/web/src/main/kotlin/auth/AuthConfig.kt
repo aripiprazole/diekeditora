@@ -3,21 +3,21 @@ package com.diekeditora.web.auth
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.ReactiveAuthenticationManager
-import org.springframework.security.authorization.ReactiveAuthorizationManager
+import org.springframework.security.oauth2.server.resource.web.server.ServerBearerTokenAuthenticationConverter
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter
-import org.springframework.security.web.server.authorization.AuthorizationWebFilter
-import org.springframework.web.server.ServerWebExchange
 
 @Configuration
-class AuthConfig(val authenticationConverter: ServerAuthenticationConverter) {
+class AuthConfig {
     @Bean
-    fun sessionAuthFilter(manager: ReactiveAuthenticationManager) =
-        AuthenticationWebFilter(manager).apply {
-            setServerAuthenticationConverter(authenticationConverter)
-        }
+    fun authenticationFilter(
+        manager: ReactiveAuthenticationManager,
+        converter: ServerAuthenticationConverter
+    ) = AuthenticationWebFilter(manager).apply {
+        setServerAuthenticationConverter(converter)
+    }
 
     @Bean
-    fun authorizationFilter(manager: ReactiveAuthorizationManager<ServerWebExchange>) =
-        AuthorizationWebFilter(manager)
+    fun authenticationConverter(): ServerAuthenticationConverter =
+        ServerBearerTokenAuthenticationConverter()
 }

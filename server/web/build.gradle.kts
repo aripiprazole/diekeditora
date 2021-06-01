@@ -12,6 +12,8 @@ dependencies {
     implementation(projects.infra)
     implementation(projects.shared)
 
+    implementation(libs.firebase.admin)
+
     implementation(libs.springBoot.security)
     implementation(libs.springBoot.actuator)
     implementation(libs.springBoot.securityOAuth2ResourceServer)

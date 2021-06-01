@@ -39,6 +39,16 @@ class Libs {
     val h2database = H2database()
     val serpro69 = Serpro69()
     val springSecurity = SpringSecurity()
+    val firebase = Firebase()
+    val google = Google()
+
+    class Google {
+        val common = "com.google.api:api-common:1.10.3"
+    }
+
+    class Firebase {
+        val admin = "com.google.firebase:firebase-admin:7.3.0"
+    }
 
     class Serpro69 {
         val kotlinFaker = "io.github.serpro69:kotlin-faker:1.4.1"
