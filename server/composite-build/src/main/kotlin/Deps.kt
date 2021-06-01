@@ -41,6 +41,16 @@ class Libs {
     val springSecurity = SpringSecurity()
     val firebase = Firebase()
     val google = Google()
+    val mockk = Mockk()
+    val ninjaSquad = NinjaSquad()
+
+    class NinjaSquad {
+        val springMockk = "com.ninja-squad:springmockk:3.0.1"
+    }
+
+    class Mockk {
+        val mockk = "io.mockk:mockk:1.11.0"
+    }
 
     class Google {
         val common = "com.google.api:api-common:1.10.3"

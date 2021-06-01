@@ -72,6 +72,7 @@ allprojects {
 
         implementation(libs.slf4j.api)
 
+        testImplementation(libs.mockk.mockk)
         testImplementation(kotlin.testJUnit5)
         testImplementation(libs.springBoot.test)
         testImplementation(libs.reactor.test)
