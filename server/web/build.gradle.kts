@@ -25,6 +25,7 @@ dependencies {
     implementation(libs.fusesource.jansi)
 
     testRuntimeOnly(libs.h2database.h2)
+    testImplementation(libs.springSecurity.test)
     testImplementation(libs.ninjaSquad.springMockk)
     testImplementation(libs.r2dbc.h2)
     testImplementation(libs.serpro69.kotlinFaker)
