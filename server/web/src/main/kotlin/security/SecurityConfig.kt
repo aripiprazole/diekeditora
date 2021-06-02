@@ -1,10 +1,11 @@
 package com.diekeditora.web.security
 
+import com.diekeditora.web.utils.delete
+import com.diekeditora.web.utils.get
+import com.diekeditora.web.utils.post
+import com.diekeditora.web.utils.put
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.HttpMethod.DELETE
-import org.springframework.http.HttpMethod.POST
-import org.springframework.http.HttpMethod.PUT
 import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder
@@ -14,18 +15,17 @@ import org.springframework.security.web.server.SecurityWebFilterChain
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler
-import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers
 import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
+import org.springframework.web.cors.reactive.CorsConfigurationSource
 import reactor.core.publisher.Mono
 
 @Configuration
 @EnableWebFluxSecurity
 class SecurityConfig(val authenticationFilter: AuthenticationWebFilter) {
     private val generalCorsConfig = CorsConfiguration().apply {
-        addAllowedOrigin("*")
-        addAllowedMethod("*")
-        addAllowedHeader("*")
+        allowedOrigins = listOf("*")
+        allowedMethods = listOf("*")
+        allowedHeaders = listOf("*")
     }
 
     @Bean
@@ -38,24 +38,23 @@ class SecurityConfig(val authenticationFilter: AuthenticationWebFilter) {
         addFilterAt(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
 
         authorizeExchange {
-            authorize(pathMatchers("/users", "/users/**"), hasAuthority("users.view"))
-            authorize(pathMatchers(POST, "/users"), hasAuthority("users.store"))
-            authorize(pathMatchers(PUT, "/users/**"), hasAuthority("users.update"))
-            authorize(pathMatchers(DELETE, "/users/**"), hasAuthority("users.update"))
+            authorize(get("/users", "/users/**"), hasAuthority("users.view"))
+            authorize(post("/users"), hasAuthority("users.store"))
+            authorize(put("/users/**"), hasAuthority("users.update"))
+            authorize(delete("/users/**"), hasAuthority("users.update"))
 
-            authorize("/session", authenticated)
+            authorize(get("/session"), authenticated)
+
             authorize("/oauth2/authorization/*", permitAll)
 
-            authorize(anyExchange, authenticated)
+            authorize(anyExchange, permitAll)
         }
 
         anonymous {
         }
 
         cors {
-            configurationSource = UrlBasedCorsConfigurationSource().apply {
-                registerCorsConfiguration("*", generalCorsConfig)
-            }
+            configurationSource = CorsConfigurationSource { generalCorsConfig }
         }
 
         exceptionHandling {

@@ -4,7 +4,9 @@ import com.diekeditora.domain.page.Page
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
 import com.diekeditora.infra.repositories.UserRepository
+import com.diekeditora.shared.generateRandomString
 import com.diekeditora.shared.logger
+import com.google.firebase.auth.FirebaseToken
 import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -19,10 +21,11 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
         }
     }
 
-    override suspend fun findUserByEmail(email: String): User? {
-        return userRepository.findByEmail(email).also {
-            log.trace("Successfully found user by %s by its email", it)
-        }
+    override suspend fun findOrCreateUserByToken(token: FirebaseToken): User {
+        return userRepository.findByEmail(token.email)
+            ?: save(
+                User(name = token.name, email = token.email, username = generateUsername(token))
+            )
     }
 
     override suspend fun findPaginatedUsers(page: Int, pageSize: Int): Page<User> {
@@ -55,5 +58,9 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
         userRepository.save(user.copy(deletedAt = LocalDateTime.now()))
 
         log.trace("Successfully deleted %s", user)
+    }
+
+    private fun generateUsername(token: FirebaseToken): String {
+        return token.name.substring(0, 12) + "_" + generateRandomString(4)
     }
 }

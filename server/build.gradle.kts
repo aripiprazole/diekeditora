@@ -57,6 +57,8 @@ allprojects {
 
         implementation(libs.google.common)
 
+        implementation(libs.firebase.admin)
+
         implementation(libs.springBoot.dataR2dbc)
         implementation(libs.springBoot.webflux)
 

@@ -22,7 +22,7 @@ class AuthenticationManager(
         }
 
         val token = auth.verifyIdTokenAsync(authentication.token).await()
-        val user = userService.findUserByEmail(token.email)
+        val user = userService.findOrCreateUserByToken(token)
 
         UsernamePasswordAuthenticationToken(user, token, emptyList())
     }
