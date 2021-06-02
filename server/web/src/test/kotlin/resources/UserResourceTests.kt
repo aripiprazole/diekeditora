@@ -22,9 +22,9 @@ import kotlin.test.assertNull
 
 @SpringBootTest
 class UserResourceTests(
-    @Autowired private val userRepository: UserRepository,
-    @Autowired private val client: WebTestClient,
-    @Autowired private val userFactory: UserFactory,
+    @Autowired val userRepository: UserRepository,
+    @Autowired val client: WebTestClient,
+    @Autowired val userFactory: UserFactory,
 ) {
     @Test
     fun `test should retrieve paginated users`(): Unit = runBlocking {
@@ -57,7 +57,6 @@ class UserResourceTests(
             .expectBody<User>()
             .isEqualTo(
                 requireNotNull(userRepository.findByUsername(user.username)).also {
-                    assertNotNull(it.emailVerifiedAt)
                     assertNull(it.updatedAt)
                     assertNull(it.deletedAt)
                 }
@@ -95,7 +94,6 @@ class UserResourceTests(
         assertEquals(user.username, body.username)
         assertEquals(user.name, body.name)
         assertEquals(user.birthday, body.birthday)
-        assertNotNull(user.emailVerifiedAt)
         assertNull(user.updatedAt)
         assertNull(user.deletedAt)
     }

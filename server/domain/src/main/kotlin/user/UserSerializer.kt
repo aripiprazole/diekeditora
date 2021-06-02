@@ -20,7 +20,6 @@ object UserSerializer {
             value.createdAt,
             value.updatedAt,
             value.deletedAt,
-            value.emailVerifiedAt
         )
 
         encoder.encodeSerializableValue(UserPayload.serializer(), serializable)

@@ -48,5 +48,4 @@ data class UserPayload(
     val createdAt: @Contextual LocalDateTime? = null,
     val updatedAt: @Contextual LocalDateTime? = null,
     val deletedAt: @Contextual LocalDateTime? = null,
-    val emailVerifiedAt: @Contextual LocalDateTime? = null
 )

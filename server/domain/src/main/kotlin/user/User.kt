@@ -25,7 +25,6 @@ data class User(
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
-    val emailVerifiedAt: LocalDateTime? = null,
 ) {
     @GraphQLIgnore
     fun update(user: User): User {
@@ -60,7 +59,6 @@ data class User(
         result = 31 * result + createdAt.hashCode()
         result = 31 * result + (updatedAt?.hashCode() ?: 0)
         result = 31 * result + (deletedAt?.hashCode() ?: 0)
-        result = 31 * result + (emailVerifiedAt?.hashCode() ?: 0)
         return result
     }
 
@@ -72,8 +70,7 @@ data class User(
             "birthday=$birthday, " +
             "createdAt=$createdAt, " +
             "updatedAt=$updatedAt, " +
-            "deletedAt=$deletedAt, " +
-            "emailVerifiedAt=$emailVerifiedAt" +
+            "deletedAt=$deletedAt" +
             ")"
     }
 }
