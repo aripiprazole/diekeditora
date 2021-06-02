@@ -21,7 +21,7 @@ data class User(
     val username: String,
     @GraphQLIgnore
     val password: String? = null,
-    val birthday: LocalDate,
+    val birthday: LocalDate? = null,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
