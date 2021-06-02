@@ -19,8 +19,6 @@ data class User(
     val name: String,
     val email: String,
     val username: String,
-    @GraphQLIgnore
-    val password: String? = null,
     val birthday: LocalDate? = null,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
@@ -32,7 +30,6 @@ data class User(
             username = user.username,
             name = user.name,
             email = user.email,
-            password = user.password,
             updatedAt = LocalDateTime.now()
         )
     }

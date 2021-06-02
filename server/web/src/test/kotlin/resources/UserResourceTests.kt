@@ -7,15 +7,12 @@ import com.diekeditora.infra.repositories.UserRepository
 import com.diekeditora.web.tests.factories.UserFactory
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.Contextual
-import kotlinx.serialization.Serializable
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
-import java.time.LocalDate
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -65,18 +62,7 @@ class UserResourceTests(
 
     @Test
     fun `test should store an user`(): Unit = runBlocking {
-        @Serializable
-        data class Data(
-            val username: String,
-            val email: String,
-            val name: String,
-            val password: String,
-            val birthday: @Contextual LocalDate
-        )
-
-        val value = userFactory.create().run {
-            Data(username, email, name, requireNotNull(password), birthday)
-        }
+        val value = UserInput.from(userFactory.create())
 
         val exchange = client.post().uri("/users")
             .bodyValue(value)

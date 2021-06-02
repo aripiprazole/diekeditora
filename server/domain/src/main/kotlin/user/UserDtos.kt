@@ -12,7 +12,6 @@ data class UserInput(
     val name: String,
     val username: String,
     val email: String,
-    val password: String? = null,
     val birthday: @Contextual LocalDate,
 ) {
     fun toUser(): User {
@@ -20,7 +19,6 @@ data class UserInput(
             name = name,
             email = email,
             username = username,
-            password = password,
             birthday = birthday,
         )
     }
@@ -31,7 +29,6 @@ data class UserInput(
                 name = user.name,
                 username = user.username,
                 email = user.email,
-                password = user.password,
                 birthday = user.birthday ?: error("When creating user, could not miss birthday"),
             )
         }
