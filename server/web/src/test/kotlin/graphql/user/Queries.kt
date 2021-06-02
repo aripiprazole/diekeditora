@@ -27,7 +27,6 @@ object UserQuery : TestQuery<UserQuery.Variables, User>(typeOf<User>()) {
                 birthday
                 createdAt
                 updatedAt
-                emailVerifiedAt
                 deletedAt
             }
         }
@@ -63,7 +62,6 @@ object UsersQuery : TestQuery<UsersQuery.Variables, DefaultConnection<User>>(
                         birthday
                         createdAt
                         updatedAt
-                        emailVerifiedAt
                         deletedAt
                     }
                 }
@@ -89,7 +87,6 @@ object CreateUserMutation : TestQuery<CreateUserMutation.Variables, CreateUserPa
                     email
                     createdAt
                     birthday
-                    emailVerifiedAt
                     deletedAt
                     updatedAt
                 }
@@ -115,7 +112,6 @@ object UpdateUserMutation : TestQuery<UpdateUserMutation.Variables, UpdateUserPa
                     email
                     birthday
                     createdAt
-                    emailVerifiedAt
                     deletedAt
                     updatedAt
                 }

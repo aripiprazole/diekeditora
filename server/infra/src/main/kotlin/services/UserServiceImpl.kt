@@ -44,10 +44,7 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
     }
 
     override suspend fun save(user: User): User {
-        val target = user.copy(
-            createdAt = LocalDateTime.now(),
-            emailVerifiedAt = LocalDateTime.now()
-        )
+        val target = user.copy(createdAt = LocalDateTime.now())
 
         return userRepository.save(target).also {
             log.trace("Successfully saved user %s into database", user)
