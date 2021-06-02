@@ -5,6 +5,7 @@ import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserInput
 import com.diekeditora.infra.repositories.UserRepository
 import com.diekeditora.web.tests.factories.UserFactory
+import com.diekeditora.web.tests.utils.AuthenticationMocker
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
@@ -22,6 +23,7 @@ class UserResourceTests(
     @Autowired val userRepository: UserRepository,
     @Autowired val client: WebTestClient,
     @Autowired val userFactory: UserFactory,
+    @Autowired val authentication: AuthenticationMocker,
 ) {
     @Test
     fun `test should retrieve paginated users`(): Unit = runBlocking {
@@ -33,9 +35,8 @@ class UserResourceTests(
 
         val page = Page.of(users, pageSize, pageNumber, userRepository.estimateTotalUsers())
 
-        println(page.items.first().createdAt)
-
-        client.get().uri("/users?page=$pageNumber")
+        client.mutateWith(authentication.configure("users.view"))
+            .get().uri("/users?page=$pageNumber")
             .exchange()
             .expectStatus().isOk
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
@@ -47,7 +48,8 @@ class UserResourceTests(
     fun `test should retrieve an user`(): Unit = runBlocking {
         val user = userFactory.create().let { userRepository.save(it) }
 
-        client.get().uri("/users/${user.username}")
+        client.mutateWith(authentication.configure("users.view"))
+            .get().uri("/users/${user.username}")
             .exchange()
             .expectStatus().isOk
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
@@ -64,13 +66,15 @@ class UserResourceTests(
     fun `test should store an user`(): Unit = runBlocking {
         val value = UserInput.from(userFactory.create())
 
-        val exchange = client.post().uri("/users")
-            .bodyValue(value)
-            .exchange()
-            .expectStatus().isCreated
-            .expectHeader().contentType(MediaType.APPLICATION_JSON)
-            .expectBody<User>()
-            .returnResult()
+        val exchange =
+            client.mutateWith(authentication.configure("users.store"))
+                .post().uri("/users")
+                .bodyValue(value)
+                .exchange()
+                .expectStatus().isCreated
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody<User>()
+                .returnResult()
 
         val body = requireNotNull(exchange.responseBody) { "User username must be not null" }
         val user = requireNotNull(userRepository.findByUsername(body.username)) {
@@ -90,7 +94,8 @@ class UserResourceTests(
         val newUser = userFactory.create()
         val id = requireNotNull(user.id) { "User's id must be not null" }
 
-        client.patch().uri("/users/${user.username}")
+        client.mutateWith(authentication.configure("users.update"))
+            .patch().uri("/users/${user.username}")
             .bodyValue(UserInput.from(newUser))
             .exchange()
             .expectStatus().isNoContent
@@ -110,7 +115,8 @@ class UserResourceTests(
 
         val id = requireNotNull(user.id) { "User's id must be not null" }
 
-        client.delete().uri("/users/${user.username}")
+        client.mutateWith(authentication.configure("users.destroy"))
+            .delete().uri("/users/${user.username}")
             .exchange()
             .expectStatus().isNoContent
 

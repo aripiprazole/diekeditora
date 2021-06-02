@@ -2,6 +2,7 @@ package com.diekeditora.web.security
 
 import com.diekeditora.web.utils.delete
 import com.diekeditora.web.utils.get
+import com.diekeditora.web.utils.patch
 import com.diekeditora.web.utils.post
 import com.diekeditora.web.utils.put
 import org.springframework.context.annotation.Bean
@@ -41,7 +42,8 @@ class SecurityConfig(val authenticationFilter: AuthenticationWebFilter) {
             authorize(get("/users", "/users/**"), hasAuthority("users.view"))
             authorize(post("/users"), hasAuthority("users.store"))
             authorize(put("/users/**"), hasAuthority("users.update"))
-            authorize(delete("/users/**"), hasAuthority("users.update"))
+            authorize(patch("/users/**"), hasAuthority("users.update"))
+            authorize(delete("/users/**"), hasAuthority("users.destroy"))
 
             authorize(get("/session"), authenticated)
 
