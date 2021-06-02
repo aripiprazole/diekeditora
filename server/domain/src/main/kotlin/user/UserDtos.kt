@@ -32,7 +32,7 @@ data class UserInput(
                 username = user.username,
                 email = user.email,
                 password = user.password,
-                birthday = user.birthday,
+                birthday = user.birthday ?: error("When creating user, could not miss birthday"),
             )
         }
     }
@@ -44,7 +44,7 @@ data class UserPayload(
     val name: String,
     val username: String,
     val email: String,
-    val birthday: @Contextual LocalDate,
+    val birthday: @Contextual LocalDate? = null,
     val createdAt: @Contextual LocalDateTime? = null,
     val updatedAt: @Contextual LocalDateTime? = null,
     val deletedAt: @Contextual LocalDateTime? = null,
