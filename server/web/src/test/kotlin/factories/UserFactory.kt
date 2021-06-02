@@ -1,11 +1,9 @@
 package com.diekeditora.web.tests.factories
 
 import com.diekeditora.domain.user.User
-import com.diekeditora.shared.generateRandomString
 import io.github.serpro69.kfaker.Faker
 import org.springframework.stereotype.Component
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @Component
 class UserFactory(val faker: Faker) : Factory<User> {
@@ -15,8 +13,6 @@ class UserFactory(val faker: Faker) : Factory<User> {
             username = faker.name.firstName(),
             email = faker.internet.email(),
             birthday = LocalDate.now(),
-            password = generateRandomString(16),
-            emailVerifiedAt = LocalDateTime.now(),
         )
     }
 }
