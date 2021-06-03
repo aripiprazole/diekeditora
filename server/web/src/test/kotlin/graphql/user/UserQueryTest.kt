@@ -4,7 +4,7 @@ import com.diekeditora.infra.repositories.UserRepository
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLException
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.NotEnoughAuthorities
+import com.diekeditora.web.tests.graphql.NOT_ENOUGH_AUTHORITIES
 import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
 import graphql.relay.SimpleListConnection
@@ -56,7 +56,7 @@ class UserQueryTest(
     fun `test should not retrieve paginated users without authorities`(): Unit = runBlocking {
         userRepository.save(userFactory.create())
 
-        assertThrows<GraphQLException>(NotEnoughAuthorities) {
+        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
             client.request(UsersQuery) {
                 authentication = auth.mock()
                 variables = UsersQuery.Variables(1)
@@ -87,7 +87,7 @@ class UserQueryTest(
             .let { userRepository.findByUsername(it.username) }
             .let(::requireNotNull)
 
-        assertThrows<GraphQLException>(NotEnoughAuthorities) {
+        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
             client.request(UserQuery) {
                 authentication = auth.mock()
                 variables = UserQuery.Variables(user.username)
