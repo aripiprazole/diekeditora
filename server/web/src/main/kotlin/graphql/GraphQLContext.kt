@@ -3,7 +3,6 @@ package com.diekeditora.web.graphql
 import com.diekeditora.domain.user.User
 import com.expediagroup.graphql.server.spring.execution.SpringGraphQLContext
 import com.expediagroup.graphql.server.spring.execution.SpringGraphQLContextFactory
-import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.reactive.awaitSingleOrNull
 import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.core.Authentication
@@ -24,9 +23,9 @@ class AuthGraphQLContextFactory(
 ) : SpringGraphQLContextFactory<AuthGraphQLContext>() {
     @Suppress("Detekt.ReturnCount")
     override suspend fun generateContext(request: ServerRequest): AuthGraphQLContext? {
-        val securityContext = ReactiveSecurityContextHolder.getContext().awaitSingle()
+        val securityContext = ReactiveSecurityContextHolder.getContext().awaitSingleOrNull()
 
-        if (securityContext.authentication != null) {
+        if (securityContext?.authentication != null) {
             return AuthGraphQLContext(securityContext.authentication!!, request)
         }
 
