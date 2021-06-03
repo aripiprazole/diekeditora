@@ -4,10 +4,8 @@ package com.diekeditora.web.tests.graphql.user
 
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserInput
-import com.diekeditora.web.graphql.user.CreateUserPayload
 import com.diekeditora.web.graphql.user.DeleteUserInput
 import com.diekeditora.web.graphql.user.UpdateUserInput
-import com.diekeditora.web.graphql.user.UpdateUserPayload
 import com.diekeditora.web.tests.graphql.TestQuery
 import graphql.relay.DefaultConnection
 import kotlinx.serialization.Serializable
@@ -73,23 +71,19 @@ object UsersQuery : TestQuery<UsersQuery.Variables, DefaultConnection<User>>(
     data class Variables(val page: Int)
 }
 
-object CreateUserMutation : TestQuery<CreateUserMutation.Variables, CreateUserPayload>(
-    typeOf<CreateUserPayload>()
-) {
+object CreateUserMutation : TestQuery<CreateUserMutation.Variables, User>(typeOf<User>()) {
     override val queryName = "createUser"
     override val operationName = "CreateUser"
     override val query = """
         mutation CreateUser($input: UserInput!) {
             createUser(input: $input) {
-                user {
-                    name
-                    username
-                    email
-                    createdAt
-                    birthday
-                    deletedAt
-                    updatedAt
-                }
+                name
+                username
+                email
+                createdAt
+                birthday
+                deletedAt
+                updatedAt
             }
         }
     """.trimIndent()
@@ -98,23 +92,19 @@ object CreateUserMutation : TestQuery<CreateUserMutation.Variables, CreateUserPa
     data class Variables(val input: UserInput)
 }
 
-object UpdateUserMutation : TestQuery<UpdateUserMutation.Variables, UpdateUserPayload>(
-    typeOf<UpdateUserPayload>()
-) {
+object UpdateUserMutation : TestQuery<UpdateUserMutation.Variables, User?>(typeOf<User?>()) {
     override val queryName = "updateUser"
     override val operationName = "UpdateUser"
     override val query = """
         mutation UpdateUser($input: UpdateUserInput!) {
             updateUser(input: $input) {
-                user {
-                    name
-                    username
-                    email
-                    birthday
-                    createdAt
-                    deletedAt
-                    updatedAt
-                }
+                name
+                username
+                email
+                birthday
+                createdAt
+                deletedAt
+                updatedAt
             }
         }
     """.trimIndent()
@@ -123,23 +113,19 @@ object UpdateUserMutation : TestQuery<UpdateUserMutation.Variables, UpdateUserPa
     data class Variables(val input: UpdateUserInput)
 }
 
-object DeleteUserMutation : TestQuery<DeleteUserMutation.Variables, UpdateUserPayload>(
-    typeOf<UpdateUserPayload>()
-) {
+object DeleteUserMutation : TestQuery<DeleteUserMutation.Variables, User?>(typeOf<User?>()) {
     override val queryName = "deleteUser"
     override val operationName = "DeleteUser"
     override val query = """
         mutation DeleteUser($input: DeleteUserInput!) {
             deleteUser(input: $input) {
-                user {
-                    name
-                    username
-                    email
-                    birthday
-                    createdAt
-                    deletedAt
-                    updatedAt
-                }
+                name
+                username
+                email
+                birthday
+                createdAt
+                deletedAt
+                updatedAt
             }
         }
     """.trimIndent()

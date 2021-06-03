@@ -22,7 +22,7 @@ import kotlin.reflect.typeOf
 import kotlin.test.assertEquals
 
 @SpringBootTest
-class AuthorityQueryTest(
+class AuthorityQueryTests(
     @Autowired private val authorityRepository: AuthorityRepository,
     @Autowired private val authorityFactory: AuthorityFactory,
     @Autowired private val client: GraphQLTestClient,
