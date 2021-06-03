@@ -4,6 +4,7 @@ import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import graphql.relay.Connection
 import graphql.relay.Relay
 import graphql.schema.Coercing
+import graphql.schema.GraphQLObjectType
 import graphql.schema.GraphQLScalarType.newScalar
 import graphql.schema.GraphQLSchema
 import graphql.schema.GraphQLType
@@ -18,60 +19,47 @@ import kotlinx.serialization.serializer
 import kotlinx.serialization.serializerOrNull
 import org.springframework.stereotype.Component
 import kotlin.reflect.KType
-import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.typeOf
+
+typealias TypeConverter = (KType) -> GraphQLType?
 
 @Component
 @OptIn(ExperimentalSerializationApi::class, ExperimentalStdlibApi::class)
 class GraphQLSchemaHooks(val json: Json) : SchemaGeneratorHooks {
     private val relay = Relay()
-    private val scalarCache = mutableMapOf<String, GraphQLType>()
-    private val unitScalar = newScalar()
-        .name("Void")
-        .coercing(object : Coercing<Unit, Unit> {
-            override fun serialize(dataFetcherResult: Any?): Unit = Unit
-            override fun parseValue(input: Any?) = Unit
-            override fun parseLiteral(input: Any?) = Unit
-        })
-        .build()
 
-    override fun willBuildSchema(builder: GraphQLSchema.Builder): GraphQLSchema.Builder {
-        return builder.additionalType(Relay.pageInfoType)
+    private val types = mutableMapOf<KType, TypeConverter>()
+    private val cache = mutableMapOf<String, GraphQLType>()
+
+    init {
+        addSerializer<Unit>(::parseUnit)
+        addSerializer<Connection<*>>(::parseConnection)
     }
 
-    @Suppress("Detekt.ReturnCount")
-    override fun willGenerateGraphQLType(type: KType): GraphQLType? {
-        // connection type
-        if (type.isSubtypeOf(typeOf<Connection<*>>())) {
-            val generic = requireNotNull(type.arguments.first().type)
-            val name = generic.jvmErasure.simpleName.orEmpty()
-            val edge = relay.edgeType(name, typeRef(name), null, emptyList())
+    private fun parseUnit(type: KType): GraphQLType {
+        return newScalar()
+            .name(type.jvmErasure.simpleName ?: "Unit")
+            .coercing(object : Coercing<Unit, Unit> {
+                override fun serialize(dataFetcherResult: Any?): Unit = Unit
+                override fun parseValue(input: Any?) = Unit
+                override fun parseLiteral(input: Any?) = Unit
+            })
+            .build()
+    }
 
-            return relay.connectionType(name, edge, emptyList())
-        }
+    private fun parseConnection(type: KType): GraphQLObjectType {
+        val generic = requireNotNull(type.arguments.first().type)
+        val name = generic.jvmErasure.simpleName.orEmpty()
+        val edge = relay.edgeType(name, typeRef(name), null, emptyList())
 
-        // return default unit scalar
-        if (type.isSubtypeOf(typeOf<Unit>())) {
-            return unitScalar
-        }
+        return relay.connectionType(name, edge, emptyList())
+    }
 
-        val name = type.jvmErasure.simpleName.orEmpty()
+    private fun parseScalar(type: KType, serializer: KSerializer<Any?>?): GraphQLType? {
+        val name = serializer?.descriptor?.serialName.orEmpty()
 
-        val serializer = json.serializersModule.serializerOrNull(type)
-        val descriptor = serializer?.descriptor
-
-        // skip builtin serializers
-        if (descriptor?.serialName.orEmpty().startsWith("kotlin")) {
-            return null
-        }
-
-        // creates a reference if it already exists
-        scalarCache[name]?.let {
-            return typeRef(name)
-        }
-
-        return when (descriptor?.kind) {
+        return when (serializer?.descriptor?.kind) {
             is PrimitiveKind.BOOLEAN -> buildScalar(Boolean.serializer(), name, type)
             is PrimitiveKind.LONG -> buildScalar(Long.serializer(), name, type)
             is PrimitiveKind.INT -> buildScalar(Int.serializer(), name, type)
@@ -82,6 +70,33 @@ class GraphQLSchemaHooks(val json: Json) : SchemaGeneratorHooks {
             is PrimitiveKind.FLOAT -> buildScalar(Float.serializer(), name, type)
             is PrimitiveKind.DOUBLE -> buildScalar(Double.serializer(), name, type)
             else -> null
+        }
+    }
+
+    override fun willBuildSchema(builder: GraphQLSchema.Builder): GraphQLSchema.Builder {
+        return builder.additionalType(Relay.pageInfoType)
+    }
+
+    @Suppress("Detekt.ReturnCount")
+    override fun willGenerateGraphQLType(type: KType): GraphQLType? {
+        val name = type.jvmErasure.simpleName.orEmpty()
+
+        // creates a reference if it already exists
+        cache[name]?.let {
+            return typeRef(name)
+        }
+
+        // skip builtin serializers
+        if (type.jvmErasure.qualifiedName.orEmpty().startsWith("kotlin.")) {
+            return null
+        }
+
+        val parser = findParserOrDefault(type) {
+            parseScalar(it, json.serializersModule.serializerOrNull(type))
+        }
+
+        return parser(type)?.also {
+            cache[name] = it
         }
     }
 
@@ -117,6 +132,16 @@ class GraphQLSchemaHooks(val json: Json) : SchemaGeneratorHooks {
                 }
             })
             .build()
-            .also { scalarCache[name] = it }
+            .also { cache[name] = it }
+    }
+
+    private fun findParserOrDefault(type: KType, default: TypeConverter): TypeConverter {
+        return types.entries.find {
+            it.key.jvmErasure.qualifiedName == type.jvmErasure.qualifiedName
+        }?.value ?: default
+    }
+
+    private inline fun <reified T : Any> addSerializer(noinline parser: TypeConverter) {
+        types[typeOf<T>()] = parser
     }
 }
