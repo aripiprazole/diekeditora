@@ -61,6 +61,11 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
     }
 
     private fun generateUsername(token: FirebaseToken): String {
-        return token.name.substring(0, 12) + "_" + generateRandomString(4)
+        return token.name.substring(0, NameStartSize) + "_" + generateRandomString(NameEndSize)
+    }
+
+    companion object {
+        private const val NameStartSize = 12
+        private const val NameEndSize = 4
     }
 }
