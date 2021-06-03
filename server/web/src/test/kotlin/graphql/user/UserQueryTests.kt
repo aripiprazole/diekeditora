@@ -35,7 +35,7 @@ class UserQueryTests(
         val original = SimpleListConnection(items).get(newDataFetchingEnvironment().build())
 
         val connection = client.request(UsersQuery) {
-            authentication = auth.mock("users.view")
+            authentication = auth.mock("user.view")
             variables = UsersQuery.Variables(pageNumber)
         }
 
@@ -74,7 +74,7 @@ class UserQueryTests(
         assertEquals(
             user,
             client.request(UserQuery) {
-                authentication = auth.mock("users.view")
+                authentication = auth.mock("user.view")
                 variables = UserQuery.Variables(user.username)
             }
         )

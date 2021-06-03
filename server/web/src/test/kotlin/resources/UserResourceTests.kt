@@ -45,7 +45,7 @@ class UserResourceTests(
 
         val page = Page.of(users, pageSize, pageNumber, userRepository.estimateTotalUsers())
 
-        client.mutateWith(auth.configure("users.view"))
+        client.mutateWith(auth.configure("user.view"))
             .get().uri("/users?page=$pageNumber")
             .exchange()
             .expectStatus().isOk
@@ -68,7 +68,7 @@ class UserResourceTests(
     fun `test should retrieve an user`(): Unit = runBlocking {
         val user = userFactory.create().let { userRepository.save(it) }
 
-        client.mutateWith(auth.configure("users.view"))
+        client.mutateWith(auth.configure("user.view"))
             .get().uri("/users/${user.username}")
             .exchange()
             .expectStatus().isOk
@@ -98,7 +98,7 @@ class UserResourceTests(
         val value = UserInput.from(userFactory.create())
 
         val exchange =
-            client.mutateWith(auth.configure("users.store"))
+            client.mutateWith(auth.configure("user.store"))
                 .post().uri("/users")
                 .bodyValue(value)
                 .exchange()
@@ -138,7 +138,7 @@ class UserResourceTests(
         val newUser = userFactory.create()
         val id = requireNotNull(user.id) { "User's id must be not null" }
 
-        client.mutateWith(auth.configure("users.update"))
+        client.mutateWith(auth.configure("user.update"))
             .patch().uri("/users/${user.username}")
             .bodyValue(UserInput.from(newUser))
             .exchange()
@@ -169,7 +169,7 @@ class UserResourceTests(
 
         val id = requireNotNull(user.id) { "User's id must be not null" }
 
-        client.mutateWith(auth.configure("users.destroy"))
+        client.mutateWith(auth.configure("user.destroy"))
             .delete().uri("/users/${user.username}")
             .exchange()
             .expectStatus().isNoContent

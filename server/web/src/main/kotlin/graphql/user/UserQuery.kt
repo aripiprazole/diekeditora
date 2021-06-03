@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component
 @Component
 class UserQuery(val userService: UserService) : Query {
     @GraphQLDescription("Returns user's details by its username")
-    @PreAuthorize("hasAuthority('users.view')")
+    @PreAuthorize("hasAuthority('user.view')")
     suspend fun user(username: String): User? {
         return userService.findUserByUsername(username)
     }
 
     @GraphQLDescription("Returns user page")
-    @PreAuthorize("hasAuthority('users.view')")
+    @PreAuthorize("hasAuthority('user.view')")
     suspend fun users(page: Int, env: DataFetchingEnvironment): Connection<User> {
         val (items) = userService.findPaginatedUsers(page)
 
