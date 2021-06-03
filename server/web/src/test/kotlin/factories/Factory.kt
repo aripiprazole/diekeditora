@@ -1,11 +1,9 @@
 package com.diekeditora.web.tests.factories
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-
 interface Factory<T> {
-    fun createMany(amount: Int = 5): Flow<T> = flow {
-        repeat(amount) { emit(create()) }
+    @OptIn(ExperimentalStdlibApi::class)
+    fun createMany(amount: Int = 5): Set<T> = buildSet {
+        repeat(amount) { add(create()) }
     }
 
     fun create(): T
