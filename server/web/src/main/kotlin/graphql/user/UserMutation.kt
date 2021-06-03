@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component
 @Component
 class UserMutation(private val userService: UserService) : Mutation {
     @GraphQLDescription("Creates an user with the provided data")
-    @PreAuthorize("hasAuthority('users.store')")
+    @PreAuthorize("hasAuthority('user.store')")
     suspend fun createUser(input: UserInput): User {
         return userService.save(input.toUser())
     }
 
     @GraphQLDescription("Updates an user by its username with the provided data")
-    @PreAuthorize("hasAuthority('users.update')")
+    @PreAuthorize("hasAuthority('user.update')")
     suspend fun updateUser(input: UpdateUserInput): User? {
         val user = userService.findUserByUsername(input.username) ?: return null
 
@@ -26,7 +26,7 @@ class UserMutation(private val userService: UserService) : Mutation {
     }
 
     @GraphQLDescription("Deletes an user by its username")
-    @PreAuthorize("hasAuthority('users.destroy')")
+    @PreAuthorize("hasAuthority('user.destroy')")
     suspend fun deleteUser(input: DeleteUserInput): User? {
         val user = userService.findUserByUsername(input.username) ?: return null
 

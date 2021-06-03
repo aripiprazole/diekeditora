@@ -36,7 +36,7 @@ class UserMutationTests(
         val birthday = user.birthday
 
         user = client.request(CreateUserMutation) {
-            authentication = auth.mock("users.store")
+            authentication = auth.mock("user.store")
             variables = CreateUserMutation.Variables(
                 input = UserInput.from(user),
             )
@@ -72,7 +72,7 @@ class UserMutationTests(
         val email = newUser.email
 
         user = client.request(UpdateUserMutation) {
-            authentication = auth.mock("users.update")
+            authentication = auth.mock("user.update")
             variables = UpdateUserMutation.Variables(
                 input = UpdateUserInput(user.username, UserInput.from(newUser)),
             )
@@ -103,7 +103,7 @@ class UserMutationTests(
         var user = userFactory.create().let { userRepository.save(it) }
 
         user = client.request(DeleteUserMutation) {
-            authentication = auth.mock("users.destroy")
+            authentication = auth.mock("user.destroy")
             variables = DeleteUserMutation.Variables(
                 input = DeleteUserInput(username = user.username)
             )

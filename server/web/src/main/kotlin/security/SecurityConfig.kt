@@ -39,11 +39,11 @@ class SecurityConfig(val authenticationFilter: AuthenticationWebFilter) {
         addFilterAt(authenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
 
         authorizeExchange {
-            authorize(get("/users", "/users/**"), hasAuthority("users.view"))
-            authorize(post("/users"), hasAuthority("users.store"))
-            authorize(put("/users/**"), hasAuthority("users.update"))
-            authorize(patch("/users/**"), hasAuthority("users.update"))
-            authorize(delete("/users/**"), hasAuthority("users.destroy"))
+            authorize(get("/users", "/users/**"), hasAuthority("user.view"))
+            authorize(post("/users"), hasAuthority("user.store"))
+            authorize(put("/users/**"), hasAuthority("user.update"))
+            authorize(patch("/users/**"), hasAuthority("user.update"))
+            authorize(delete("/users/**"), hasAuthority("user.destroy"))
 
             authorize(get("/session"), authenticated)
 
