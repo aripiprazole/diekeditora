@@ -110,7 +110,7 @@ class GraphQLDataFetcher(
             .getValue(handler.createEvaluationContext(authentication, invocation))
 
         if (result == false) {
-            throw AccessDeniedException("Not enough permissions")
+            throw AccessDeniedException("Not enough authorities")
         }
     }
 }

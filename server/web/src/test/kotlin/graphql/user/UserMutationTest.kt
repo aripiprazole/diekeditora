@@ -6,7 +6,7 @@ import com.diekeditora.web.graphql.user.UpdateUserInput
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLException
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.NotEnoughAuthorities
+import com.diekeditora.web.tests.graphql.NOT_ENOUGH_AUTHORITIES
 import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
 import kotlinx.coroutines.runBlocking
@@ -53,7 +53,7 @@ class UserMutationTest(
     fun `test should not create user without authorities`(): Unit = runBlocking {
         val user = userFactory.create()
 
-        assertThrows<GraphQLException>(NotEnoughAuthorities) {
+        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
             client.request(CreateUserMutation) {
                 authentication = auth.mock()
                 variables = CreateUserMutation.Variables(
@@ -91,7 +91,7 @@ class UserMutationTest(
         val user = userFactory.create().let { userRepository.save(it) }
         val newUser = userFactory.create()
 
-        assertThrows<GraphQLException>(NotEnoughAuthorities) {
+        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
             client.request(UpdateUserMutation) {
                 authentication = auth.mock()
                 variables = UpdateUserMutation.Variables(
