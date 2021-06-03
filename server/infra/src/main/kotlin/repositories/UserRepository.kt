@@ -15,10 +15,10 @@ interface UserRepository : CoroutineSortingRepository<User, UUID> {
     @Query("""SELECT * FROM "user" WHERE deleted_at IS NULL LIMIT :pageSize OFFSET ((:page - 1) * 15)""")
     suspend fun findAll(page: Int, pageSize: Int = 15): Flow<User>
 
-    @Query("""SELECT * FROM "user" WHERE deleted_at IS NULL AND username = :username LIMIT 1""")
+    @Query("""SELECT * FROM "user" WHERE username = :username LIMIT 1""")
     suspend fun findByUsername(username: String): User?
 
-    @Query("""SELECT * FROM "user" WHERE deleted_at IS NULL AND email = :email LIMIT 1""")
+    @Query("""SELECT * FROM "user" WHERE email = :email LIMIT 1""")
     suspend fun findByEmail(email: String): User?
 
     @Query("""SELECT count(id) FROM "user"""")

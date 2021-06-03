@@ -26,6 +26,16 @@ object UserSerializer {
     }
 
     override fun deserialize(decoder: Decoder): User {
-        return decoder.decodeSerializableValue(UserInput.serializer()).toUser()
+        val surrogate = decoder.decodeSerializableValue(UserPayload.serializer())
+
+        return User(
+            name = surrogate.name,
+            email = surrogate.email,
+            username = surrogate.username,
+            birthday = surrogate.birthday,
+            createdAt = surrogate.createdAt!!,
+            updatedAt = surrogate.updatedAt,
+            deletedAt = surrogate.deletedAt
+        )
     }
 }
