@@ -28,6 +28,7 @@ class UserMutation(private val userService: UserService) : Mutation {
     }
 
     @GraphQLDescription("Deletes an user by its username")
+    @PreAuthorize("hasAuthority('users.destroy')")
     suspend fun deleteUser(input: DeleteUserInput): DeleteUserPayload {
         val user = userService.findUserByUsername(input.username)
             ?: return DeleteUserPayload(null)
