@@ -130,7 +130,17 @@ object DeleteUserMutation : TestQuery<DeleteUserMutation.Variables, UpdateUserPa
     override val operationName = "DeleteUser"
     override val query = """
         mutation DeleteUser($input: DeleteUserInput!) {
-            deleteUser(input: $input)
+            deleteUser(input: $input) {
+                user {
+                    name
+                    username
+                    email
+                    birthday
+                    createdAt
+                    deletedAt
+                    updatedAt
+                }
+            }
         }
     """.trimIndent()
 
