@@ -1,4 +1,4 @@
-package com.diekeditora.domain.permission
+package com.diekeditora.domain.authority
 
 import com.diekeditora.domain.page.Page
 
