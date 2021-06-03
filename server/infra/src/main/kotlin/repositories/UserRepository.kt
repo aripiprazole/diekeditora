@@ -9,11 +9,11 @@ import java.util.UUID
 
 @Repository
 interface UserRepository : CoroutineSortingRepository<User, UUID> {
-    @Query("""SELECT * FROM "user" WHERE deleted_at IS NOT NULL LIMIT :pageSize OFFSET ((:page - 1) * 15)""")
-    suspend fun findAllDeleted(page: Int, pageSize: Int = 15): Flow<User>
+    @Query("""SELECT * FROM "user" WHERE deleted_at IS NOT NULL LIMIT :pageSize OFFSET ((:page - 1) * :pageSize)""")
+    suspend fun findPaginatedDeleted(page: Int, pageSize: Int = 15): Flow<User>
 
-    @Query("""SELECT * FROM "user" WHERE deleted_at IS NULL LIMIT :pageSize OFFSET ((:page - 1) * 15)""")
-    suspend fun findAll(page: Int, pageSize: Int = 15): Flow<User>
+    @Query("""SELECT * FROM "user" WHERE deleted_at IS NULL LIMIT :pageSize OFFSET ((:page - 1) * :pageSize)""")
+    suspend fun findPaginated(page: Int, pageSize: Int = 15): Flow<User>
 
     @Query("""SELECT * FROM "user" WHERE username = :username LIMIT 1""")
     suspend fun findByUsername(username: String): User?

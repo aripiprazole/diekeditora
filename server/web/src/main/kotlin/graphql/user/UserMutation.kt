@@ -13,27 +13,24 @@ import org.springframework.stereotype.Component
 class UserMutation(private val userService: UserService) : Mutation {
     @GraphQLDescription("Creates an user with the provided data")
     @PreAuthorize("hasAuthority('users.store')")
-    suspend fun createUser(input: UserInput): CreateUserPayload {
-        val user = input.toUser()
-
-        return CreateUserPayload(userService.save(user))
+    suspend fun createUser(input: UserInput): User {
+        return userService.save(input.toUser())
     }
 
     @GraphQLDescription("Updates an user by its username with the provided data")
     @PreAuthorize("hasAuthority('users.update')")
-    suspend fun updateUser(input: UpdateUserInput): UpdateUserPayload {
-        val user = userService.updateUserByUsername(input.username, input.data.toUser())
+    suspend fun updateUser(input: UpdateUserInput): User? {
+        val user = userService.findUserByUsername(input.username) ?: return null
 
-        return UpdateUserPayload(user)
+        return userService.update(user, input.data.toUser())
     }
 
     @GraphQLDescription("Deletes an user by its username")
     @PreAuthorize("hasAuthority('users.destroy')")
-    suspend fun deleteUser(input: DeleteUserInput): DeleteUserPayload {
-        val user = userService.findUserByUsername(input.username)
-            ?: return DeleteUserPayload(null)
+    suspend fun deleteUser(input: DeleteUserInput): User? {
+        val user = userService.findUserByUsername(input.username) ?: return null
 
-        return DeleteUserPayload(userService.delete(user))
+        return userService.delete(user)
     }
 }
 
@@ -42,12 +39,3 @@ data class DeleteUserInput(val username: String)
 
 @Serializable
 data class UpdateUserInput(val username: String, val data: UserInput)
-
-@Serializable
-data class CreateUserPayload(val user: User)
-
-@Serializable
-data class UpdateUserPayload(val user: User?)
-
-@Serializable
-data class DeleteUserPayload(val user: User?)

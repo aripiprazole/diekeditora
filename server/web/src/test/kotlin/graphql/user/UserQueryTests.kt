@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import kotlin.test.assertEquals
 
 @SpringBootTest
-class UserQueryTest(
+class UserQueryTests(
     @Autowired private val userRepository: UserRepository,
     @Autowired private val client: GraphQLTestClient,
     @Autowired private val userFactory: UserFactory,
@@ -30,7 +30,7 @@ class UserQueryTest(
 
         val pageNumber = 1
         val pageSize = 15
-        val items = userRepository.findAll(pageNumber, pageSize).toList()
+        val items = userRepository.findPaginated(pageNumber, pageSize).toList()
 
         val original = SimpleListConnection(items).get(newDataFetchingEnvironment().build())
 

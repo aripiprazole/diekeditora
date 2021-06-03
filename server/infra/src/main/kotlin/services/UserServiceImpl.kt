@@ -29,18 +29,14 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
     }
 
     override suspend fun findPaginatedUsers(page: Int, pageSize: Int): Page<User> {
-        val users = userRepository.findAll(page, pageSize).toList()
+        val users = userRepository.findPaginated(page, pageSize).toList()
 
         return Page.of(users, pageSize, page, userRepository.estimateTotalUsers()).also {
             log.trace("Successfully found page of user %d", page)
         }
     }
 
-    override suspend fun updateUserByUsername(username: String, user: User): User? {
-        val target = user.takeIf { it.id != null }
-            ?: findUserByUsername(username)
-            ?: return null
-
+    override suspend fun update(target: User, user: User): User {
         return userRepository.save(target.update(user)).also {
             log.trace("Successfully updated user %s", user)
         }

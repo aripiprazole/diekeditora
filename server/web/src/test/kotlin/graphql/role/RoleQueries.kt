@@ -31,8 +31,8 @@ object RoleQuery : TestQuery<RoleQuery.Variables, Role?>(typeOf<User?>()) {
     data class Variables(val name: String)
 }
 
-object RolesQuery : TestQuery<RolesQuery.Variables, DefaultConnection<User>>(
-    typeOf<DefaultConnection<User>>()
+object RolesQuery : TestQuery<RolesQuery.Variables, DefaultConnection<Role>>(
+    typeOf<DefaultConnection<Role>>()
 ) {
     private const val page = "\$page"
 

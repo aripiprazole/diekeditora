@@ -19,7 +19,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @SpringBootTest
-class RoleMutationTest(
+class RoleMutationTests(
     @Autowired private val roleRepository: RoleRepository,
     @Autowired private val client: GraphQLTestClient,
     @Autowired private val roleFactory: RoleFactory,

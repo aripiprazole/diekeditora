@@ -19,7 +19,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 @SpringBootTest
-class RoleQueryTest(
+class RoleQueryTests(
     @Autowired private val roleRepository: RoleRepository,
     @Autowired private val roleFactory: RoleFactory,
     @Autowired private val client: GraphQLTestClient,

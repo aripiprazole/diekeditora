@@ -41,7 +41,7 @@ class UserResourceTests(
 
         val pageNumber = 1
         val pageSize = 15
-        val users = userRepository.findAll(pageNumber, pageSize).toList()
+        val users = userRepository.findPaginated(pageNumber, pageSize).toList()
 
         val page = Page.of(users, pageSize, pageNumber, userRepository.estimateTotalUsers())
 

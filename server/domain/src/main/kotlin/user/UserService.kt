@@ -12,7 +12,7 @@ interface UserService {
 
     suspend fun findPaginatedUsers(page: Int = 1, pageSize: Int = 15): Page<User>
 
-    suspend fun updateUserByUsername(username: String, user: User): User?
+    suspend fun update(target: User, user: User): User
 
     suspend fun save(user: User): User
 

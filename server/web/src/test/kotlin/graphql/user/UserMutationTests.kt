@@ -19,7 +19,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 @SpringBootTest
-class UserMutationTest(
+class UserMutationTests(
     @Autowired private val userRepository: UserRepository,
     @Autowired private val client: GraphQLTestClient,
     @Autowired private val userFactory: UserFactory,
@@ -35,14 +35,12 @@ class UserMutationTest(
         val email = user.email
         val birthday = user.birthday
 
-        user = client
-            .request(CreateUserMutation) {
-                authentication = auth.mock("users.store")
-                variables = CreateUserMutation.Variables(
-                    input = UserInput.from(user),
-                )
-            }
-            .user
+        user = client.request(CreateUserMutation) {
+            authentication = auth.mock("users.store")
+            variables = CreateUserMutation.Variables(
+                input = UserInput.from(user),
+            )
+        }
 
         assertEquals(name, user.name)
         assertEquals(username, user.username)
@@ -73,14 +71,12 @@ class UserMutationTest(
         val username = newUser.username
         val email = newUser.email
 
-        user = client
-            .request(UpdateUserMutation) {
-                authentication = auth.mock("users.update")
-                variables = UpdateUserMutation.Variables(
-                    input = UpdateUserInput(user.username, UserInput.from(newUser)),
-                )
-            }
-            .user.let(::assertNotNull)
+        user = client.request(UpdateUserMutation) {
+            authentication = auth.mock("users.update")
+            variables = UpdateUserMutation.Variables(
+                input = UpdateUserInput(user.username, UserInput.from(newUser)),
+            )
+        }.let(::assertNotNull)
 
         assertEquals(name, user.name)
         assertEquals(username, user.username)
@@ -106,14 +102,12 @@ class UserMutationTest(
     fun `test should delete user by username`(): Unit = runBlocking {
         var user = userFactory.create().let { userRepository.save(it) }
 
-        user = client
-            .request(DeleteUserMutation) {
-                authentication = auth.mock("users.destroy")
-                variables = DeleteUserMutation.Variables(
-                    input = DeleteUserInput(username = user.username)
-                )
-            }
-            .user.let(::assertNotNull)
+        user = client.request(DeleteUserMutation) {
+            authentication = auth.mock("users.destroy")
+            variables = DeleteUserMutation.Variables(
+                input = DeleteUserInput(username = user.username)
+            )
+        }.let(::assertNotNull)
 
         assertNotNull(user.deletedAt)
     }

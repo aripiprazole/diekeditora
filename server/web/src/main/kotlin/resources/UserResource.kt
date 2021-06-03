@@ -47,7 +47,9 @@ class UserResource(val userService: UserService) {
         @PathVariable username: String,
         @RequestBody user: User
     ): ResponseEntity<Unit> {
-        userService.updateUserByUsername(username, user) ?: return userNotFound()
+        val target = userService.findUserByUsername(username) ?: return userNotFound()
+
+        userService.update(target, user)
 
         return ResponseEntity.noContent().build()
     }
