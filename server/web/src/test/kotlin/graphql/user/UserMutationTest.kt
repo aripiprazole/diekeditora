@@ -88,7 +88,7 @@ class UserMutationTest(
     }
 
     @Test
-    fun `test should not delete user by username without authorities`(): Unit = runBlocking {
+    fun `test should not update user by username without authorities`(): Unit = runBlocking {
         val user = userFactory.create().let { userRepository.save(it) }
         val newUser = userFactory.create()
 
@@ -119,12 +119,12 @@ class UserMutationTest(
     }
 
     @Test
-    fun `test should not update user by username without authorities`(): Unit = runBlocking {
+    fun `test should not delete user by username without authorities`(): Unit = runBlocking {
         val user = userFactory.create().let { userRepository.save(it) }
 
         assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
             client.request(DeleteUserMutation) {
-                authentication = auth.mock("users.destroy")
+                authentication = auth.mock()
                 variables = DeleteUserMutation.Variables(
                     input = DeleteUserInput(username = user.username)
                 )

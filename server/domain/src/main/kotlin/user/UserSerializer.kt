@@ -6,6 +6,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializer
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import java.time.LocalDateTime
 
 @Serializer(forClass = User::class)
 object UserSerializer {
@@ -33,7 +34,7 @@ object UserSerializer {
             email = surrogate.email,
             username = surrogate.username,
             birthday = surrogate.birthday,
-            createdAt = surrogate.createdAt!!,
+            createdAt = surrogate.createdAt ?: LocalDateTime.now(),
             updatedAt = surrogate.updatedAt,
             deletedAt = surrogate.deletedAt
         )
