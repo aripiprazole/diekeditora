@@ -2,6 +2,7 @@ package com.diekeditora.web.tests.graphql.user
 
 import com.diekeditora.domain.user.UserInput
 import com.diekeditora.infra.repositories.UserRepository
+import com.diekeditora.web.graphql.user.DeleteUserInput
 import com.diekeditora.web.graphql.user.UpdateUserInput
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLException
@@ -87,7 +88,7 @@ class UserMutationTest(
     }
 
     @Test
-    fun `test should not update user by username without authorities`(): Unit = runBlocking {
+    fun `test should not delete user by username without authorities`(): Unit = runBlocking {
         val user = userFactory.create().let { userRepository.save(it) }
         val newUser = userFactory.create()
 
@@ -96,6 +97,36 @@ class UserMutationTest(
                 authentication = auth.mock()
                 variables = UpdateUserMutation.Variables(
                     input = UpdateUserInput(user.username, UserInput.from(newUser)),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test should delete user by username`(): Unit = runBlocking {
+        var user = userFactory.create().let { userRepository.save(it) }
+
+        user = client
+            .request(DeleteUserMutation) {
+                authentication = auth.mock("users.destroy")
+                variables = DeleteUserMutation.Variables(
+                    input = DeleteUserInput(username = user.username)
+                )
+            }
+            .user.let(::assertNotNull)
+
+        assertNotNull(user.deletedAt)
+    }
+
+    @Test
+    fun `test should not update user by username without authorities`(): Unit = runBlocking {
+        val user = userFactory.create().let { userRepository.save(it) }
+
+        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+            client.request(DeleteUserMutation) {
+                authentication = auth.mock("users.destroy")
+                variables = DeleteUserMutation.Variables(
+                    input = DeleteUserInput(username = user.username)
                 )
             }
         }
