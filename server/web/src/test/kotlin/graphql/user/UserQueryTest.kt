@@ -2,7 +2,9 @@ package com.diekeditora.web.tests.graphql.user
 
 import com.diekeditora.infra.repositories.UserRepository
 import com.diekeditora.web.tests.factories.UserFactory
+import com.diekeditora.web.tests.graphql.GraphQLException
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
+import com.diekeditora.web.tests.graphql.NotEnoughAuthorities
 import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
 import graphql.relay.SimpleListConnection
@@ -10,6 +12,7 @@ import graphql.schema.DataFetchingEnvironmentImpl.newDataFetchingEnvironment
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import kotlin.test.assertEquals
@@ -50,6 +53,18 @@ class UserQueryTest(
     }
 
     @Test
+    fun `test should not retrieve paginated users without authorities`(): Unit = runBlocking {
+        userRepository.save(userFactory.create())
+
+        assertThrows<GraphQLException>(NotEnoughAuthorities) {
+            client.request(UsersQuery) {
+                authentication = auth.mock()
+                variables = UsersQuery.Variables(1)
+            }
+        }
+    }
+
+    @Test
     fun `test should retrieve an user`(): Unit = runBlocking {
         val user = userFactory.create()
             .let { userRepository.save(it) }
@@ -63,5 +78,20 @@ class UserQueryTest(
                 variables = UserQuery.Variables(user.username)
             }
         )
+    }
+
+    @Test
+    fun `test should not retrieve an user without authorities`(): Unit = runBlocking {
+        val user = userFactory.create()
+            .let { userRepository.save(it) }
+            .let { userRepository.findByUsername(it.username) }
+            .let(::requireNotNull)
+
+        assertThrows<GraphQLException>(NotEnoughAuthorities) {
+            client.request(UserQuery) {
+                authentication = auth.mock()
+                variables = UserQuery.Variables(user.username)
+            }
+        }
     }
 }

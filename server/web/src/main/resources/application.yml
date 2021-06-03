@@ -19,6 +19,7 @@ logging:
       - error
       - warn
       - info
+    graphql.execution.SimpleDataFetcherExceptionHandler: info
     com.expediagroup.graphql.server.spring.NonFederatedSchemaAutoConfiguration: error
     com.expediagroup.graphql: error
     notprivacysafe.graphql.GraphQL: error

@@ -43,11 +43,13 @@ inline fun <reified V, reified R : Any> GraphQLTestClient.request(
         .decodeToString()
 
     val response = json.decodeFromString<JsonObject>(string)
-    val data = response["data"]?.jsonObject ?: run {
-        val errors = response["errors"]!!.jsonArray
+    val errors = response["errors"]?.jsonArray
 
+    if (errors != null) {
         throw GraphQLException(errors.map { it.jsonObject["message"]!!.jsonPrimitive.content })
     }
+
+    val data = response["data"]!!.jsonObject
 
     return json.decodeFromJsonElement(data[query.queryName]!!)
 }

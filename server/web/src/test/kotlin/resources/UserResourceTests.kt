@@ -26,6 +26,16 @@ class UserResourceTests(
     @Autowired val auth: AuthenticationMocker,
 ) {
     @Test
+    fun `test should not retrieve paginated users without authorities`(): Unit = runBlocking {
+        userRepository.save(userFactory.create())
+
+        client.mutateWith(auth.configure())
+            .get().uri("/users?page=1")
+            .exchange()
+            .expectStatus().isForbidden
+    }
+
+    @Test
     fun `test should retrieve paginated users`(): Unit = runBlocking {
         userRepository.save(userFactory.create())
 
@@ -45,6 +55,16 @@ class UserResourceTests(
     }
 
     @Test
+    fun `test should not retrieve an user without authorities`(): Unit = runBlocking {
+        val user = userFactory.create().let { userRepository.save(it) }
+
+        client.mutateWith(auth.configure())
+            .get().uri("/users/${user.username}")
+            .exchange()
+            .expectStatus().isForbidden
+    }
+
+    @Test
     fun `test should retrieve an user`(): Unit = runBlocking {
         val user = userFactory.create().let { userRepository.save(it) }
 
@@ -60,6 +80,17 @@ class UserResourceTests(
                     assertNull(it.deletedAt)
                 }
             )
+    }
+
+    @Test
+    fun `test should not store an user without authorities`(): Unit = runBlocking {
+        val value = UserInput.from(userFactory.create())
+
+        client.mutateWith(auth.configure())
+            .post().uri("/users")
+            .bodyValue(value)
+            .exchange()
+            .expectStatus().isForbidden
     }
 
     @Test
@@ -89,6 +120,19 @@ class UserResourceTests(
     }
 
     @Test
+    fun `test should not update an user by requests body without authorities`(): Unit =
+        runBlocking {
+            val user = userFactory.create().let { userRepository.save(it) }
+            val newUser = userFactory.create()
+
+            client.mutateWith(auth.configure())
+                .patch().uri("/users/${user.username}")
+                .bodyValue(UserInput.from(newUser))
+                .exchange()
+                .expectStatus().isForbidden
+        }
+
+    @Test
     fun `test should update an user by requests body`(): Unit = runBlocking {
         var user = userFactory.create().let { userRepository.save(it) }
         val newUser = userFactory.create()
@@ -107,6 +151,16 @@ class UserResourceTests(
         assertEquals(newUser.birthday, user.birthday)
         assertNotNull(user.updatedAt)
         assertNull(user.deletedAt)
+    }
+
+    @Test
+    fun `test should not delete an user by its username without authorities`(): Unit = runBlocking {
+        val user = userFactory.create().let { userRepository.save(it) }
+
+        client.mutateWith(auth.configure())
+            .delete().uri("/users/${user.username}")
+            .exchange()
+            .expectStatus().isForbidden
     }
 
     @Test
