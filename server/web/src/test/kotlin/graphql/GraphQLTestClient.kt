@@ -18,7 +18,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 @Component
 class GraphQLTestClient(val client: WebTestClient, val json: Json)
 
-inline fun <reified V, reified R : Any> GraphQLTestClient.request(
+inline fun <reified V, reified R> GraphQLTestClient.request(
     query: TestQuery<V, R>,
     block: GraphQLRequestBuilder<V, R>.() -> Unit = {}
 ): R {
@@ -58,7 +58,7 @@ class GraphQLException(errors: List<String>) : Exception(
     "Request failed with: ${errors.joinToString(", ")}"
 )
 
-class GraphQLRequestBuilder<V, R : Any>(testQuery: TestQuery<V, R>) {
+class GraphQLRequestBuilder<V, R>(testQuery: TestQuery<V, R>) {
     var authentication: Authentication? = null
     var query: String? = testQuery.query
     var operationName: String? = testQuery.operationName
