@@ -4,6 +4,7 @@ import com.diekeditora.infra.repositories.UserRepository
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
 import com.diekeditora.web.tests.graphql.request
+import com.diekeditora.web.tests.utils.AuthenticationMocker
 import graphql.relay.SimpleListConnection
 import graphql.schema.DataFetchingEnvironmentImpl.newDataFetchingEnvironment
 import kotlinx.coroutines.flow.toList
@@ -18,6 +19,7 @@ class UserQueryTest(
     @Autowired private val userRepository: UserRepository,
     @Autowired private val client: GraphQLTestClient,
     @Autowired private val userFactory: UserFactory,
+    @Autowired private val auth: AuthenticationMocker,
 ) {
     @Test
     fun `test should retrieve paginated users`(): Unit = runBlocking {
@@ -30,6 +32,7 @@ class UserQueryTest(
         val original = SimpleListConnection(items).get(newDataFetchingEnvironment().build())
 
         val connection = client.request(UsersQuery) {
+            authentication = auth.mock("users.view")
             variables = UsersQuery.Variables(pageNumber)
         }
 
@@ -56,6 +59,7 @@ class UserQueryTest(
         assertEquals(
             user,
             client.request(UserQuery) {
+                authentication = auth.mock("users.view")
                 variables = UserQuery.Variables(user.username)
             }
         )

@@ -6,6 +6,7 @@ import com.diekeditora.web.graphql.user.UpdateUserInput
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
 import com.diekeditora.web.tests.graphql.request
+import com.diekeditora.web.tests.utils.AuthenticationMocker
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,6 +19,7 @@ class UserMutationTest(
     @Autowired private val userRepository: UserRepository,
     @Autowired private val client: GraphQLTestClient,
     @Autowired private val userFactory: UserFactory,
+    @Autowired private val auth: AuthenticationMocker,
 ) {
     @Test
     fun `test should create user`(): Unit = runBlocking {
@@ -30,6 +32,7 @@ class UserMutationTest(
 
         user = client
             .request(CreateUserMutation) {
+                authentication = auth.mock("users.store")
                 variables = CreateUserMutation.Variables(
                     input = UserInput.from(user),
                 )
@@ -53,6 +56,7 @@ class UserMutationTest(
 
         user = client
             .request(UpdateUserMutation) {
+                authentication = auth.mock("users.update")
                 variables = UpdateUserMutation.Variables(
                     input = UpdateUserInput(user.username, UserInput.from(newUser)),
                 )

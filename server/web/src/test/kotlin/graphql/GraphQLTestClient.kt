@@ -10,6 +10,8 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.springframework.http.MediaType
+import org.springframework.security.core.Authentication
+import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockAuthentication
 import org.springframework.stereotype.Component
 import org.springframework.test.web.reactive.server.WebTestClient
 
@@ -18,13 +20,22 @@ class GraphQLTestClient(val client: WebTestClient, val json: Json)
 
 inline fun <reified V, reified R : Any> GraphQLTestClient.request(
     query: TestQuery<V, R>,
-    builder: GraphQLRequestBuilder<V, R>.() -> Unit = {}
+    block: GraphQLRequestBuilder<V, R>.() -> Unit = {}
 ): R {
+    val builder = GraphQLRequestBuilder(query).apply(block)
+
     val string = client
+        .run {
+            if (builder.authentication != null) {
+                mutateWith(mockAuthentication(builder.authentication!!))
+            } else {
+                this
+            }
+        }
         .post().uri("/graphql")
         .contentType(MediaType.APPLICATION_JSON)
         .bodyValue(
-            json.encodeToString(GraphQLRequestBuilder(query).apply(builder).toRequest())
+            json.encodeToString(builder.toRequest())
         )
         .exchange()
         .expectBody()
@@ -46,6 +57,7 @@ class GraphQLException(errors: List<String>) : Exception(
 )
 
 class GraphQLRequestBuilder<V, R : Any>(testQuery: TestQuery<V, R>) {
+    var authentication: Authentication? = null
     var query: String? = testQuery.query
     var operationName: String? = testQuery.operationName
     var variables: V? = null
