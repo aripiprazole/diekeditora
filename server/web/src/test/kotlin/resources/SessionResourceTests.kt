@@ -14,12 +14,12 @@ import org.springframework.test.web.reactive.server.expectBody
 @SpringBootTest
 @ActiveProfiles("test")
 class SessionResourceTests(
-    @Autowired val authentication: AuthenticationMocker,
+    @Autowired val auth: AuthenticationMocker,
     @Autowired val client: WebTestClient,
 ) {
     @Test
     fun `test should show current session with email and password login`(): Unit = runBlocking {
-        val token = authentication.mock()
+        val token = auth.mock()
 
         client.mutateWith(mockAuthentication(token))
             .get().uri("/session")
