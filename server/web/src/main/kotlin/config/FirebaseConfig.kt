@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class FirebaseConfig {
     @Bean
-    fun app(credentials: GoogleCredentials): FirebaseApp? = tryOrNull {
+    fun app(): FirebaseApp? = tryOrNull {
         FirebaseApp.initializeApp(
             FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.getApplicationDefault())
