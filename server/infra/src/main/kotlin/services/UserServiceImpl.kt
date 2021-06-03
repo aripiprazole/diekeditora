@@ -54,10 +54,10 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
         }
     }
 
-    override suspend fun delete(user: User) {
-        userRepository.save(user.copy(deletedAt = LocalDateTime.now()))
-
-        log.trace("Successfully deleted %s", user)
+    override suspend fun delete(user: User): User {
+        return userRepository.save(user.copy(deletedAt = LocalDateTime.now())).also {
+            log.trace("Successfully deleted %s", it)
+        }
     }
 
     private fun generateUsername(token: FirebaseToken): String {
