@@ -23,7 +23,7 @@ class UserResourceTests(
     @Autowired val userRepository: UserRepository,
     @Autowired val client: WebTestClient,
     @Autowired val userFactory: UserFactory,
-    @Autowired val authentication: AuthenticationMocker,
+    @Autowired val auth: AuthenticationMocker,
 ) {
     @Test
     fun `test should retrieve paginated users`(): Unit = runBlocking {
@@ -35,7 +35,7 @@ class UserResourceTests(
 
         val page = Page.of(users, pageSize, pageNumber, userRepository.estimateTotalUsers())
 
-        client.mutateWith(authentication.configure("users.view"))
+        client.mutateWith(auth.configure("users.view"))
             .get().uri("/users?page=$pageNumber")
             .exchange()
             .expectStatus().isOk
@@ -48,7 +48,7 @@ class UserResourceTests(
     fun `test should retrieve an user`(): Unit = runBlocking {
         val user = userFactory.create().let { userRepository.save(it) }
 
-        client.mutateWith(authentication.configure("users.view"))
+        client.mutateWith(auth.configure("users.view"))
             .get().uri("/users/${user.username}")
             .exchange()
             .expectStatus().isOk
@@ -67,7 +67,7 @@ class UserResourceTests(
         val value = UserInput.from(userFactory.create())
 
         val exchange =
-            client.mutateWith(authentication.configure("users.store"))
+            client.mutateWith(auth.configure("users.store"))
                 .post().uri("/users")
                 .bodyValue(value)
                 .exchange()
@@ -94,7 +94,7 @@ class UserResourceTests(
         val newUser = userFactory.create()
         val id = requireNotNull(user.id) { "User's id must be not null" }
 
-        client.mutateWith(authentication.configure("users.update"))
+        client.mutateWith(auth.configure("users.update"))
             .patch().uri("/users/${user.username}")
             .bodyValue(UserInput.from(newUser))
             .exchange()
@@ -115,7 +115,7 @@ class UserResourceTests(
 
         val id = requireNotNull(user.id) { "User's id must be not null" }
 
-        client.mutateWith(authentication.configure("users.destroy"))
+        client.mutateWith(auth.configure("users.destroy"))
             .delete().uri("/users/${user.username}")
             .exchange()
             .expectStatus().isNoContent
