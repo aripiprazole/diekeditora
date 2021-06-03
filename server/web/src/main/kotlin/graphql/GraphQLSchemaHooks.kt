@@ -9,6 +9,8 @@ import graphql.schema.GraphQLSchema
 import graphql.schema.GraphQLType
 import graphql.schema.GraphQLTypeReference.typeRef
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonPrimitive
@@ -70,52 +72,48 @@ class GraphQLSchemaHooks(val json: Json) : SchemaGeneratorHooks {
         }
 
         return when (descriptor?.kind) {
-            is PrimitiveKind.BOOLEAN -> buildScalar(name, type, String::toBoolean)
-            is PrimitiveKind.LONG -> buildScalar(name, type, String::toLong)
-            is PrimitiveKind.INT -> buildScalar(name, type, String::toInt)
-            is PrimitiveKind.STRING -> buildScalar(name, type) { it }
-            is PrimitiveKind.CHAR -> buildScalar(name, type) { it.toCharArray().first() }
-            is PrimitiveKind.SHORT -> buildScalar(name, type, String::toShort)
-            is PrimitiveKind.BYTE -> buildScalar(name, type, String::toByte)
-            is PrimitiveKind.FLOAT -> buildScalar(name, type, String::toFloat)
-            is PrimitiveKind.DOUBLE -> buildScalar(name, type, String::toDouble)
+            is PrimitiveKind.BOOLEAN -> buildScalar(Boolean.serializer(), name, type)
+            is PrimitiveKind.LONG -> buildScalar(Long.serializer(), name, type)
+            is PrimitiveKind.INT -> buildScalar(Int.serializer(), name, type)
+            is PrimitiveKind.STRING -> buildScalar(String.serializer(), name, type)
+            is PrimitiveKind.CHAR -> buildScalar(Char.serializer(), name, type)
+            is PrimitiveKind.SHORT -> buildScalar(Short.serializer(), name, type)
+            is PrimitiveKind.BYTE -> buildScalar(Byte.serializer(), name, type)
+            is PrimitiveKind.FLOAT -> buildScalar(Float.serializer(), name, type)
+            is PrimitiveKind.DOUBLE -> buildScalar(Double.serializer(), name, type)
             else -> null
         }
     }
 
     private fun <T : Any> buildScalar(
+        scalarSerializer: KSerializer<T>,
         name: String,
-        type: KType,
-        transform: (String) -> T
+        type: KType
     ): GraphQLType {
-        val serializer = requireNotNull(json.serializersModule.serializer(type))
+        val serializer = json.serializersModule.serializer(type)
 
         return newScalar()
             .name(type.jvmErasure.simpleName)
             .coercing(object : Coercing<Any, Any> {
+                @Suppress("UNCHECKED_CAST")
                 override fun serialize(value: Any): Any {
-                    return transform(
-                        json.encodeToJsonElement(
-                            serializer,
-                            value
-                        ).jsonPrimitive.content
-                    )
+                    return json.encodeToJsonElement(serializer, value).jsonPrimitive.content
                 }
 
-                override fun parseValue(input: Any): Any? {
-                    if (serializer.descriptor.kind == PrimitiveKind.STRING) {
-                        return json.decodeFromString(serializer, """"$input"""")
+                override fun parseValue(input: Any): Any {
+                    if (scalarSerializer.descriptor.kind == PrimitiveKind.STRING) {
+                        return json.decodeFromString(scalarSerializer, """"$input"""")
                     }
 
-                    return json.decodeFromString(serializer, input.toString())
+                    return json.decodeFromString(scalarSerializer, input.toString())
                 }
 
-                override fun parseLiteral(input: Any): Any? {
-                    if (serializer.descriptor.kind == PrimitiveKind.STRING) {
-                        return json.decodeFromString(serializer, """"$input"""")
+                override fun parseLiteral(input: Any): Any {
+                    if (scalarSerializer.descriptor.kind == PrimitiveKind.STRING) {
+                        return json.decodeFromString(scalarSerializer, """"$input"""")
                     }
 
-                    return json.decodeFromString(serializer, input.toString())
+                    return json.decodeFromString(scalarSerializer, input.toString())
                 }
             })
             .build()
