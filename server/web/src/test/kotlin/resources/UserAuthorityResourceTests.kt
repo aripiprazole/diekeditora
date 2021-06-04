@@ -62,7 +62,10 @@ class UserAuthorityResourceTests(
     @Test
     fun `test should retrieve user's authorities`(): Unit = runBlocking {
         val user = userRepository.save(userFactory.create()).also {
-            userAuthorityRepository.save(it, authorityFactory.createMany(5))
+            userAuthorityRepository.save(
+                it,
+                authorityRepository.saveAll(authorityFactory.createMany(5)).toList()
+            )
         }
 
         client.mutateWith(auth.configure("authority.view"))
