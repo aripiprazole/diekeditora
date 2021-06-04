@@ -7,15 +7,13 @@ import com.diekeditora.web.graphql.user.role.UserAddRoleInput
 import com.diekeditora.web.graphql.user.role.UserRemoveRoleInput
 import com.diekeditora.web.tests.factories.RoleFactory
 import com.diekeditora.web.tests.factories.UserFactory
-import com.diekeditora.web.tests.graphql.GraphQLException
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.NOT_ENOUGH_AUTHORITIES
 import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
+import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import kotlin.test.assertEquals
@@ -52,7 +50,7 @@ class UserRoleMutationTests(
         val user = userRepository.save(userFactory.create())
         val role = roleRepository.save(roleFactory.create())
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(AddRoleMutation) {
                 authentication = auth.mock()
                 variables = AddRoleMutation.Variables(
@@ -88,7 +86,7 @@ class UserRoleMutationTests(
             userRoleRepository.save(user, it)
         }
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(RemoveRoleMutation) {
                 authentication = auth.mock()
                 variables = RemoveRoleMutation.Variables(

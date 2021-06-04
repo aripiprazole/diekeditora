@@ -2,17 +2,15 @@ package com.diekeditora.web.tests.graphql.user
 
 import com.diekeditora.infra.repositories.UserRepository
 import com.diekeditora.web.tests.factories.UserFactory
-import com.diekeditora.web.tests.graphql.GraphQLException
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.NOT_ENOUGH_AUTHORITIES
 import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
+import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import graphql.relay.SimpleListConnection
 import graphql.schema.DataFetchingEnvironmentImpl.newDataFetchingEnvironment
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import kotlin.test.assertEquals
@@ -56,7 +54,7 @@ class UserQueryTests(
     fun `test should not retrieve paginated users without authorities`(): Unit = runBlocking {
         userRepository.save(userFactory.create())
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(UsersQuery) {
                 authentication = auth.mock()
                 variables = UsersQuery.Variables(1)
@@ -87,7 +85,7 @@ class UserQueryTests(
             .let { userRepository.findByUsername(it.username) }
             .let(::requireNotNull)
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(UserQuery) {
                 authentication = auth.mock()
                 variables = UserQuery.Variables(user.username)

@@ -4,14 +4,12 @@ import com.diekeditora.infra.repositories.RoleRepository
 import com.diekeditora.web.graphql.role.DeleteRoleInput
 import com.diekeditora.web.graphql.role.UpdateRoleInput
 import com.diekeditora.web.tests.factories.RoleFactory
-import com.diekeditora.web.tests.graphql.GraphQLException
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.NOT_ENOUGH_AUTHORITIES
 import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
+import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import kotlin.test.assertEquals
@@ -46,7 +44,7 @@ class RoleMutationTests(
     fun `test should not create role without authorities`(): Unit = runBlocking {
         val role = roleFactory.create()
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(CreateRoleMutation) {
                 authentication = auth.mock()
                 variables = CreateRoleMutation.Variables(role)
@@ -75,7 +73,7 @@ class RoleMutationTests(
         val role = roleFactory.create().let { roleRepository.save(it) }
         val newRole = roleFactory.create()
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(UpdateRoleMutation) {
                 authentication = auth.mock()
                 variables = UpdateRoleMutation.Variables(
@@ -101,7 +99,7 @@ class RoleMutationTests(
     fun `test should not delete role by name without authorities`(): Unit = runBlocking {
         val role = roleFactory.create().let { roleRepository.save(it) }
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(DeleteRoleMutation) {
                 authentication = auth.mock()
                 variables = DeleteRoleMutation.Variables(input = DeleteRoleInput(role.name))
