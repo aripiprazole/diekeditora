@@ -1,22 +1,11 @@
 package com.diekeditora.web.tests.resources
 
-import com.diekeditora.domain.authority.Role
 import com.diekeditora.domain.page.Page
 import com.diekeditora.domain.user.User
-import com.diekeditora.domain.user.UserAddAuthorityDto
-import com.diekeditora.domain.user.UserAddRoleDto
 import com.diekeditora.domain.user.UserInput
-import com.diekeditora.infra.repositories.AuthorityRepository
-import com.diekeditora.infra.repositories.RoleRepository
-import com.diekeditora.infra.repositories.UserAuthorityRepository
 import com.diekeditora.infra.repositories.UserRepository
-import com.diekeditora.infra.repositories.UserRoleRepository
-import com.diekeditora.web.tests.factories.AuthorityFactory
-import com.diekeditora.web.tests.factories.RoleFactory
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.utils.AuthenticationMocker
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
@@ -32,12 +21,6 @@ import kotlin.test.assertNull
 @SpringBootTest
 class UserResourceTests(
     @Autowired val userRepository: UserRepository,
-    @Autowired val userRoleRepository: UserRoleRepository,
-    @Autowired val roleRepository: RoleRepository,
-    @Autowired val authorityRepository: AuthorityRepository,
-    @Autowired val userAuthorityRepository: UserAuthorityRepository,
-    @Autowired val roleFactory: RoleFactory,
-    @Autowired val authorityFactory: AuthorityFactory,
     @Autowired val userFactory: UserFactory,
     @Autowired val client: WebTestClient,
     @Autowired val auth: AuthenticationMocker,
@@ -77,113 +60,6 @@ class UserResourceTests(
 
         client.mutateWith(auth.configure())
             .get().uri("/users/${user.username}")
-            .exchange()
-            .expectStatus().isForbidden
-    }
-
-    @Test
-    fun `test should add user's a role`(): Unit = runBlocking {
-        val user = userRepository.save(userFactory.create())
-        val role = roleRepository.save(roleFactory.create())
-
-        val userRoles = userRoleRepository.findByUser(user).toList()
-
-        client.mutateWith(auth.configure("role.admin"))
-            .post().uri("/users/${user.username}/roles")
-            .bodyValue(UserAddRoleDto(setOf(role.name)))
-            .exchange()
-            .expectStatus().isNoContent
-
-        assertEquals(userRoles + role, userRoleRepository.findByUser(user).toList())
-    }
-
-    @Test
-    fun `test should not add user's a role without authorities`(): Unit = runBlocking {
-        val user = userRepository.save(userFactory.create())
-        val role = roleRepository.save(roleFactory.create())
-
-        client.mutateWith(auth.configure("role.admin"))
-            .post().uri("/users/${user.username}/roles")
-            .bodyValue(UserAddRoleDto(setOf(role.name)))
-            .exchange()
-            .expectStatus().isForbidden
-    }
-
-    @Test
-    fun `test should add user's an authority`(): Unit = runBlocking {
-        val user = userRepository.save(userFactory.create())
-        val authority = authorityRepository.save(authorityFactory.create()).value
-
-        val userAuthorities = userAuthorityRepository.findByUser(user).toList().map { it.value }
-
-        client.mutateWith(auth.configure("authority.admin"))
-            .post().uri("/users/${user.username}/authorities")
-            .bodyValue(UserAddAuthorityDto(setOf(authority)))
-            .exchange()
-            .expectStatus().isNoContent
-
-        assertEquals(
-            userAuthorities + authority,
-            userAuthorityRepository.findByUser(user).toList().map { it.value }
-        )
-    }
-
-    @Test
-    fun `test should not add user's an authority without authorities`(): Unit = runBlocking {
-        val user = userRepository.save(userFactory.create())
-        val authority = authorityRepository.save(authorityFactory.create()).value
-
-        client.mutateWith(auth.configure("authority.admin"))
-            .post().uri("/users/${user.username}/authorities")
-            .bodyValue(UserAddAuthorityDto(setOf(authority)))
-            .exchange()
-            .expectStatus().isForbidden
-    }
-
-    @Test
-    fun `test should retrieve user's roles`(): Unit = runBlocking {
-        val user = userRepository.save(userFactory.create()).also {
-            userRoleRepository.save(it, roleFactory.createMany(5))
-        }
-
-        client.mutateWith(auth.configure("role.view"))
-            .get().uri("/users/${user.username}/roles")
-            .exchange()
-            .expectStatus().isOk
-            .expectBody<Flow<Role>>()
-            .isEqualTo(userRoleRepository.findByUser(user))
-    }
-
-    @Test
-    fun `test should not retrieve user's roles without authorities`(): Unit = runBlocking {
-        val user = userRepository.save(userFactory.create())
-
-        client.mutateWith(auth.configure())
-            .get().uri("/users/${user.username}/roles")
-            .exchange()
-            .expectStatus().isForbidden
-    }
-
-    @Test
-    fun `test should retrieve user's authorities`(): Unit = runBlocking {
-        val user = userRepository.save(userFactory.create()).also {
-            userAuthorityRepository.save(it, authorityFactory.createMany(5))
-        }
-
-        client.mutateWith(auth.configure("authority.view"))
-            .get().uri("/users/${user.username}/authorities")
-            .exchange()
-            .expectStatus().isOk
-            .expectBody<Flow<String>>()
-            .isEqualTo(userAuthorityRepository.findByUser(user).map { it.value })
-    }
-
-    @Test
-    fun `test should not retrieve user's authorities`(): Unit = runBlocking {
-        val user = userRepository.save(userFactory.create())
-
-        client.mutateWith(auth.configure())
-            .get().uri("/users/${user.username}/authorities")
             .exchange()
             .expectStatus().isForbidden
     }
