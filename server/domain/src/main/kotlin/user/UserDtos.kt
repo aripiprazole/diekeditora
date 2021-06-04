@@ -46,3 +46,11 @@ data class UserPayload(
     val updatedAt: @Contextual LocalDateTime? = null,
     val deletedAt: @Contextual LocalDateTime? = null,
 )
+
+@Serializable
+@SerialName("UserAddRoleDto")
+data class UserAddRoleDto(val name: Set<String>)
+
+@Serializable
+@SerialName("UserAddAuthorityDto")
+data class UserAddAuthorityDto(val authorities: Set<String>)
