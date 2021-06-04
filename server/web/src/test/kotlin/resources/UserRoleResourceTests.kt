@@ -19,7 +19,7 @@ import org.springframework.test.web.reactive.server.expectBody
 import kotlin.test.assertEquals
 
 @SpringBootTest
-class UserRoleAuthorityTests(
+class UserRoleResourceTests(
     @Autowired val userRepository: UserRepository,
     @Autowired val userFactory: UserFactory,
     @Autowired val roleRepository: RoleRepository,
@@ -59,7 +59,7 @@ class UserRoleAuthorityTests(
     @Test
     fun `test should retrieve user's roles`(): Unit = runBlocking {
         val user = userRepository.save(userFactory.create()).also {
-            userRoleRepository.save(it, roleFactory.createMany(5))
+            userRoleRepository.save(it, roleRepository.saveAll(roleFactory.createMany(5)).toList())
         }
 
         client.mutateWith(auth.configure("role.view"))
