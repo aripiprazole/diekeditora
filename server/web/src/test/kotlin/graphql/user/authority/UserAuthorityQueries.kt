@@ -3,6 +3,7 @@
 package com.diekeditora.web.tests.graphql.user.authority
 
 import com.diekeditora.web.graphql.user.authority.UserAddAuthorityInput
+import com.diekeditora.web.graphql.user.authority.UserRemoveAuthorityInput
 import com.diekeditora.web.tests.graphql.TestQuery
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
@@ -28,11 +29,26 @@ object AddAuthorityMutation : TestQuery<AddAuthorityMutation.Variables, Unit>(ty
     override val queryName = "addAuthority"
     override val operationName = "AddAuthority"
     override val query = """
-        mutation AddRole($input: UserAddAuthorityInput!) {
+        mutation AddAuthority($input: UserAddAuthorityInput!) {
             addAuthority(input: $input)
         }
     """.trimIndent()
 
     @Serializable
     data class Variables(val input: UserAddAuthorityInput)
+}
+
+object RemoveAuthorityMutation : TestQuery<RemoveAuthorityMutation.Variables, Unit>(
+    typeOf<Unit>()
+) {
+    override val queryName = "removeAuthority"
+    override val operationName = "RemoveAuthority"
+    override val query = """
+        mutation RemoveAuthority($input: UserRemoveAuthorityInput!) {
+            removeAuthority(input: $input)
+        }
+    """.trimIndent()
+
+    @Serializable
+    data class Variables(val input: UserRemoveAuthorityInput)
 }

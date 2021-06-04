@@ -9,3 +9,6 @@ class UserRoleMutation : Mutation
 
 @Serializable
 class UserAddRoleInput(val username: String, val roles: Set<String>)
+
+@Serializable
+class UserRemoveRoleInput(val username: String, val roles: Set<String>)
