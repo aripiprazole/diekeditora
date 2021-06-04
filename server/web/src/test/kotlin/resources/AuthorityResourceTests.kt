@@ -24,7 +24,7 @@ class AuthorityResourceTests(
         authorityRepository.save(authorityFactory.create())
 
         client.mutateWith(auth.configure("authority.view"))
-            .get().uri("/roles")
+            .get().uri("/authorities")
             .exchange()
             .expectStatus().isOk
             .expectBody<Set<String>>()
@@ -36,7 +36,7 @@ class AuthorityResourceTests(
         authorityRepository.save(authorityFactory.create())
 
         client.mutateWith(auth.configure())
-            .get().uri("/roles")
+            .get().uri("/authorities")
             .exchange()
             .expectStatus().isForbidden
     }
