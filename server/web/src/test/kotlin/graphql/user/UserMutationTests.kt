@@ -5,14 +5,12 @@ import com.diekeditora.infra.repositories.UserRepository
 import com.diekeditora.web.graphql.user.DeleteUserInput
 import com.diekeditora.web.graphql.user.UpdateUserInput
 import com.diekeditora.web.tests.factories.UserFactory
-import com.diekeditora.web.tests.graphql.GraphQLException
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.NOT_ENOUGH_AUTHORITIES
 import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
+import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import kotlin.test.assertEquals
@@ -52,7 +50,7 @@ class UserMutationTests(
     fun `test should not create user without authorities`(): Unit = runBlocking {
         val user = userFactory.create()
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(CreateUserMutation) {
                 authentication = auth.mock()
                 variables = CreateUserMutation.Variables(
@@ -88,7 +86,7 @@ class UserMutationTests(
         val user = userFactory.create().let { userRepository.save(it) }
         val newUser = userFactory.create()
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(UpdateUserMutation) {
                 authentication = auth.mock()
                 variables = UpdateUserMutation.Variables(
@@ -116,7 +114,7 @@ class UserMutationTests(
     fun `test should not delete user by username without authorities`(): Unit = runBlocking {
         val user = userFactory.create().let { userRepository.save(it) }
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(DeleteUserMutation) {
                 authentication = auth.mock()
                 variables = DeleteUserMutation.Variables(

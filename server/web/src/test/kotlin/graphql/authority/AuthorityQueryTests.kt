@@ -4,18 +4,16 @@ package com.diekeditora.web.tests.graphql.authority
 
 import com.diekeditora.infra.repositories.AuthorityRepository
 import com.diekeditora.web.tests.factories.AuthorityFactory
-import com.diekeditora.web.tests.graphql.GraphQLException
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.NOT_ENOUGH_AUTHORITIES
 import com.diekeditora.web.tests.graphql.TestQuery
 import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
+import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toSet
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import kotlin.reflect.typeOf
@@ -44,7 +42,7 @@ class AuthorityQueryTests(
     fun `test not should retrieve all authorities without authorities`(): Unit = runBlocking {
         authorityRepository.saveAll(authorityFactory.createMany(15))
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(AuthoritiesQuery) {
                 authentication = auth.mock("authority.view")
                 variables = AuthoritiesQuery.Variables

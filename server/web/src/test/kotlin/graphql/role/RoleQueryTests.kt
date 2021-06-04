@@ -2,17 +2,15 @@ package com.diekeditora.web.tests.graphql.role
 
 import com.diekeditora.infra.repositories.RoleRepository
 import com.diekeditora.web.tests.factories.RoleFactory
-import com.diekeditora.web.tests.graphql.GraphQLException
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.NOT_ENOUGH_AUTHORITIES
 import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
+import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import graphql.relay.SimpleListConnection
 import graphql.schema.DataFetchingEnvironmentImpl.newDataFetchingEnvironment
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import kotlin.test.assertEquals
@@ -59,7 +57,7 @@ class RoleQueryTests(
 
         val pageNumber = 1
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(RolesQuery) {
                 authentication = auth.mock()
                 variables = RolesQuery.Variables(pageNumber)
@@ -83,7 +81,7 @@ class RoleQueryTests(
     fun `test not should retrieve a role without authorities`(): Unit = runBlocking {
         val role = roleRepository.save(roleFactory.create())
 
-        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+        assertGraphQLForbidden {
             client.request(RoleQuery) {
                 authentication = auth.mock()
                 variables = RoleQuery.Variables(role.name)
