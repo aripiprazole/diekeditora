@@ -85,4 +85,37 @@ class UserAuthorityResourceTests(
             .exchange()
             .expectStatus().isForbidden
     }
+
+    @Test
+    fun `test should remove an authority from user`(): Unit = runBlocking {
+        val user = userRepository.save(userFactory.create())
+        val authority = authorityRepository.save(authorityFactory.create()).also {
+            userAuthorityRepository.save(user, it)
+        }
+
+        val userAuthorities = userAuthorityRepository.findByUser(user).toList().map { it.value }
+
+        client.mutateWith(auth.configure("authority.admin"))
+            .delete().uri("/users/${user.username}/authorities/${authority.value}")
+            .exchange()
+            .expectStatus().isNoContent
+
+        assertEquals(
+            userAuthorities - authority,
+            userAuthorityRepository.findByUser(user).toList().map { it.value }
+        )
+    }
+
+    @Test
+    fun `test should not remove an authority from user without authorities`(): Unit = runBlocking {
+        val user = userRepository.save(userFactory.create())
+        val authority = authorityRepository.save(authorityFactory.create()).also {
+            userAuthorityRepository.save(user, it)
+        }
+
+        client.mutateWith(auth.configure())
+            .delete().uri("/users/${user.username}/authorities/${authority.value}")
+            .exchange()
+            .expectStatus().isForbidden
+    }
 }

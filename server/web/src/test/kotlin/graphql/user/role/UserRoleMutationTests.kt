@@ -4,6 +4,7 @@ import com.diekeditora.infra.repositories.RoleRepository
 import com.diekeditora.infra.repositories.UserRepository
 import com.diekeditora.infra.repositories.UserRoleRepository
 import com.diekeditora.web.graphql.user.role.UserAddRoleInput
+import com.diekeditora.web.graphql.user.role.UserRemoveRoleInput
 import com.diekeditora.web.tests.factories.RoleFactory
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLException
@@ -56,6 +57,42 @@ class UserRoleMutationTests(
                 authentication = auth.mock()
                 variables = AddRoleMutation.Variables(
                     input = UserAddRoleInput(user.username, setOf(role.name))
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test should remove a role from user`(): Unit = runBlocking {
+        val user = userRepository.save(userFactory.create())
+        val role = roleRepository.save(roleFactory.create()).also {
+            userRoleRepository.save(user, it)
+        }
+
+        val userRoles = userRoleRepository.findByUser(user).toList()
+
+        client.request(RemoveRoleMutation) {
+            authentication = auth.mock("role.admin")
+            variables = RemoveRoleMutation.Variables(
+                input = UserRemoveRoleInput(user.username, setOf(role.name))
+            )
+        }
+
+        assertEquals(userRoles - role, userRoleRepository.findByUser(user).toList())
+    }
+
+    @Test
+    fun `test should not remove a role from user without authorities`(): Unit = runBlocking {
+        val user = userRepository.save(userFactory.create())
+        val role = roleRepository.save(roleFactory.create()).also {
+            userRoleRepository.save(user, it)
+        }
+
+        assertThrows<GraphQLException>(NOT_ENOUGH_AUTHORITIES) {
+            client.request(RemoveRoleMutation) {
+                authentication = auth.mock()
+                variables = RemoveRoleMutation.Variables(
+                    input = UserRemoveRoleInput(user.username, setOf(role.name))
                 )
             }
         }

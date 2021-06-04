@@ -4,6 +4,7 @@ package com.diekeditora.web.tests.graphql.user.role
 
 import com.diekeditora.domain.authority.Role
 import com.diekeditora.web.graphql.user.role.UserAddRoleInput
+import com.diekeditora.web.graphql.user.role.UserRemoveRoleInput
 import com.diekeditora.web.tests.graphql.TestQuery
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
@@ -39,4 +40,17 @@ object AddRoleMutation : TestQuery<AddRoleMutation.Variables, Unit>(typeOf<Unit>
 
     @Serializable
     data class Variables(val input: UserAddRoleInput)
+}
+
+object RemoveRoleMutation : TestQuery<RemoveRoleMutation.Variables, Unit>(typeOf<Unit>()) {
+    override val queryName = "removeRoles"
+    override val operationName = "RemoveRoles"
+    override val query = """
+        mutation RemoveRoles($input: UserRemoveRoleInput!) {
+            removeRoles(input: $input)
+        }
+    """.trimIndent()
+
+    @Serializable
+    data class Variables(val input: UserRemoveRoleInput)
 }

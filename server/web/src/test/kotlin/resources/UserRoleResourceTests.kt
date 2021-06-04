@@ -79,4 +79,34 @@ class UserRoleResourceTests(
             .exchange()
             .expectStatus().isForbidden
     }
+
+    @Test
+    fun `test should remove a role from user`(): Unit = runBlocking {
+        val user = userRepository.save(userFactory.create())
+        val role = roleRepository.save(roleFactory.create()).also {
+            userRoleRepository.save(user, it)
+        }
+
+        val userRoles = userRoleRepository.findByUser(user).toList()
+
+        client.mutateWith(auth.configure("role.admin"))
+            .delete().uri("/users/${user.username}/roles/${role.name}")
+            .exchange()
+            .expectStatus().isNoContent
+
+        assertEquals(userRoles - role, userRoleRepository.findByUser(user).toList())
+    }
+
+    @Test
+    fun `test should not remove a role from user without authorities`(): Unit = runBlocking {
+        val user = userRepository.save(userFactory.create())
+        val role = roleRepository.save(roleFactory.create()).also {
+            userRoleRepository.save(user, it)
+        }
+
+        client.mutateWith(auth.configure())
+            .delete().uri("/users/${user.username}/roles/${role.name}")
+            .exchange()
+            .expectStatus().isForbidden
+    }
 }
