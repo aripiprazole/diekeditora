@@ -1,5 +1,6 @@
 package com.diekeditora.web.config
 
+import com.diekeditora.infra.repositories.AuthorityRepository
 import com.diekeditora.infra.repositories.RoleAuthorityRepository
 import com.diekeditora.infra.repositories.UserAuthorityRepository
 import com.diekeditora.infra.repositories.UserRoleRepository
@@ -17,4 +18,7 @@ class RepositoryConfig(val template: R2dbcEntityTemplate) {
 
     @Bean
     fun roleAuthorityRepository(): RoleAuthorityRepository = RoleAuthorityRepository(template)
+
+    @Bean
+    fun authorityRepository(): AuthorityRepository = AuthorityRepository(template)
 }
