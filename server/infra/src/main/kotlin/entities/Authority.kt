@@ -22,4 +22,10 @@ class Authority(@Id val id: UUID? = null, val value: String) {
     override fun toString(): String {
         return "Authority($value)"
     }
+
+    companion object {
+        fun of(value: String): Authority {
+            return Authority(null, value)
+        }
+    }
 }
