@@ -1,4 +1,4 @@
-package com.diekeditora.web.auth
+package com.diekeditora.web.security
 
 import com.diekeditora.domain.user.UserService
 import com.diekeditora.shared.await
