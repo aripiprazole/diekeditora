@@ -2,7 +2,7 @@ package com.diekeditora.web.tests.auth
 
 import com.diekeditora.domain.user.UserService
 import com.diekeditora.shared.generateRandomString
-import com.diekeditora.web.auth.AuthenticationManager
+import com.diekeditora.web.security.AuthenticationManager
 import com.diekeditora.web.tests.factories.TokenFactory
 import com.diekeditora.web.tests.factories.UserFactory
 import com.google.api.core.ApiFutures
