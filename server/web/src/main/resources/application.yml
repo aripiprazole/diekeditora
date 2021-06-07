@@ -6,8 +6,8 @@ server:
       enabled: false
 
 spring:
-  r2dbc:
-    url: r2dbc:postgresql://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+  datas:
+    url: jdbc:postgresql://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
     name: ${DB_NAME}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}

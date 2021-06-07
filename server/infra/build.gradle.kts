@@ -9,5 +9,5 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.shared)
 
-    implementation(libs.springBoot.dataR2dbc)
+    implementation(libs.exposed.core)
 }

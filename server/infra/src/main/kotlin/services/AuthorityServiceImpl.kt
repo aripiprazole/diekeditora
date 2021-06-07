@@ -7,20 +7,17 @@ import com.diekeditora.shared.logger
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toSet
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AuthorityServiceImpl(val authorityRepository: AuthorityRepository) : AuthorityService {
     private val log by logger()
 
-    @Transactional
     override suspend fun findAllAuthorities(): Set<String> {
         return authorityRepository.findAll().map { it.value }.toSet().also {
             log.trace("Successfully found all authorities %s", it)
         }
     }
 
-    @Transactional
     override suspend fun createAuthorities(vararg authorities: String): Set<String> {
         return authorityRepository
             .saveAll(authorities.map { Authority.of(it) })
@@ -31,7 +28,6 @@ class AuthorityServiceImpl(val authorityRepository: AuthorityRepository) : Autho
             }
     }
 
-    @Transactional
     override suspend fun deleteAuthorities(vararg authorities: String) {
         authorityRepository.deleteAll(authorities.map { Authority.of(it) })
 

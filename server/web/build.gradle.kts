@@ -12,14 +12,14 @@ dependencies {
     implementation(projects.infra)
     implementation(projects.shared)
 
+    implementation(libs.exposed.springBootStarter)
+
     implementation(libs.springBoot.security)
     implementation(libs.springBoot.actuator)
     implementation(libs.springBoot.securityOAuth2ResourceServer)
-    implementation(libs.springSecurity.oauth2Client)
 
     runtimeOnly(libs.postgresql.postgresql)
 
-    implementation(libs.r2dbc.postgresql)
     implementation(libs.classgraph.classgraph)
     implementation(libs.logback.classic)
     implementation(libs.fusesource.jansi)
@@ -27,6 +27,5 @@ dependencies {
     testRuntimeOnly(libs.h2database.h2)
     testImplementation(libs.springSecurity.test)
     testImplementation(libs.ninjaSquad.springMockk)
-    testImplementation(libs.r2dbc.h2)
     testImplementation(libs.serpro69.kotlinFaker)
 }

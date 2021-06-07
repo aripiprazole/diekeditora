@@ -1,9 +1,8 @@
 package com.diekeditora.infra.entities
 
-import org.springframework.data.annotation.Id
 import java.util.UUID
 
-class Authority(@Id val id: UUID? = null, val value: String) {
+class Authority(val id: UUID? = null, val value: String) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

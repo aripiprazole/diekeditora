@@ -59,8 +59,7 @@ allprojects {
 
         implementation(libs.firebase.admin)
 
-        implementation(libs.springBoot.dataR2dbc)
-        implementation(libs.springBoot.webflux)
+        implementation(libs.spring.context)
 
         implementation(libs.reactor.core)
         implementation(libs.reactor.kotlin)

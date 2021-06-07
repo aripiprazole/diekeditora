@@ -9,21 +9,18 @@ import com.diekeditora.shared.logger
 import com.google.firebase.auth.FirebaseToken
 import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
 class UserServiceImpl(private val userRepository: UserRepository) : UserService {
     private val log by logger()
 
-    @Transactional
     override suspend fun findUserByUsername(username: String): User? {
         return userRepository.findByUsername(username).also {
             log.trace("Successfully found user by %s by its username", it)
         }
     }
 
-    @Transactional
     override suspend fun findOrCreateUserByToken(token: FirebaseToken): User {
         return userRepository.findByEmail(token.email)
             ?: save(
@@ -31,7 +28,6 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
             )
     }
 
-    @Transactional
     override suspend fun findPaginatedUsers(page: Int, pageSize: Int): Page<User> {
         val users = userRepository.findPaginated(page, pageSize).toList()
 
@@ -40,14 +36,12 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
         }
     }
 
-    @Transactional
     override suspend fun update(target: User, user: User): User {
         return userRepository.save(target.update(user)).also {
             log.trace("Successfully updated user %s", user)
         }
     }
 
-    @Transactional
     override suspend fun save(user: User): User {
         val target = user.copy(createdAt = LocalDateTime.now())
 
@@ -56,7 +50,6 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
         }
     }
 
-    @Transactional
     override suspend fun delete(user: User): User {
         return userRepository.save(user.copy(deletedAt = LocalDateTime.now())).also {
             log.trace("Successfully deleted %s", it)

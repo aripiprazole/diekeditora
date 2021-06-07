@@ -27,12 +27,12 @@ class Libs {
     val kotlinx = Kotlinx()
     val postgresql = Postgresql()
     val springBoot = SpringBoot()
+    val spring = Spring()
     val slf4j = Slf4j()
     val reactor = Reactor()
     val expediaGroup = ExpediaGroup()
     val junit = JUnit()
     val pinterest = Pinterest()
-    val r2dbc = R2dbc()
     val classgraph = Classgraph()
     val logback = Logback()
     val fusesource = Fusesource()
@@ -43,6 +43,7 @@ class Libs {
     val google = Google()
     val mockk = Mockk()
     val ninjaSquad = NinjaSquad()
+    val exposed = Exposed()
 
     class NinjaSquad {
         val springMockk = "com.ninja-squad:springmockk:3.0.1"
@@ -99,13 +100,22 @@ class Libs {
         val postgresql = "org.postgresql:postgresql:42.2.20"
     }
 
+    class Exposed {
+        val core = "org.jetbrains.exposed:exposed-core:0.31.1"
+        val jdbc = "org.jetbrains.exposed:exposed-jdbc:0.31.1"
+        val springBootStarter = "org.jetbrains.exposed:exposed-spring-boot-starter:0.31.1"
+    }
+
+    class Spring {
+        val context = "org.springframework:spring-context:5.3.7"
+    }
+
     class SpringBoot {
         val security = "org.springframework.boot:spring-boot-starter-security"
         val actuator = "org.springframework.boot:spring-boot-starter-actuator"
         val securityOAuth2ResourceServer =
             "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
         val webflux = "org.springframework.boot:spring-boot-starter-webflux:2.4.5"
-        val dataR2dbc = "org.springframework.boot:spring-boot-starter-data-r2dbc:2.4.5"
         val test = "org.springframework.boot:spring-boot-starter-test:2.4.5"
     }
 
@@ -127,10 +137,5 @@ class Libs {
 
     class Classgraph {
         val classgraph = "io.github.classgraph:classgraph:4.8.105"
-    }
-
-    class R2dbc {
-        val h2 = "io.r2dbc:r2dbc-h2:0.8.4.RELEASE"
-        val postgresql = "io.r2dbc:r2dbc-postgresql:0.8.7.RELEASE"
     }
 }

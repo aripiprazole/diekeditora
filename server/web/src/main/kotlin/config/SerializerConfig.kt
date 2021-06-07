@@ -1,8 +1,8 @@
 package com.diekeditora.web.config
 
-import com.diekeditora.domain.serializers.AnySerializersModule
-import com.diekeditora.domain.serializers.GraphQLSerializersModule
-import com.diekeditora.domain.serializers.JavaSerializersModule
+import com.diekeditora.infra.serializers.AnySerializersModule
+import com.diekeditora.infra.serializers.GraphQLSerializersModule
+import com.diekeditora.infra.serializers.JavaSerializersModule
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.plus
 import org.springframework.context.annotation.Bean
