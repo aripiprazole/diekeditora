@@ -10,19 +10,19 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class AuthorityServiceImpl(val authorityRepository: AuthorityRepository) : AuthorityService {
+internal class AuthorityServiceImpl(val repository: AuthorityRepository) : AuthorityService {
     private val log by logger()
 
     @Transactional
     override suspend fun findAllAuthorities(): Set<String> {
-        return authorityRepository.findAll().map { it.value }.toSet().also {
+        return repository.findAll().map { it.value }.toSet().also {
             log.trace("Successfully found all authorities %s", it)
         }
     }
 
     @Transactional
     override suspend fun createAuthorities(vararg authorities: String): Set<String> {
-        return authorityRepository
+        return repository
             .saveAll(authorities.map { Authority.of(it) })
             .map(Authority::value)
             .toSet()
@@ -33,7 +33,7 @@ class AuthorityServiceImpl(val authorityRepository: AuthorityRepository) : Autho
 
     @Transactional
     override suspend fun deleteAuthorities(vararg authorities: String) {
-        authorityRepository.deleteAll(authorities.map { Authority.of(it) })
+        repository.deleteAll(authorities.map { Authority.of(it) })
 
         log.trace("Successfully deleted authorities %s from database", authorities.toList())
     }

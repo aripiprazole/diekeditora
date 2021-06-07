@@ -11,21 +11,21 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
-class RoleServiceImpl(val roleRepository: RoleRepository) : RoleService {
+internal class RoleServiceImpl(val repository: RoleRepository) : RoleService {
     private val log by logger()
 
     @Transactional
     override suspend fun findPaginatedRoles(page: Int, pageSize: Int): Page<Role> {
-        val roles = roleRepository.findPaginated(page, pageSize).toList()
+        val roles = repository.findPaginated(page, pageSize).toList()
 
-        return Page.of(roles, pageSize, page, roleRepository.estimateTotalRoles()).also {
+        return Page.of(roles, pageSize, page, repository.estimateTotalRoles()).also {
             log.trace("Successfully found page of role %d", page)
         }
     }
 
     @Transactional
     override suspend fun findRoleByName(name: String): Role? {
-        return roleRepository.findByName(name).also {
+        return repository.findByName(name).also {
             log.trace("Successfully found role by %s by its name", it)
         }
     }
@@ -34,21 +34,21 @@ class RoleServiceImpl(val roleRepository: RoleRepository) : RoleService {
     override suspend fun save(role: Role): Role {
         val target = role.copy(createdAt = LocalDateTime.now())
 
-        return roleRepository.save(target).also {
+        return repository.save(target).also {
             log.trace("Successfully saved role %s into database", it)
         }
     }
 
     @Transactional
     override suspend fun update(target: Role, role: Role): Role {
-        return roleRepository.save(role.copy(updatedAt = LocalDateTime.now())).also {
+        return repository.save(role.copy(updatedAt = LocalDateTime.now())).also {
             log.trace("Successfully updated role %s", it)
         }
     }
 
     @Transactional
     override suspend fun delete(role: Role) {
-        roleRepository.delete(role)
+        repository.delete(role)
 
         log.trace("Successfully deleted role %s", role)
     }
