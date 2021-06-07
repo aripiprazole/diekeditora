@@ -9,17 +9,17 @@ import kotlinx.coroutines.flow.toSet
 import org.springframework.stereotype.Service
 
 @Service
-class AuthorityServiceImpl(val authorityRepository: AuthorityRepository) : AuthorityService {
+internal class AuthorityServiceImpl(val repository: AuthorityRepository) : AuthorityService {
     private val log by logger()
 
     override suspend fun findAllAuthorities(): Set<String> {
-        return authorityRepository.findAll().map { it.value }.toSet().also {
+        return repository.findAll().map { it.value }.toSet().also {
             log.trace("Successfully found all authorities %s", it)
         }
     }
 
     override suspend fun createAuthorities(vararg authorities: String): Set<String> {
-        return authorityRepository
+        return repository
             .saveAll(authorities.map { Authority.of(it) })
             .map(Authority::value)
             .toSet()
@@ -29,7 +29,7 @@ class AuthorityServiceImpl(val authorityRepository: AuthorityRepository) : Autho
     }
 
     override suspend fun deleteAuthorities(vararg authorities: String) {
-        authorityRepository.deleteAll(authorities.map { Authority.of(it) })
+        repository.deleteAll(authorities.map { Authority.of(it) })
 
         log.trace("Successfully deleted authorities %s from database", authorities.toList())
     }

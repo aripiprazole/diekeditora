@@ -12,32 +12,32 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class UserServiceImpl(private val userRepository: UserRepository) : UserService {
+internal class UserServiceImpl(private val repository: UserRepository) : UserService {
     private val log by logger()
 
     override suspend fun findUserByUsername(username: String): User? {
-        return userRepository.findByUsername(username).also {
+        return repository.findByUsername(username).also {
             log.trace("Successfully found user by %s by its username", it)
         }
     }
 
     override suspend fun findOrCreateUserByToken(token: FirebaseToken): User {
-        return userRepository.findByEmail(token.email)
+        return repository.findByEmail(token.email)
             ?: save(
                 User(name = token.name, email = token.email, username = generateUsername(token))
             )
     }
 
     override suspend fun findPaginatedUsers(page: Int, pageSize: Int): Page<User> {
-        val users = userRepository.findPaginated(page, pageSize).toList()
+        val users = repository.findPaginated(page, pageSize).toList()
 
-        return Page.of(users, pageSize, page, userRepository.estimateTotalUsers()).also {
+        return Page.of(users, pageSize, page, repository.estimateTotalUsers()).also {
             log.trace("Successfully found page of user %d", page)
         }
     }
 
     override suspend fun update(target: User, user: User): User {
-        return userRepository.save(target.update(user)).also {
+        return repository.save(target.update(user)).also {
             log.trace("Successfully updated user %s", user)
         }
     }
@@ -45,13 +45,13 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
     override suspend fun save(user: User): User {
         val target = user.copy(createdAt = LocalDateTime.now())
 
-        return userRepository.save(target).also {
+        return repository.save(target).also {
             log.trace("Successfully saved user %s into database", user)
         }
     }
 
     override suspend fun delete(user: User): User {
-        return userRepository.save(user.copy(deletedAt = LocalDateTime.now())).also {
+        return repository.save(user.copy(deletedAt = LocalDateTime.now())).also {
             log.trace("Successfully deleted %s", it)
         }
     }
