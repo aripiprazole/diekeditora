@@ -102,6 +102,7 @@ class Libs {
 
     class Exposed {
         val core = "org.jetbrains.exposed:exposed-core:0.31.1"
+        val javaTime = "org.jetbrains.exposed:exposed-java-time:0.31.1"
         val jdbc = "org.jetbrains.exposed:exposed-jdbc:0.31.1"
         val springBootStarter = "org.jetbrains.exposed:exposed-spring-boot-starter:0.31.1"
     }

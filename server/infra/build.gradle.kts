@@ -10,4 +10,5 @@ dependencies {
     implementation(projects.shared)
 
     implementation(libs.exposed.core)
+    implementation(libs.exposed.javaTime)
 }
