@@ -18,7 +18,7 @@ class DatabaseConfig(val connectionFactory: ConnectionFactory) : AbstractR2dbcCo
             val populator = CompositeDatabasePopulator().apply {
                 val migrations = ClassPathResource("db/migration")
 
-                migrations.file.list().orEmpty().forEach {
+                migrations.file.list().orEmpty().sorted().forEach {
                     val resource = ClassPathResource("db/migration/$it")
 
                     addPopulators(ResourceDatabasePopulator(resource))

@@ -8,8 +8,8 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 
 @SpringBootApplication
 @EnableWebFluxSecurity
-@EnableR2dbcRepositories("com.diekeditora.infra")
-@ComponentScan("com.diekeditora.domain", "com.diekeditora.web")
+@EnableR2dbcRepositories("com.diekeditora")
+@ComponentScan("com.diekeditora")
 class DiekEditoraApp
 
 fun main(args: Array<String>) {

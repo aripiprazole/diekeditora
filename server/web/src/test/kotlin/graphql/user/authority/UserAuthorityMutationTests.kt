@@ -33,7 +33,7 @@ class UserAuthorityMutationTests(
         val user = userRepository.save(userFactory.create())
         val authority = authorityRepository.save(authorityFactory.create())
 
-        val userAuthorities = userAuthorityRepository.findByUser(user).toList().map { it.value }
+        val userAuthorities = userAuthorityRepository.findByUser(user).toList().map { it.authority }
 
         client.request(AddAuthorityMutation) {
             authentication = auth.mock("authority.admin")
@@ -44,7 +44,7 @@ class UserAuthorityMutationTests(
 
         assertEquals(
             userAuthorities + authority,
-            userAuthorityRepository.findByUser(user).toList().map { it.value }
+            userAuthorityRepository.findByUser(user).toList().map { it.authority }
         )
     }
 
@@ -70,7 +70,7 @@ class UserAuthorityMutationTests(
             userAuthorityRepository.save(user, it)
         }
 
-        val userAuthorities = userAuthorityRepository.findByUser(user).toList().map { it.value }
+        val userAuthorities = userAuthorityRepository.findByUser(user).toList().map { it.authority }
 
         client.request(RemoveAuthorityMutation) {
             authentication = auth.mock("authority.admin")
@@ -81,7 +81,7 @@ class UserAuthorityMutationTests(
 
         assertEquals(
             userAuthorities - authority,
-            userAuthorityRepository.findByUser(user).toList().map { it.value }
+            userAuthorityRepository.findByUser(user).toList().map { it.authority }
         )
     }
 
