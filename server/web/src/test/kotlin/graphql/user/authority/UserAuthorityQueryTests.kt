@@ -11,7 +11,6 @@ import com.diekeditora.web.tests.graphql.NOT_ENOUGH_AUTHORITIES
 import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -41,7 +40,7 @@ class UserAuthorityQueryTests(
             variables = UserAuthoritiesQuery.Variables(username = user.username)
         }
 
-        assertEquals(userAuthorityRepository.findByUser(user).map { it.value }, response)
+        assertEquals(userAuthorityRepository.findByUser(user).map { it.authority }, response)
     }
 
     @Test

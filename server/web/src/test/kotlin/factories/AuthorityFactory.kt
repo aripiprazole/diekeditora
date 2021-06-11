@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component
 @Component
 class AuthorityFactory : Factory<Authority> {
     override fun create(): Authority {
-        return Authority(value = generateRandomString(4) + "." + generateRandomString(4))
+        return Authority(authority = generateRandomString(4) + "." + generateRandomString(4))
     }
 }

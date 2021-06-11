@@ -15,26 +15,8 @@ internal class AuthorityServiceImpl(val repository: AuthorityRepository) : Autho
 
     @Transactional
     override suspend fun findAllAuthorities(): Set<String> {
-        return repository.findAll().map { it.value }.toSet().also {
+        return repository.findAll().map { it.authority }.toSet().also {
             log.trace("Successfully found all authorities %s", it)
         }
-    }
-
-    @Transactional
-    override suspend fun createAuthorities(vararg authorities: String): Set<String> {
-        return repository
-            .saveAll(authorities.map { Authority.of(it) })
-            .map(Authority::value)
-            .toSet()
-            .also {
-                log.trace("Successfully saved authorities %s into database", authorities.toList())
-            }
-    }
-
-    @Transactional
-    override suspend fun deleteAuthorities(vararg authorities: String) {
-        repository.deleteAll(authorities.map { Authority.of(it) })
-
-        log.trace("Successfully deleted authorities %s from database", authorities.toList())
     }
 }

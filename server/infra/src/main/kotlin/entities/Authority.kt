@@ -1,31 +1,28 @@
 package com.diekeditora.infra.entities
 
-import org.springframework.data.annotation.Id
-import java.util.UUID
-
-class Authority(@Id val id: UUID? = null, val value: String) {
+class Authority(val authority: String) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
         other as Authority
 
-        if (value != other.value) return false
+        if (authority != other.authority) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return value.hashCode()
+        return authority.hashCode()
     }
 
     override fun toString(): String {
-        return "Authority($value)"
+        return "Authority($authority)"
     }
 
     companion object {
         fun of(value: String): Authority {
-            return Authority(null, value)
+            return Authority(value)
         }
     }
 }
