@@ -1,0 +1,50 @@
+package com.diekeditora.web.tests.graphql.user.authority
+
+import com.diekeditora.infra.repositories.UserAuthorityRepository
+import com.diekeditora.infra.repositories.UserRepository
+import com.diekeditora.web.tests.factories.AuthorityFactory
+import com.diekeditora.web.tests.factories.UserFactory
+import com.diekeditora.web.tests.graphql.GraphQLTestClient
+import com.diekeditora.web.tests.graphql.request
+import com.diekeditora.web.tests.utils.AuthenticationMocker
+import com.diekeditora.web.tests.utils.assertGraphQLForbidden
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import kotlin.test.assertEquals
+
+class UserAuthorityQueryTests(
+    @Autowired val userRepository: UserRepository,
+    @Autowired val userFactory: UserFactory,
+    @Autowired val authorityFactory: AuthorityFactory,
+    @Autowired val userAuthorityRepository: UserAuthorityRepository,
+    @Autowired val client: GraphQLTestClient,
+    @Autowired val auth: AuthenticationMocker,
+) {
+    @Test
+    fun `test should retrieve user's roles`(): Unit = runBlocking {
+        val user = userRepository.save(userFactory.create()).also {
+            userAuthorityRepository.save(it, authorityFactory.createMany(5))
+        }
+
+        val response = client.request(UserAuthoritiesQuery) {
+            authentication = auth.mock("authority.view")
+            variables = UserAuthoritiesQuery.Variables(username = user.username)
+        }
+
+        assertEquals(userAuthorityRepository.findByUser(user).map { it.authority }, response)
+    }
+
+    @Test
+    fun `test should not retrieve user's roles without authorities`(): Unit = runBlocking {
+        val user = userRepository.save(userFactory.create())
+
+        assertGraphQLForbidden {
+            client.request(UserAuthoritiesQuery) {
+                authentication = auth.mock()
+                variables = UserAuthoritiesQuery.Variables(username = user.username)
+            }
+        }
+    }
+}
