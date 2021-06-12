@@ -3,7 +3,10 @@
 package com.diekeditora.web.tests.graphql.authority
 
 import com.diekeditora.infra.repositories.AuthorityRepository
+import com.diekeditora.infra.repositories.UserAuthorityRepository
+import com.diekeditora.infra.repositories.UserRepository
 import com.diekeditora.web.tests.factories.AuthorityFactory
+import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
 import com.diekeditora.web.tests.graphql.TestQuery
 import com.diekeditora.web.tests.graphql.request
@@ -21,14 +24,19 @@ import kotlin.test.assertEquals
 
 @SpringBootTest
 class AuthorityQueryTests(
+    @Autowired private val userRepository: UserRepository,
     @Autowired private val authorityRepository: AuthorityRepository,
+    @Autowired private val userAuthorityRepository: UserAuthorityRepository,
     @Autowired private val authorityFactory: AuthorityFactory,
+    @Autowired private val userFactory: UserFactory,
     @Autowired private val client: GraphQLTestClient,
     @Autowired private val auth: AuthenticationMocker,
 ) {
     @Test
     fun `test should retrieve all authorities`(): Unit = runBlocking {
-        authorityRepository.saveAll(authorityFactory.createMany(15))
+        userRepository.save(userFactory.create()).also { user ->
+            userAuthorityRepository.save(user, authorityFactory.createMany(15))
+        }
 
         val response = client.request(AuthoritiesQuery) {
             authentication = auth.mock("authority.view")
@@ -40,7 +48,9 @@ class AuthorityQueryTests(
 
     @Test
     fun `test not should retrieve all authorities without authorities`(): Unit = runBlocking {
-        authorityRepository.saveAll(authorityFactory.createMany(15))
+        userRepository.save(userFactory.create()).also { user ->
+            userAuthorityRepository.save(user, authorityFactory.createMany(15))
+        }
 
         assertGraphQLForbidden {
             client.request(AuthoritiesQuery) {
