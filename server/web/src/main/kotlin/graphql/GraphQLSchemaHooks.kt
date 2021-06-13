@@ -79,7 +79,9 @@ class GraphQLSchemaHooks(val json: Json) : SchemaGeneratorHooks {
 
     @Suppress("Detekt.ReturnCount")
     override fun willGenerateGraphQLType(type: KType): GraphQLType? {
-        val name = type.jvmErasure.simpleName.orEmpty()
+        val name = type.jvmErasure.simpleName.orEmpty().let { typeName ->
+            type.arguments.joinToString("") + typeName
+        }
 
         // creates a reference if it already exists
         cache[name]?.let {
