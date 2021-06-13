@@ -10,7 +10,7 @@ class RoleFactory(val faker: Faker, val authorityFactory: AuthorityFactory) : Fa
     override fun create(): Role {
         return Role(
             name = faker.funnyName.name(),
-            authorities = authorityFactory.createMany(Random.nextInt(5)).map { it.authority }.toSet()
+            authorities = authorityFactory.createMany(Random.nextInt(5)).map { it.authority }
         )
     }
 }
