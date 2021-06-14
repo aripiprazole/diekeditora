@@ -1,5 +1,6 @@
 package com.diekeditora.domain.user
 
+import com.diekeditora.domain.authority.Role
 import com.diekeditora.domain.page.Page
 import com.google.firebase.auth.FirebaseToken
 import org.springframework.stereotype.Service
@@ -11,6 +12,10 @@ interface UserService {
     suspend fun findOrCreateUserByToken(token: FirebaseToken): User
 
     suspend fun findPaginatedUsers(page: Int = 1, pageSize: Int = 15): Page<User>
+
+    suspend fun findUserRoles(user: User): List<Role>
+
+    suspend fun findUserAuthorities(user: User): List<String>
 
     suspend fun update(target: User, user: User): User
 

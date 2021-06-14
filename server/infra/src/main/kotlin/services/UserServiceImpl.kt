@@ -1,9 +1,12 @@
 package com.diekeditora.infra.services
 
+import com.diekeditora.domain.authority.Role
 import com.diekeditora.domain.page.Page
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
+import com.diekeditora.infra.repositories.UserAuthorityRepository
 import com.diekeditora.infra.repositories.UserRepository
+import com.diekeditora.infra.repositories.UserRoleRepository
 import com.diekeditora.shared.generateRandomString
 import com.diekeditora.shared.logger
 import com.google.firebase.auth.FirebaseToken
@@ -13,7 +16,11 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
-internal class UserServiceImpl(private val repository: UserRepository) : UserService {
+internal class UserServiceImpl(
+    val repository: UserRepository,
+    val userAuthorityRepository: UserAuthorityRepository,
+    val userRoleRepository: UserRoleRepository,
+) : UserService {
     private val log by logger()
 
     @Transactional
@@ -37,6 +44,20 @@ internal class UserServiceImpl(private val repository: UserRepository) : UserSer
 
         return Page.of(users, pageSize, page, repository.estimateTotalUsers()).also {
             log.trace("Successfully found page of user %d", page)
+        }
+    }
+
+    @Transactional
+    override suspend fun findUserAuthorities(user: User): List<String> {
+        return userAuthorityRepository.findByUser(user).toList().map { it.authority }.also {
+            log.trace("Successfully found user authorities %s by user", it)
+        }
+    }
+
+    @Transactional
+    override suspend fun findUserRoles(user: User): List<Role> {
+        return userRoleRepository.findByUser(user).toList().also {
+            log.trace("Successfully found user roles %s by user", it)
         }
     }
 

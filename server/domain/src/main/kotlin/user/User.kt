@@ -1,10 +1,14 @@
 package com.diekeditora.domain.user
 
+import com.diekeditora.domain.authority.Role
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
+import graphql.schema.DataFetchingEnvironment
+import kotlinx.coroutines.future.await
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
+import org.springframework.security.access.prepost.PreAuthorize
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
@@ -24,6 +28,22 @@ data class User(
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
 ) {
+    @PreAuthorize("hasAuthority('role.view')")
+    suspend fun roles(env: DataFetchingEnvironment): List<Role> {
+        return env
+            .getDataLoader<User, List<Role>>("UserRoleLoader")
+            .load(this)
+            .await()
+    }
+
+    @PreAuthorize("hasAuthority('authority.view')")
+    suspend fun authorities(env: DataFetchingEnvironment): List<String> {
+        return env
+            .getDataLoader<User, List<String>>("UserAuthorityLoader")
+            .load(this)
+            .await()
+    }
+
     @GraphQLIgnore
     fun update(user: User): User {
         return copy(
