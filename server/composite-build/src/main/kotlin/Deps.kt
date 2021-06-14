@@ -110,6 +110,7 @@ class Libs {
     }
 
     class SpringSecurity {
+        val core = "org.springframework.security:spring-security-oauth2-client:5.5.0"
         val oauth2Client = "org.springframework.security:spring-security-oauth2-client:5.5.0"
         val test = "org.springframework.security:spring-security-test:5.5.0"
     }

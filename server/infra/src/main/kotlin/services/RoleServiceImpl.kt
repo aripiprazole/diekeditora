@@ -29,17 +29,16 @@ internal class RoleServiceImpl(
 
     @Transactional
     override suspend fun findRoleByName(name: String): Role? {
-        return repository.findByName(name)
-            ?.let { role ->
-                role.copy(
-                    authorities = roleAuthorityRepository
-                        .findByRole(role).toList()
-                        .map { it.authority }
-                )
-            }
-            ?.also {
-                log.trace("Successfully found role by %s by its name", it)
-            }
+        return repository.findByName(name)?.also {
+            log.trace("Successfully found role by %s by its name", it)
+        }
+    }
+
+    @Transactional
+    override suspend fun findRoleAuthorities(role: Role): List<String> {
+        return roleAuthorityRepository.findByRole(role).toList().map { it.authority }.also {
+            log.trace("Successfully found role authorities %s by role", it)
+        }
     }
 
     @Transactional

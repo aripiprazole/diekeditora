@@ -41,7 +41,14 @@ class RoleQueryTests(
         connection.edges.forEachIndexed { index, edge ->
             val originalEdge = original.edges[index]
 
-            assertEquals(originalEdge.node, edge.node)
+            assertEquals(originalEdge.node.name, edge.node.name)
+            assertEquals(originalEdge.node.createdAt, edge.node.createdAt)
+            assertEquals(originalEdge.node.updatedAt, edge.node.updatedAt)
+            assertEquals(
+                originalEdge.node.authorities(newDataFetchingEnvironment().build()),
+                edge.node.authorities
+            )
+
             assertEquals(originalEdge.cursor, edge.cursor)
         }
 

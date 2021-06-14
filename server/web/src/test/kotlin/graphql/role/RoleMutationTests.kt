@@ -8,6 +8,7 @@ import com.diekeditora.web.tests.graphql.GraphQLTestClient
 import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
 import com.diekeditora.web.tests.utils.assertGraphQLForbidden
+import graphql.schema.DataFetchingEnvironmentImpl.newDataFetchingEnvironment
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,18 +27,18 @@ class RoleMutationTests(
 
     @Test
     fun `test should create role`(): Unit = runBlocking {
-        var role = roleFactory.create()
+        val role = roleFactory.create()
 
         val name = role.name
-        val authorities = role.authorities
+        val authorities = role.authorities(newDataFetchingEnvironment().build())
 
-        role = client.request(CreateRoleMutation) {
+        val response = client.request(CreateRoleMutation) {
             authentication = auth.mock("role.store")
             variables = CreateRoleMutation.Variables(role)
         }
 
-        assertEquals(name, role.name)
-        assertEquals(authorities, role.authorities)
+        assertEquals(name, response.name)
+        assertEquals(authorities, response.authorities)
     }
 
     @Test
