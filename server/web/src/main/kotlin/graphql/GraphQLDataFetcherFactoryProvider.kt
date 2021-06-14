@@ -66,7 +66,9 @@ class GraphQLDataFetcher(
     }
 
     private fun runFunction(env: DataFetchingEnvironment): Any? {
-        val parameters = arrayOf(fn.instanceParameter!! to target) +
+        val instance: Any? = target ?: env.getSource()
+
+        val parameters = arrayOf(fn.instanceParameter!! to instance) +
             fn.valueParameters.mapNotNull { mapParameter(it, env) }
 
         return if (fn.isSuspend) {
@@ -102,8 +104,10 @@ class GraphQLDataFetcher(
     }
 
     private fun AuthGraphQLContext.authenticate(value: String, env: DataFetchingEnvironment) {
+        val instance = target ?: env.getSource()
+
         val method = fn.javaMethod ?: error("Could not get java method from function $fn")
-        val invocation = SimpleMethodInvocation(target, method, env.arguments.values)
+        val invocation = SimpleMethodInvocation(instance, method, env.arguments.values)
 
         val result = parser
             .parseExpression(value)
