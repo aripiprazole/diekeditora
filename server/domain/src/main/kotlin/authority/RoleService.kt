@@ -7,6 +7,8 @@ interface RoleService {
 
     suspend fun findRoleByName(name: String): Role?
 
+    suspend fun findRoleAuthorities(role: Role): List<String>
+
     suspend fun save(role: Role): Role
 
     suspend fun update(target: Role, role: Role): Role
