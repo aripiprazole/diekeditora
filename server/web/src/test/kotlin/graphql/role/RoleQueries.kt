@@ -7,12 +7,10 @@ import com.diekeditora.web.graphql.role.DeleteRoleInput
 import com.diekeditora.web.graphql.role.UpdateRoleInput
 import com.diekeditora.web.tests.graphql.TestQuery
 import graphql.relay.DefaultConnection
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
-import java.time.LocalDateTime
 import kotlin.reflect.typeOf
 
-object RoleQuery : TestQuery<RoleQuery.Variables, Role?>(typeOf<RoleResponse?>()) {
+object RoleQuery : TestQuery<RoleQuery.Variables, Role?>(typeOf<Role?>()) {
     private const val name = "\$name"
 
     override val queryName = "role"
@@ -21,7 +19,6 @@ object RoleQuery : TestQuery<RoleQuery.Variables, Role?>(typeOf<RoleResponse?>()
         query RoleQuery($name: String!) {
             role(name: $name) {
                 name
-                authorities
                 createdAt
                 updatedAt
             }
@@ -32,8 +29,8 @@ object RoleQuery : TestQuery<RoleQuery.Variables, Role?>(typeOf<RoleResponse?>()
     data class Variables(val name: String)
 }
 
-object RolesQuery : TestQuery<RolesQuery.Variables, DefaultConnection<RoleResponse>>(
-    typeOf<DefaultConnection<RoleResponse>>()
+object RolesQuery : TestQuery<RolesQuery.Variables, DefaultConnection<Role>>(
+    typeOf<DefaultConnection<Role>>()
 ) {
     private const val page = "\$page"
 
@@ -53,7 +50,6 @@ object RolesQuery : TestQuery<RolesQuery.Variables, DefaultConnection<RoleRespon
                     cursor
                     node {
                         name
-                        authorities
                         createdAt
                         updatedAt
                     }
@@ -66,16 +62,13 @@ object RolesQuery : TestQuery<RolesQuery.Variables, DefaultConnection<RoleRespon
     data class Variables(val page: Int)
 }
 
-object CreateRoleMutation : TestQuery<CreateRoleMutation.Variables, RoleResponse>(
-    typeOf<RoleResponse>()
-) {
+object CreateRoleMutation : TestQuery<CreateRoleMutation.Variables, Role>(typeOf<Role>()) {
     override val queryName = "createRole"
     override val operationName = "CreateRole"
     override val query = """
         mutation CreateRole($input: Role!) {
             createRole(input: $input) {
                 name
-                authorities
                 createdAt
                 updatedAt
             }
@@ -93,7 +86,6 @@ object UpdateRoleMutation : TestQuery<UpdateRoleMutation.Variables, Role?>(typeO
         mutation UpdateRole($input: UpdateRoleInput!) {
             updateRole(input: $input) {
                 name
-                authorities
                 createdAt
                 updatedAt
             }
@@ -116,11 +108,3 @@ object DeleteRoleMutation : TestQuery<DeleteRoleMutation.Variables, Unit>(typeOf
     @Serializable
     data class Variables(val input: DeleteRoleInput)
 }
-
-@Serializable
-data class RoleResponse(
-    val name: String,
-    val authorities: List<String>,
-    val createdAt: @Contextual LocalDateTime,
-    val updatedAt: @Contextual LocalDateTime
-)
