@@ -3,8 +3,6 @@
 package com.diekeditora.web.tests.graphql.role
 
 import com.diekeditora.domain.authority.Role
-import com.diekeditora.web.graphql.role.DeleteRoleInput
-import com.diekeditora.web.graphql.role.UpdateRoleInput
 import com.diekeditora.web.tests.graphql.TestQuery
 import graphql.relay.DefaultConnection
 import kotlinx.serialization.Serializable
@@ -66,7 +64,7 @@ object CreateRoleMutation : TestQuery<CreateRoleMutation.Variables, Role>(typeOf
     override val queryName = "createRole"
     override val operationName = "CreateRole"
     override val query = """
-        mutation CreateRole($input: Role!) {
+        mutation CreateRole($input: RoleInput!) {
             createRole(input: $input) {
                 name
                 createdAt
@@ -80,11 +78,12 @@ object CreateRoleMutation : TestQuery<CreateRoleMutation.Variables, Role>(typeOf
 }
 
 object UpdateRoleMutation : TestQuery<UpdateRoleMutation.Variables, Role?>(typeOf<Role?>()) {
+    private const val name = "\$name"
     override val queryName = "updateRole"
     override val operationName = "UpdateRole"
     override val query = """
-        mutation UpdateRole($input: UpdateRoleInput!) {
-            updateRole(input: $input) {
+        mutation UpdateRole($name: String!, $input: RoleInput!) {
+            updateRole(name: $name, input: $input) {
                 name
                 createdAt
                 updatedAt
@@ -93,18 +92,20 @@ object UpdateRoleMutation : TestQuery<UpdateRoleMutation.Variables, Role?>(typeO
     """.trimIndent()
 
     @Serializable
-    data class Variables(val input: UpdateRoleInput)
+    data class Variables(val name: String, val input: Role)
 }
 
 object DeleteRoleMutation : TestQuery<DeleteRoleMutation.Variables, Unit>(typeOf<Unit>()) {
+    private const val name = "\$name"
+
     override val queryName = "deleteRole"
     override val operationName = "DeleteRole"
     override val query = """
-        mutation DeleteRole($input: DeleteRoleInput!) {
-            deleteRole(input: $input)
+        mutation DeleteRole($name: String!) {
+            deleteRole(name: $name)
         }
     """.trimIndent()
 
     @Serializable
-    data class Variables(val input: DeleteRoleInput)
+    data class Variables(val name: String)
 }

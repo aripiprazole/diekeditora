@@ -13,7 +13,7 @@ import java.util.UUID
 
 @SerialName("Role")
 @Serializable
-data class Role @JvmOverloads constructor(
+data class Role(
     @Id
     @GraphQLIgnore
     @kotlinx.serialization.Transient

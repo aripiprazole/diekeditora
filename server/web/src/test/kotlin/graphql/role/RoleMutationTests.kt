@@ -1,8 +1,6 @@
 package com.diekeditora.web.tests.graphql.role
 
 import com.diekeditora.infra.repositories.RoleRepository
-import com.diekeditora.web.graphql.role.DeleteRoleInput
-import com.diekeditora.web.graphql.role.UpdateRoleInput
 import com.diekeditora.web.tests.factories.RoleFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
 import com.diekeditora.web.tests.graphql.request
@@ -57,9 +55,7 @@ class RoleMutationTests(
 
         role = client.request(UpdateRoleMutation) {
             authentication = auth.mock("role.update")
-            variables = UpdateRoleMutation.Variables(
-                input = UpdateRoleInput(role.name, newRole),
-            )
+            variables = UpdateRoleMutation.Variables(name = role.name, input = newRole)
         }.let(::assertNotNull)
 
         assertEquals(newRole.name, role.name)
@@ -74,9 +70,7 @@ class RoleMutationTests(
         assertGraphQLForbidden {
             client.request(UpdateRoleMutation) {
                 authentication = auth.mock()
-                variables = UpdateRoleMutation.Variables(
-                    input = UpdateRoleInput(role.name, newRole),
-                )
+                variables = UpdateRoleMutation.Variables(name = role.name, input = newRole)
             }
         }
     }
@@ -87,7 +81,7 @@ class RoleMutationTests(
 
         client.request(DeleteRoleMutation) {
             authentication = auth.mock("role.destroy")
-            variables = DeleteRoleMutation.Variables(input = DeleteRoleInput(role.name))
+            variables = DeleteRoleMutation.Variables(name = role.name)
         }
 
         assertNull(roleRepository.findById(role.id!!))
@@ -100,7 +94,7 @@ class RoleMutationTests(
         assertGraphQLForbidden {
             client.request(DeleteRoleMutation) {
                 authentication = auth.mock()
-                variables = DeleteRoleMutation.Variables(input = DeleteRoleInput(role.name))
+                variables = DeleteRoleMutation.Variables(name = role.name)
             }
         }
     }
