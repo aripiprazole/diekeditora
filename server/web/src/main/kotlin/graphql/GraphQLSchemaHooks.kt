@@ -77,7 +77,6 @@ class GraphQLSchemaHooks(val json: Json) : SchemaGeneratorHooks {
         return builder.additionalType(Relay.pageInfoType)
     }
 
-    @Suppress("Detekt.ReturnCount")
     override fun willGenerateGraphQLType(type: KType): GraphQLType? {
         val name = type.jvmErasure.simpleName.orEmpty().let { typeName ->
             type.arguments.joinToString("") + typeName
@@ -88,12 +87,12 @@ class GraphQLSchemaHooks(val json: Json) : SchemaGeneratorHooks {
             return typeRef(name)
         }
 
-        // skip builtin serializers
-        if (type.jvmErasure.qualifiedName.orEmpty().startsWith("kotlin.")) {
-            return null
-        }
-
         val parser = findParserOrDefault(type) {
+            // skip builtin serializers
+            if (type.jvmErasure.qualifiedName.orEmpty().startsWith("kotlin.")) {
+                return@findParserOrDefault null
+            }
+
             parseScalar(it, json.serializersModule.serializerOrNull(type))
         }
 
