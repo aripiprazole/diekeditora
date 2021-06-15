@@ -4,8 +4,6 @@ package com.diekeditora.web.tests.graphql.user
 
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserInput
-import com.diekeditora.web.graphql.user.DeleteUserInput
-import com.diekeditora.web.graphql.user.UpdateUserInput
 import com.diekeditora.web.tests.graphql.TestQuery
 import graphql.relay.DefaultConnection
 import kotlinx.serialization.Serializable
@@ -93,11 +91,12 @@ object CreateUserMutation : TestQuery<CreateUserMutation.Variables, User>(typeOf
 }
 
 object UpdateUserMutation : TestQuery<UpdateUserMutation.Variables, User?>(typeOf<User?>()) {
+    private const val username = "\$username"
     override val queryName = "updateUser"
     override val operationName = "UpdateUser"
     override val query = """
-        mutation UpdateUser($input: UpdateUserInput!) {
-            updateUser(input: $input) {
+        mutation UpdateUser($username: String!, $input: UserInput!) {
+            updateUser(username: $username, input: $input) {
                 name
                 username
                 email
@@ -110,15 +109,17 @@ object UpdateUserMutation : TestQuery<UpdateUserMutation.Variables, User?>(typeO
     """.trimIndent()
 
     @Serializable
-    data class Variables(val input: UpdateUserInput)
+    data class Variables(val username: String, val input: UserInput)
 }
 
 object DeleteUserMutation : TestQuery<DeleteUserMutation.Variables, User?>(typeOf<User?>()) {
+    private const val username = "\$username"
+
     override val queryName = "deleteUser"
     override val operationName = "DeleteUser"
     override val query = """
-        mutation DeleteUser($input: DeleteUserInput!) {
-            deleteUser(input: $input) {
+        mutation DeleteUser($username: String!) {
+            deleteUser(username: $username) {
                 name
                 username
                 email
@@ -131,5 +132,5 @@ object DeleteUserMutation : TestQuery<DeleteUserMutation.Variables, User?>(typeO
     """.trimIndent()
 
     @Serializable
-    data class Variables(val input: DeleteUserInput)
+    data class Variables(val username: String)
 }

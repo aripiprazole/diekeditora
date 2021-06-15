@@ -36,7 +36,7 @@ internal class RoleServiceImpl(
 
     @Transactional
     override suspend fun findRoleAuthorities(role: Role): List<String> {
-        return roleAuthorityRepository.findByRole(role).toList().map { it.authority }.also {
+        return roleAuthorityRepository.findByRole(role).toList().map { it.value }.also {
             log.trace("Successfully found role authorities %s by role", it)
         }
     }

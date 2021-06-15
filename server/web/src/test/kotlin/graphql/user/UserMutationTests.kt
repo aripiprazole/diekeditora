@@ -2,8 +2,6 @@ package com.diekeditora.web.tests.graphql.user
 
 import com.diekeditora.domain.user.UserInput
 import com.diekeditora.infra.repositories.UserRepository
-import com.diekeditora.web.graphql.user.DeleteUserInput
-import com.diekeditora.web.graphql.user.UpdateUserInput
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
 import com.diekeditora.web.tests.graphql.request
@@ -72,7 +70,8 @@ class UserMutationTests(
         user = client.request(UpdateUserMutation) {
             authentication = auth.mock("user.update")
             variables = UpdateUserMutation.Variables(
-                input = UpdateUserInput(user.username, UserInput.from(newUser)),
+                username = user.username,
+                input = UserInput.from(newUser),
             )
         }.let(::assertNotNull)
 
@@ -90,7 +89,8 @@ class UserMutationTests(
             client.request(UpdateUserMutation) {
                 authentication = auth.mock()
                 variables = UpdateUserMutation.Variables(
-                    input = UpdateUserInput(user.username, UserInput.from(newUser)),
+                    username = user.username,
+                    input = UserInput.from(newUser)
                 )
             }
         }
@@ -102,9 +102,7 @@ class UserMutationTests(
 
         user = client.request(DeleteUserMutation) {
             authentication = auth.mock("user.destroy")
-            variables = DeleteUserMutation.Variables(
-                input = DeleteUserInput(username = user.username)
-            )
+            variables = DeleteUserMutation.Variables(user.username)
         }.let(::assertNotNull)
 
         assertNotNull(user.deletedAt)
@@ -117,9 +115,7 @@ class UserMutationTests(
         assertGraphQLForbidden {
             client.request(DeleteUserMutation) {
                 authentication = auth.mock()
-                variables = DeleteUserMutation.Variables(
-                    input = DeleteUserInput(username = user.username)
-                )
+                variables = DeleteUserMutation.Variables(user.username)
             }
         }
     }
