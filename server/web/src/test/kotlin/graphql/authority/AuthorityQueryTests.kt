@@ -54,21 +54,21 @@ class AuthorityQueryTests(
 
         assertGraphQLForbidden {
             client.request(AuthoritiesQuery) {
-                authentication = auth.mock("authority.view")
+                authentication = auth.mock()
                 variables = AuthoritiesQuery.Variables
             }
         }
     }
 }
 
-object AuthoritiesQuery :
-    TestQuery<AuthoritiesQuery.Variables, Set<String>>(typeOf<Set<String>>()) {
+object AuthoritiesQuery : TestQuery<AuthoritiesQuery.Variables, Set<String>>(
+    typeOf<Set<String>>()
+) {
     override val queryName = "authorities"
     override val operationName = "AuthoritiesQuery"
     override val query = """
         query AuthoritiesQuery {
-            authorities() {
-            }
+            authorities
         }
     """.trimIndent()
 
