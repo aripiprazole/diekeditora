@@ -2,8 +2,6 @@ package com.diekeditora.web.tests.graphql.user.authority
 
 import com.diekeditora.infra.repositories.UserAuthorityRepository
 import com.diekeditora.infra.repositories.UserRepository
-import com.diekeditora.web.graphql.user.authority.UserAddAuthorityInput
-import com.diekeditora.web.graphql.user.authority.UserRemoveAuthorityInput
 import com.diekeditora.web.tests.factories.AuthorityFactory
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
@@ -27,70 +25,36 @@ class UserAuthorityMutationTests(
     @Autowired val auth: AuthenticationMocker,
 ) {
     @Test
-    fun `test should add user's an authority`(): Unit = runBlocking {
+    fun `test should update user's authorities`(): Unit = runBlocking {
         val user = userRepository.save(userFactory.create())
         val authority = authorityFactory.create().also { userAuthorityRepository.save(user, it) }
 
-        val userAuthorities = userAuthorityRepository.findByUser(user).toList().map { it.authority }
+        val authorities = userAuthorityRepository.findByUser(user).toList().map { it.value }
 
-        client.request(AddAuthorityMutation) {
+        client.request(UpdateUserAuthoritiesQuery) {
             authentication = auth.mock("authority.admin")
-            variables = AddAuthorityMutation.Variables(
-                input = UserAddAuthorityInput(user.username, setOf(authority.authority))
+            variables = UpdateUserAuthoritiesQuery.Variables(
+                username = user.username,
+                authorities = authorities + authority.value,
             )
         }
 
         assertEquals(
-            userAuthorities + authority,
-            userAuthorityRepository.findByUser(user).toList().map { it.authority }
+            authorities + authority.value,
+            userAuthorityRepository.findByUser(user).toList().map { it.value }
         )
     }
 
     @Test
     fun `test should not add user's an authority without authorities`(): Unit = runBlocking {
         val user = userRepository.save(userFactory.create())
-        val authority = authorityFactory.create().also { userAuthorityRepository.save(user, it) }
 
         assertGraphQLForbidden {
-            client.request(AddAuthorityMutation) {
+            client.request(UpdateUserAuthoritiesQuery) {
                 authentication = auth.mock()
-                variables = AddAuthorityMutation.Variables(
-                    input = UserAddAuthorityInput(user.username, setOf(authority.authority))
-                )
-            }
-        }
-    }
-
-    @Test
-    fun `test should remove an authority from user`(): Unit = runBlocking {
-        val user = userRepository.save(userFactory.create())
-        val authority = authorityFactory.create().also { userAuthorityRepository.save(user, it) }
-
-        val userAuthorities = userAuthorityRepository.findByUser(user).toList().map { it.authority }
-
-        client.request(RemoveAuthorityMutation) {
-            authentication = auth.mock("authority.admin")
-            variables = RemoveAuthorityMutation.Variables(
-                input = UserRemoveAuthorityInput(user.username, setOf(authority.authority))
-            )
-        }
-
-        assertEquals(
-            userAuthorities - authority,
-            userAuthorityRepository.findByUser(user).toList().map { it.authority }
-        )
-    }
-
-    @Test
-    fun `test should not remove an authority from user without authorities`(): Unit = runBlocking {
-        val user = userRepository.save(userFactory.create())
-        val authority = authorityFactory.create().also { userAuthorityRepository.save(user, it) }
-
-        assertGraphQLForbidden {
-            client.request(RemoveAuthorityMutation) {
-                authentication = auth.mock()
-                variables = RemoveAuthorityMutation.Variables(
-                    input = UserRemoveAuthorityInput(user.username, setOf(authority.authority))
+                variables = UpdateUserAuthoritiesQuery.Variables(
+                    username = user.username,
+                    authorities = listOf(),
                 )
             }
         }

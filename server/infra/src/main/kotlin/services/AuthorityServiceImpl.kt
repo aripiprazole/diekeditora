@@ -1,7 +1,6 @@
 package com.diekeditora.infra.services
 
 import com.diekeditora.domain.authority.AuthorityService
-import com.diekeditora.infra.entities.Authority
 import com.diekeditora.infra.repositories.AuthorityRepository
 import com.diekeditora.shared.logger
 import kotlinx.coroutines.flow.map
@@ -15,7 +14,7 @@ internal class AuthorityServiceImpl(val repository: AuthorityRepository) : Autho
 
     @Transactional
     override suspend fun findAllAuthorities(): Set<String> {
-        return repository.findAll().map { it.authority }.toSet().also {
+        return repository.findAll().map { it.value }.toSet().also {
             log.trace("Successfully found all authorities %s", it)
         }
     }

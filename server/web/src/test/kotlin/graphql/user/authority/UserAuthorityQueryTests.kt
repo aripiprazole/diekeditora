@@ -9,6 +9,7 @@ import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
 import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,7 +34,10 @@ class UserAuthorityQueryTests(
             variables = UserAuthoritiesQuery.Variables(username = user.username)
         }
 
-        assertEquals(userAuthorityRepository.findByUser(user).map { it.authority }, response)
+        assertEquals(
+            userAuthorityRepository.findByUser(user).map { it.value }.toList(),
+            response.authorities
+        )
     }
 
     @Test

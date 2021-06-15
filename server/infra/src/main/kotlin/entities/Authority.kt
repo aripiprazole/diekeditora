@@ -1,23 +1,25 @@
 package com.diekeditora.infra.entities
 
-class Authority(val authority: String) {
+import org.springframework.data.relational.core.mapping.Column
+
+class Authority(@Column("authority") val value: String) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
         other as Authority
 
-        if (authority != other.authority) return false
+        if (value != other.value) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return authority.hashCode()
+        return value.hashCode()
     }
 
     override fun toString(): String {
-        return "Authority($authority)"
+        return "Authority($value)"
     }
 
     companion object {

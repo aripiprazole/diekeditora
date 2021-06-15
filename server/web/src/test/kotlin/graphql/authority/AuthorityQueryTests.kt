@@ -43,7 +43,7 @@ class AuthorityQueryTests(
             variables = AuthoritiesQuery.Variables
         }
 
-        assertEquals(authorityRepository.findAll().map { it.authority }.toSet(), response)
+        assertEquals(authorityRepository.findAll().map { it.value }.toSet(), response)
     }
 
     @Test

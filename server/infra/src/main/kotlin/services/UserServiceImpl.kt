@@ -49,7 +49,7 @@ internal class UserServiceImpl(
 
     @Transactional
     override suspend fun findUserAuthorities(user: User): List<String> {
-        return userAuthorityRepository.findByUser(user).toList().map { it.authority }.also {
+        return userAuthorityRepository.findByUser(user).toList().map { it.value }.also {
             log.trace("Successfully found user authorities %s by user", it)
         }
     }

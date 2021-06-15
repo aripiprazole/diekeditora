@@ -10,7 +10,6 @@ import org.springframework.r2dbc.core.flow
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
-import reactor.kotlin.core.publisher.toFlux
 
 @Repository
 interface RoleAuthorityRepository {
@@ -51,7 +50,7 @@ internal class RoleAuthorityRepositoryImpl(val template: R2dbcEntityTemplate) :
             val statement = connection.createStatement(INSERT_AUTHORITIES_QUERY)
 
             authorities.forEach {
-                statement.bind(0, roleId).bind(1, it.authority).add()
+                statement.bind(0, roleId).bind(1, it.value).add()
             }
 
             Flux.from(statement.execute())

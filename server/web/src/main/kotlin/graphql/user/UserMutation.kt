@@ -5,7 +5,6 @@ import com.diekeditora.domain.user.UserInput
 import com.diekeditora.domain.user.UserService
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
-import kotlinx.serialization.Serializable
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Component
 
@@ -19,23 +18,17 @@ class UserMutation(private val userService: UserService) : Mutation {
 
     @GraphQLDescription("Updates an user by its username with the provided data")
     @PreAuthorize("hasAuthority('user.update')")
-    suspend fun updateUser(input: UpdateUserInput): User? {
-        val user = userService.findUserByUsername(input.username) ?: return null
+    suspend fun updateUser(username: String, input: UserInput): User? {
+        val user = userService.findUserByUsername(username) ?: return null
 
-        return userService.update(user, input.data.toUser())
+        return userService.update(user, input.toUser())
     }
 
     @GraphQLDescription("Deletes an user by its username")
     @PreAuthorize("hasAuthority('user.destroy')")
-    suspend fun deleteUser(input: DeleteUserInput): User? {
-        val user = userService.findUserByUsername(input.username) ?: return null
+    suspend fun deleteUser(username: String): User? {
+        val user = userService.findUserByUsername(username) ?: return null
 
         return userService.delete(user)
     }
 }
-
-@Serializable
-data class DeleteUserInput(val username: String)
-
-@Serializable
-data class UpdateUserInput(val username: String, val data: UserInput)
