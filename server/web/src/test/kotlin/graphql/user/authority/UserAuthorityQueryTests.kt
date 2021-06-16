@@ -13,8 +13,10 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
 import kotlin.test.assertEquals
 
+@SpringBootTest
 class UserAuthorityQueryTests(
     @Autowired val userRepository: UserRepository,
     @Autowired val userFactory: UserFactory,
@@ -24,13 +26,13 @@ class UserAuthorityQueryTests(
     @Autowired val auth: AuthenticationMocker,
 ) {
     @Test
-    fun `test should retrieve user's roles`(): Unit = runBlocking {
+    fun `test should retrieve user's authorities`(): Unit = runBlocking {
         val user = userRepository.save(userFactory.create()).also {
             userAuthorityRepository.link(it, authorityFactory.createMany(5))
         }
 
         val response = client.request(UserAuthoritiesQuery) {
-            authentication = auth.mock("authority.view")
+            authentication = auth.mock("user.view", "authority.view")
             variables = UserAuthoritiesQuery.Variables(username = user.username)
         }
 
@@ -41,7 +43,7 @@ class UserAuthorityQueryTests(
     }
 
     @Test
-    fun `test should not retrieve user's roles without authorities`(): Unit = runBlocking {
+    fun `test should not retrieve user's authorities without authorities`(): Unit = runBlocking {
         val user = userRepository.save(userFactory.create())
 
         assertGraphQLForbidden {
