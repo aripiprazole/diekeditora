@@ -2,12 +2,14 @@
 
 package com.diekeditora.web.tests.graphql.user.authority
 
+import com.diekeditora.domain.user.UserInput
+import com.diekeditora.domain.user.UserPayload
 import com.diekeditora.web.tests.graphql.TestQuery
 import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf
 
-object UserAuthoritiesQuery : TestQuery<UserAuthoritiesQuery.Variables, UserResponse>(
-    typeOf<UserResponse>()
+object UserAuthoritiesQuery : TestQuery<UserAuthoritiesQuery.Variables, UserPayload>(
+    typeOf<UserPayload>()
 ) {
     private const val username = "\$username"
     override val queryName = "user"
@@ -15,6 +17,10 @@ object UserAuthoritiesQuery : TestQuery<UserAuthoritiesQuery.Variables, UserResp
     override val query = """
         query UserAuthoritiesQuery($username: String!) {
             user(username: $username) {
+                name
+                username
+                email
+                birthday
                 authorities
             }
         }
@@ -24,25 +30,50 @@ object UserAuthoritiesQuery : TestQuery<UserAuthoritiesQuery.Variables, UserResp
     data class Variables(val username: String)
 }
 
-object UpdateUserAuthoritiesQuery : TestQuery<UpdateUserAuthoritiesQuery.Variables, UserResponse>(
-    typeOf<UserResponse>()
+object LinkUserAuthoritiesQuery : TestQuery<LinkUserAuthoritiesQuery.Variables, UserPayload>(
+    typeOf<UserPayload>()
 ) {
-    private const val username = "\$username"
+    private const val user = "\$user"
     private const val authorities = "\$authorities"
 
-    override val queryName = "update"
-    override val operationName = "UpdateUserAuthoritiesQuery"
+    override val queryName = "linkAuthorities"
+    override val operationName = "LinkUserAuthoritiesQuery"
     override val query = """
-        mutation UpdateUserAuthoritiesQuery($username: String!, $authorities: [String!]) {
-            updateUser(username: $username, authorities: $authorities) {
+        mutation LinkUserAuthoritiesQuery($user: UserInput!, $authorities: [String!]!) {
+            linkAuthorities(user: $user, authorities: $authorities) {
+                name
+                username
+                email
+                birthday
                 authorities
             }
         }
     """.trimIndent()
 
     @Serializable
-    data class Variables(val username: String, val authorities: List<String>)
+    data class Variables(val user: UserInput, val authorities: List<String>)
 }
 
-@Serializable
-data class UserResponse(val authorities: List<String>)
+object UnlinkUserAuthoritiesQuery : TestQuery<UnlinkUserAuthoritiesQuery.Variables, UserPayload>(
+    typeOf<UserPayload>()
+) {
+    private const val user = "\$user"
+    private const val authorities = "\$authorities"
+
+    override val queryName = "unlinkAuthorities"
+    override val operationName = "UnlinkUserAuthoritiesQuery"
+    override val query = """
+        mutation UnlinkUserAuthoritiesQuery($user: UserInput!, $authorities: [String!]!) {
+            unlinkAuthorities(user: $user, authorities: $authorities) {
+                name
+                username
+                email
+                birthday
+                authorities
+            }
+        }
+    """.trimIndent()
+
+    @Serializable
+    data class Variables(val user: UserInput, val authorities: List<String>)
+}

@@ -4,6 +4,7 @@ import com.diekeditora.domain.authority.Role
 import com.diekeditora.domain.page.Page
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
+import com.diekeditora.infra.entities.Authority
 import com.diekeditora.infra.repositories.UserAuthorityRepository
 import com.diekeditora.infra.repositories.UserRepository
 import com.diekeditora.infra.repositories.UserRoleRepository
@@ -52,6 +53,20 @@ internal class UserServiceImpl(
         return userAuthorityRepository.findByUser(user).toList().map { it.value }.also {
             log.trace("Successfully found user authorities %s by user", it)
         }
+    }
+
+    @Transactional
+    override suspend fun linkAuthorities(user: User, authorities: List<String>) {
+        userAuthorityRepository.link(user, authorities.map(::Authority))
+
+        log.trace("Successfully linked %s authorities to user %s", authorities, user)
+    }
+
+    @Transactional
+    override suspend fun unlinkAuthorities(user: User, authorities: List<String>) {
+        userAuthorityRepository.unlink(user, authorities.map(::Authority))
+
+        log.trace("Successfully unlinked %s authorities to user %s", authorities, user)
     }
 
     @Transactional

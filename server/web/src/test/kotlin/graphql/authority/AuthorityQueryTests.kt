@@ -35,7 +35,7 @@ class AuthorityQueryTests(
     @Test
     fun `test should retrieve all authorities`(): Unit = runBlocking {
         userRepository.save(userFactory.create()).also { user ->
-            userAuthorityRepository.save(user, authorityFactory.createMany(15))
+            userAuthorityRepository.link(user, authorityFactory.createMany(15))
         }
 
         val response = client.request(AuthoritiesQuery) {
@@ -49,7 +49,7 @@ class AuthorityQueryTests(
     @Test
     fun `test not should retrieve all authorities without authorities`(): Unit = runBlocking {
         userRepository.save(userFactory.create()).also { user ->
-            userAuthorityRepository.save(user, authorityFactory.createMany(15))
+            userAuthorityRepository.link(user, authorityFactory.createMany(15))
         }
 
         assertGraphQLForbidden {
