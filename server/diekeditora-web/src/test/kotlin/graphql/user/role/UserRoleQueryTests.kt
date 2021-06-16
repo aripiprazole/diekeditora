@@ -29,15 +29,15 @@ class UserRoleQueryTests(
     @Test
     fun `test should retrieve user's roles`(): Unit = runBlocking {
         val user = userRepository.save(userFactory.create()).also {
-            userRoleRepository.save(it, roleRepository.saveAll(roleFactory.createMany(5)).toList())
+            userRoleRepository.link(it, roleRepository.saveAll(roleFactory.createMany(5)).toList())
         }
 
         val response = client.request(UserRolesQuery) {
-            authentication = auth.mock("role.view")
+            authentication = auth.mock("user.view", "role.view")
             variables = UserRolesQuery.Variables(username = user.username)
         }
 
-        assertEquals(userRoleRepository.findByUser(user), response)
+        assertEquals(userRoleRepository.findByUser(user).toList(), response.roles)
     }
 
     @Test

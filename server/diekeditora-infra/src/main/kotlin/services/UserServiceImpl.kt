@@ -56,6 +56,20 @@ internal class UserServiceImpl(
     }
 
     @Transactional
+    override suspend fun linkRoles(user: User, roles: List<Role>) {
+        userRoleRepository.link(user, roles)
+
+        log.trace("Successfully linked %s roles to user %s", roles, user)
+    }
+
+    @Transactional
+    override suspend fun unlinkRoles(user: User, roles: List<Role>) {
+        userRoleRepository.unlink(user, roles)
+
+        log.trace("Successfully unlinked %s roles to user %s", roles, user)
+    }
+
+    @Transactional
     override suspend fun linkAuthorities(user: User, authorities: List<String>) {
         userAuthorityRepository.link(user, authorities.map(::Authority))
 
@@ -66,7 +80,7 @@ internal class UserServiceImpl(
     override suspend fun unlinkAuthorities(user: User, authorities: List<String>) {
         userAuthorityRepository.unlink(user, authorities.map(::Authority))
 
-        log.trace("Successfully unlinked %s authorities to user %s", authorities, user)
+        log.trace("Successfully unlinked %s authorities from user %s", authorities, user)
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package com.diekeditora.domain.user
 
+import com.diekeditora.domain.role.Role
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -41,5 +42,5 @@ data class UserPayload(
     val updatedAt: @Contextual LocalDateTime? = null,
     val deletedAt: @Contextual LocalDateTime? = null,
     val authorities: List<String> = emptyList(),
-    val roles: List<String> = emptyList(),
+    val roles: List<Role> = emptyList(),
 )
