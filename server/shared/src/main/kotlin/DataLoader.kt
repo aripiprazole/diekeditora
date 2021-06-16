@@ -6,6 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.future.future
 import org.dataloader.DataLoader
+import org.dataloader.DataLoaderOptions
 import java.util.concurrent.Executors
 
 private const val POOL_SIZE = 4
@@ -22,11 +23,14 @@ class DataLoaderBuilder internal constructor(private val name: String) {
         return object : KotlinDataLoader<K, V> {
             override val dataLoaderName = name
 
-            override fun getDataLoader(): DataLoader<K, V> = DataLoader { keys ->
-                futureScope.future {
-                    keys.map { function(it) }
-                }
-            }
+            override fun getDataLoader(): DataLoader<K, V> = DataLoader.newDataLoader(
+                { keys ->
+                    futureScope.future { keys.map { function(it) } }
+                },
+                DataLoaderOptions.newOptions()
+                    .setCachingEnabled(false)
+                    .setBatchingEnabled(false)
+            )
         }
     }
 }
