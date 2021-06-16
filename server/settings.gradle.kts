@@ -1,9 +1,8 @@
 rootProject.name = "server"
 
-include("web")
-include("domain")
-include("app")
-include("infra")
-include("shared")
+include("diekeditora-web")
+include("diekeditora-domain")
+include("diekeditora-infra")
+include("diekeditora-shared")
 
-includeBuild("composite-build")
+includeBuild("diekeditora-build")
