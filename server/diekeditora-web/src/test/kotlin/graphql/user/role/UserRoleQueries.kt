@@ -2,25 +2,27 @@
 
 package com.diekeditora.web.tests.graphql.user.role
 
-import com.diekeditora.domain.role.Role
-import com.diekeditora.web.graphql.user.role.UserAddRoleInput
-import com.diekeditora.web.graphql.user.role.UserRemoveRoleInput
+import com.diekeditora.domain.user.UserPayload
 import com.diekeditora.web.tests.graphql.TestQuery
-import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf
 
-object UserRolesQuery : TestQuery<UserRolesQuery.Variables, Flow<Role>>(typeOf<Flow<Role>>()) {
+object UserRolesQuery : TestQuery<UserRolesQuery.Variables, UserPayload>(typeOf<UserPayload>()) {
     private const val username = "\$username"
-    override val queryName = "userRoles"
+
+    override val queryName = "user"
     override val operationName = "UserRolesQuery"
     override val query = """
-        mutation UserRolesQuery($username: String!) {
-            userRoles(username: $username) {
+        query UserRolesQuery($username: String!) {
+            user(username: $username) {
                 name
-                authorities
-                createdAt
-                updatedAt
+                username
+                email
+                roles {
+                    name
+                    updatedAt
+                    createdAt
+                }
             }
         }
     """.trimIndent()
@@ -29,28 +31,56 @@ object UserRolesQuery : TestQuery<UserRolesQuery.Variables, Flow<Role>>(typeOf<F
     data class Variables(val username: String)
 }
 
-object AddRoleMutation : TestQuery<AddRoleMutation.Variables, Unit>(typeOf<Unit>()) {
-    override val queryName = "addRole"
-    override val operationName = "AddRole"
+object LinkUserRoleQuery : TestQuery<LinkUserRoleQuery.Variables, UserPayload>(
+    typeOf<UserPayload>()
+) {
+    private const val username = "\$username"
+    private const val roles = "\$roles"
+
+    override val queryName = "linkRolesToUser"
+    override val operationName = "LinkUserRoles"
     override val query = """
-        mutation AddRole($input: UserAddRoleInput!) {
-            addRole(input: $input)
+        mutation LinkUserRoles($username: String!, $roles: [String!]!) {
+            linkRolesToUser(username: $username, roles: $roles) {
+                name
+                username
+                email
+                roles {
+                    name
+                    updatedAt
+                    createdAt
+                }
+            }
         }
     """.trimIndent()
 
     @Serializable
-    data class Variables(val input: UserAddRoleInput)
+    data class Variables(val username: String, val roles: List<String>)
 }
 
-object RemoveRoleMutation : TestQuery<RemoveRoleMutation.Variables, Unit>(typeOf<Unit>()) {
-    override val queryName = "removeRoles"
-    override val operationName = "RemoveRoles"
+object UnlinkUserRolesQuery : TestQuery<UnlinkUserRolesQuery.Variables, UserPayload>(
+    typeOf<UserPayload>()
+) {
+    private const val username = "\$username"
+    private const val roles = "\$roles"
+
+    override val queryName = "unlinkRolesFromUser"
+    override val operationName = "UnlinkRolesFromUser"
     override val query = """
-        mutation RemoveRoles($input: UserRemoveRoleInput!) {
-            removeRoles(input: $input)
+        mutation UnlinkRolesFromUser($username: String!, $roles: [String!]!) {
+            unlinkRolesFromUser(username: $username, roles: $roles) {
+                name
+                username
+                email
+                roles {
+                    name
+                    updatedAt
+                    createdAt
+                }
+            }
         }
     """.trimIndent()
 
     @Serializable
-    data class Variables(val input: UserRemoveRoleInput)
+    data class Variables(val username: String, val roles: List<String>)
 }
