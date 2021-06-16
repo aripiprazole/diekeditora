@@ -1,5 +1,6 @@
 package com.diekeditora.web.tests.graphql.user.authority
 
+import com.diekeditora.domain.user.UserInput
 import com.diekeditora.infra.repositories.UserAuthorityRepository
 import com.diekeditora.infra.repositories.UserRepository
 import com.diekeditora.web.tests.factories.AuthorityFactory
@@ -25,17 +26,17 @@ class UserAuthorityMutationTests(
     @Autowired val auth: AuthenticationMocker,
 ) {
     @Test
-    fun `test should update user's authorities`(): Unit = runBlocking {
+    fun `test should link an authority to user`(): Unit = runBlocking {
         val user = userRepository.save(userFactory.create())
-        val authority = authorityFactory.create().also { userAuthorityRepository.save(user, it) }
+        val authority = authorityFactory.create()
 
         val authorities = userAuthorityRepository.findByUser(user).toList().map { it.value }
 
-        client.request(UpdateUserAuthoritiesQuery) {
-            authentication = auth.mock("authority.admin")
-            variables = UpdateUserAuthoritiesQuery.Variables(
-                username = user.username,
-                authorities = authorities + authority.value,
+        client.request(LinkUserAuthoritiesQuery) {
+            authentication = auth.mock("authority.admin", "authority.view")
+            variables = LinkUserAuthoritiesQuery.Variables(
+                user = UserInput.from(user),
+                authorities = listOf(authority.value),
             )
         }
 
@@ -46,15 +47,53 @@ class UserAuthorityMutationTests(
     }
 
     @Test
-    fun `test should not add user's an authority without authorities`(): Unit = runBlocking {
+    fun `test should not link an authority to user without authorities`(): Unit = runBlocking {
         val user = userRepository.save(userFactory.create())
+        val authority = authorityFactory.create()
 
         assertGraphQLForbidden {
-            client.request(UpdateUserAuthoritiesQuery) {
+            client.request(LinkUserAuthoritiesQuery) {
                 authentication = auth.mock()
-                variables = UpdateUserAuthoritiesQuery.Variables(
-                    username = user.username,
-                    authorities = listOf(),
+                variables = LinkUserAuthoritiesQuery.Variables(
+                    user = UserInput.from(user),
+                    authorities = listOf(authority.value),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `test should unlink an authority from user`(): Unit = runBlocking {
+        val user = userRepository.save(userFactory.create())
+        val authority = authorityFactory.create().also { userAuthorityRepository.link(user, it) }
+
+        val authorities = userAuthorityRepository.findByUser(user).toList().map { it.value }
+
+        client.request(UnlinkUserAuthoritiesQuery) {
+            authentication = auth.mock("authority.admin", "authority.view")
+            variables = UnlinkUserAuthoritiesQuery.Variables(
+                user = UserInput.from(user),
+                authorities = listOf(authority.value),
+            )
+        }
+
+        assertEquals(
+            authorities - authority.value,
+            userAuthorityRepository.findByUser(user).toList().map { it.value }
+        )
+    }
+
+    @Test
+    fun `test should not unlink an authority from user without authorities`(): Unit = runBlocking {
+        val user = userRepository.save(userFactory.create())
+        val authority = authorityFactory.create().also { userAuthorityRepository.link(user, it) }
+
+        assertGraphQLForbidden {
+            client.request(UnlinkUserAuthoritiesQuery) {
+                authentication = auth.mock()
+                variables = UnlinkUserAuthoritiesQuery.Variables(
+                    user = UserInput.from(user),
+                    authorities = listOf(authority.value),
                 )
             }
         }

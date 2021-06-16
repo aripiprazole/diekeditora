@@ -1,14 +1,25 @@
 package com.diekeditora.web.graphql.user.authority
 
+import com.diekeditora.domain.user.User
+import com.diekeditora.domain.user.UserInput
+import com.diekeditora.domain.user.UserService
 import com.expediagroup.graphql.server.operations.Mutation
-import kotlinx.serialization.Serializable
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Component
 
 @Component
-class UserAuthorityMutation : Mutation
+class UserAuthorityMutation(val userService: UserService) : Mutation {
+    @PreAuthorize("hasAuthority('authority.admin')")
+    suspend fun linkAuthorities(user: UserInput, authorities: List<String>): User? {
+        return userService.findUserByUsername(user.username)?.also { target ->
+            userService.linkAuthorities(target, authorities)
+        }
+    }
 
-@Serializable
-class UserAddAuthorityInput(val username: String, val authorities: Set<String>)
-
-@Serializable
-class UserRemoveAuthorityInput(val username: String, val authorities: Set<String>)
+    @PreAuthorize("hasAuthority('authority.admin')")
+    suspend fun unlinkAuthorities(user: UserInput, authorities: List<String>): User? {
+        return userService.findUserByUsername(user.username)?.also { target ->
+            userService.unlinkAuthorities(target, authorities)
+        }
+    }
+}

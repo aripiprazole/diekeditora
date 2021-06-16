@@ -17,6 +17,10 @@ interface UserService {
 
     suspend fun findUserAuthorities(user: User): List<String>
 
+    suspend fun linkAuthorities(user: User, authorities: List<String>)
+
+    suspend fun unlinkAuthorities(user: User, authorities: List<String>)
+
     suspend fun update(target: User, user: User): User
 
     suspend fun save(user: User): User

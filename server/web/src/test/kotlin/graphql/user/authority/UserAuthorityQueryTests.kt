@@ -26,7 +26,7 @@ class UserAuthorityQueryTests(
     @Test
     fun `test should retrieve user's roles`(): Unit = runBlocking {
         val user = userRepository.save(userFactory.create()).also {
-            userAuthorityRepository.save(it, authorityFactory.createMany(5))
+            userAuthorityRepository.link(it, authorityFactory.createMany(5))
         }
 
         val response = client.request(UserAuthoritiesQuery) {
