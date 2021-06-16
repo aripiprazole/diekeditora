@@ -26,7 +26,7 @@ object RoleAuthoritiesQuery : TestQuery<RoleAuthoritiesQuery.Variables, RolePayl
     """.trimIndent()
 
     @Serializable
-    data class Variables(val username: String)
+    data class Variables(val name: String)
 }
 
 object LinkRoleAuthoritiesQuery : TestQuery<LinkRoleAuthoritiesQuery.Variables, RolePayload>(
