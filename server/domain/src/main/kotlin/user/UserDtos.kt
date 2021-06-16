@@ -13,8 +13,6 @@ data class UserInput(
     val username: String,
     val email: String,
     val birthday: @Contextual LocalDate,
-    val authorities: List<String>? = null,
-    val roles: List<String>? = null,
 ) {
     fun toUser(): User {
         return User(name = name, email = email, username = username, birthday = birthday)
@@ -42,4 +40,6 @@ data class UserPayload(
     val createdAt: @Contextual LocalDateTime? = null,
     val updatedAt: @Contextual LocalDateTime? = null,
     val deletedAt: @Contextual LocalDateTime? = null,
+    val authorities: List<String> = emptyList(),
+    val roles: List<String> = emptyList(),
 )
