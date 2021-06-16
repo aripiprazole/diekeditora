@@ -3,6 +3,7 @@ package com.diekeditora.infra.services
 import com.diekeditora.domain.authority.Role
 import com.diekeditora.domain.authority.RoleService
 import com.diekeditora.domain.page.Page
+import com.diekeditora.infra.entities.Authority
 import com.diekeditora.infra.repositories.RoleAuthorityRepository
 import com.diekeditora.infra.repositories.RoleRepository
 import com.diekeditora.shared.logger
@@ -39,6 +40,20 @@ internal class RoleServiceImpl(
         return roleAuthorityRepository.findByRole(role).toList().map { it.value }.also {
             log.trace("Successfully found role authorities %s by role", it)
         }
+    }
+
+    @Transactional
+    override suspend fun linkAuthorities(role: Role, authorities: List<String>) {
+        roleAuthorityRepository.link(role, authorities.map(::Authority))
+
+        log.trace("Successfully linked %s authorities to role %s", authorities, role)
+    }
+
+    @Transactional
+    override suspend fun unlinkAuthorities(role: Role, authorities: List<String>) {
+        roleAuthorityRepository.unlink(role, authorities.map(::Authority))
+
+        log.trace("Successfully linked %s authorities to role %s", authorities, role)
     }
 
     @Transactional
