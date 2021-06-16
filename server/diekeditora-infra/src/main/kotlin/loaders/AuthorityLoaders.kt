@@ -2,8 +2,8 @@
 
 package com.diekeditora.infra.loaders
 
-import com.diekeditora.domain.authority.Role
-import com.diekeditora.domain.authority.RoleService
+import com.diekeditora.domain.role.Role
+import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
 import com.diekeditora.shared.dataLoader

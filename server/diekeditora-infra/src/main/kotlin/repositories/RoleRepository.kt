@@ -1,6 +1,6 @@
 package com.diekeditora.infra.repositories
 
-import com.diekeditora.domain.authority.Role
+import com.diekeditora.domain.role.Role
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.repository.kotlin.CoroutineSortingRepository

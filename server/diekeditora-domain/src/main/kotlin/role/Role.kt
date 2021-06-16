@@ -1,4 +1,4 @@
-package com.diekeditora.domain.authority
+package com.diekeditora.domain.role
 
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import graphql.schema.DataFetchingEnvironment

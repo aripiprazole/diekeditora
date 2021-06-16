@@ -1,7 +1,7 @@
 package com.diekeditora.web.graphql.role
 
-import com.diekeditora.domain.authority.Role
-import com.diekeditora.domain.authority.RoleService
+import com.diekeditora.domain.role.Role
+import com.diekeditora.domain.role.RoleService
 import com.expediagroup.graphql.server.operations.Query
 import graphql.relay.Connection
 import graphql.relay.SimpleListConnection

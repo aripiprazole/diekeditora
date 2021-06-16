@@ -1,6 +1,6 @@
 package com.diekeditora.web.tests.factories
 
-import com.diekeditora.domain.authority.Role
+import com.diekeditora.domain.role.Role
 import io.github.serpro69.kfaker.Faker
 import org.springframework.stereotype.Component
 

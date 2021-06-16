@@ -2,7 +2,7 @@
 
 package com.diekeditora.web.tests.graphql.role.authority
 
-import com.diekeditora.domain.authority.RolePayload
+import com.diekeditora.domain.role.RolePayload
 import com.diekeditora.web.tests.graphql.TestQuery
 import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf
