@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalSerializationApi::class)
 
-package com.diekeditora.domain.serializers.graphql
+package com.diekeditora.infra.serializers.graphql
 
 import graphql.relay.DefaultConnectionCursor
 import graphql.relay.DefaultPageInfo

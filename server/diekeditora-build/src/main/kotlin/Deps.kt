@@ -17,10 +17,10 @@ inline class KotlinDependencies(private val handler: DependencyHandler) {
 }
 
 inline class ProjectDependencies(private val handler: DependencyHandler) {
-    val web get() = handler.project(":web")
-    val infra get() = handler.project(":infra")
-    val shared get() = handler.project(":shared")
-    val domain get() = handler.project(":domain")
+    val web get() = handler.project(":diekeditora-web")
+    val infra get() = handler.project(":diekeditora-infra")
+    val shared get() = handler.project(":diekeditora-shared")
+    val domain get() = handler.project(":diekeditora-domain")
 }
 
 class Libs {
