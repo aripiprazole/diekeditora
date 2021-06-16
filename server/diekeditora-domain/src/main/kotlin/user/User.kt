@@ -1,6 +1,6 @@
 package com.diekeditora.domain.user
 
-import com.diekeditora.domain.authority.Role
+import com.diekeditora.domain.role.Role
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await

@@ -1,4 +1,4 @@
-package com.diekeditora.domain.authority
+package com.diekeditora.domain.role
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable

@@ -1,8 +1,8 @@
 package com.diekeditora.infra.services
 
-import com.diekeditora.domain.authority.Role
-import com.diekeditora.domain.authority.RoleService
 import com.diekeditora.domain.page.Page
+import com.diekeditora.domain.role.Role
+import com.diekeditora.domain.role.RoleService
 import com.diekeditora.infra.entities.Authority
 import com.diekeditora.infra.repositories.RoleAuthorityRepository
 import com.diekeditora.infra.repositories.RoleRepository

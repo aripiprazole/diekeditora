@@ -1,6 +1,6 @@
 package com.diekeditora.infra.repositories
 
-import com.diekeditora.domain.authority.Role
+import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.user.User
 import com.diekeditora.infra.utils.read
 import kotlinx.coroutines.flow.Flow

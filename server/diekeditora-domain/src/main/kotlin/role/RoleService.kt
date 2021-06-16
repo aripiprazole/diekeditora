@@ -1,4 +1,4 @@
-package com.diekeditora.domain.authority
+package com.diekeditora.domain.role
 
 import com.diekeditora.domain.page.Page
 

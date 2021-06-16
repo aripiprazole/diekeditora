@@ -1,7 +1,7 @@
 package com.diekeditora.domain.user
 
-import com.diekeditora.domain.authority.Role
 import com.diekeditora.domain.page.Page
+import com.diekeditora.domain.role.Role
 import com.google.firebase.auth.FirebaseToken
 import org.springframework.stereotype.Service
 

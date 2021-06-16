@@ -2,7 +2,7 @@
 
 package com.diekeditora.web.tests.graphql.user.role
 
-import com.diekeditora.domain.authority.Role
+import com.diekeditora.domain.role.Role
 import com.diekeditora.web.graphql.user.role.UserAddRoleInput
 import com.diekeditora.web.graphql.user.role.UserRemoveRoleInput
 import com.diekeditora.web.tests.graphql.TestQuery

@@ -1,7 +1,7 @@
 package com.diekeditora.web.graphql.role
 
-import com.diekeditora.domain.authority.Role
-import com.diekeditora.domain.authority.RoleService
+import com.diekeditora.domain.role.Role
+import com.diekeditora.domain.role.RoleService
 import com.expediagroup.graphql.server.operations.Mutation
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Component
