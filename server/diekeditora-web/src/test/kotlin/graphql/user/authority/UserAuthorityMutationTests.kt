@@ -1,6 +1,5 @@
 package com.diekeditora.web.tests.graphql.user.authority
 
-import com.diekeditora.domain.user.UserInput
 import com.diekeditora.infra.repositories.UserAuthorityRepository
 import com.diekeditora.infra.repositories.UserRepository
 import com.diekeditora.web.tests.factories.AuthorityFactory
@@ -35,7 +34,7 @@ class UserAuthorityMutationTests(
         client.request(LinkUserAuthoritiesQuery) {
             authentication = auth.mock("authority.admin", "authority.view")
             variables = LinkUserAuthoritiesQuery.Variables(
-                user = UserInput.from(user),
+                username = user.username,
                 authorities = listOf(authority.value),
             )
         }
@@ -55,7 +54,7 @@ class UserAuthorityMutationTests(
             client.request(LinkUserAuthoritiesQuery) {
                 authentication = auth.mock()
                 variables = LinkUserAuthoritiesQuery.Variables(
-                    user = UserInput.from(user),
+                    username = user.username,
                     authorities = listOf(authority.value),
                 )
             }
@@ -72,7 +71,7 @@ class UserAuthorityMutationTests(
         client.request(UnlinkUserAuthoritiesQuery) {
             authentication = auth.mock("authority.admin", "authority.view")
             variables = UnlinkUserAuthoritiesQuery.Variables(
-                user = UserInput.from(user),
+                username = user.username,
                 authorities = listOf(authority.value),
             )
         }
@@ -92,7 +91,7 @@ class UserAuthorityMutationTests(
             client.request(UnlinkUserAuthoritiesQuery) {
                 authentication = auth.mock()
                 variables = UnlinkUserAuthoritiesQuery.Variables(
-                    user = UserInput.from(user),
+                    username = user.username,
                     authorities = listOf(authority.value),
                 )
             }
