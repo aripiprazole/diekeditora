@@ -1,8 +1,5 @@
 package com.diekeditora.domain.page
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Page<T : Any>(
     val items: List<T>,
     val next: Int? = null,

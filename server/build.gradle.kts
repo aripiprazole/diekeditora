@@ -65,7 +65,6 @@ allprojects {
         implementation(libs.reactor.core)
         implementation(libs.reactor.kotlin)
 
-        implementation(libs.kotlinx.serializationJson)
         implementation(libs.kotlinx.coroutinesCore)
         implementation(libs.kotlinx.coroutinesJdk8)
         implementation(libs.kotlinx.coroutinesReactor)

@@ -1,19 +1,16 @@
 package com.diekeditora.web.config
 
-import kotlinx.serialization.json.Json
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.codec.ServerCodecConfigurer
-import org.springframework.http.codec.json.KotlinSerializationJsonDecoder
-import org.springframework.http.codec.json.KotlinSerializationJsonEncoder
+import org.springframework.http.codec.json.Jackson2JsonDecoder
+import org.springframework.http.codec.json.Jackson2JsonEncoder
 import org.springframework.web.reactive.config.WebFluxConfigurer
 
 @Configuration
-class WebConfig(val json: Json) : WebFluxConfigurer {
+class WebConfig(val objectMapper: ObjectMapper) : WebFluxConfigurer {
     override fun configureHttpMessageCodecs(configurer: ServerCodecConfigurer) {
-        configurer.defaultCodecs()
-            .kotlinSerializationJsonEncoder(KotlinSerializationJsonEncoder(json))
-
-        configurer.defaultCodecs()
-            .kotlinSerializationJsonDecoder(KotlinSerializationJsonDecoder(json))
+        configurer.defaultCodecs().jackson2JsonEncoder(Jackson2JsonEncoder(objectMapper))
+        configurer.defaultCodecs().jackson2JsonDecoder(Jackson2JsonDecoder(objectMapper))
     }
 }

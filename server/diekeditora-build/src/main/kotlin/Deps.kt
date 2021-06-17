@@ -123,7 +123,6 @@ class Libs {
         val coroutinesReactor = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.4.3"
         val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
         val coroutinesJdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.4.3"
-        val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
     }
 
     class Classgraph {

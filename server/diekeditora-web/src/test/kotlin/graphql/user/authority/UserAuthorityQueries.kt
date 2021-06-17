@@ -4,14 +4,13 @@ package com.diekeditora.web.tests.graphql.user.authority
 
 import com.diekeditora.domain.user.UserPayload
 import com.diekeditora.web.tests.graphql.TestQuery
-import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf
 
 object UserAuthoritiesQuery : TestQuery<UserPayload>(typeOf<UserPayload>()) {
     private const val username = "\$username"
 
     override val queryName = "user"
-    override val query = """
+    override val content = """
         query UserAuthoritiesQuery($username: String!) {
             user(username: $username) {
                 name
@@ -23,7 +22,6 @@ object UserAuthoritiesQuery : TestQuery<UserPayload>(typeOf<UserPayload>()) {
         }
     """.trimIndent()
 
-    @Serializable
     data class Variables(val username: String)
 }
 
@@ -32,7 +30,7 @@ object LinkAuthoritiesToUserMutation : TestQuery<UserPayload>(typeOf<UserPayload
     private const val authorities = "\$authorities"
 
     override val queryName = "linkAuthoritiesToUser"
-    override val query = """
+    override val content = """
         mutation LinkAuthoritiesToUserMutation($username: String!, $authorities: [String!]!) {
             linkAuthoritiesToUser(username: $username, authorities: $authorities) {
                 name
@@ -44,7 +42,6 @@ object LinkAuthoritiesToUserMutation : TestQuery<UserPayload>(typeOf<UserPayload
         }
     """.trimIndent()
 
-    @Serializable
     data class Variables(val username: String, val authorities: List<String>)
 }
 
@@ -53,7 +50,7 @@ object UnlinkAuthoritiesFromUserMutation : TestQuery<UserPayload>(typeOf<UserPay
     private const val authorities = "\$authorities"
 
     override val queryName = "unlinkAuthoritiesFromUser"
-    override val query = """
+    override val content = """
         mutation UnlinkAuthoritiesFromUserMutation($username: String!, $authorities: [String!]!) {
             unlinkAuthoritiesFromUser(username: $username, authorities: $authorities) {
                 name
@@ -65,6 +62,5 @@ object UnlinkAuthoritiesFromUserMutation : TestQuery<UserPayload>(typeOf<UserPay
         }
     """.trimIndent()
 
-    @Serializable
     data class Variables(val username: String, val authorities: List<String>)
 }

@@ -1,6 +1,5 @@
 package com.diekeditora.web.graphql
 
-import com.diekeditora.web.utils.toJsonElement
 import com.expediagroup.graphql.generator.annotations.GraphQLName
 import com.expediagroup.graphql.generator.exceptions.CouldNotGetNameOfKParameterException
 import com.expediagroup.graphql.generator.execution.FunctionDataFetcher
@@ -9,11 +8,8 @@ import com.expediagroup.graphql.generator.execution.KotlinDataFetcherFactoryProv
 import com.expediagroup.graphql.generator.execution.OptionalInput
 import com.expediagroup.graphql.generator.execution.SimpleKotlinDataFetcherFactoryProvider
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import graphql.schema.DataFetcherFactory
 import graphql.schema.DataFetchingEnvironment
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.serializer
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler
 import org.springframework.security.access.prepost.PreAuthorize
@@ -30,20 +26,18 @@ import kotlin.reflect.jvm.jvmErasure
 
 @Component
 class GraphQLDataFetcherFactoryProvider(
-    private val objectMapper: ObjectMapper = jacksonObjectMapper(),
-    private val json: Json,
+    val objectMapper: ObjectMapper
 ) : KotlinDataFetcherFactoryProvider by SimpleKotlinDataFetcherFactoryProvider() {
     private val handler = DefaultMethodSecurityExpressionHandler()
 
     override fun functionDataFetcherFactory(target: Any?, kFunction: KFunction<*>) =
         DataFetcherFactory {
-            GraphQLDataFetcher(objectMapper, json, target, kFunction, handler)
+            GraphQLDataFetcher(objectMapper, target, kFunction, handler)
         }
 }
 
 class GraphQLDataFetcher(
-    objectMapper: ObjectMapper,
-    private val json: Json,
+    private val objectMapper: ObjectMapper,
     private val target: Any?,
     private val fn: KFunction<*>,
     private val handler: DefaultMethodSecurityExpressionHandler
@@ -92,10 +86,10 @@ class GraphQLDataFetcher(
                         ?: throw CouldNotGetNameOfKParameterException(param)
 
                 if (env.containsArgument(name) || param.type.jvmErasure.isSubclassOf(OptionalInput::class)) {
-                    val serializer = json.serializersModule.serializer(param.type)
-                    val element = env.getArgument<Any?>(name).toJsonElement()
+                    // rewrite value to be used in real scenario
+                    val repr = env.getArgument<Any?>(name)?.let(objectMapper::writeValueAsString)
 
-                    param to json.decodeFromJsonElement(serializer, element)
+                    param to objectMapper.readValue(repr, param.type.jvmErasure.java)
                 } else {
                     null
                 }
