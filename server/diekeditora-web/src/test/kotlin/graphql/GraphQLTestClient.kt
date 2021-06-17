@@ -1,29 +1,26 @@
 package com.diekeditora.web.tests.graphql
 
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.decodeFromJsonElement
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import com.expediagroup.graphql.generator.exceptions.GraphQLKotlinException
+import com.expediagroup.graphql.server.types.GraphQLRequest
+import com.expediagroup.graphql.server.types.GraphQLResponse
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.http.MediaType
 import org.springframework.security.core.Authentication
 import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockAuthentication
 import org.springframework.stereotype.Component
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBody
 
 @Component
-class GraphQLTestClient(val client: WebTestClient, val json: Json) {
-    final inline fun <V, R> request(
+class GraphQLTestClient(val client: WebTestClient, val objectMapper: ObjectMapper) {
+    final inline fun <R> request(
         query: TestQuery<R>,
-        block: GraphQLRequestBuilder<V, R>.() -> Unit = {}
+        block: GraphQLRequestBuilder<R>.() -> Unit = {},
     ): R {
-        val builder = GraphQLRequestBuilder<V, R>(query).apply(block)
+        val builder = GraphQLRequestBuilder(query).apply(block)
 
-        val string = client
+        val response = client
             .run {
                 if (builder.authentication != null) {
                     mutateWith(mockAuthentication(builder.authentication!!))
@@ -33,45 +30,34 @@ class GraphQLTestClient(val client: WebTestClient, val json: Json) {
             }
             .post().uri("/graphql")
             .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(
-                json.encodeToString(builder.toRequest())
-            )
+            .bodyValue(builder.toRequest(objectMapper))
             .exchange()
-            .expectBody()
+            .expectBody<GraphQLResponse<Map<String, R>>>()
             .returnResult().responseBody!!
-            .decodeToString()
 
-        val response = json.decodeFromString<JsonObject>(string)
-        val errors = response["errors"]?.jsonArray
-
-        if (errors != null) {
-            throw GraphQLException(errors.map { it.jsonObject["message"]!!.jsonPrimitive.content })
+        response.errors?.let { errors ->
+            throw GraphQLKotlinException(errors.joinToString(", "))
         }
 
-        val data = response["data"]!!.jsonObject
-
-        return json.decodeFromJsonElement(data[query.queryName]!!)
+        return response.data
+            ?.get(query.queryName)
+            ?: throw GraphQLKotlinException("GraphQLResponse.data is null")
     }
 }
 
-class GraphQLException(errors: List<String>) : Exception(
-    "Request failed with: ${errors.joinToString(", ")}"
-)
-
-class GraphQLRequestBuilder<V, R>(testQuery: TestQuery<R>) {
+class GraphQLRequestBuilder<R>(query: TestQuery<R>) {
     var authentication: Authentication? = null
-    var query: String? = testQuery.query
-    var operationName: String? = testQuery.operationName
-    var variables: V? = null
+    var query: String? = query.content
+    var operationName: String? = query.operationName
+    var variables: Any? = null
 }
 
-@Serializable
-data class GraphQLRequest<T>(
-    val query: String,
-    val operationName: String,
-    val variables: T
-)
+fun GraphQLRequestBuilder<*>.toRequest(objectMapper: ObjectMapper): GraphQLRequest {
+    val variablesMap = if (variables != null) {
+        objectMapper.readValue<Map<String, Any>>(objectMapper.writeValueAsString(variables))
+    } else {
+        null
+    }
 
-fun <V> GraphQLRequestBuilder<V, *>.toRequest(): GraphQLRequest<V> {
-    return GraphQLRequest(query!!, operationName!!, variables!!)
+    return GraphQLRequest(query!!, operationName!!, variablesMap)
 }

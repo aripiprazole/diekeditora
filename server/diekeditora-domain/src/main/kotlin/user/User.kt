@@ -2,10 +2,9 @@ package com.diekeditora.domain.user
 
 import com.diekeditora.domain.role.Role
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
+import com.fasterxml.jackson.annotation.JsonIgnore
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import org.springframework.security.access.prepost.PreAuthorize
@@ -13,12 +12,11 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 
-@Serializable(with = UserSerializer::class)
 @Table("\"user\"")
-@SerialName("User")
 data class User(
     @Id
     @GraphQLIgnore
+    @JsonIgnore
     val id: UUID? = null,
     val name: String,
     val email: String,

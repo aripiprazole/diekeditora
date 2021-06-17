@@ -1,40 +1,33 @@
 package com.diekeditora.web.graphql
 
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import graphql.relay.Connection
 import graphql.relay.Relay
 import graphql.schema.Coercing
 import graphql.schema.GraphQLObjectType
+import graphql.schema.GraphQLScalarType
 import graphql.schema.GraphQLScalarType.newScalar
 import graphql.schema.GraphQLSchema
 import graphql.schema.GraphQLType
 import graphql.schema.GraphQLTypeReference.typeRef
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonPrimitive
-import kotlinx.serialization.serializer
-import kotlinx.serialization.serializerOrNull
-import org.springframework.stereotype.Component
 import kotlin.reflect.KType
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.typeOf
 
 typealias TypeConverter = (KType) -> GraphQLType?
 
-@Component
-@OptIn(ExperimentalSerializationApi::class, ExperimentalStdlibApi::class)
-class GraphQLSchemaHooks(val json: Json) : SchemaGeneratorHooks {
+@OptIn(ExperimentalStdlibApi::class)
+class GraphQLSchemaHooks(val objectMapper: ObjectMapper) : SchemaGeneratorHooks {
     private val relay = Relay()
 
     private val types = mutableMapOf<KType, TypeConverter>()
     private val cache = mutableMapOf<String, GraphQLType>()
 
     init {
-        addSerializer<Unit>(::parseUnit)
-        addSerializer<Connection<*>>(::parseConnection)
+        withSerializer<Unit>(::parseUnit)
+        withSerializer<Connection<*>>(::parseConnection)
     }
 
     private fun parseUnit(type: KType): GraphQLType {
@@ -56,23 +49,6 @@ class GraphQLSchemaHooks(val json: Json) : SchemaGeneratorHooks {
         return relay.connectionType(name, edge, emptyList())
     }
 
-    private fun parseScalar(type: KType, serializer: KSerializer<Any?>?): GraphQLType? {
-        val name = serializer?.descriptor?.serialName.orEmpty()
-
-        return when (serializer?.descriptor?.kind) {
-            is PrimitiveKind.BOOLEAN -> buildScalar(Boolean.serializer(), name, type)
-            is PrimitiveKind.LONG -> buildScalar(Long.serializer(), name, type)
-            is PrimitiveKind.INT -> buildScalar(Int.serializer(), name, type)
-            is PrimitiveKind.STRING -> buildScalar(String.serializer(), name, type)
-            is PrimitiveKind.CHAR -> buildScalar(Char.serializer(), name, type)
-            is PrimitiveKind.SHORT -> buildScalar(Short.serializer(), name, type)
-            is PrimitiveKind.BYTE -> buildScalar(Byte.serializer(), name, type)
-            is PrimitiveKind.FLOAT -> buildScalar(Float.serializer(), name, type)
-            is PrimitiveKind.DOUBLE -> buildScalar(Double.serializer(), name, type)
-            else -> null
-        }
-    }
-
     override fun willBuildSchema(builder: GraphQLSchema.Builder): GraphQLSchema.Builder {
         return builder.additionalType(Relay.pageInfoType)
     }
@@ -87,62 +63,41 @@ class GraphQLSchemaHooks(val json: Json) : SchemaGeneratorHooks {
             return typeRef(name)
         }
 
-        val parser = findParserOrDefault(type) {
-            // skip builtin serializers
-            if (type.jvmErasure.qualifiedName.orEmpty().startsWith("kotlin.")) {
-                return@findParserOrDefault null
-            }
-
-            parseScalar(it, json.serializersModule.serializerOrNull(type))
-        }
-
-        return parser(type)?.also {
+        return parser(type)?.invoke(type)?.also {
             cache[name] = it
         }
     }
 
-    private fun <T : Any> buildScalar(
-        scalarSerializer: KSerializer<T>,
-        name: String,
-        type: KType
-    ): GraphQLType {
-        val serializer = json.serializersModule.serializer(type)
+    inline fun <reified I, reified O> jacksonCoercing(
+        noinline transform: (String) -> O,
+    ): Coercing<I, O> = object : Coercing<I, O> {
+        override fun serialize(result: Any?): O {
+            return transform(objectMapper.writeValueAsString(result))
+        }
 
-        return newScalar()
-            .name(type.jvmErasure.simpleName)
-            .coercing(object : Coercing<Any, Any> {
-                @Suppress("UNCHECKED_CAST")
-                override fun serialize(value: Any): Any {
-                    return json.encodeToJsonElement(serializer, value).jsonPrimitive.content
-                }
+        override fun parseValue(input: Any?): I {
+            return objectMapper.readValue(input.toString())
+        }
 
-                override fun parseValue(input: Any): Any {
-                    if (scalarSerializer.descriptor.kind == PrimitiveKind.STRING) {
-                        return json.decodeFromString(scalarSerializer, """"$input"""")
-                    }
-
-                    return json.decodeFromString(scalarSerializer, input.toString())
-                }
-
-                override fun parseLiteral(input: Any): Any {
-                    if (scalarSerializer.descriptor.kind == PrimitiveKind.STRING) {
-                        return json.decodeFromString(scalarSerializer, """"$input"""")
-                    }
-
-                    return json.decodeFromString(scalarSerializer, input.toString())
-                }
-            })
-            .build()
-            .also { cache[name] = it }
+        override fun parseLiteral(input: Any?): I {
+            return objectMapper.readValue(input.toString())
+        }
     }
 
-    private fun findParserOrDefault(type: KType, default: TypeConverter): TypeConverter {
-        return types.entries.find {
-            it.key.jvmErasure.qualifiedName == type.jvmErasure.qualifiedName
-        }?.value ?: default
+    fun withScalar(type: KType, scalar: GraphQLScalarType) {
+        types[type] = { scalar }
     }
 
-    private inline fun <reified T : Any> addSerializer(noinline parser: TypeConverter) {
+    inline fun <reified T : Any> withScalar(scalar: GraphQLScalarType) {
+        withScalar(typeOf<T>(), scalar)
+    }
+
+    private inline fun <reified T : Any> withSerializer(noinline parser: TypeConverter) {
         types[typeOf<T>()] = parser
+    }
+
+    private fun parser(type: KType): TypeConverter? {
+        return types.entries
+            .find { it.key.jvmErasure.qualifiedName == type.jvmErasure.qualifiedName }?.value
     }
 }

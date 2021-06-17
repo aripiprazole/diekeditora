@@ -14,7 +14,6 @@ import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toSet
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.Serializable
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -39,7 +38,6 @@ class AuthorityQueryTests(
 
         val response = client.request(AuthoritiesQuery) {
             authentication = auth.mock("authority.view")
-            variables = AuthoritiesQuery.Variables
         }
 
         assertEquals(authorityRepository.findAll().map { it.value }.toSet(), response)
@@ -54,7 +52,6 @@ class AuthorityQueryTests(
         assertGraphQLForbidden {
             client.request(AuthoritiesQuery) {
                 authentication = auth.mock()
-                variables = AuthoritiesQuery.Variables
             }
         }
     }
@@ -62,12 +59,9 @@ class AuthorityQueryTests(
 
 object AuthoritiesQuery : TestQuery<Set<String>>(typeOf<Set<String>>()) {
     override val queryName = "authorities"
-    override val query = """
+    override val content = """
         query AuthoritiesQuery {
             authorities
         }
     """.trimIndent()
-
-    @Serializable
-    object Variables
 }

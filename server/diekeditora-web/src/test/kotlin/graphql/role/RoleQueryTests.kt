@@ -70,7 +70,7 @@ class RoleQueryTests(
         val response = client.request(RoleQuery) {
             authentication = auth.mock("role.view")
             variables = RoleQuery.Variables(role.name)
-        }.let(::assertNotNull)
+        }
 
         assertEquals(role, response)
     }
