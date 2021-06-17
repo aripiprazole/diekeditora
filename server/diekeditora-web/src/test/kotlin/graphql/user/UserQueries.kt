@@ -9,11 +9,10 @@ import graphql.relay.DefaultConnection
 import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf
 
-object UserQuery : TestQuery<UserQuery.Variables, User>(typeOf<User>()) {
+object UserQuery : TestQuery<User>(typeOf<User>()) {
     private const val username = "\$username"
 
     override val queryName = "user"
-    override val operationName = "UserQuery"
     override val query = """
         query UserQuery($username: String!) {
             user(username: $username) {
@@ -32,13 +31,10 @@ object UserQuery : TestQuery<UserQuery.Variables, User>(typeOf<User>()) {
     data class Variables(val username: String)
 }
 
-object UsersQuery : TestQuery<UsersQuery.Variables, DefaultConnection<User>>(
-    typeOf<DefaultConnection<User>>()
-) {
+object UsersQuery : TestQuery<DefaultConnection<User>>(typeOf<DefaultConnection<User>>()) {
     private const val page = "\$page"
 
     override val queryName = "users"
-    override val operationName = "UsersQuery"
     override val query = """
         query UsersQuery($page: Int!) {
             users(page: $page) {
@@ -69,11 +65,10 @@ object UsersQuery : TestQuery<UsersQuery.Variables, DefaultConnection<User>>(
     data class Variables(val page: Int)
 }
 
-object CreateUserMutation : TestQuery<CreateUserMutation.Variables, User>(typeOf<User>()) {
+object CreateUserMutation : TestQuery<User>(typeOf<User>()) {
     override val queryName = "createUser"
-    override val operationName = "CreateUser"
     override val query = """
-        mutation CreateUser($input: UserInput!) {
+        mutation CreateUserMutation($input: UserInput!) {
             createUser(input: $input) {
                 name
                 username
@@ -90,12 +85,12 @@ object CreateUserMutation : TestQuery<CreateUserMutation.Variables, User>(typeOf
     data class Variables(val input: UserInput)
 }
 
-object UpdateUserMutation : TestQuery<UpdateUserMutation.Variables, User?>(typeOf<User?>()) {
+object UpdateUserMutation : TestQuery<User?>(typeOf<User?>()) {
     private const val username = "\$username"
+
     override val queryName = "updateUser"
-    override val operationName = "UpdateUser"
     override val query = """
-        mutation UpdateUser($username: String!, $input: UserInput!) {
+        mutation UpdateUserMutation($username: String!, $input: UserInput!) {
             updateUser(username: $username, input: $input) {
                 name
                 username
@@ -112,13 +107,12 @@ object UpdateUserMutation : TestQuery<UpdateUserMutation.Variables, User?>(typeO
     data class Variables(val username: String, val input: UserInput)
 }
 
-object DeleteUserMutation : TestQuery<DeleteUserMutation.Variables, User?>(typeOf<User?>()) {
+object DeleteUserMutation : TestQuery<User?>(typeOf<User?>()) {
     private const val username = "\$username"
 
     override val queryName = "deleteUser"
-    override val operationName = "DeleteUser"
     override val query = """
-        mutation DeleteUser($username: String!) {
+        mutation DeleteUserMutation($username: String!) {
             deleteUser(username: $username) {
                 name
                 username

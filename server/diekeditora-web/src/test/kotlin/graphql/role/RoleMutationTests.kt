@@ -3,7 +3,6 @@ package com.diekeditora.web.tests.graphql.role
 import com.diekeditora.infra.repositories.RoleRepository
 import com.diekeditora.web.tests.factories.RoleFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
 import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import kotlinx.coroutines.runBlocking

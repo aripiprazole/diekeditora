@@ -7,12 +7,10 @@ import com.diekeditora.web.tests.graphql.TestQuery
 import kotlinx.serialization.Serializable
 import kotlin.reflect.typeOf
 
-object UserAuthoritiesQuery : TestQuery<UserAuthoritiesQuery.Variables, UserPayload>(
-    typeOf<UserPayload>()
-) {
+object UserAuthoritiesQuery : TestQuery<UserPayload>(typeOf<UserPayload>()) {
     private const val username = "\$username"
+
     override val queryName = "user"
-    override val operationName = "UserAuthoritiesQuery"
     override val query = """
         query UserAuthoritiesQuery($username: String!) {
             user(username: $username) {
@@ -29,16 +27,13 @@ object UserAuthoritiesQuery : TestQuery<UserAuthoritiesQuery.Variables, UserPayl
     data class Variables(val username: String)
 }
 
-object LinkUserAuthoritiesQuery : TestQuery<LinkUserAuthoritiesQuery.Variables, UserPayload>(
-    typeOf<UserPayload>()
-) {
+object LinkAuthoritiesToUserMutation : TestQuery<UserPayload>(typeOf<UserPayload>()) {
     private const val username = "\$username"
     private const val authorities = "\$authorities"
 
     override val queryName = "linkAuthoritiesToUser"
-    override val operationName = "LinkUserAuthoritiesQuery"
     override val query = """
-        mutation LinkUserAuthoritiesQuery($username: String!, $authorities: [String!]!) {
+        mutation LinkAuthoritiesToUserMutation($username: String!, $authorities: [String!]!) {
             linkAuthoritiesToUser(username: $username, authorities: $authorities) {
                 name
                 username
@@ -53,16 +48,13 @@ object LinkUserAuthoritiesQuery : TestQuery<LinkUserAuthoritiesQuery.Variables, 
     data class Variables(val username: String, val authorities: List<String>)
 }
 
-object UnlinkUserAuthoritiesQuery : TestQuery<UnlinkUserAuthoritiesQuery.Variables, UserPayload>(
-    typeOf<UserPayload>()
-) {
+object UnlinkAuthoritiesFromUserMutation : TestQuery<UserPayload>(typeOf<UserPayload>()) {
     private const val username = "\$username"
     private const val authorities = "\$authorities"
 
     override val queryName = "unlinkAuthoritiesFromUser"
-    override val operationName = "UnlinkUserAuthoritiesQuery"
     override val query = """
-        mutation UnlinkUserAuthoritiesQuery($username: String!, $authorities: [String!]!) {
+        mutation UnlinkAuthoritiesFromUserMutation($username: String!, $authorities: [String!]!) {
             unlinkAuthoritiesFromUser(username: $username, authorities: $authorities) {
                 name
                 username

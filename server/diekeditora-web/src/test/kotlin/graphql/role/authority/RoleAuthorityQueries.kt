@@ -29,16 +29,16 @@ object RoleAuthoritiesQuery : TestQuery<RoleAuthoritiesQuery.Variables, RolePayl
     data class Variables(val name: String)
 }
 
-object LinkRoleAuthoritiesQuery : TestQuery<LinkRoleAuthoritiesQuery.Variables, RolePayload>(
+object LinkAuthoritiesToRoleMutation : TestQuery<LinkAuthoritiesToRoleMutation.Variables, RolePayload>(
     typeOf<RolePayload>()
 ) {
     private const val name = "\$name"
     private const val authorities = "\$authorities"
 
     override val queryName = "linkAuthoritiesToRole"
-    override val operationName = "LinkRoleAuthoritiesQuery"
+    override val operationName = "LinkAuthoritiesToRoleMutation"
     override val query = """
-        mutation LinkRoleAuthoritiesQuery($name: String!, $authorities: [String!]!) {
+        mutation LinkAuthoritiesToRoleMutation($name: String!, $authorities: [String!]!) {
             linkAuthoritiesToRole(name: $name, authorities: $authorities) {
                 name
                 createdAt
@@ -52,16 +52,16 @@ object LinkRoleAuthoritiesQuery : TestQuery<LinkRoleAuthoritiesQuery.Variables, 
     data class Variables(val name: String, val authorities: List<String>)
 }
 
-object UnlinkRoleAuthoritiesQuery : TestQuery<UnlinkRoleAuthoritiesQuery.Variables, RolePayload>(
+object UnlinkAuthoritiesFromRoleMutation : TestQuery<UnlinkAuthoritiesFromRoleMutation.Variables, RolePayload>(
     typeOf<RolePayload>()
 ) {
     private const val name = "\$name"
     private const val authorities = "\$authorities"
 
     override val queryName = "unlinkAuthoritiesFromRole"
-    override val operationName = "UnlinkRoleAuthoritiesQuery"
+    override val operationName = "UnlinkAuthoritiesFromRoleMutation"
     override val query = """
-        mutation UnlinkRoleAuthoritiesQuery($name: String!, $authorities: [String!]!) {
+        mutation UnlinkAuthoritiesFromRoleMutation($name: String!, $authorities: [String!]!) {
             unlinkAuthoritiesFromRole(name: $name, authorities: $authorities) {
                 name
                 createdAt

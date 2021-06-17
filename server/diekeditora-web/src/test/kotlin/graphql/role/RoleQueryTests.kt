@@ -3,7 +3,6 @@ package com.diekeditora.web.tests.graphql.role
 import com.diekeditora.infra.repositories.RoleRepository
 import com.diekeditora.web.tests.factories.RoleFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
 import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import graphql.relay.SimpleListConnection
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 
 @SpringBootTest
 class RoleQueryTests(
