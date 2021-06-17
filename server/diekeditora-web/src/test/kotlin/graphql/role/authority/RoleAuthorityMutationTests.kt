@@ -5,7 +5,6 @@ import com.diekeditora.infra.repositories.RoleRepository
 import com.diekeditora.web.tests.factories.AuthorityFactory
 import com.diekeditora.web.tests.factories.RoleFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
 import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import kotlinx.coroutines.flow.toList
@@ -31,9 +30,9 @@ class RoleAuthorityMutationTests(
 
         val authorities = roleAuthorityRepository.findByRole(role).toList().map { it.value }
 
-        client.request(LinkRoleAuthoritiesQuery) {
+        client.request(LinkAuthoritiesToRoleMutation) {
             authentication = auth.mock("authority.admin", "authority.view")
-            variables = LinkRoleAuthoritiesQuery.Variables(
+            variables = LinkAuthoritiesToRoleMutation.Variables(
                 name = role.name,
                 authorities = listOf(authority.value),
             )
@@ -51,9 +50,9 @@ class RoleAuthorityMutationTests(
         val authority = authorityFactory.create()
 
         assertGraphQLForbidden {
-            client.request(LinkRoleAuthoritiesQuery) {
+            client.request(LinkAuthoritiesToRoleMutation) {
                 authentication = auth.mock()
-                variables = LinkRoleAuthoritiesQuery.Variables(
+                variables = LinkAuthoritiesToRoleMutation.Variables(
                     name = role.name,
                     authorities = listOf(authority.value),
                 )
@@ -68,9 +67,9 @@ class RoleAuthorityMutationTests(
 
         val authorities = roleAuthorityRepository.findByRole(role).toList().map { it.value }
 
-        client.request(UnlinkRoleAuthoritiesQuery) {
+        client.request(UnlinkAuthoritiesFromRoleMutation) {
             authentication = auth.mock("authority.admin", "authority.view")
-            variables = UnlinkRoleAuthoritiesQuery.Variables(
+            variables = UnlinkAuthoritiesFromRoleMutation.Variables(
                 name = role.name,
                 authorities = listOf(authority.value),
             )
@@ -88,9 +87,9 @@ class RoleAuthorityMutationTests(
         val authority = authorityFactory.create().also { roleAuthorityRepository.link(role, it) }
 
         assertGraphQLForbidden {
-            client.request(UnlinkRoleAuthoritiesQuery) {
+            client.request(UnlinkAuthoritiesFromRoleMutation) {
                 authentication = auth.mock()
-                variables = UnlinkRoleAuthoritiesQuery.Variables(
+                variables = UnlinkAuthoritiesFromRoleMutation.Variables(
                     name = role.name,
                     authorities = listOf(authority.value),
                 )

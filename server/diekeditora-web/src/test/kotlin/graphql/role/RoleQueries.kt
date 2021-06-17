@@ -62,9 +62,9 @@ object RolesQuery : TestQuery<RolesQuery.Variables, DefaultConnection<Role>>(
 
 object CreateRoleMutation : TestQuery<CreateRoleMutation.Variables, Role>(typeOf<Role>()) {
     override val queryName = "createRole"
-    override val operationName = "CreateRole"
+    override val operationName = "CreateRoleMutation"
     override val query = """
-        mutation CreateRole($input: RoleInput!) {
+        mutation CreateRoleMutation($input: RoleInput!) {
             createRole(input: $input) {
                 name
                 createdAt
@@ -80,9 +80,9 @@ object CreateRoleMutation : TestQuery<CreateRoleMutation.Variables, Role>(typeOf
 object UpdateRoleMutation : TestQuery<UpdateRoleMutation.Variables, Role?>(typeOf<Role?>()) {
     private const val name = "\$name"
     override val queryName = "updateRole"
-    override val operationName = "UpdateRole"
+    override val operationName = "UpdateRoleMutation"
     override val query = """
-        mutation UpdateRole($name: String!, $input: RoleInput!) {
+        mutation UpdateRoleMutation($name: String!, $input: RoleInput!) {
             updateRole(name: $name, input: $input) {
                 name
                 createdAt
@@ -99,9 +99,9 @@ object DeleteRoleMutation : TestQuery<DeleteRoleMutation.Variables, Unit>(typeOf
     private const val name = "\$name"
 
     override val queryName = "deleteRole"
-    override val operationName = "DeleteRole"
+    override val operationName = "DeleteRoleMutation"
     override val query = """
-        mutation DeleteRole($name: String!) {
+        mutation DeleteRoleMutation($name: String!) {
             deleteRole(name: $name)
         }
     """.trimIndent()

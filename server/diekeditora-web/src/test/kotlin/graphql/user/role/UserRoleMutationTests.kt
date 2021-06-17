@@ -6,7 +6,6 @@ import com.diekeditora.infra.repositories.UserRoleRepository
 import com.diekeditora.web.tests.factories.RoleFactory
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
 import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import kotlinx.coroutines.flow.toList
@@ -33,9 +32,9 @@ class UserRoleMutationTests(
 
         val roles = userRoleRepository.findByUser(user).toList()
 
-        client.request(LinkUserRoleQuery) {
+        client.request(LinkRolesToUserMutation) {
             authentication = auth.mock("role.admin", "role.view")
-            variables = LinkUserRoleQuery.Variables(
+            variables = LinkRolesToUserMutation.Variables(
                 username = user.username,
                 roles = listOf(role.name)
             )
@@ -50,9 +49,9 @@ class UserRoleMutationTests(
         val role = roleRepository.save(roleFactory.create())
 
         assertGraphQLForbidden {
-            client.request(LinkUserRoleQuery) {
+            client.request(LinkRolesToUserMutation) {
                 authentication = auth.mock()
-                variables = LinkUserRoleQuery.Variables(
+                variables = LinkRolesToUserMutation.Variables(
                     username = user.username,
                     roles = listOf(role.name)
                 )
@@ -69,9 +68,9 @@ class UserRoleMutationTests(
 
         val roles = userRoleRepository.findByUser(user).toList()
 
-        client.request(UnlinkUserRolesQuery) {
+        client.request(UnlinkRolesFromUserMutation) {
             authentication = auth.mock("role.admin", "role.view")
-            variables = UnlinkUserRolesQuery.Variables(
+            variables = UnlinkRolesFromUserMutation.Variables(
                 username = user.username,
                 roles = listOf(role.name),
             )
@@ -88,9 +87,9 @@ class UserRoleMutationTests(
         }
 
         assertGraphQLForbidden {
-            client.request(UnlinkUserRolesQuery) {
+            client.request(UnlinkRolesFromUserMutation) {
                 authentication = auth.mock()
-                variables = UnlinkUserRolesQuery.Variables(
+                variables = UnlinkRolesFromUserMutation.Variables(
                     username = user.username,
                     roles = listOf(role.name),
                 )

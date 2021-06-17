@@ -9,7 +9,6 @@ import com.diekeditora.web.tests.factories.AuthorityFactory
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
 import com.diekeditora.web.tests.graphql.TestQuery
-import com.diekeditora.web.tests.graphql.request
 import com.diekeditora.web.tests.utils.AuthenticationMocker
 import com.diekeditora.web.tests.utils.assertGraphQLForbidden
 import kotlinx.coroutines.flow.map
@@ -61,11 +60,8 @@ class AuthorityQueryTests(
     }
 }
 
-object AuthoritiesQuery : TestQuery<AuthoritiesQuery.Variables, Set<String>>(
-    typeOf<Set<String>>()
-) {
+object AuthoritiesQuery : TestQuery<Set<String>>(typeOf<Set<String>>()) {
     override val queryName = "authorities"
-    override val operationName = "AuthoritiesQuery"
     override val query = """
         query AuthoritiesQuery {
             authorities
