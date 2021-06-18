@@ -34,7 +34,7 @@ object LinkRolesToUserMutation : TestQuery<UserPayload>(typeOf<UserPayload>()) {
 
     override val queryName = "linkRolesToUser"
     override val content = """
-        mutation LinkUserRolesMutation($username: String!, $roles: [String!]!) {
+        mutation LinkRolesToUserMutation($username: String!, $roles: [String!]!) {
             linkRolesToUser(username: $username, roles: $roles) {
                 name
                 username

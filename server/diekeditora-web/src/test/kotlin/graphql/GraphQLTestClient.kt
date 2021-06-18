@@ -14,7 +14,7 @@ import org.springframework.test.web.reactive.server.expectBody
 
 @Component
 class GraphQLTestClient(val client: WebTestClient, val objectMapper: ObjectMapper) {
-    final inline fun <R> request(
+    final inline fun <reified R> request(
         query: TestQuery<R>,
         block: GraphQLRequestBuilder<R>.() -> Unit = {},
     ): R {
@@ -32,15 +32,17 @@ class GraphQLTestClient(val client: WebTestClient, val objectMapper: ObjectMappe
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(builder.toRequest(objectMapper))
             .exchange()
-            .expectBody<GraphQLResponse<Map<String, R>>>()
+            .expectBody<GraphQLResponse<Map<String, Any>>>()
             .returnResult().responseBody!!
 
         response.errors?.let { errors ->
-            throw GraphQLKotlinException(errors.joinToString(", "))
+            throw GraphQLKotlinException(errors.joinToString(", ") { it.message })
         }
 
         return response.data
             ?.get(query.queryName)
+            ?.let(objectMapper::writeValueAsString)
+            ?.let { objectMapper.readValue<R>(it) }
             ?: throw GraphQLKotlinException("GraphQLResponse.data is null")
     }
 }
