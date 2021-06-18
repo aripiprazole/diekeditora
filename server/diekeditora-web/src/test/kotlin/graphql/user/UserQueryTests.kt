@@ -40,11 +40,11 @@ class UserQueryTests(
             val originalEdge = original.edges[index]
 
             assertEquals(originalEdge.node, edge.node)
-            assertEquals(originalEdge.cursor, edge.cursor)
+            assertEquals(originalEdge.cursor.value, edge.cursor.value)
         }
 
-        assertEquals(original.pageInfo.startCursor, connection.pageInfo.startCursor)
-        assertEquals(original.pageInfo.endCursor, connection.pageInfo.endCursor)
+        assertEquals(original.pageInfo.startCursor.value, connection.pageInfo.startCursor.value)
+        assertEquals(original.pageInfo.endCursor.value, connection.pageInfo.endCursor.value)
         assertEquals(original.pageInfo.isHasNextPage, connection.pageInfo.isHasNextPage)
         assertEquals(original.pageInfo.isHasPreviousPage, connection.pageInfo.isHasPreviousPage)
     }

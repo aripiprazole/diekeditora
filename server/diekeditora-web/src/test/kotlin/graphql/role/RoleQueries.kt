@@ -2,9 +2,9 @@
 
 package com.diekeditora.web.tests.graphql.role
 
+import com.diekeditora.domain.graphql.GraphQLConnection
 import com.diekeditora.domain.role.Role
 import com.diekeditora.web.tests.graphql.TestQuery
-import graphql.relay.DefaultConnection
 import kotlin.reflect.typeOf
 
 object RoleQuery : TestQuery<Role>(typeOf<Role>()) {
@@ -24,7 +24,7 @@ object RoleQuery : TestQuery<Role>(typeOf<Role>()) {
     data class Variables(val name: String)
 }
 
-object RolesQuery : TestQuery<DefaultConnection<Role>>(typeOf<DefaultConnection<Role>>()) {
+object RolesQuery : TestQuery<GraphQLConnection<Role>>(typeOf<GraphQLConnection<Role>>()) {
     private const val page = "\$page"
 
     override val queryName = "roles"

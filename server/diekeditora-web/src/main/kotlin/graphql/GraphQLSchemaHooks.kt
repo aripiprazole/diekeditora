@@ -2,6 +2,7 @@ package com.diekeditora.web.graphql
 
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.node.ValueNode
 import com.fasterxml.jackson.module.kotlin.readValue
 import graphql.relay.Connection
 import graphql.relay.Relay
@@ -13,6 +14,7 @@ import graphql.schema.GraphQLSchema
 import graphql.schema.GraphQLType
 import graphql.schema.GraphQLTypeReference.typeRef
 import kotlin.reflect.KType
+import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.typeOf
 
@@ -72,14 +74,22 @@ class GraphQLSchemaHooks(val objectMapper: ObjectMapper) : SchemaGeneratorHooks 
         noinline transform: (String) -> O,
     ): Coercing<I, O> = object : Coercing<I, O> {
         override fun serialize(result: Any?): O {
-            return transform(objectMapper.writeValueAsString(result))
+            return transform(objectMapper.valueToTree<ValueNode>(result).asText())
         }
 
         override fun parseValue(input: Any?): I {
+            if (typeOf<O>().isSubtypeOf(typeOf<String>())) {
+                return objectMapper.readValue("\"$input\"")
+            }
+
             return objectMapper.readValue(input.toString())
         }
 
         override fun parseLiteral(input: Any?): I {
+            if (typeOf<O>().isSubtypeOf(typeOf<String>())) {
+                return objectMapper.readValue("\"$input\"")
+            }
+
             return objectMapper.readValue(input.toString())
         }
     }

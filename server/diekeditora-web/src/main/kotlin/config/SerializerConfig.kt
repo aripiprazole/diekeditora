@@ -1,5 +1,9 @@
 package com.diekeditora.web.config
 
+import com.diekeditora.domain.graphql.GraphQLConnection
+import com.diekeditora.domain.graphql.GraphQLConnectionCursor
+import com.diekeditora.domain.graphql.GraphQLEdge
+import com.diekeditora.domain.graphql.GraphQLPageInfo
 import com.diekeditora.infra.serializers.time.DateDeserializer
 import com.diekeditora.infra.serializers.time.DateSerializer
 import com.diekeditora.infra.serializers.time.InstantDeserializer
@@ -11,6 +15,10 @@ import com.diekeditora.infra.serializers.time.LocalDateTimeSerializer
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import graphql.relay.Connection
+import graphql.relay.ConnectionCursor
+import graphql.relay.Edge
+import graphql.relay.PageInfo
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.time.Instant
@@ -32,5 +40,13 @@ class SerializerConfig {
                 .addDeserializer(LocalDate::class.java, LocalDateDeserializer())
                 .addSerializer(LocalDateTime::class.java, LocalDateTimeSerializer())
                 .addDeserializer(LocalDateTime::class.java, LocalDateTimeDeserializer())
+
+                .addAbstractTypeMapping(Connection::class.java, GraphQLConnection::class.java)
+                .addAbstractTypeMapping(Edge::class.java, GraphQLEdge::class.java)
+                .addAbstractTypeMapping(PageInfo::class.java, GraphQLPageInfo::class.java)
+                .addAbstractTypeMapping(
+                    ConnectionCursor::class.java,
+                    GraphQLConnectionCursor::class.java
+                )
         )
 }

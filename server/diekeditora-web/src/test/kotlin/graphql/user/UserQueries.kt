@@ -2,10 +2,10 @@
 
 package com.diekeditora.web.tests.graphql.user
 
+import com.diekeditora.domain.graphql.GraphQLConnection
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserInput
 import com.diekeditora.web.tests.graphql.TestQuery
-import graphql.relay.DefaultConnection
 import kotlin.reflect.typeOf
 
 object UserQuery : TestQuery<User>(typeOf<User>()) {
@@ -29,7 +29,7 @@ object UserQuery : TestQuery<User>(typeOf<User>()) {
     data class Variables(val username: String)
 }
 
-object UsersQuery : TestQuery<DefaultConnection<User>>(typeOf<DefaultConnection<User>>()) {
+object UsersQuery : TestQuery<GraphQLConnection<User>>(typeOf<GraphQLConnection<User>>()) {
     private const val page = "\$page"
 
     override val queryName = "users"
