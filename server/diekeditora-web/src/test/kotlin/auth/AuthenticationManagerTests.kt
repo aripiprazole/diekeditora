@@ -1,5 +1,6 @@
 package com.diekeditora.web.tests.auth
 
+import com.diekeditora.domain.authority.AuthorityService
 import com.diekeditora.domain.user.UserService
 import com.diekeditora.shared.generateRandomString
 import com.diekeditora.web.security.AuthenticationManager
@@ -30,17 +31,20 @@ class AuthenticationManagerTests(
     fun `test should authenticate successfully with bearer token`(): Unit = runBlocking {
         val auth = mockk<FirebaseAuth>()
         val userService = mockk<UserService>()
+        val authorityService = mockk<AuthorityService>()
 
         var authentication: Authentication =
             BearerTokenAuthenticationToken(generateRandomString(15))
 
-        val manager = AuthenticationManager(auth, userService)
+        val manager = AuthenticationManager(auth, userService, authorityService)
 
         val user = userFactory.create()
         val token = tokenFactory.create()
 
         every { auth.verifyIdTokenAsync(any()) } returns ApiFutures.immediateFuture(token)
+
         coEvery { userService.findOrCreateUserByToken(any()) } returns user
+        coEvery { authorityService.findAllUserAuthorities(any()) } returns emptySet()
 
         authentication = manager.authenticate(authentication).awaitSingle()
 
