@@ -14,4 +14,5 @@ data class UserPayload(
     val deletedAt: LocalDateTime? = null,
     val authorities: List<String> = emptyList(),
     val roles: List<Role> = emptyList(),
+    val allAuthorities: List<String> = emptyList(),
 )

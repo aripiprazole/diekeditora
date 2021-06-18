@@ -2,6 +2,7 @@
 
 package com.diekeditora.infra.loaders
 
+import com.diekeditora.domain.authority.AuthorityService
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.User
@@ -20,4 +21,10 @@ class RoleAuthorityLoader(val roleService: RoleService) :
 class UserAuthorityLoader(val userService: UserService) :
     KotlinDataLoader<User, List<String>> by dataLoader("UserAuthorityLoader").execute({ user ->
         userService.findUserAuthorities(user)
+    })
+
+@Component
+class AllUserAuthorityLoader(val authorityService: AuthorityService) :
+    KotlinDataLoader<User, List<String>> by dataLoader("AllUserAuthorityLoader").execute({ user ->
+        authorityService.findALlAuthoritiesByUser(user).toList()
     })
