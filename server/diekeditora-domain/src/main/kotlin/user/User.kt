@@ -35,6 +35,14 @@ data class User(
     }
 
     @PreAuthorize("hasAuthority('authority.view')")
+    suspend fun allAuthorities(env: DataFetchingEnvironment): List<String> {
+        return env
+            .getDataLoader<User, List<String>>("AllUserAuthorityLoader")
+            .load(this)
+            .await()
+    }
+
+    @PreAuthorize("hasAuthority('authority.view')")
     suspend fun authorities(env: DataFetchingEnvironment): List<String> {
         return env
             .getDataLoader<User, List<String>>("UserAuthorityLoader")

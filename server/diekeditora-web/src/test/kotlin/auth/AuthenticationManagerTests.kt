@@ -44,7 +44,7 @@ class AuthenticationManagerTests(
         every { auth.verifyIdTokenAsync(any()) } returns ApiFutures.immediateFuture(token)
 
         coEvery { userService.findOrCreateUserByToken(any()) } returns user
-        coEvery { authorityService.findAllUserAuthorities(any()) } returns emptySet()
+        coEvery { authorityService.findALlAuthoritiesByUser(any()) } returns emptySet()
 
         authentication = manager.authenticate(authentication).awaitSingle()
 

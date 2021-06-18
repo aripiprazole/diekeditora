@@ -21,7 +21,7 @@ internal class AuthorityServiceImpl(val repository: AuthorityRepository) : Autho
     }
 
     @Transactional
-    override suspend fun findAllUserAuthorities(user: User): Set<String> {
+    override suspend fun findALlAuthoritiesByUser(user: User): Set<String> {
         return repository.findAllByUser(user).map { it.value }.toSet().also {
             log.trace("Successfully found all user %s authorities %s", user, it)
         }
