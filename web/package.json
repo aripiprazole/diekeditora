@@ -11,10 +11,13 @@
     "lerna": "^3.22.1",
     "prettier": "^2.3.1",
     "stylelint": "^13.13.1",
+    "tsconfig-paths-webpack-plugin": "^3.5.1",
     "typescript": "^4.3.4"
   },
   "scripts": {
-    "dev": "lerna run --scope @diekeditora/app --stream dev"
+    "app:dev": "lerna run --scope @diekeditora/app --stream dev",
+    "storybook:debug": "lerna run --scope @diekeditora/ui --stream storybook",
+    "storybook": "lerna run --scope @diekeditora/ui storybook"
   },
   "dependencies": {
     "next": "^11.0.0",
