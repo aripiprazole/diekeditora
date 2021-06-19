@@ -22,6 +22,7 @@
     "lint": "eslint './**/*.ts' './**/*.tsx' './**/*.js' --fix",
     "build": "lerna run --scope @diekeditora/app --stream build",
     "start": "lerna run --scope @diekeditora/app --stream start",
+    "test": "lerna run --scope @diekeditora/app --stream cypress:run",
     "app:dev": "lerna run --scope @diekeditora/app --stream dev",
     "storybook:debug": "lerna run --scope @diekeditora/ui --stream storybook",
     "storybook": "lerna run --scope @diekeditora/ui storybook",
