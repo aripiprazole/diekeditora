@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { Story } from '@storybook/react';
+import {Story} from '@storybook/react';
 
-import { Button, ButtonProps } from '.';
+import {Button, ButtonProps} from '.';
 
 export default {
   title: 'Example/Button',
   component: Button,
   argTypes: {
-    backgroundColor: { control: 'color' },
+    backgroundColor: {control: 'color'},
   },
 };
 

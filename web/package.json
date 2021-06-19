@@ -4,20 +4,28 @@
   "devDependencies": {
     "@types/node": "^15.12.3",
     "@types/react": "^17.0.11",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
     "babel-loader": "^8.2.2",
     "eslint": "^7.29.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.24.0",
     "lerna": "^3.22.1",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.3.1",
     "stylelint": "^13.13.1",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
     "typescript": "^4.3.4"
   },
   "scripts": {
+    "dev": "run-p app:dev storybook",
+    "lint": "eslint './**/*.ts' './**/*.tsx' './**/*.js' --fix",
+    "build": "lerna run --scope @diekeditora/app --stream build",
+    "start": "lerna run --scope @diekeditora/app --stream start",
     "app:dev": "lerna run --scope @diekeditora/app --stream dev",
     "storybook:debug": "lerna run --scope @diekeditora/ui --stream storybook",
-    "storybook": "lerna run --scope @diekeditora/ui storybook"
+    "storybook": "lerna run --scope @diekeditora/ui storybook",
+    "build-storybook": "lerna run --scope @diekeditora/ui --stream build-storybook"
   },
   "dependencies": {
     "next": "^11.0.0",

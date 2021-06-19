@@ -6,6 +6,11 @@ module.exports = {
   },
   extends: ['plugin:react/recommended', 'google'],
   parser: '@typescript-eslint/parser',
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -15,6 +20,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
+    'max-len': ['error', {code: 120}],
     'react/prop-types': [0],
   },
 };

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Story } from '@storybook/react';
+import {Story} from '@storybook/react';
 
-import { Header, HeaderProps } from '.';
+import {Header, HeaderProps} from '.';
 
 export default {
   title: 'Example/Header',

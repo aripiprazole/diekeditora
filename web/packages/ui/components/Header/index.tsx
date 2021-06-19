@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button } from '~/components';
+import {Button} from '~/components';
 
 import './index.css';
 
@@ -11,7 +11,7 @@ export type HeaderProps = {
   onCreateAccount: () => void;
 };
 
-export const Header: React.VFC<HeaderProps> = ({ user, onLogin, onLogout, onCreateAccount }) => (
+export const Header: React.VFC<HeaderProps> = ({user, onLogin, onLogout, onCreateAccount}) => (
   <header>
     <div className="wrapper">
       <div>
