@@ -31,15 +31,17 @@ export type ButtonProps = {
 
 /**
  * Primary UI component for user interaction
+ *
+ * @return {JSX.Element}
  */
-export const Button: React.FC<ButtonProps> = ({ size = 'medium', primary, backgroundColor, label, ...props }) => {
+export const Button: React.FC<ButtonProps> = ({size = 'medium', primary, backgroundColor, label, ...props}) => {
   const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
 
   return (
     <button
       type="button"
       className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      style={backgroundColor && { backgroundColor }}
+      style={backgroundColor && {backgroundColor}}
       {...props}
     >
       {label}
