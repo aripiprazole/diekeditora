@@ -1,7 +1,10 @@
 {
-  "extends": "../../config/next.tsconfig.json",
+  "extends": "../../../config/next.tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "../",
+    "lib": ["es5", "dom"],
+    "types": ["cypress"],
+    "isolatedModules": true,
     "paths": {
       "~/*": ["./*"]
     }
