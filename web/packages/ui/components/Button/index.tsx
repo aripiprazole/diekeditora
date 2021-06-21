@@ -1,50 +1,146 @@
-import React from 'react';
+import React, {ReactNode, ButtonHTMLAttributes} from 'react';
 
-import './index.css';
+import styled from 'styled-components';
 
-export type ButtonProps = {
+import {Color, Size} from '~/theme';
+
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   /**
-   * Is this the principal call to action on the page?
+   * The color of the component. It supports those theme colors that make sense for this component.
    */
-  primary?: boolean;
-
-  /**
-   * What background color to use
-   */
-  backgroundColor?: string;
-
-  /**
-   * Button contents
-   */
-  label: string;
+  color?: Color;
 
   /**
    * How large should the button be?
    */
-  size?: 'small' | 'medium' | 'large';
+  size?: Size;
 
   /**
-   * Optional click handler
+   * Which variant the button will be?
    */
-  onClick: () => void;
+  variant?: 'outlined' | 'contained' | 'text';
+
+  /**
+   * Button contents
+   */
+  children?: ReactNode;
+
+  /**
+   * Button will be disabled
+   */
+  disabled?: boolean;
 };
 
 /**
  * Primary UI component for user interaction
- *
- * @return {JSX.Element}
  */
-export const Button: React.FC<ButtonProps> = ({size = 'medium', primary, backgroundColor, label, ...props}) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+export const Button: React.FC<ButtonProps> = ({
+  size = 'medium',
+  color = 'primary',
+  variant = 'contained',
+  disabled = false,
+  ...props
+}) => {
+  const args = {size, color, variant, disabled, ...props};
 
-  return (
-    <button
-      type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      style={backgroundColor && {backgroundColor}}
-      {...props}
-    >
-      {label}
-    </button>
-  );
+  if (variant === 'outlined') {
+    return <OutlinedButton {...args} />;
+  }
+
+  if (variant === 'text') {
+    return <TextButton {...args} />;
+  }
+
+  return <ContainedButton {...args} />;
 };
+
+const TextButton = styled.button<ButtonProps>`
+  background: transparent;
+  color: ${({theme, color}) => theme.palette[color][450]};
+
+  font-weight: 600;
+
+  border: none;
+  border-radius: 0.25rem;
+
+  position: relative;
+
+  transition: 200ms;
+
+  user-select: none;
+
+  padding: ${({size}) =>
+    size === 'small' ?
+      '0.4rem 2.25rem' :
+      size === 'medium' ?
+      '0.6rem 4.25rem' :
+      size === 'large' ?
+      '0.8rem 6.25rem' :
+      null};
+
+  :not(:disabled) {
+    cursor: pointer;
+
+    :focus {
+      outline: 0.125rem solid ${({theme}) => theme.palette.info[100]};
+      outline-offset: 0.125rem;
+      -moz-outline-radius: 0.125rem;
+    }
+
+    :hover {
+      color: ${({theme, color}) => theme.palette[color][300]};
+    }
+
+    :active {
+      color: ${({theme, color}) => theme.palette[color][200]};
+    }
+  }
+
+  :disabled {
+    color: ${({theme}) => theme.palette.neutral[300]};
+  }
+`;
+
+const ContainedButton = styled(TextButton)`
+  background: ${({theme, color}) => theme.palette[color][450]};
+  color: ${({theme, color}) => theme.palette[color].contrastText};
+
+  :disabled {
+    background: ${({theme}) => theme.palette.neutral[400]};
+  }
+
+  :not(:disabled) {
+    :hover {
+      background: ${({theme, color}) => theme.palette[color][300]};
+      color: ${({theme, color}) => theme.palette[color].contrastText};
+    }
+
+    :active {
+      background: ${({theme, color}) => theme.palette[color][200]};
+      color: ${({theme, color}) => theme.palette[color].contrastText};
+    }
+  }
+`;
+
+const OutlinedButton = styled(TextButton)`
+  background: transparent;
+  border: 0.125rem solid ${({theme, color}) => theme.palette[color][450]};
+  color: ${({theme, color}) => theme.palette[color][450]};
+
+  :disabled {
+    border: 0.125rem solid ${({theme}) => theme.palette.neutral[400]};
+    color: ${({theme}) => theme.palette.neutral[400]};
+  }
+
+  :not(:disabled) {
+    cursor: pointer;
+
+    :hover {
+      border: 0.125rem solid ${({theme, color}) => theme.palette[color][300]};
+    }
+
+    :active {
+      border: 0.125rem solid ${({theme, color}) => theme.palette[color][200]};
+    }
+  }
+`;
