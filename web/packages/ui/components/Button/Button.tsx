@@ -2,6 +2,7 @@ import React, {ReactNode, ButtonHTMLAttributes} from 'react';
 
 import styled from 'styled-components';
 
+import {Typography} from '~/components';
 import {Color, Size} from '~/theme';
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -39,19 +40,22 @@ export const Button: React.FC<ButtonProps> = ({
   color = 'primary',
   variant = 'contained',
   disabled = false,
+  children,
   ...props
 }) => {
-  const args = {size, color, variant, disabled, ...props};
+  const buttonVariants = {
+    text: TextButton,
+    contained: ContainedButton,
+    outlined: OutlinedButton,
+  };
 
-  if (variant === 'outlined') {
-    return <OutlinedButton {...args} />;
-  }
+  const StyledButton = buttonVariants[variant] ?? TextButton;
 
-  if (variant === 'text') {
-    return <TextButton {...args} />;
-  }
-
-  return <ContainedButton {...args} />;
+  return (
+    <StyledButton size={size} color={color} variant={variant} disabled={disabled} {...props}>
+      <Typography variant="button">{children}</Typography>
+    </StyledButton>
+  );
 };
 
 const TextButton = styled.button<ButtonProps>`

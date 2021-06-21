@@ -1,2 +1,2 @@
-export * from './Button/Button';
-export * from './Header';
+export * from './Button';
+export * from './Typography';
