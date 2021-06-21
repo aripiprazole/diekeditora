@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Meta, Story} from '@storybook/react';
 
-import {Button, ButtonProps} from '.';
+import {Button, ButtonProps} from './Button';
 
 export default {
   title: 'Library/Components/Button',
