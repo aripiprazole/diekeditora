@@ -7,6 +7,16 @@ import {Typography, TypographyProps} from './Typography';
 export default {
   title: 'Library/Components/Typography',
   component: Typography,
+  argTypes: {
+    fontFamily: {control: 'text'},
+    fontWeight: {control: 'number'},
+    lineHeight: {control: 'number'},
+    fontSize: {control: 'number'},
+    variant: {
+      options: ['h1', 'h2', 'h3', 'h4', 'body1', 'body2', 'body3', 'button'],
+      control: {type: 'select'},
+    },
+  },
 } as Meta;
 
 export const H1: Story<TypographyProps> = (props) => <Typography {...props} />;
