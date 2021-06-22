@@ -2,8 +2,8 @@ import React, {ReactNode, ButtonHTMLAttributes} from 'react';
 
 import styled from 'styled-components';
 
-import {Typography} from '~/components';
-import {Color, Size} from '~/theme';
+import {Typography} from '@diekeditora/ui';
+import {Color, Size} from '@diekeditora/ui/theme';
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   /**

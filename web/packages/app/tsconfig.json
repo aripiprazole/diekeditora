@@ -1,11 +1,16 @@
 {
-  "extends": "../../config/next.tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./*"]
-    }
+      "@diekeditora/app/*": ["./*"],
+      "@diekeditora/app": ["./"],
+      "@diekeditora/ui/*": ["../ui/*"],
+      "@diekeditora/ui": ["../ui"]
+    },
+    "target": "es5"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["cypress", "node_modules"]
 }

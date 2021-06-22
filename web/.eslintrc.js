@@ -21,6 +21,7 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
   rules: {
     'max-len': ['error', {code: 120}],
+    'valid-jsdoc': [0],
     'react/prop-types': [0],
   },
 };

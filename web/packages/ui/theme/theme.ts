@@ -1,4 +1,4 @@
-import {Palette, Theme} from '~/theme';
+import {Palette, Theme} from '@diekeditora/ui/theme';
 
 type ThemeOptions = {
   palette: Palette;

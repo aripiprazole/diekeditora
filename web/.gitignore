@@ -228,3 +228,5 @@ modules.xml
 
 # and uncomment the following lines
 # .pnp.*
+
+.psc-ide-port
