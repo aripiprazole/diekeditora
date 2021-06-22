@@ -1,7 +1,8 @@
 import React, {ComponentType, ReactNode} from 'react';
 
 import styled from 'styled-components';
-import {fontFamily} from '~/styles';
+
+import {fontFamily} from '@diekeditora/ui/styles';
 
 export type TypographyProps = React.HTMLAttributes<HTMLElement> & {
   /**

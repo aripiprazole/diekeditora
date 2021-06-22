@@ -1,9 +1,10 @@
 {
-  "extends": "../../config/next.tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./*"]
+      "@diekeditora/ui/*": ["./*"],
+      "@diekeditora/ui": ["./"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

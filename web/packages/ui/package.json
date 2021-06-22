@@ -5,7 +5,7 @@
   "author": "Lorenzo Guimarães <lorenzooguimaraes@gmail.com>",
   "homepage": "https://github.com/diekeditora/diekeditora",
   "license": "ISC",
-  "main": "lib/ui.js",
+  "main": "index.ts",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
