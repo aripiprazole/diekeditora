@@ -1,4 +1,4 @@
-import React, {ComponentType, ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 
 import styled from 'styled-components';
 
@@ -13,7 +13,7 @@ export type TypographyProps = React.HTMLAttributes<HTMLElement> & {
   /**
    * Typography component type
    */
-  component?: ComponentType<React.HTMLAttributes<HTMLElement>>;
+  component?: any;
 
   /**
    * Typography will be in italic?
@@ -51,7 +51,7 @@ export type TypographyProps = React.HTMLAttributes<HTMLElement> & {
   children?: ReactNode;
 };
 
-export const Typography: React.VFC<TypographyProps> = ({variant, fontFamily = 'Poppins', ...props}) => {
+export const Typography: React.VFC<TypographyProps> = ({variant, fontFamily = 'Poppins', component, ...props}) => {
   const typographyVariants = {
     h1: H1,
     h2: H2,
@@ -66,7 +66,7 @@ export const Typography: React.VFC<TypographyProps> = ({variant, fontFamily = 'P
   if (typographyVariants[variant]) {
     const StyledTypography = typographyVariants[variant];
 
-    return <StyledTypography fontFamily={fontFamily} {...props} />;
+    return <StyledTypography as={component} className="DiekEditora_Typography" fontFamily={fontFamily} {...props} />;
   }
 
   return null;

@@ -1,1 +1,3 @@
-export * from './components';
+export * from './components/Button';
+export * from './components/Typography';
+export * from './components/Header';
