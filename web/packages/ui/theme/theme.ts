@@ -1,7 +1,8 @@
-import {Palette, Theme} from '@diekeditora/ui/theme';
+import {Borders, Palette, Theme} from '@diekeditora/ui/theme';
 
 type ThemeOptions = {
   palette: Palette;
+  borders: Borders;
 };
 
 export type Size = 'small' | 'medium' | 'large';
@@ -15,5 +16,6 @@ export type Size = 'small' | 'medium' | 'large';
 export function createTheme(options: ThemeOptions): Theme {
   return {
     palette: options.palette,
+    borders: options.borders,
   };
 }

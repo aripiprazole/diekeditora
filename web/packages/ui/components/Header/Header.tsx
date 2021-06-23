@@ -34,7 +34,7 @@ export const Header: React.VFC = () => {
             <List>
               {items.map(({text, link}) => (
                 <li key={link}>
-                  <Link href="/" passHref>
+                  <Link href={link} passHref>
                     <TextButton as={NavLink} color="neutral" outline={false}>
                       <Typography variant="h4" as="span">
                         {text}
