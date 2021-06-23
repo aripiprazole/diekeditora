@@ -74,7 +74,15 @@ export const Button: React.FC<ButtonProps> = ({
   const StyledButton = buttonVariants[variant] ?? TextButton;
 
   return (
-    <StyledButton outline={outline} size={size} color={color} variant={variant} disabled={disabled} {...props}>
+    <StyledButton
+      outline={outline}
+      size={size}
+      color={color}
+      variant={variant}
+      disabled={disabled}
+      className={[disabled && 'disabled'].join(' ')}
+      {...props}
+    >
       <Typography variant="button">{children}</Typography>
     </StyledButton>
   );
@@ -117,7 +125,7 @@ export const TextButton = styled.button<ButtonProps>`
       '0.6rem 8.25rem' :
       null};
 
-  :not(:disabled) {
+  :not(.disabled) {
     cursor: pointer;
 
     :focus {
@@ -139,7 +147,7 @@ export const TextButton = styled.button<ButtonProps>`
     }
   }
 
-  :disabled {
+  .disabled {
     color: ${({theme}) => theme.palette.neutral[300]};
   }
 `;
@@ -152,7 +160,7 @@ export const ContainedButton = styled(TextButton)`
     background: ${({theme}) => theme.palette.neutral[400]};
   }
 
-  :not(:disabled) {
+  :not(.disabled) {
     :hover {
       background: ${({theme, color}) => theme.palette[color][300]};
       color: ${({theme, color}) => theme.palette[color].contrastText};
@@ -170,12 +178,12 @@ export const OutlinedButton = styled(TextButton)`
   border: 0.125rem solid ${({theme, color}) => theme.palette[color][450]};
   color: ${({theme, color}) => theme.palette[color][450]};
 
-  :disabled {
+  .disabled {
     border: 0.125rem solid ${({theme}) => theme.palette.neutral[400]};
     color: ${({theme}) => theme.palette.neutral[400]};
   }
 
-  :not(:disabled) {
+  :not(.disabled) {
     cursor: pointer;
 
     :hover {

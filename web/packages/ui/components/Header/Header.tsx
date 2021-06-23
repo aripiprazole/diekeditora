@@ -5,7 +5,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import {FullLogo} from '@diekeditora/ui/icons';
-import {Typography, Button, TextButton, ContainedButton} from '@diekeditora/ui';
+import {Typography, TextButton, ContainedButton} from '@diekeditora/ui';
 
 type NavItem = {
   link: string;
@@ -35,8 +35,8 @@ export const Header: React.VFC = () => {
               {items.map(({text, link}) => (
                 <li key={link}>
                   <Link href="/" passHref>
-                    <TextButton as={NavLink} outline={false}>
-                      <Typography variant="h4" as="span" color="#fff">
+                    <TextButton as={NavLink} color="neutral" outline={false}>
+                      <Typography variant="h4" as="span">
                         {text}
                       </Typography>
                     </TextButton>
@@ -178,6 +178,8 @@ const List = styled.ul`
 `;
 
 const NavLink = styled.a`
+  color: #fff;
+
   height: 100%;
   padding: 0 1.125rem;
 
