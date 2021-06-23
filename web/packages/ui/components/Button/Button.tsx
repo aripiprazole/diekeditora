@@ -31,6 +31,8 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
    */
   children?: ReactNode;
 
+  border?: Size | 'full';
+
   /**
    * Button will be disabled
    */
@@ -78,6 +80,18 @@ export const Button: React.FC<ButtonProps> = ({
   );
 };
 
+const cssBorderRadius = ({border = 'medium'}: ButtonProps) => css`
+  border-radius: ${border === 'small' ?
+    '0.25rem' :
+    border === 'medium' ?
+    '0.625rem' :
+    border === 'large' ?
+    '1.25rem' :
+    border === 'full' ?
+    '50%' :
+    null};
+`;
+
 export const TextButton = styled.button<ButtonProps>`
   background: transparent;
   color: ${({theme, color}) => theme.palette[color][450]};
@@ -85,7 +99,6 @@ export const TextButton = styled.button<ButtonProps>`
   font-weight: 600;
 
   border: none;
-  border-radius: 0.25rem;
 
   position: relative;
 
@@ -93,13 +106,15 @@ export const TextButton = styled.button<ButtonProps>`
 
   user-select: none;
 
+  ${cssBorderRadius}
+
   padding: ${({size}) =>
     size === 'small' ?
-      '0.4rem 2.25rem' :
+      '0.6rem 1rem' :
       size === 'medium' ?
       '0.6rem 4.25rem' :
       size === 'large' ?
-      '0.8rem 6.25rem' :
+      '0.6rem 8.25rem' :
       null};
 
   :not(:disabled) {

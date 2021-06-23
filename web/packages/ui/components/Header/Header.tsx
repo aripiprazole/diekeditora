@@ -5,7 +5,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import {FullLogo} from '@diekeditora/ui/icons';
-import {Typography, TextButton} from '@diekeditora/ui';
+import {Typography, Button, TextButton, ContainedButton} from '@diekeditora/ui';
 
 type NavItem = {
   link: string;
@@ -36,7 +36,7 @@ export const Header: React.VFC = () => {
                 <li key={link}>
                   <Link href="/" passHref>
                     <TextButton as={NavLink} outline={false}>
-                      <Typography variant="h4" as="span">
+                      <Typography variant="h4" as="span" color="#fff">
                         {text}
                       </Typography>
                     </TextButton>
@@ -57,14 +57,59 @@ export const Header: React.VFC = () => {
         </Content>
       </Navbar>
 
+      <Main>
+        <Competition>
+          <Typography variant="h1" lineHeight="4.875rem" fontSize="4.25rem" color="#fff">
+            Participe do concurso
+          </Typography>
+
+          <ParticipateButton size="small" border="large">
+            Participar agora
+          </ParticipateButton>
+        </Competition>
+      </Main>
+
       <Slideshow />
     </Container>
   );
 };
 
 const Container = styled.header`
-  height: 650px;
+  height: 40.625rem;
   position: relative;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+const Main = styled.main`
+  width: 100%;
+  max-width: 68.75rem;
+  margin: auto;
+
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const Competition = styled.div`
+  max-width: 27.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+
+  text-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
+`;
+
+const ParticipateButton = styled(ContainedButton)`
+  padding: 15px 0.875rem;
+  border-radius: 1.2rem;
+  font-size: 14px;
+  filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.25));
+
+  width: fit-content;
 `;
 
 const Navbar = styled.nav`
@@ -102,12 +147,14 @@ const Slideshow = styled.div`
   right: 0;
   z-index: -1;
 
-  background: url('/images/Slideshow1.png');
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/Slideshow1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 
 const Content = styled.div`
   width: 100%;
-  max-width: 1400px;
+  max-width: 87.5rem;
   margin: auto;
   z-index: 2;
 
@@ -131,8 +178,6 @@ const List = styled.ul`
 `;
 
 const NavLink = styled.a`
-  color: #fff;
-
   height: 100%;
   padding: 0 1.125rem;
 
