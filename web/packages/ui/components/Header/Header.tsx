@@ -36,7 +36,7 @@ export const Header: React.VFC = () => {
                 <li key={link}>
                   <Link href="/" passHref>
                     <TextButton as={NavLink} outline={false}>
-                      <Typography variant="h4" component="span">
+                      <Typography variant="h4" as="span">
                         {text}
                       </Typography>
                     </TextButton>
