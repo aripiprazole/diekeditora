@@ -1,4 +1,4 @@
-import {PaletteColor} from './color';
+import {color, PaletteColor} from './color';
 import {createTheme} from './theme';
 
 export type Palette = {
@@ -9,10 +9,20 @@ export type Palette = {
   success: PaletteColor;
   error: PaletteColor;
   extra: PaletteColor;
+
+  bg: string;
+};
+
+export type Borders = {
+  full: string;
+  large: string;
+  medium: string;
+  small: string;
 };
 
 export type Theme = {
   palette: Palette;
+  borders: Borders;
 };
 
 declare module 'styled-components' {
@@ -20,59 +30,68 @@ declare module 'styled-components' {
 }
 
 export const defaultTheme = createTheme({
+  borders: {
+    full: '50%',
+    large: '1.25rem',
+    medium: '0.625rem',
+    small: '0.25rem',
+  },
   palette: {
-    neutral: {
-      [500]: '#FFFFFF',
-      [400]: '#E0E0E0',
-      [300]: '#888888',
-      [200]: '#686868',
-      [100]: '#000000',
-      contrastText: '#FFFFFF',
-    },
+    bg: '#242424',
 
-    primary: {
-      [900]: '#F8F2FF',
-      [600]: '#C07EFF',
-      [450]: '#9B5DD6',
-      [300]: '#691D89',
-      [200]: '#4A2370',
-      contrastText: '#FFFFFF',
-    },
+    neutral: color({
+      light: '#E0E0E0',
+      default: '#FFFFFF',
+      dark: '#686868',
+      darker: '#888888',
+      contrastText: '#000000',
+    }),
 
-    secondary: {
-      [900]: '#FFE1F0',
-      [600]: '#FF5CB0',
-      [450]: '#FF0083',
-      [300]: '#A91762',
-      [200]: '#7F0041',
+    primary: color({
+      lighter: '#F8F2FF',
+      light: '#C07EFF',
+      default: '#9B5DD6',
+      dark: '#691D89',
+      darker: '#4A2370',
       contrastText: '#FFFFFF',
-    },
+    }),
 
-    info: {
-      [100]: '#2F80ED',
-      [200]: '#2CB3FF',
-      [300]: '#EEF7FF',
+    secondary: color({
+      lighter: '#FFE1F0',
+      light: '#FF5CB0',
+      default: '#FF0083',
+      dark: '#A91762',
+      darker: '#7F0041',
       contrastText: '#FFFFFF',
-    },
+    }),
 
-    success: {
-      [100]: '#1AB759',
-      [200]: '#2AC769',
-      [300]: '#40DD7F',
+    info: color({
+      light: '#EEF7FF',
+      default: '#2CB3FF',
+      dark: '#2F80ED',
       contrastText: '#FFFFFF',
-    },
+    }),
 
-    error: {
-      [100]: '#E93C3C',
-      [200]: '#FB4E4E',
-      [300]: '#FF6262',
+    success: color({
+      light: '#1AB759',
+      default: '#2AC769',
+      dark: '#40DD7F',
       contrastText: '#FFFFFF',
-    },
+    }),
 
-    extra: {
-      [100]: '#FF1B44',
+    error: color({
+      light: '#E93C3C',
+      default: '#FB4E4E',
+      dark: '#FF6262',
       contrastText: '#FFFFFF',
-    },
+    }),
+
+    extra: color({
+      light: '#FF1B44',
+      default: '#FF1B44',
+      dark: '#FF1B44',
+      contrastText: '#FFFFFF',
+    }),
   },
 });
 

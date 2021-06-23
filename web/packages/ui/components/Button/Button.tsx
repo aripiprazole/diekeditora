@@ -88,24 +88,19 @@ export const Button: React.FC<ButtonProps> = ({
   );
 };
 
-const cssBorderRadius = ({border = 'medium'}: ButtonProps) => css`
-  border-radius: ${border === 'small' ?
-    '0.25rem' :
-    border === 'medium' ?
-    '0.625rem' :
-    border === 'large' ?
-    '1.25rem' :
-    border === 'full' ?
-    '50%' :
-    null};
-`;
+const buttonSizes = {
+  small: '0.6rem 1rem',
+  medium: '0.6rem 4.25rem',
+  large: '0.6rem 8.25rem',
+};
 
 export const TextButton = styled.button<ButtonProps>`
   background: transparent;
-  color: ${({theme, color}) => theme.palette[color][450]};
+  color: ${({theme, color}) => theme.palette[color].default};
 
   font-weight: 600;
 
+  border-radius: ${({theme, border = 'medium'}) => theme[border]};
   border: none;
 
   position: relative;
@@ -114,16 +109,7 @@ export const TextButton = styled.button<ButtonProps>`
 
   user-select: none;
 
-  ${cssBorderRadius}
-
-  padding: ${({size}) =>
-    size === 'small' ?
-      '0.6rem 1rem' :
-      size === 'medium' ?
-      '0.6rem 4.25rem' :
-      size === 'large' ?
-      '0.6rem 8.25rem' :
-      null};
+  padding: ${({size}) => buttonSizes[size]};
 
   :not(.disabled) {
     cursor: pointer;
@@ -132,18 +118,18 @@ export const TextButton = styled.button<ButtonProps>`
       ${({outline}) =>
     outline &&
         css`
-          outline: 0.125rem solid ${({theme}) => theme.palette.info[100]};
+          outline: 0.125rem solid ${({theme}) => theme.palette.info.dark};
           outline-offset: 0.125rem;
           -moz-outline-radius: 0.125rem;
         `};
     }
 
     :hover {
-      color: ${({theme, color}) => theme.palette[color][300]};
+      color: ${({theme, color}) => theme.palette[color].dark};
     }
 
     :active {
-      color: ${({theme, color}) => theme.palette[color][200]};
+      color: ${({theme, color}) => theme.palette[color].darker};
     }
   }
 
@@ -153,21 +139,21 @@ export const TextButton = styled.button<ButtonProps>`
 `;
 
 export const ContainedButton = styled(TextButton)`
-  background: ${({theme, color}) => theme.palette[color][450]};
+  background: ${({theme, color}) => theme.palette[color].default};
   color: ${({theme, color}) => theme.palette[color].contrastText};
 
   :disabled {
-    background: ${({theme}) => theme.palette.neutral[400]};
+    background: ${({theme}) => theme.palette.neutral.light};
   }
 
   :not(.disabled) {
     :hover {
-      background: ${({theme, color}) => theme.palette[color][300]};
+      background: ${({theme, color}) => theme.palette[color].dark};
       color: ${({theme, color}) => theme.palette[color].contrastText};
     }
 
     :active {
-      background: ${({theme, color}) => theme.palette[color][200]};
+      background: ${({theme, color}) => theme.palette[color].darker};
       color: ${({theme, color}) => theme.palette[color].contrastText};
     }
   }
@@ -175,23 +161,23 @@ export const ContainedButton = styled(TextButton)`
 
 export const OutlinedButton = styled(TextButton)`
   background: transparent;
-  border: 0.125rem solid ${({theme, color}) => theme.palette[color][450]};
-  color: ${({theme, color}) => theme.palette[color][450]};
+  border: 0.125rem solid ${({theme, color}) => theme.palette[color].default};
+  color: ${({theme, color}) => theme.palette[color].default};
 
   .disabled {
-    border: 0.125rem solid ${({theme}) => theme.palette.neutral[400]};
-    color: ${({theme}) => theme.palette.neutral[400]};
+    border: 0.125rem solid ${({theme}) => theme.palette.neutral.light};
+    color: ${({theme}) => theme.palette.neutral.light};
   }
 
   :not(.disabled) {
     cursor: pointer;
 
     :hover {
-      border: 0.125rem solid ${({theme, color}) => theme.palette[color][300]};
+      border: 0.125rem solid ${({theme, color}) => theme.palette[color].dark};
     }
 
     :active {
-      border: 0.125rem solid ${({theme, color}) => theme.palette[color][200]};
+      border: 0.125rem solid ${({theme, color}) => theme.palette[color].darker};
     }
   }
 `;
