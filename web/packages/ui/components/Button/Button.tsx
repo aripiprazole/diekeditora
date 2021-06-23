@@ -1,15 +1,20 @@
 import React, {ReactNode, ButtonHTMLAttributes} from 'react';
 
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
-import {Typography} from '@diekeditora/ui';
 import {Color, Size} from '@diekeditora/ui/theme';
+import {Typography} from '@diekeditora/ui';
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   /**
    * The color of the component. It supports those theme colors that make sense for this component.
    */
   color?: Color;
+
+  /**
+   * The type of the component
+   */
+  as?: any;
 
   /**
    * How large should the button be?
@@ -30,16 +35,31 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
    * Button will be disabled
    */
   disabled?: boolean;
+
+  /**
+   * Button outline be disabled
+   */
+  outline?: boolean;
+};
+
+const defaultProps: ButtonProps = {
+  size: 'medium',
+  color: 'primary',
+  variant: 'contained',
+  disabled: false,
+  outline: true,
 };
 
 /**
  * Primary UI component for user interaction
  */
 export const Button: React.FC<ButtonProps> = ({
-  size = 'medium',
-  color = 'primary',
-  variant = 'contained',
-  disabled = false,
+  size = defaultProps.size,
+  color = defaultProps.color,
+  variant = defaultProps.variant,
+  disabled = defaultProps.disabled,
+  outline = defaultProps.outline,
+  as,
   children,
   ...props
 }) => {
@@ -52,13 +72,13 @@ export const Button: React.FC<ButtonProps> = ({
   const StyledButton = buttonVariants[variant] ?? TextButton;
 
   return (
-    <StyledButton size={size} color={color} variant={variant} disabled={disabled} {...props}>
+    <StyledButton outline={outline} size={size} color={color} variant={variant} disabled={disabled} {...props}>
       <Typography variant="button">{children}</Typography>
     </StyledButton>
   );
 };
 
-const TextButton = styled.button<ButtonProps>`
+export const TextButton = styled.button<ButtonProps>`
   background: transparent;
   color: ${({theme, color}) => theme.palette[color][450]};
 
@@ -86,9 +106,13 @@ const TextButton = styled.button<ButtonProps>`
     cursor: pointer;
 
     :focus {
-      outline: 0.125rem solid ${({theme}) => theme.palette.info[100]};
-      outline-offset: 0.125rem;
-      -moz-outline-radius: 0.125rem;
+      ${({outline}) =>
+    outline &&
+        css`
+          outline: 0.125rem solid ${({theme}) => theme.palette.info[100]};
+          outline-offset: 0.125rem;
+          -moz-outline-radius: 0.125rem;
+        `};
     }
 
     :hover {
@@ -105,7 +129,7 @@ const TextButton = styled.button<ButtonProps>`
   }
 `;
 
-const ContainedButton = styled(TextButton)`
+export const ContainedButton = styled(TextButton)`
   background: ${({theme, color}) => theme.palette[color][450]};
   color: ${({theme, color}) => theme.palette[color].contrastText};
 
@@ -126,7 +150,7 @@ const ContainedButton = styled(TextButton)`
   }
 `;
 
-const OutlinedButton = styled(TextButton)`
+export const OutlinedButton = styled(TextButton)`
   background: transparent;
   border: 0.125rem solid ${({theme, color}) => theme.palette[color][450]};
   color: ${({theme, color}) => theme.palette[color][450]};
@@ -148,3 +172,7 @@ const OutlinedButton = styled(TextButton)`
     }
   }
 `;
+
+OutlinedButton.defaultProps = defaultProps;
+TextButton.defaultProps = defaultProps;
+ContainedButton.defaultProps = defaultProps;
