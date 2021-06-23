@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 import {fontFamily} from '@diekeditora/ui/styles';
 
@@ -24,6 +24,8 @@ export type TypographyProps = React.HTMLAttributes<HTMLElement> & {
    * Typography will be bold?
    */
   bold?: number;
+
+  color?: string;
 
   /**
    * Typography will in which line height?
@@ -72,12 +74,21 @@ export const Typography: React.VFC<TypographyProps> = ({variant, fontFamily = 'P
   return null;
 };
 
+const cssColor = ({color}: TypographyProps) =>
+  color &&
+  css`
+    color: ${color};
+  `;
+
+const cssFontFamily = (props: TypographyProps) => fontFamily(props.fontFamily);
+
 const H1 = styled.h1<TypographyProps>`
   font-size: ${({fontSize = '24px'}) => fontSize};
   line-height: ${({lineHeight = '32px'}) => lineHeight};
   font-weight: ${({fontWeight = 700}) => fontWeight};
 
-  ${(props) => fontFamily(props.fontFamily)}
+  ${cssColor}
+  ${cssFontFamily}
 `;
 
 const H2 = styled.h2<TypographyProps>`
@@ -85,7 +96,8 @@ const H2 = styled.h2<TypographyProps>`
   line-height: ${({lineHeight = '32px'}) => lineHeight};
   font-weight: ${({fontWeight = 700}) => fontWeight};
 
-  ${(props) => fontFamily(props.fontFamily)}
+  ${cssColor}
+  ${cssFontFamily}
 `;
 
 const H3 = styled.h3<TypographyProps>`
@@ -93,7 +105,8 @@ const H3 = styled.h3<TypographyProps>`
   line-height: ${({lineHeight = '32px'}) => lineHeight};
   font-weight: ${({fontWeight = 600}) => fontWeight};
 
-  ${(props) => fontFamily(props.fontFamily)}
+  ${cssColor}
+  ${cssFontFamily}
 `;
 
 const H4 = styled.h4<TypographyProps>`
@@ -101,7 +114,8 @@ const H4 = styled.h4<TypographyProps>`
   line-height: ${({lineHeight = '24px'}) => lineHeight};
   font-weight: ${({fontWeight = 700}) => fontWeight};
 
-  ${(props) => fontFamily(props.fontFamily)}
+  ${cssColor}
+  ${cssFontFamily}
 `;
 
 const Body1 = styled.p<TypographyProps>`
@@ -109,7 +123,8 @@ const Body1 = styled.p<TypographyProps>`
   line-height: ${({lineHeight = '32px'}) => lineHeight};
   font-weight: ${({fontWeight = 700}) => fontWeight};
 
-  ${(props) => fontFamily(props.fontFamily)}
+  ${cssColor}
+  ${cssFontFamily}
 `;
 
 const Body2 = styled.p<TypographyProps>`
@@ -117,7 +132,8 @@ const Body2 = styled.p<TypographyProps>`
   line-height: ${({lineHeight = '24px'}) => lineHeight};
   font-weight: ${({fontWeight = 700}) => fontWeight};
 
-  ${(props) => fontFamily(props.fontFamily)}
+  ${cssColor}
+  ${cssFontFamily}
 `;
 
 const Body3 = styled.p<TypographyProps>`
@@ -125,7 +141,8 @@ const Body3 = styled.p<TypographyProps>`
   line-height: ${({lineHeight = '16px'}) => lineHeight};
   font-weight: ${({fontWeight = 600}) => fontWeight};
 
-  ${(props) => fontFamily(props.fontFamily)}
+  ${cssColor}
+  ${cssFontFamily}
 `;
 
 const Button = styled.span<TypographyProps>`
@@ -133,5 +150,6 @@ const Button = styled.span<TypographyProps>`
   line-height: ${({lineHeight = '24px'}) => lineHeight};
   font-weight: ${({fontWeight = 600}) => fontWeight};
 
-  ${(props) => fontFamily(props.fontFamily)}
+  ${cssColor}
+  ${cssFontFamily}
 `;
