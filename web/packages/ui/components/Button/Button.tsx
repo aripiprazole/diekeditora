@@ -31,6 +31,9 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
    */
   children?: ReactNode;
 
+  /**
+   * Border size
+   */
   border?: Size | 'full';
 
   /**

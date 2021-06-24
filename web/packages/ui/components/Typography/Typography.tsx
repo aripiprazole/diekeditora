@@ -25,6 +25,9 @@ export type TypographyProps = React.HTMLAttributes<HTMLElement> & {
    */
   bold?: number;
 
+  /**
+   * Typography will be in which color?
+   */
   color?: string;
 
   /**
