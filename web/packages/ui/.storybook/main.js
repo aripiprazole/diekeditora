@@ -5,7 +5,7 @@ module.exports = {
   stories: ['../**/*.stories.mdx', '../**/*.stories.@(js|jsx|ts|tsx)'],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   typescript: {
-    reactDocgen: 'react-docgen-typescript',
+    reactDocgen: 'none',
     reactDocgenTypescriptOptions: {
       compilerOptions: {
         allowSyntheticDefaultImports: false,
@@ -15,9 +15,9 @@ module.exports = {
   },
   webpackFinal: async (config) => {
     config.resolve.plugins.push(
-      new TsconfigPathsPlugin({
-        configFile: path.resolve(__dirname, '../tsconfig.json'),
-      })
+        new TsconfigPathsPlugin({
+          configFile: path.resolve(__dirname, '../tsconfig.json'),
+        }),
     );
     return config;
   },
