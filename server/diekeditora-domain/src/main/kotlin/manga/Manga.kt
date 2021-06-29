@@ -1,5 +1,6 @@
 package com.diekeditora.domain.manga
 
+import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.profile.Profile
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
@@ -9,14 +10,13 @@ import kotlinx.coroutines.future.await
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
-import java.util.UUID
 
 @Table("manga")
 data class Manga(
     @Id
     @GraphQLIgnore
     @JsonIgnore
-    val id: UUID? = null,
+    val id: UniqueId? = null,
     val title: String,
     val competing: Boolean,
     val summary: String,

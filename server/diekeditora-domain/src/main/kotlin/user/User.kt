@@ -1,5 +1,6 @@
 package com.diekeditora.domain.user
 
+import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.profile.Profile
 import com.diekeditora.domain.role.Role
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
@@ -12,14 +13,13 @@ import org.springframework.data.relational.core.mapping.Table
 import org.springframework.security.access.prepost.PreAuthorize
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.UUID
 
 @Table("\"user\"")
 data class User(
     @Id
     @GraphQLIgnore
     @JsonIgnore
-    val id: UUID? = null,
+    val id: UniqueId? = null,
     val name: String,
     val email: String,
     val username: String,
