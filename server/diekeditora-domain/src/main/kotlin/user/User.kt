@@ -1,6 +1,8 @@
 package com.diekeditora.domain.user
 
+import com.diekeditora.domain.profile.Profile
 import com.diekeditora.domain.role.Role
+import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
 import graphql.schema.DataFetchingEnvironment
@@ -26,6 +28,14 @@ data class User(
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
 ) {
+    @GraphQLDescription("Finds the user's profile")
+    suspend fun profile(env: DataFetchingEnvironment): Profile {
+        return env
+            .getDataLoader<User, Profile>("UserProfileLoader")
+            .load(this)
+            .await()
+    }
+
     @PreAuthorize("hasAuthority('role.view')")
     suspend fun roles(env: DataFetchingEnvironment): List<Role> {
         return env
