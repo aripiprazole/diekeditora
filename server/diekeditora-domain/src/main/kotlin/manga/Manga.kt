@@ -23,6 +23,7 @@ data class Manga(
     val advisory: AgeAdvisory = AgeAdvisory.Free,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
+    val deletedAt: LocalDateTime? = null,
 ) {
     @GraphQLDescription("Returns manga's summary rating")
     suspend fun summaryRating(env: DataFetchingEnvironment): Rating {
