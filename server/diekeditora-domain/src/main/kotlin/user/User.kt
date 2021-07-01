@@ -1,5 +1,6 @@
 package com.diekeditora.domain.user
 
+import com.diekeditora.domain.Entity
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.profile.Profile
 import com.diekeditora.domain.role.Role
@@ -27,7 +28,8 @@ data class User(
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
-) {
+) : Entity<User> {
+
     @GraphQLDescription("Finds the user's profile")
     suspend fun profile(env: DataFetchingEnvironment): Profile {
         return env
@@ -60,12 +62,11 @@ data class User(
             .await()
     }
 
-    @GraphQLIgnore
-    fun update(user: User): User {
+    override fun update(with: User): User {
         return copy(
-            username = user.username,
-            name = user.name,
-            email = user.email,
+            username = with.username,
+            name = with.name,
+            email = with.email,
             updatedAt = LocalDateTime.now()
         )
     }
@@ -89,9 +90,6 @@ data class User(
         result = 31 * result + email.hashCode()
         result = 31 * result + username.hashCode()
         result = 31 * result + birthday.hashCode()
-        result = 31 * result + createdAt.hashCode()
-        result = 31 * result + (updatedAt?.hashCode() ?: 0)
-        result = 31 * result + (deletedAt?.hashCode() ?: 0)
         return result
     }
 
