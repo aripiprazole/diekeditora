@@ -1,5 +1,6 @@
 package com.diekeditora.domain.manga
 
+import com.diekeditora.domain.Entity
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.profile.Profile
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
@@ -24,7 +25,8 @@ data class Manga(
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
-) {
+) : Entity<Manga> {
+
     @GraphQLDescription("Returns manga's summary rating")
     suspend fun summaryRating(env: DataFetchingEnvironment): Rating {
         return env
@@ -63,5 +65,49 @@ data class Manga(
             .getDataLoader<Manga, Set<Profile>>("MangaAuthorLoader")
             .load(this)
             .await()
+    }
+
+    override fun update(with: Manga): Manga {
+        return copy(
+            title = with.title,
+            competing = with.competing,
+            summary = with.summary,
+            advisory = with.advisory,
+            updatedAt = LocalDateTime.now(),
+        )
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Manga
+
+        if (title != other.title) return false
+        if (competing != other.competing) return false
+        if (summary != other.summary) return false
+        if (advisory != other.advisory) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = title.hashCode()
+        result = 31 * result + competing.hashCode()
+        result = 31 * result + summary.hashCode()
+        result = 31 * result + advisory.hashCode()
+        return result
+    }
+
+    override fun toString(): String {
+        return "Manga(" +
+            "title='$title', " +
+            "competing=$competing, " +
+            "summary='$summary', " +
+            "advisory=$advisory, " +
+            "createdAt=$createdAt, " +
+            "updatedAt=$updatedAt, " +
+            "deletedAt=$deletedAt" +
+            ")"
     }
 }
