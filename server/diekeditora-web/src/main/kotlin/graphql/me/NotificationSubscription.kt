@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 @Component
 class NotificationSubscription(val notificationService: NotificationService) : Subscription {
     @GraphQLDescription("Subscribes current user for its new notifications")
-    suspend fun notificationAdded(ctx: AuthGraphQLContext): Flow<Notification> {
+    suspend fun notificationIssued(ctx: AuthGraphQLContext): Flow<Notification> {
         return notificationService.subscribeNotifications(ctx.user)
     }
 }
