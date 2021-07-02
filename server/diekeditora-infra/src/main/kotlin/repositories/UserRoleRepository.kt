@@ -1,5 +1,6 @@
 package com.diekeditora.infra.repositories
 
+import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.user.User
 import com.diekeditora.infra.utils.read
@@ -12,7 +13,6 @@ import org.springframework.r2dbc.core.bind
 import org.springframework.r2dbc.core.flow
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
-import java.util.UUID
 
 @Repository
 interface UserRoleRepository {
@@ -68,8 +68,8 @@ internal class UserRoleRepositoryImpl(val template: R2dbcEntityTemplate) : UserR
 
         template.databaseClient
             .sql(REMOVE_ROLES_QUERY)
-            .bind<UUID>("user", userId)
-            .bind<Set<UUID>>("roles", roleIds.toSet())
+            .bind<UniqueId>("user", userId)
+            .bind<Set<UniqueId>>("roles", roleIds.toSet())
             .await()
     }
 

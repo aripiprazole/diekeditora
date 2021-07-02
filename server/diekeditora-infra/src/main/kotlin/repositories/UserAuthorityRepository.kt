@@ -1,5 +1,6 @@
 package com.diekeditora.infra.repositories
 
+import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.user.User
 import com.diekeditora.infra.entities.Authority
 import com.diekeditora.infra.utils.read
@@ -12,7 +13,6 @@ import org.springframework.r2dbc.core.bind
 import org.springframework.r2dbc.core.flow
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
-import java.util.UUID
 
 @Repository
 interface UserAuthorityRepository {
@@ -65,7 +65,7 @@ internal class UserAuthorityRepositoryImpl(val template: R2dbcEntityTemplate) :
 
         template.databaseClient
             .sql(REMOVE_AUTHORITIES_QUERY)
-            .bind<UUID>("user", userId)
+            .bind<UniqueId>("user", userId)
             .bind<Set<String>>("authorities", authorities.map(Authority::value).toSet())
             .await()
     }
