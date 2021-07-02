@@ -10,6 +10,7 @@ import org.springframework.data.annotation.Id
 import java.time.LocalDateTime
 
 sealed class Notification {
+    @GraphQLIgnore
     abstract val id: UniqueId?
     abstract val uid: UniqueId
     abstract val issuedAt: LocalDateTime

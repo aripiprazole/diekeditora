@@ -2,9 +2,13 @@ package com.diekeditora.domain.invoice
 
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.user.User
+import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
+import com.fasterxml.jackson.annotation.JsonIgnore
+import org.springframework.data.annotation.Id
 import java.time.LocalDateTime
 
 sealed class Invoice {
+    @GraphQLIgnore
     abstract val id: UniqueId?
     abstract val uid: UniqueId
     abstract val payer: User
@@ -16,6 +20,9 @@ sealed class Invoice {
 }
 
 data class MangaSubscriptionInvoice(
+    @Id
+    @JsonIgnore
+    @GraphQLIgnore
     override val id: UniqueId? = null,
     override val uid: UniqueId,
     override val payer: User,
@@ -27,6 +34,9 @@ data class MangaSubscriptionInvoice(
 ) : Invoice()
 
 data class MangaChapterInvoice(
+    @Id
+    @JsonIgnore
+    @GraphQLIgnore
     override val id: UniqueId? = null,
     override val uid: UniqueId,
     override val payer: User,
