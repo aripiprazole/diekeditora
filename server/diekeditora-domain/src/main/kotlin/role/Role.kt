@@ -1,6 +1,7 @@
 package com.diekeditora.domain.role
 
 import com.diekeditora.domain.MutableEntity
+import com.diekeditora.domain.id.UniqueId
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
 import graphql.schema.DataFetchingEnvironment
@@ -9,14 +10,13 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import org.springframework.security.access.prepost.PreAuthorize
 import java.time.LocalDateTime
-import java.util.UUID
 
 @Table("role")
 data class Role(
     @Id
     @GraphQLIgnore
     @JsonIgnore
-    val id: UUID? = null,
+    val id: UniqueId? = null,
     val name: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null
