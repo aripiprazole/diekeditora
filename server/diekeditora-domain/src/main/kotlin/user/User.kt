@@ -29,7 +29,6 @@ data class User(
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
 ) : MutableEntity<User> {
-
     @GraphQLDescription("Finds the user's profile")
     suspend fun profile(env: DataFetchingEnvironment): Profile {
         return env
@@ -39,27 +38,30 @@ data class User(
     }
 
     @PreAuthorize("hasAuthority('role.view')")
-    suspend fun roles(env: DataFetchingEnvironment): Set<Role> {
+    suspend fun roles(env: DataFetchingEnvironment): List<Role> {
         return env
             .getDataLoader<User, Set<Role>>("UserRoleLoader")
             .load(this)
             .await()
+            .toList()
     }
 
     @PreAuthorize("hasAuthority('authority.view')")
-    suspend fun allAuthorities(env: DataFetchingEnvironment): Set<String> {
+    suspend fun allAuthorities(env: DataFetchingEnvironment): List<String> {
         return env
             .getDataLoader<User, Set<String>>("AllUserAuthorityLoader")
             .load(this)
             .await()
+            .toList()
     }
 
     @PreAuthorize("hasAuthority('authority.view')")
-    suspend fun authorities(env: DataFetchingEnvironment): Set<String> {
+    suspend fun authorities(env: DataFetchingEnvironment): List<String> {
         return env
             .getDataLoader<User, Set<String>>("UserAuthorityLoader")
             .load(this)
             .await()
+            .toList()
     }
 
     override fun update(with: User): User {

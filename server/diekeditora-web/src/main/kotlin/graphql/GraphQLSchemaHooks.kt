@@ -7,8 +7,6 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import graphql.relay.Connection
 import graphql.relay.Relay
 import graphql.schema.Coercing
-import graphql.schema.GraphQLList
-import graphql.schema.GraphQLList.list
 import graphql.schema.GraphQLObjectType
 import graphql.schema.GraphQLScalarType
 import graphql.schema.GraphQLScalarType.newScalar
@@ -32,7 +30,6 @@ class GraphQLSchemaHooks(val objectMapper: ObjectMapper) : SchemaGeneratorHooks 
     init {
         withSerializer<Unit>(::parseUnit)
         withSerializer<Connection<*>>(::parseConnection)
-        withSerializer<Set<*>>(::parseSet)
     }
 
     private fun parseUnit(type: KType): GraphQLType {
@@ -52,13 +49,6 @@ class GraphQLSchemaHooks(val objectMapper: ObjectMapper) : SchemaGeneratorHooks 
         val edge = relay.edgeType(name, typeRef(name), null, emptyList())
 
         return relay.connectionType(name, edge, emptyList())
-    }
-
-    private fun parseSet(type: KType): GraphQLList {
-        val generic = requireNotNull(type.arguments.first().type)
-        val name = generic.jvmErasure.simpleName.orEmpty()
-
-        return list(typeRef(name))
     }
 
     override fun willBuildSchema(builder: GraphQLSchema.Builder): GraphQLSchema.Builder {

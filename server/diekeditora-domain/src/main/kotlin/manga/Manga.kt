@@ -36,35 +36,39 @@ data class Manga(
     }
 
     @GraphQLDescription("Returns manga's ratings")
-    suspend fun ratings(env: DataFetchingEnvironment): Set<Int> {
+    suspend fun ratings(env: DataFetchingEnvironment): List<Int> {
         return env
             .getDataLoader<Manga, Set<Int>>("MangaRatingsLoader")
             .load(this)
             .await()
+            .toList()
     }
 
     @GraphQLDescription("Returns manga's genres")
-    suspend fun genres(env: DataFetchingEnvironment): Set<Genre> {
+    suspend fun genres(env: DataFetchingEnvironment): List<Genre> {
         return env
             .getDataLoader<Manga, Set<Genre>>("MangaGenreLoader")
             .load(this)
             .await()
+            .toList()
     }
 
     @GraphQLDescription("Returns manga's chapters")
-    suspend fun chapters(env: DataFetchingEnvironment): Set<Chapter> {
+    suspend fun chapters(env: DataFetchingEnvironment): List<Chapter> {
         return env
             .getDataLoader<Manga, Set<Chapter>>("MangaChapterLoader")
             .load(this)
             .await()
+            .toList()
     }
 
     @GraphQLDescription("Returns manga's authors")
-    suspend fun authors(env: DataFetchingEnvironment): Set<Profile> {
+    suspend fun authors(env: DataFetchingEnvironment): List<Profile> {
         return env
             .getDataLoader<Manga, Set<Profile>>("MangaAuthorLoader")
             .load(this)
             .await()
+            .toList()
     }
 
     override fun update(with: Manga): Manga {
