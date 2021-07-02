@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component
 
 @Component
 class UserRoleLoader(val userService: UserService) :
-    KotlinDataLoader<User, List<Role>> by dataLoader("UserRoleLoader").execute({ user ->
+    KotlinDataLoader<User, Set<Role>> by dataLoader("UserRoleLoader").execute({ user ->
         userService.findUserRoles(user)
     })

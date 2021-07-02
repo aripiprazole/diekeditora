@@ -7,11 +7,11 @@ interface RoleService {
 
     suspend fun findRoleByName(name: String): Role?
 
-    suspend fun findRoleAuthorities(role: Role): List<String>
+    suspend fun findRoleAuthorities(role: Role): Set<String>
 
-    suspend fun linkAuthorities(role: Role, authorities: List<String>)
+    suspend fun linkAuthorities(role: Role, authorities: Set<String>)
 
-    suspend fun unlinkAuthorities(role: Role, authorities: List<String>)
+    suspend fun unlinkAuthorities(role: Role, authorities: Set<String>)
 
     suspend fun save(role: Role): Role
 
