@@ -59,7 +59,7 @@ class UserAuthorityQueryTests(
         }
 
         assertEquals(
-            authorityService.findALlAuthoritiesByUser(user).toList(),
+            authorityService.findAllAuthoritiesByUser(user).toList(),
             response.allAuthorities
         )
     }

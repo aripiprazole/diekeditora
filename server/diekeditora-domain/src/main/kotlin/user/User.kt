@@ -39,25 +39,25 @@ data class User(
     }
 
     @PreAuthorize("hasAuthority('role.view')")
-    suspend fun roles(env: DataFetchingEnvironment): List<Role> {
+    suspend fun roles(env: DataFetchingEnvironment): Set<Role> {
         return env
-            .getDataLoader<User, List<Role>>("UserRoleLoader")
+            .getDataLoader<User, Set<Role>>("UserRoleLoader")
             .load(this)
             .await()
     }
 
     @PreAuthorize("hasAuthority('authority.view')")
-    suspend fun allAuthorities(env: DataFetchingEnvironment): List<String> {
+    suspend fun allAuthorities(env: DataFetchingEnvironment): Set<String> {
         return env
-            .getDataLoader<User, List<String>>("AllUserAuthorityLoader")
+            .getDataLoader<User, Set<String>>("AllUserAuthorityLoader")
             .load(this)
             .await()
     }
 
     @PreAuthorize("hasAuthority('authority.view')")
-    suspend fun authorities(env: DataFetchingEnvironment): List<String> {
+    suspend fun authorities(env: DataFetchingEnvironment): Set<String> {
         return env
-            .getDataLoader<User, List<String>>("UserAuthorityLoader")
+            .getDataLoader<User, Set<String>>("UserAuthorityLoader")
             .load(this)
             .await()
     }

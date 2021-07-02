@@ -11,7 +11,9 @@ import com.diekeditora.infra.repositories.UserRoleRepository
 import com.diekeditora.shared.generateRandomString
 import com.diekeditora.shared.logger
 import com.google.firebase.auth.FirebaseToken
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.flow.toSet
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -49,43 +51,43 @@ internal class UserServiceImpl(
     }
 
     @Transactional
-    override suspend fun findUserAuthorities(user: User): List<String> {
-        return userAuthorityRepository.findByUser(user).toList().map { it.value }.also {
+    override suspend fun findUserAuthorities(user: User): Set<String> {
+        return userAuthorityRepository.findByUser(user).map { it.value }.toSet().also {
             log.trace("Successfully found user authorities %s by user", it)
         }
     }
 
     @Transactional
-    override suspend fun linkRoles(user: User, roles: List<Role>) {
+    override suspend fun linkRoles(user: User, roles: Set<Role>) {
         userRoleRepository.link(user, roles)
 
         log.trace("Successfully linked %s roles to user %s", roles, user)
     }
 
     @Transactional
-    override suspend fun unlinkRoles(user: User, roles: List<Role>) {
+    override suspend fun unlinkRoles(user: User, roles: Set<Role>) {
         userRoleRepository.unlink(user, roles)
 
         log.trace("Successfully unlinked %s roles to user %s", roles, user)
     }
 
     @Transactional
-    override suspend fun linkAuthorities(user: User, authorities: List<String>) {
+    override suspend fun linkAuthorities(user: User, authorities: Set<String>) {
         userAuthorityRepository.link(user, authorities.map(::Authority))
 
         log.trace("Successfully linked %s authorities to user %s", authorities, user)
     }
 
     @Transactional
-    override suspend fun unlinkAuthorities(user: User, authorities: List<String>) {
+    override suspend fun unlinkAuthorities(user: User, authorities: Set<String>) {
         userAuthorityRepository.unlink(user, authorities.map(::Authority))
 
         log.trace("Successfully unlinked %s authorities from user %s", authorities, user)
     }
 
     @Transactional
-    override suspend fun findUserRoles(user: User): List<Role> {
-        return userRoleRepository.findByUser(user).toList().also {
+    override suspend fun findUserRoles(user: User): Set<Role> {
+        return userRoleRepository.findByUser(user).toSet().also {
             log.trace("Successfully found user roles %s by user", it)
         }
     }

@@ -7,7 +7,9 @@ import com.diekeditora.infra.entities.Authority
 import com.diekeditora.infra.repositories.RoleAuthorityRepository
 import com.diekeditora.infra.repositories.RoleRepository
 import com.diekeditora.shared.logger
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.flow.toSet
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -36,21 +38,21 @@ internal class RoleServiceImpl(
     }
 
     @Transactional
-    override suspend fun findRoleAuthorities(role: Role): List<String> {
-        return roleAuthorityRepository.findByRole(role).toList().map { it.value }.also {
+    override suspend fun findRoleAuthorities(role: Role): Set<String> {
+        return roleAuthorityRepository.findByRole(role).map { it.value }.toSet().also {
             log.trace("Successfully found role authorities %s by role", it)
         }
     }
 
     @Transactional
-    override suspend fun linkAuthorities(role: Role, authorities: List<String>) {
+    override suspend fun linkAuthorities(role: Role, authorities: Set<String>) {
         roleAuthorityRepository.link(role, authorities.map(::Authority))
 
         log.trace("Successfully linked %s authorities to role %s", authorities, role)
     }
 
     @Transactional
-    override suspend fun unlinkAuthorities(role: Role, authorities: List<String>) {
+    override suspend fun unlinkAuthorities(role: Role, authorities: Set<String>) {
         roleAuthorityRepository.unlink(role, authorities.map(::Authority))
 
         log.trace("Successfully linked %s authorities to role %s", authorities, role)

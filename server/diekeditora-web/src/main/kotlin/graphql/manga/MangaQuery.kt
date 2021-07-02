@@ -19,9 +19,9 @@ class MangaQuery(val mangaService: MangaService) : Query {
         @GraphQLDescription("Node list size") first: Int,
         @GraphQLDescription("Manga title") after: String,
         @GraphQLDescription("Manga search order") orderBy: MangaSort = MangaSort.empty(),
-        @GraphQLDescription("Manga search filter categories") filterBy: Set<String> = emptySet(),
+        @GraphQLDescription("Manga search filter categories") filterBy: List<String> = emptyList(),
     ): Connection<Manga> {
-        val (items) = mangaService.findMangas(first, after, orderBy, filterBy)
+        val (items) = mangaService.findMangas(first, after, orderBy, filterBy.toSet())
 
         return SimpleListConnection(items).get(env)
     }

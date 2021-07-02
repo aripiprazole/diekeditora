@@ -28,7 +28,7 @@ class AuthenticationManager(
 
         val user = userService.findOrCreateUserByToken(token)
         val authorities = authorityService
-            .findALlAuthoritiesByUser(user)
+            .findAllAuthoritiesByUser(user)
             .map(::SimpleGrantedAuthority)
 
         UsernamePasswordAuthenticationToken(user, token, authorities)

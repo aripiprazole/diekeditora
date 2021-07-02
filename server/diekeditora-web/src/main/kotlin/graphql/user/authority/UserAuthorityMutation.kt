@@ -11,14 +11,14 @@ class UserAuthorityMutation(val userService: UserService) : Mutation {
     @PreAuthorize("hasAuthority('authority.admin')")
     suspend fun linkAuthoritiesToUser(username: String, authorities: List<String>): User? {
         return userService.findUserByUsername(username)?.also { target ->
-            userService.linkAuthorities(target, authorities)
+            userService.linkAuthorities(target, authorities.toSet())
         }
     }
 
     @PreAuthorize("hasAuthority('authority.admin')")
     suspend fun unlinkAuthoritiesFromUser(username: String, authorities: List<String>): User? {
         return userService.findUserByUsername(username)?.also { target ->
-            userService.unlinkAuthorities(target, authorities)
+            userService.unlinkAuthorities(target, authorities.toSet())
         }
     }
 }
