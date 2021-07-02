@@ -20,6 +20,7 @@ data class Chapter(
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
 ) : MutableEntity<Chapter> {
+    @GraphQLIgnore
     override fun update(with: Chapter): Chapter {
         return copy(
             title = with.title,
@@ -29,6 +30,7 @@ data class Chapter(
         )
     }
 
+    @GraphQLIgnore
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -42,6 +44,7 @@ data class Chapter(
         return true
     }
 
+    @GraphQLIgnore
     override fun hashCode(): Int {
         var result = title.hashCode()
         result = 31 * result + pages
@@ -49,6 +52,7 @@ data class Chapter(
         return result
     }
 
+    @GraphQLIgnore
     override fun toString(): String {
         return "Chapter(" +
             "title='$title', " +

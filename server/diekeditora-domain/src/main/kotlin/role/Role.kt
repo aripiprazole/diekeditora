@@ -30,6 +30,7 @@ data class Role(
             .toList()
     }
 
+    @GraphQLIgnore
     override fun update(with: Role): Role {
         return copy(
             name = with.name,
@@ -37,6 +38,7 @@ data class Role(
         )
     }
 
+    @GraphQLIgnore
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -48,10 +50,12 @@ data class Role(
         return true
     }
 
+    @GraphQLIgnore
     override fun hashCode(): Int {
         return name.hashCode()
     }
 
+    @GraphQLIgnore
     override fun toString(): String {
         return "Role(" +
             "name='$name', " +

@@ -6,6 +6,8 @@ import com.diekeditora.domain.profile.Profile
 import com.diekeditora.domain.role.Role
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
 import com.fasterxml.jackson.annotation.JsonIgnore
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
@@ -15,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 import java.time.LocalDate
 import java.time.LocalDateTime
 
+@GraphQLValidObjectLocations([Locations.OBJECT])
 @Table("\"user\"")
 data class User(
     @Id
@@ -64,6 +67,7 @@ data class User(
             .toList()
     }
 
+    @GraphQLIgnore
     override fun update(with: User): User {
         return copy(
             username = with.username,
@@ -73,6 +77,7 @@ data class User(
         )
     }
 
+    @GraphQLIgnore
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -87,6 +92,7 @@ data class User(
         return true
     }
 
+    @GraphQLIgnore
     override fun hashCode(): Int {
         var result = name.hashCode()
         result = 31 * result + email.hashCode()
@@ -95,6 +101,7 @@ data class User(
         return result
     }
 
+    @GraphQLIgnore
     override fun toString(): String {
         return "User(" +
             "name='$name', " +

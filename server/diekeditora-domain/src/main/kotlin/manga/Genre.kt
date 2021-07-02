@@ -18,6 +18,7 @@ data class Genre(
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
 ) : MutableEntity<Genre> {
+    @GraphQLIgnore
     override fun update(with: Genre): Genre {
         return copy(
             title = with.title,
@@ -25,6 +26,7 @@ data class Genre(
         )
     }
 
+    @GraphQLIgnore
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -36,10 +38,12 @@ data class Genre(
         return true
     }
 
+    @GraphQLIgnore
     override fun hashCode(): Int {
         return title.hashCode()
     }
 
+    @GraphQLIgnore
     override fun toString(): String {
         return "Genre(" +
             "title='$title', " +

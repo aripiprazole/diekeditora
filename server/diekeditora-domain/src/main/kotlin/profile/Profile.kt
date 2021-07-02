@@ -25,6 +25,7 @@ data class Profile(
     val displayName: String
         get() = user.username
 
+    @GraphQLIgnore
     override fun update(with: Profile): Profile {
         return copy(
             gender = with.gender,
@@ -33,6 +34,7 @@ data class Profile(
         )
     }
 
+    @GraphQLIgnore
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -45,12 +47,14 @@ data class Profile(
         return true
     }
 
+    @GraphQLIgnore
     override fun hashCode(): Int {
         var result = gender.hashCode()
         result = 31 * result + user.hashCode()
         return result
     }
 
+    @GraphQLIgnore
     override fun toString(): String {
         return "Profile(" +
             "gender=$gender, " +

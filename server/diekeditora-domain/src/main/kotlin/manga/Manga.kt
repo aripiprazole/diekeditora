@@ -71,6 +71,7 @@ data class Manga(
             .toList()
     }
 
+    @GraphQLIgnore
     override fun update(with: Manga): Manga {
         return copy(
             title = with.title,
@@ -81,6 +82,7 @@ data class Manga(
         )
     }
 
+    @GraphQLIgnore
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -95,6 +97,7 @@ data class Manga(
         return true
     }
 
+    @GraphQLIgnore
     override fun hashCode(): Int {
         var result = title.hashCode()
         result = 31 * result + competing.hashCode()
@@ -103,6 +106,7 @@ data class Manga(
         return result
     }
 
+    @GraphQLIgnore
     override fun toString(): String {
         return "Manga(" +
             "title='$title', " +
