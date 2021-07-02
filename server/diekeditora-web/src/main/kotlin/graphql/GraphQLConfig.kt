@@ -1,7 +1,9 @@
 package com.diekeditora.web.graphql
 
+import com.expediagroup.graphql.generator.execution.FlowSubscriptionExecutionStrategy
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.fasterxml.jackson.databind.ObjectMapper
+import graphql.execution.ExecutionStrategy
 import graphql.schema.GraphQLScalarType.newScalar
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -12,6 +14,9 @@ import java.util.Date
 
 @Configuration
 class GraphQLConfig(val objectMapper: ObjectMapper) {
+    @Bean
+    fun subscriptionExecutionStrategy(): ExecutionStrategy = FlowSubscriptionExecutionStrategy()
+
     @Bean
     fun hooks(): SchemaGeneratorHooks = GraphQLSchemaHooks(objectMapper).apply {
         withScalar<Instant>(
