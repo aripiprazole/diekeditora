@@ -32,6 +32,7 @@ data class Comment(
             .await()
     }
 
+    @GraphQLIgnore
     override fun update(with: Comment): Comment {
         return copy(
             profile = with.profile,
@@ -40,6 +41,7 @@ data class Comment(
         )
     }
 
+    @GraphQLIgnore
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -53,6 +55,7 @@ data class Comment(
         return true
     }
 
+    @GraphQLIgnore
     override fun hashCode(): Int {
         var result = uid.hashCode()
         result = 31 * result + profile.hashCode()
@@ -60,6 +63,7 @@ data class Comment(
         return result
     }
 
+    @GraphQLIgnore
     override fun toString(): String {
         return "Comment(" +
             "uid=$uid, " +
