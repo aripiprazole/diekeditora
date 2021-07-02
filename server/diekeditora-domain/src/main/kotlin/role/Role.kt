@@ -22,11 +22,12 @@ data class Role(
     val updatedAt: LocalDateTime? = null
 ) : MutableEntity<Role> {
     @PreAuthorize("hasAuthority('authority.view')")
-    suspend fun authorities(env: DataFetchingEnvironment): Set<String> {
+    suspend fun authorities(env: DataFetchingEnvironment): List<String> {
         return env
             .getDataLoader<Role, Set<String>>("RoleAuthorityLoader")
             .load(this)
             .await()
+            .toList()
     }
 
     override fun update(with: Role): Role {
