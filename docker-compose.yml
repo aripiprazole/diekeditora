@@ -13,13 +13,18 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ./web
     volumes:
-      - ./frontend:/var/www
-    env_file:
-      - frontend/.env
+      - ./web:/var/www
     ports:
       - ${PORT:-3000}:3000
+    networks:
+      - diekeditora
+
+  cache:
+    image: redis:alpine
+    ports:
+      - 6379:6379
     networks:
       - diekeditora
 
