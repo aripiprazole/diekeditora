@@ -1,6 +1,6 @@
 package com.diekeditora.domain.role
 
-import com.diekeditora.domain.Entity
+import com.diekeditora.domain.MutableEntity
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
 import graphql.schema.DataFetchingEnvironment
@@ -20,7 +20,7 @@ data class Role(
     val name: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null
-) : Entity<Role> {
+) : MutableEntity<Role> {
     @PreAuthorize("hasAuthority('authority.view')")
     suspend fun authorities(env: DataFetchingEnvironment): List<String> {
         return env

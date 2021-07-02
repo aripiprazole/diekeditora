@@ -1,6 +1,6 @@
 package com.diekeditora.domain.manga
 
-import com.diekeditora.domain.Entity
+import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.profile.Profile
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
@@ -25,7 +25,7 @@ data class Manga(
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
-) : Entity<Manga> {
+) : MutableEntity<Manga> {
 
     @GraphQLDescription("Returns manga's summary rating")
     suspend fun summaryRating(env: DataFetchingEnvironment): Rating {

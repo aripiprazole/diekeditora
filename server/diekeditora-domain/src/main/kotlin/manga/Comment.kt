@@ -1,6 +1,6 @@
 package com.diekeditora.domain.manga
 
-import com.diekeditora.domain.Entity
+import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.profile.Profile
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
@@ -23,7 +23,7 @@ data class Comment(
     val content: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
-) : Entity<Comment> {
+) : MutableEntity<Comment> {
     @GraphQLDescription("Returns comment's likes")
     suspend fun likes(env: DataFetchingEnvironment): Int {
         return env
