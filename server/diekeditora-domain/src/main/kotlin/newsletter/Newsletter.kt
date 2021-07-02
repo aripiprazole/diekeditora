@@ -1,10 +1,10 @@
 package com.diekeditora.domain.newsletter
 
-import com.diekeditora.domain.Entity
+import com.diekeditora.domain.MutableEntity
 import org.springframework.data.relational.core.mapping.Table
 
 @Table("newsletter")
-data class Newsletter(val email: String, val active: Boolean = true) : Entity<Newsletter> {
+data class Newsletter(val email: String, val active: Boolean = true) : MutableEntity<Newsletter> {
     override fun update(with: Newsletter): Newsletter {
         return copy(email = with.email, active = with.active)
     }

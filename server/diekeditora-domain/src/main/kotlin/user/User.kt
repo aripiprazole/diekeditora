@@ -1,6 +1,6 @@
 package com.diekeditora.domain.user
 
-import com.diekeditora.domain.Entity
+import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.profile.Profile
 import com.diekeditora.domain.role.Role
@@ -28,7 +28,7 @@ data class User(
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
-) : Entity<User> {
+) : MutableEntity<User> {
 
     @GraphQLDescription("Finds the user's profile")
     suspend fun profile(env: DataFetchingEnvironment): Profile {

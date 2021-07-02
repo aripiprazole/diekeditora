@@ -1,6 +1,6 @@
 package com.diekeditora.domain.profile
 
-import com.diekeditora.domain.Entity
+import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.user.User
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
@@ -20,7 +20,7 @@ data class Profile(
     val user: User,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
-) : Entity<Profile> {
+) : MutableEntity<Profile> {
     @GraphQLDescription("Returns profile's display name")
     val displayName: String
         get() = user.username

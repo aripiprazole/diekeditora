@@ -1,6 +1,6 @@
 package com.diekeditora.domain.manga
 
-import com.diekeditora.domain.Entity
+import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.id.UniqueId
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -17,7 +17,7 @@ data class Genre(
     val title: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
-) : Entity<Genre> {
+) : MutableEntity<Genre> {
     override fun update(with: Genre): Genre {
         return copy(
             title = with.title,
