@@ -21,11 +21,11 @@ internal class InvoiceServiceImpl : InvoiceService {
         TODO("Not yet implemented")
     }
 
-    override suspend fun subscribeAllMangaInvoices(manga: Manga): Flow<Invoice> {
+    override fun subscribeAllMangaInvoices(manga: Manga): Flow<Invoice> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun subscribeMangaSubscriptions(manga: Manga): Flow<MangaSubscriptionInvoice> {
+    override fun subscribeMangaSubscriptions(manga: Manga): Flow<MangaSubscriptionInvoice> {
         TODO("Not yet implemented")
     }
 
@@ -37,7 +37,7 @@ internal class InvoiceServiceImpl : InvoiceService {
         TODO("Not yet implemented")
     }
 
-    override suspend fun subscribeChapterInvoices(chapter: Chapter): Flow<MangaChapterInvoice> {
+    override fun subscribeChapterInvoices(chapter: Chapter): Flow<MangaChapterInvoice> {
         TODO("Not yet implemented")
     }
 
