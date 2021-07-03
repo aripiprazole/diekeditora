@@ -14,7 +14,6 @@ import reactor.core.publisher.Flux
 @OptIn(ExperimentalCoroutinesApi::class)
 class NotificationSubscription(val notificationService: NotificationService) : Subscription {
     @GraphQLDescription("Subscribes current user for its new notifications")
-    suspend fun notificationIssued(ctx: AuthGraphQLContext): Flux<Notification> = flux {
-        notificationService.subscribeNotifications(ctx.user)
-    }
+    fun notificationIssued(): Flux<Notification> =
+        notificationService.subscribeNotifications(dummyUser).asFlux()
 }

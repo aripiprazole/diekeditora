@@ -7,17 +7,17 @@ import com.diekeditora.domain.page.Page
 import kotlinx.coroutines.flow.Flow
 
 interface InvoiceService {
+    fun subscribeAllMangaInvoices(manga: Manga): Flow<Invoice>
     suspend fun findAllMangaInvoices(manga: Manga, first: Int, after: UniqueId): Page<Invoice>
-    suspend fun subscribeAllMangaInvoices(manga: Manga): Flow<Invoice>
 
-    suspend fun subscribeMangaSubscriptions(manga: Manga): Flow<MangaSubscriptionInvoice>
+    fun subscribeMangaSubscriptions(manga: Manga): Flow<MangaSubscriptionInvoice>
     suspend fun findMangaSubscriptions(
         manga: Manga,
         first: Int,
         after: UniqueId
     ): Page<MangaSubscriptionInvoice>
 
-    suspend fun subscribeChapterInvoices(chapter: Chapter): Flow<MangaChapterInvoice>
+    fun subscribeChapterInvoices(chapter: Chapter): Flow<MangaChapterInvoice>
     suspend fun findChapterInvoices(
         chapter: Chapter,
         first: Int,

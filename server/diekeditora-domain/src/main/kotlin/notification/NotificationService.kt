@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface NotificationService {
     suspend fun findNotifications(user: User, first: Int, after: UniqueId): Page<Notification>
 
-    suspend fun subscribeNotifications(user: User): Flow<Notification>
+    fun subscribeNotifications(user: User): Flow<Notification>
 }
