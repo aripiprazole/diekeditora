@@ -106,6 +106,8 @@ class Libs {
             "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
         val webflux = "org.springframework.boot:spring-boot-starter-webflux:2.4.5"
         val dataR2dbc = "org.springframework.boot:spring-boot-starter-data-r2dbc:2.4.5"
+        val dataRedisReactive =
+            "org.springframework.boot:spring-boot-starter-data-redis-reactive:2.4.5"
         val test = "org.springframework.boot:spring-boot-starter-test:2.4.5"
     }
 

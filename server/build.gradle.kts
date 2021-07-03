@@ -60,6 +60,7 @@ allprojects {
         implementation(libs.firebase.admin)
 
         implementation(libs.springBoot.dataR2dbc)
+        implementation(libs.springBoot.dataRedisReactive)
         implementation(libs.springBoot.webflux)
 
         implementation(libs.reactor.core)

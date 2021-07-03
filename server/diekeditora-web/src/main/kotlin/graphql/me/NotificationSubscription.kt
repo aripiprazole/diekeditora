@@ -6,7 +6,7 @@ import com.diekeditora.web.graphql.AuthGraphQLContext
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Subscription
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.reactor.flux
+import kotlinx.coroutines.reactor.asFlux
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 
@@ -14,6 +14,6 @@ import reactor.core.publisher.Flux
 @OptIn(ExperimentalCoroutinesApi::class)
 class NotificationSubscription(val notificationService: NotificationService) : Subscription {
     @GraphQLDescription("Subscribes current user for its new notifications")
-    fun notificationIssued(): Flux<Notification> =
-        notificationService.subscribeNotifications(dummyUser).asFlux()
+    fun notificationIssued(ctx: AuthGraphQLContext): Flux<Notification> =
+        notificationService.subscribeNotifications(ctx.user).asFlux()
 }

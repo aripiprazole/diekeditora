@@ -6,18 +6,20 @@ import com.diekeditora.domain.manga.Comment
 import com.diekeditora.domain.manga.Manga
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.fasterxml.jackson.annotation.JsonTypeName
 import org.springframework.data.annotation.Id
 import java.time.LocalDateTime
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
 sealed class Notification {
     @GraphQLIgnore
     abstract val id: UniqueId?
     abstract val uid: UniqueId
     abstract val issuedAt: LocalDateTime
-
-    open val rawContent: String? get() = null
 }
 
+@JsonTypeName("CommentMentionNotification")
 data class CommentMentionNotification(
     @Id
     @JsonIgnore
@@ -28,6 +30,7 @@ data class CommentMentionNotification(
     override val issuedAt: LocalDateTime = LocalDateTime.now(),
 ) : Notification()
 
+@JsonTypeName("MangaNewsletterNotification")
 data class MangaNewsletterNotification(
     @Id
     @JsonIgnore
@@ -38,6 +41,7 @@ data class MangaNewsletterNotification(
     override val issuedAt: LocalDateTime = LocalDateTime.now(),
 ) : Notification()
 
+@JsonTypeName("MangaSelfInvoiceUpdatedNotification")
 data class MangaSelfInvoiceUpdatedNotification(
     @Id
     @JsonIgnore
@@ -48,6 +52,7 @@ data class MangaSelfInvoiceUpdatedNotification(
     override val issuedAt: LocalDateTime = LocalDateTime.now(),
 ) : Notification()
 
+@JsonTypeName("MangaInvoiceUpdatedNotification")
 data class MangaInvoiceUpdatedNotification(
     @Id
     @JsonIgnore
@@ -55,5 +60,16 @@ data class MangaInvoiceUpdatedNotification(
     override val id: UniqueId? = null,
     override val uid: UniqueId,
     val invoice: Invoice,
+    override val issuedAt: LocalDateTime = LocalDateTime.now(),
+) : Notification()
+
+@JsonTypeName("SimpleNotification")
+data class SimpleNotification(
+    @Id
+    @JsonIgnore
+    @GraphQLIgnore
+    override val id: UniqueId? = null,
+    override val uid: UniqueId,
+    val message: String,
     override val issuedAt: LocalDateTime = LocalDateTime.now(),
 ) : Notification()
