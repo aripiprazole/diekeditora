@@ -1,0 +1,37 @@
+{
+  "cSpell.words": [
+    "Cantarell",
+    "Diek",
+    "Docgen",
+    "Fira",
+    "Guimar",
+    "Guimarães",
+    "Helvetica",
+    "Neue",
+    "Roboto",
+    "Segoe",
+    "apexcharts",
+    "browserslist",
+    "diekeditora",
+    "editora",
+    "es",
+    "formik",
+    "grayscale",
+    "iconify",
+    "preconnect",
+    "simplebar",
+    "stylelint"
+  ],
+  "editor.rulers": [80, 120, 160],
+  "[javascript]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+    "editor.tabSize": 2
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+    "editor.tabSize": 2
+  }
+}
