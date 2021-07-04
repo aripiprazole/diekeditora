@@ -11,7 +11,7 @@ import {
   TimelineDot
 } from '@material-ui/lab';
 // utils
-import { fDateTime } from '../../../utils/formatTime';
+import { fDateTime } from '@diekeditora/admin/utils/formatTime';
 
 // ----------------------------------------------------------------------
 
