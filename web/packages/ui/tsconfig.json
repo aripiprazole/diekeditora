@@ -4,7 +4,9 @@
     "baseUrl": ".",
     "paths": {
       "@diekeditora/ui/*": ["./*"],
-      "@diekeditora/ui": ["./"]
+      "@diekeditora/ui": ["./"],
+      "@diekeditora/store/*": ["../store/*"],
+      "@diekeditora/store": ["../store"]
     }
   },
   "include": ["**/*.d.ts", "**/*.ts", "**/*.tsx"],

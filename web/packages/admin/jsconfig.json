@@ -3,8 +3,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@diekeditora/admin/*": ["./*"],
-      "@diekeditora/admin": ["./"]
+      "@diekeditora/admin/*": ["./src/*"],
+      "@diekeditora/admin": ["./src"],
+      "@diekeditora/store/*": ["../store/*"],
+      "@diekeditora/store": ["../store"]
     }
   },
   "include": ["**/*.d.ts", "**/*.ts","**/*.js","**/*.jsx", "**/*.tsx"],
