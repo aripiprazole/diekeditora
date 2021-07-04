@@ -3,7 +3,7 @@ import ReactApexChart from 'react-apexcharts';
 // material
 import { Card, CardHeader, Box } from '@material-ui/core';
 //
-import { BaseOptionChart } from '../../charts';
+import { BaseOptionChart } from '@diekeditora/admin/components/charts';
 
 // ----------------------------------------------------------------------
 

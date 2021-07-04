@@ -4,7 +4,7 @@ import appleFilled from '@iconify/icons-ant-design/apple-filled';
 import { alpha, experimentalStyled as styled } from '@material-ui/core/styles';
 import { Card, Typography } from '@material-ui/core';
 // utils
-import { fShortenNumber } from '../../../utils/formatNumber';
+import { fShortenNumber } from '@diekeditora/admin/utils/formatNumber';
 
 // ----------------------------------------------------------------------
 

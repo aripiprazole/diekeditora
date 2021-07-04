@@ -8,10 +8,10 @@ import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
 import { alpha, experimentalStyled as styled } from '@material-ui/core/styles';
 import { Box, Link, Card, Grid, Avatar, Typography, CardContent } from '@material-ui/core';
 // utils
-import { fDate } from '../../../utils/formatTime';
-import { fShortenNumber } from '../../../utils/formatNumber';
+import { fDate } from '@diekeditora/admin/utils/formatTime';
+import { fShortenNumber } from '@diekeditora/admin/utils/formatNumber';
 //
-import SvgIconStyle from '../../SvgIconStyle';
+import SvgIconStyle from '@diekeditora/admin/components/SvgIconStyle';
 
 // ----------------------------------------------------------------------
 

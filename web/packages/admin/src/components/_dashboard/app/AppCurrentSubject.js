@@ -4,7 +4,7 @@ import ReactApexChart from 'react-apexcharts';
 import { useTheme, experimentalStyled as styled } from '@material-ui/core/styles';
 import { Card, CardHeader } from '@material-ui/core';
 //
-import { BaseOptionChart } from '../../charts';
+import { BaseOptionChart } from '@diekeditora/admin/components/charts';
 
 // ----------------------------------------------------------------------
 
