@@ -4,20 +4,26 @@ import 'simplebar/src/simplebar.css';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { ApolloProvider } from '@apollo/client';
 
 //
+import { graphQLClient } from '@diekeditora/store';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
 
+//
+
 // ----------------------------------------------------------------------
 
 ReactDOM.render(
-  <HelmetProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </HelmetProvider>,
+  <ApolloProvider client={graphQLClient}>
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HelmetProvider>
+  </ApolloProvider>,
   document.getElementById('root')
 );
 
