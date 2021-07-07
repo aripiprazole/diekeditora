@@ -6,6 +6,7 @@
     "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    "checkJs": false,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",

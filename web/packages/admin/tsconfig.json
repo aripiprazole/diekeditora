@@ -5,16 +5,15 @@
     "target": "es5",
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "paths": {
+      "@diekeditora/admin": ["./src"],
+      "@diekeditora/admin/*": ["./src/*"],
+      "@diekeditora/store": ["../store"],
+      "@diekeditora/store/*": ["../store/*"]
+    }
   },
-  "include": [
-    "**/*.d.ts",
-    "**/*.ts",
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["**/*.d.ts", "**/*.ts", "**/*.js", "**/*.jsx", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }
