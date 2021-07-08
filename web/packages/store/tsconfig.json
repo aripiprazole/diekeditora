@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "declaration": true,
+    "composite": true,
+    "noEmit": false,
+    "target": "ES3",
+    "emitDeclarationOnly": true,
+    "isolatedModules": true,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist", "node_modules"]
+}
