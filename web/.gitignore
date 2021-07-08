@@ -230,3 +230,5 @@ modules.xml
 # .pnp.*
 
 .psc-ide-port
+
+**/dist/
