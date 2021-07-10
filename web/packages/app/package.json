@@ -32,11 +32,15 @@
     "cypress:run": "cypress run"
   },
   "dependencies": {
-    "@diekeditora/ui": "0.0.1",
-    "mobx": "^6.3.2",
-    "mobx-react": "^7.2.0"
+    "@diekeditora/store": "^0.0.1",
+    "@diekeditora/ui": "^0.0.1",
+    "react-redux": "^7.2.4",
+    "redux": "^4.1.0",
+    "redux-persist": "^6.0.0",
+    "redux-saga": "^1.1.3"
   },
   "devDependencies": {
+    "@types/react-redux": "^7.1.18",
     "cypress": "^7.5.0",
     "eslint": "7.28.0",
     "eslint-config-next": "11.0.0"
