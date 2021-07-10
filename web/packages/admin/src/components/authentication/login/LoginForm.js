@@ -16,6 +16,7 @@ import {
   FormControlLabel
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
+import firebase from 'firebase';
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +36,12 @@ export default function LoginForm() {
       remember: true
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
+    onSubmit: async ({ email, password }) => {
+      const credentials = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then((data) => data.user);
+
       navigate('/dashboard', { replace: true });
     }
   });

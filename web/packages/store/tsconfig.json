@@ -9,7 +9,11 @@
     "emitDeclarationOnly": true,
     "isolatedModules": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "paths": {
+      "@diekeditora/store": ["."],
+      "@diekeditora/store/*": ["./*"]
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["dist", "node_modules"]
