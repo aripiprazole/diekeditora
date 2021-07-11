@@ -1,5 +1,5 @@
 import {AnyAction} from 'redux';
-import {AuthActions} from './auth/actions';
+import {AuthActions} from './modules/auth/actions';
 
 const disabledLogsActions: string[] = [AuthActions.LOGIN];
 

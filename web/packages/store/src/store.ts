@@ -6,7 +6,7 @@ import {persistStore, Persistor} from 'redux-persist';
 import {logger} from './middlewares';
 import {rootReducer, rootSaga} from './modules';
 
-import {AuthState} from './auth';
+import {AuthState} from './modules/auth';
 
 export let persistor: Persistor;
 export let store: Store;
