@@ -1,3 +1,3 @@
-export * from './auth/actions';
-export * from './user/actions';
-export * from './manga/actions';
+export * from './modules/auth/actions';
+export * from './modules/user/actions';
+export * from './modules/manga/actions';
