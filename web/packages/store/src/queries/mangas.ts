@@ -1,12 +1,22 @@
 import {gql} from '@apollo/client';
 
-import {BASIC_MANGA_FRAGMENT} from '~/fragments/manga';
+import {COMPLETE_MANGA_FRAGMENT, BASIC_MANGA_FRAGMENT} from '~/fragments';
 
-export const MANGAS_QUERY = gql`
+export const MANGA_QUERY = gql`
+  ${COMPLETE_MANGA_FRAGMENT}
+
+  query ($title: string) {
+    manga(title: $title) {
+      ...CompleteMangaFragment
+    }
+  }
+`;
+
+export const MANGA_CONNECTION_QUERY = gql`
   ${BASIC_MANGA_FRAGMENT}
 
   query ($after: Int, $before: UniqueId) {
-    manga(after: $after, before: $before) {
+    mangas(after: $after, before: $before) {
       pageInfo {
         startCursor
         endCursor
