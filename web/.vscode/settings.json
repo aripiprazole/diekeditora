@@ -7,6 +7,7 @@
     "Guimar",
     "Guimarães",
     "Helvetica",
+    "Mangas",
     "Neue",
     "Roboto",
     "Segoe",
@@ -23,6 +24,9 @@
     "formik",
     "grayscale",
     "iconify",
+    "immer",
+    "middlewares",
+    "persistor",
     "preconnect",
     "simplebar",
     "stylelint"
