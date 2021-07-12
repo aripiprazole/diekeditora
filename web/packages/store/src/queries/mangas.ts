@@ -1,19 +1,19 @@
 import {gql} from '@apollo/client';
 
-import {COMPLETE_MANGA_FRAGMENT, BASIC_MANGA_FRAGMENT} from '~/fragments';
+import {COMPLETE_MANGA_FRAGMENT, MANGA_FRAGMENT} from '~/fragments';
 
 export const MANGA_QUERY = gql`
   ${COMPLETE_MANGA_FRAGMENT}
 
   query ($title: string) {
     manga(title: $title) {
-      ...MangaFragment
+      ...CompleteMangaFragment
     }
   }
 `;
 
 export const MANGA_CONNECTION_QUERY = gql`
-  ${BASIC_MANGA_FRAGMENT}
+  ${MANGA_FRAGMENT}
 
   query ($after: Int, $before: UniqueId) {
     mangas(after: $after, before: $before) {
@@ -27,7 +27,7 @@ export const MANGA_CONNECTION_QUERY = gql`
       edges {
         cursor
         node {
-          ...BasicMangaFragment
+          ...MangaFragment
         }
       }
     }
