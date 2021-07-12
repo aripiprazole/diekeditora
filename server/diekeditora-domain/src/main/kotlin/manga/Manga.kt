@@ -26,6 +26,13 @@ data class Manga(
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
 ) : MutableEntity<Manga> {
+    @GraphQLDescription("Returns latest chapter")
+    suspend fun latestChapter(env: DataFetchingEnvironment): Chapter {
+        return env
+            .getDataLoader<Manga, Chapter>("MangaLatestChapterLoader")
+            .load(this)
+            .await()
+    }
 
     @GraphQLDescription("Returns manga's summary rating")
     suspend fun summaryRating(env: DataFetchingEnvironment): Rating {

@@ -15,6 +15,7 @@ data class Chapter(
     @JsonIgnore
     val id: UniqueId? = null,
     val title: String,
+    val number: Int,
     val pages: Int,
     val enabled: Boolean = false,
     val createdAt: LocalDateTime = LocalDateTime.now(),
