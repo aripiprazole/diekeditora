@@ -1,10 +1,10 @@
 import produce from 'immer';
 
-import {Connection, User} from '~/entities';
+import {CompleteUser, Connection, User} from '~/entities';
 import {UserAction, UserActions} from './actions';
 
 export type UserState = {
-  user: User | null;
+  user: CompleteUser | null;
   connection: Connection<User> | null;
   error: Error | null;
   loading: boolean;

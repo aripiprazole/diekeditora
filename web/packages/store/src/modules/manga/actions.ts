@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {Connection, Manga} from '~/entities';
+import {CompleteManga, Connection, Manga} from '~/entities';
 
 export type MangaAction =
   | FetchMangaConnectionAction
@@ -20,7 +20,7 @@ export type FetchMangaConnectionAction = {
 
 export type FetchMangaSuccessAction = {
   type: MangaActions.FETCH_MANGA_SUCCESS;
-  payload: { manga: Manga };
+  payload: { manga: CompleteManga };
 };
 
 export type FetchMangaConnectionSuccessAction = {
@@ -51,7 +51,7 @@ export const fetchManga = (title: string): FetchMangaAction => ({
   payload: {title},
 });
 
-export const fetchMangaSuccess = (manga: Manga): FetchMangaSuccessAction => ({
+export const fetchMangaSuccess = (manga: CompleteManga): FetchMangaSuccessAction => ({
   type: MangaActions.FETCH_MANGA_SUCCESS,
   payload: {manga},
 });

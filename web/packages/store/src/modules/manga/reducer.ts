@@ -1,10 +1,11 @@
 import produce from 'immer';
 
-import {Connection, Manga} from '~/entities';
+import {CompleteManga, Connection, Manga} from '~/entities';
+
 import {MangaAction, MangaActions} from './actions';
 
 export type MangaState = {
-  manga: Manga | null;
+  manga: CompleteManga | null;
   connection: Connection<Manga> | null;
   error: Error | null;
   loading: boolean;

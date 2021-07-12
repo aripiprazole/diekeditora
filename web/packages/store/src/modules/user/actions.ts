@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {Connection, User} from '~/entities';
+import {CompleteUser, Connection, User} from '~/entities';
 
 export type UserAction =
   | FetchUserConnectionAction
@@ -21,7 +21,7 @@ export type FetchUserAction = {
 
 export type FetchUserSuccessAction = {
   type: UserActions.FETCH_USER_SUCCESS;
-  payload: { user: User };
+  payload: { user: CompleteUser };
 };
 
 export type FetchUserConnectionSuccessAction = {
@@ -47,7 +47,7 @@ export const fetchUserConnection = (first: number, after?: string): FetchUserCon
   payload: {first, after},
 });
 
-export const fetchUserSuccess = (user: User): FetchUserSuccessAction => ({
+export const fetchUserSuccess = (user: CompleteUser): FetchUserSuccessAction => ({
   type: UserActions.FETCH_USER_SUCCESS,
   payload: {user},
 });
