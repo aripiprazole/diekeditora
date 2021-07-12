@@ -15,7 +15,7 @@ const defaultState: MangaState = {
   loading: false,
 };
 
-export const userReducer = (state = defaultState, action: MangaAction) =>
+export const mangaReducer = (state = defaultState, action: MangaAction) =>
   produce(state, (draft) => {
     switch (action.type) {
       case MangaActions.FETCH_MANGAS:
