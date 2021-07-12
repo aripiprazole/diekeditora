@@ -7,7 +7,7 @@ export const MANGA_QUERY = gql`
 
   query ($title: string) {
     manga(title: $title) {
-      ...CompleteMangaFragment
+      ...MangaFragment
     }
   }
 `;

@@ -10,3 +10,14 @@ export const BASIC_USER_FRAGMENT = gql`
     deletedAt
   }
 `;
+
+export const COMPLETE_USER_FRAGMENT = gql`
+  fragment UserFragment on User {
+    name
+    username
+    email
+    createdAt
+    updatedAt
+    deletedAt
+  }
+`;

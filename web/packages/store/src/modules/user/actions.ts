@@ -1,15 +1,31 @@
 /* eslint-disable no-unused-vars */
 import {Connection, User} from '~/entities';
 
-export type UserAction = FetchUserConnectionAction | FetchUserSuccessAction | FetchUserFailAction;
+export type UserAction =
+  | FetchUserConnectionAction
+  | FetchUserConnectionSuccessAction
+  | FetchUserAction
+  | FetchUserSuccessAction
+  | FetchUserConnectionAction
+  | FetchUserFailAction;
 
 export type FetchUserConnectionAction = {
   type: UserActions.FETCH_USER_CONNECTION;
   payload: { after?: string; first: number };
 };
 
+export type FetchUserAction = {
+  type: UserActions.FETCH_USER;
+  payload: { username: string };
+};
+
 export type FetchUserSuccessAction = {
   type: UserActions.FETCH_USER_SUCCESS;
+  payload: { user: User };
+};
+
+export type FetchUserConnectionSuccessAction = {
+  type: UserActions.FETCH_USER_CONNECTION_SUCCESS;
   payload: { connection: Connection<User> };
 };
 
@@ -20,6 +36,8 @@ export type FetchUserFailAction = {
 
 export enum UserActions {
   FETCH_USER_CONNECTION = '@user/FETCH_USER_CONNECTION',
+  FETCH_USER_CONNECTION_SUCCESS = '@user/FETCH_USER_CONNECTION_SUCCESS',
+  FETCH_USER = '@user/FETCH_USER',
   FETCH_USER_SUCCESS = '@user/FETCH_USER_SUCCESS',
   FETCH_USER_FAIL = '@user/FETCH_USER_FAIL',
 }
@@ -29,8 +47,13 @@ export const fetchUserConnection = (first: number, after?: string): FetchUserCon
   payload: {first, after},
 });
 
-export const fetchUserSuccess = (connection: Connection<User>): FetchUserSuccessAction => ({
+export const fetchUserSuccess = (user: User): FetchUserSuccessAction => ({
   type: UserActions.FETCH_USER_SUCCESS,
+  payload: {user},
+});
+
+export const fetchUserConnectionSuccess = (connection: Connection<User>): FetchUserConnectionSuccessAction => ({
+  type: UserActions.FETCH_USER_CONNECTION_SUCCESS,
   payload: {connection},
 });
 
