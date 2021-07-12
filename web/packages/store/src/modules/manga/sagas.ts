@@ -1,28 +1,59 @@
 import {all, call, put, takeEvery} from 'redux-saga/effects';
-import {graphQLClient} from '~/client';
 
+import {graphQLClient} from '~/client';
 import {Connection, Manga} from '~/entities';
-import {USERS_QUERY} from '~/queries';
-import {FetchMangaConnectionAction, fetchMangasFail, fetchMangasSuccess, MangaActions} from './actions';
+import {MANGA_CONNECTION_QUERY, MANGA_QUERY} from '~/queries';
+
+import {
+  FetchMangaConnectionAction,
+  fetchMangaFail,
+  fetchMangaConnectionSuccess,
+  MangaActions,
+  FetchMangaAction,
+  fetchMangaSuccess,
+} from './actions';
 
 type FetchMangaConnectionResponse = {
   mangas: Connection<Manga>;
 };
 
-/** Fetch users saga */
+type FetchMangaResponse = {
+  manga: Manga;
+};
+
+/** Fetch manga connection saga */
 function* fetchMangaConnectionSaga(action: FetchMangaConnectionAction) {
   try {
     const response: FetchMangaConnectionResponse = yield call(() =>
       graphQLClient.query({
-        query: USERS_QUERY,
+        query: MANGA_CONNECTION_QUERY,
         variables: action.payload,
       }),
     );
 
-    yield put(fetchMangasSuccess(response.mangas));
+    yield put(fetchMangaConnectionSuccess(response.mangas));
   } catch (error) {
-    yield put(fetchMangasFail(error));
+    yield put(fetchMangaFail(error));
   }
 }
 
-export const mangaSagas = all([takeEvery(MangaActions.FETCH_MANGA_CONNECTION, fetchMangaConnectionSaga)]);
+/** Fetch manga saga */
+function* fetchMangaSaga(action: FetchMangaAction) {
+  try {
+    const response: FetchMangaResponse = yield call(() =>
+      graphQLClient.query({
+        query: MANGA_QUERY,
+        variables: action.payload,
+      }),
+    );
+
+    yield put(fetchMangaSuccess(response.manga));
+  } catch (error) {
+    yield put(fetchMangaFail(error));
+  }
+}
+
+export const mangaSagas = all([
+  takeEvery(MangaActions.FETCH_MANGA_CONNECTION, fetchMangaConnectionSaga),
+  takeEvery(MangaActions.FETCH_MANGA, fetchMangaSaga),
+]);
