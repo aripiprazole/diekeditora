@@ -2,6 +2,7 @@ import {combineReducers} from 'redux';
 import {persistReducer} from 'redux-persist';
 
 import {authReducer, authSagas} from './auth';
+import {userReducer, userSagas} from './user';
 
 import storage from 'redux-persist/lib/storage';
 
@@ -14,10 +15,12 @@ const config = (key: string, transforms: any[] = []) => ({
 });
 
 export const rootReducer = combineReducers({
+  user: userReducer,
   auth: persistReducer(config('auth', [AuthTransformer]), authReducer),
 });
 
 /** Root saga */
 export function* rootSaga() {
   yield authSagas;
+  yield userSagas;
 }
