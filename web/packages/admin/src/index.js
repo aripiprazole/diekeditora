@@ -4,10 +4,12 @@ import 'simplebar/src/simplebar.css';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { Provider } from 'react-redux';
+import { ApolloProvider } from '@apollo/client';
+import { PersistGate } from 'redux-persist/integration/react';
+import { graphQLClient, makeStore, store, persistor } from '@diekeditora/store';
 
 //
-import { ApolloProvider } from '@apollo/client';
-import { graphQLClient } from '@diekeditora/store';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
@@ -16,14 +18,20 @@ import reportWebVitals from './reportWebVitals';
 
 // ----------------------------------------------------------------------
 
+makeStore();
+
 ReactDOM.render(
-  <ApolloProvider client={graphQLClient}>
-    <HelmetProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </HelmetProvider>
-  </ApolloProvider>,
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <ApolloProvider client={graphQLClient}>
+        <HelmetProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </HelmetProvider>
+      </ApolloProvider>
+    </PersistGate>
+  </Provider>,
   document.getElementById('root')
 );
 
