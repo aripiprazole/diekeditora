@@ -1,7 +1,7 @@
 import {all, call, put, takeEvery} from 'redux-saga/effects';
 
 import {graphQLClient} from '~/client';
-import {Connection, User} from '~/entities';
+import {CompleteUser, Connection, User} from '~/entities';
 import {USER_CONNECTION_QUERY} from '~/queries';
 
 import {
@@ -18,7 +18,7 @@ type FetchUserConnectionResponse = {
 };
 
 type FetchUserResponse = {
-  user: User;
+  user: CompleteUser;
 };
 
 /** Fetch user connection saga */

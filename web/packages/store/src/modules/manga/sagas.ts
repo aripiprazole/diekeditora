@@ -1,7 +1,7 @@
 import {all, call, put, takeEvery} from 'redux-saga/effects';
 
 import {graphQLClient} from '~/client';
-import {Connection, Manga} from '~/entities';
+import {CompleteManga, Connection, Manga} from '~/entities';
 import {MANGA_CONNECTION_QUERY, MANGA_QUERY} from '~/queries';
 
 import {
@@ -18,7 +18,7 @@ type FetchMangaConnectionResponse = {
 };
 
 type FetchMangaResponse = {
-  manga: Manga;
+  manga: CompleteManga;
 };
 
 /** Fetch manga connection saga */
