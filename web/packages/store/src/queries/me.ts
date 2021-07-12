@@ -7,7 +7,7 @@ export const ME_USER_QUERY = gql`
 
   query {
     me {
-      ...BasicUserFragment
+      ...UserFragment
     }
   }
 `;
