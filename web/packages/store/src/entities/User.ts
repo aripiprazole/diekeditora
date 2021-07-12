@@ -1,24 +1,12 @@
 /**
  * User entity
  */
-export class User {
-  /**
-   * Creates user instance
-   * @param name
-   * @param username
-   * @param email
-   * @param birthday
-   * @param createdAt
-   * @param updatedAt
-   * @param deletedAt
-   */
-  public constructor(
-    public readonly name: string,
-    public readonly username: string,
-    public readonly email: string,
-    public readonly birthday: Date,
-    public readonly createdAt: Date,
-    public readonly updatedAt: Date | null,
-    public readonly deletedAt: Date | null,
-  ) {}
-}
+export type User = {
+  readonly name: string;
+  readonly username: string;
+  readonly email: string;
+  readonly birthday: Date;
+  readonly createdAt: Date;
+  readonly updatedAt: Date | null;
+  readonly deletedAt: Date | null;
+};
