@@ -3,6 +3,7 @@ import {persistReducer} from 'redux-persist';
 
 import {authReducer, authSagas} from './auth';
 import {userReducer, userSagas} from './user';
+import {mangaReducer, mangaSagas} from './manga';
 
 import storage from 'redux-persist/lib/storage';
 
@@ -16,6 +17,7 @@ const config = (key: string, transforms: any[] = []) => ({
 
 export const rootReducer = combineReducers({
   user: userReducer,
+  manga: mangaReducer,
   auth: persistReducer(config('auth', [AuthTransformer]), authReducer),
 });
 
@@ -23,4 +25,5 @@ export const rootReducer = combineReducers({
 export function* rootSaga() {
   yield authSagas;
   yield userSagas;
+  yield mangaSagas;
 }

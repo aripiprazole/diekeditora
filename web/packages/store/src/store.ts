@@ -7,6 +7,8 @@ import {logger} from './middlewares';
 import {rootReducer, rootSaga} from './modules';
 
 import {AuthState} from './modules/auth';
+import {MangaState} from './modules/manga';
+import {UserState} from './modules/user';
 
 export let persistor: Persistor;
 export let store: Store;
@@ -35,6 +37,8 @@ declare module 'react-redux' {
 declare module 'redux' {
   export interface State {
     auth: AuthState;
+    manga: MangaState;
+    user: UserState;
   }
 
   export interface Store {
