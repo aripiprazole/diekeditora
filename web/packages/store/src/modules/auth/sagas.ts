@@ -1,8 +1,8 @@
-import {all, call, put} from 'redux-saga/effects';
+import {all, call, put, takeEvery} from 'redux-saga/effects';
+
 import {graphQLClient} from '~/client';
 import {User} from '~/entities';
 import {ME_USER_QUERY} from '~/queries';
-
 import {AuthActions, LoginAction, loginFail, loginSuccess} from './actions';
 
 type LoginResponse = {
@@ -24,4 +24,4 @@ function* loginSaga(login: LoginAction) {
   }
 }
 
-export const authSagas = all([AuthActions.LOGIN, loginSaga]);
+export const authSagas = all([takeEvery(AuthActions.LOGIN, loginSaga)]);
