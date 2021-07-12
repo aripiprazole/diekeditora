@@ -1,40 +1,40 @@
 /* eslint-disable no-unused-vars */
 import {Connection, User} from '~/entities';
 
-export type UserAction = FetchUsersAction | FetchUsersSuccessAction | FetchUsersFailAction;
+export type UserAction = FetchUserConnectionAction | FetchUserSuccessAction | FetchUserFailAction;
 
-export type FetchUsersAction = {
-  type: UserActions.FETCH_USERS;
+export type FetchUserConnectionAction = {
+  type: UserActions.FETCH_USER_CONNECTION;
   payload: { after?: string; first: number };
 };
 
-export type FetchUsersSuccessAction = {
-  type: UserActions.FETCH_USERS_SUCCESS;
+export type FetchUserSuccessAction = {
+  type: UserActions.FETCH_USER_SUCCESS;
   payload: { connection: Connection<User> };
 };
 
-export type FetchUsersFailAction = {
-  type: UserActions.FETCH_USERS_FAIL;
+export type FetchUserFailAction = {
+  type: UserActions.FETCH_USER_FAIL;
   payload: { error: Error };
 };
 
 export enum UserActions {
-  FETCH_USERS = '@user/FETCH_USERS',
-  FETCH_USERS_SUCCESS = '@user/FETCH_USERS_SUCCESS',
-  FETCH_USERS_FAIL = '@user/FETCH_USERS_FAIL',
+  FETCH_USER_CONNECTION = '@user/FETCH_USER_CONNECTION',
+  FETCH_USER_SUCCESS = '@user/FETCH_USER_SUCCESS',
+  FETCH_USER_FAIL = '@user/FETCH_USER_FAIL',
 }
 
-export const fetchUsers = (first: number, after?: string): FetchUsersAction => ({
-  type: UserActions.FETCH_USERS,
+export const fetchUserConnection = (first: number, after?: string): FetchUserConnectionAction => ({
+  type: UserActions.FETCH_USER_CONNECTION,
   payload: {first, after},
 });
 
-export const fetchUsersSuccess = (connection: Connection<User>): FetchUsersSuccessAction => ({
-  type: UserActions.FETCH_USERS_SUCCESS,
+export const fetchUserSuccess = (connection: Connection<User>): FetchUserSuccessAction => ({
+  type: UserActions.FETCH_USER_SUCCESS,
   payload: {connection},
 });
 
-export const fetchUsersFail = (error: Error): FetchUsersFailAction => ({
-  type: UserActions.FETCH_USERS_FAIL,
+export const fetchUserFail = (error: Error): FetchUserFailAction => ({
+  type: UserActions.FETCH_USER_FAIL,
   payload: {error},
 });

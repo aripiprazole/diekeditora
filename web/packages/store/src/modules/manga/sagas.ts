@@ -3,16 +3,16 @@ import {graphQLClient} from '~/client';
 
 import {Connection, Manga} from '~/entities';
 import {USERS_QUERY} from '~/queries';
-import {FetchMangasAction, fetchMangasFail, fetchMangasSuccess, MangaActions} from './actions';
+import {FetchMangaConnectionAction, fetchMangasFail, fetchMangasSuccess, MangaActions} from './actions';
 
-type FetchMangasResponse = {
+type FetchMangaConnectionResponse = {
   mangas: Connection<Manga>;
 };
 
 /** Fetch users saga */
-function* fetchUsersSaga(action: FetchMangasAction) {
+function* fetchMangaConnectionSaga(action: FetchMangaConnectionAction) {
   try {
-    const response: FetchMangasResponse = yield call(() =>
+    const response: FetchMangaConnectionResponse = yield call(() =>
       graphQLClient.query({
         query: USERS_QUERY,
         variables: action.payload,
@@ -25,4 +25,4 @@ function* fetchUsersSaga(action: FetchMangasAction) {
   }
 }
 
-export const mangaSagas = all([takeEvery(MangaActions.FETCH_MANGAS, fetchUsersSaga)]);
+export const mangaSagas = all([takeEvery(MangaActions.FETCH_MANGA_CONNECTION, fetchMangaConnectionSaga)]);

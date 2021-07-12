@@ -18,19 +18,19 @@ const defaultState: MangaState = {
 export const mangaReducer = (state = defaultState, action: MangaAction) =>
   produce(state, (draft) => {
     switch (action.type) {
-      case MangaActions.FETCH_MANGAS:
+      case MangaActions.FETCH_MANGA_CONNECTION:
         draft.loading = true;
         draft.connection = null;
         draft.error = null;
         break;
 
-      case MangaActions.FETCH_MANGAS_SUCCESS:
+      case MangaActions.FETCH_MANGA_SUCCESS:
         draft.loading = false;
         draft.connection = action.payload.connection;
         draft.error = null;
         break;
 
-      case MangaActions.FETCH_MANGAS_FAIL:
+      case MangaActions.FETCH_MANGA_FAIL:
         draft.loading = false;
         draft.connection = null;
         draft.error = action.payload.error;

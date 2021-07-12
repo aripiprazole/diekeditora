@@ -18,19 +18,19 @@ const defaultState: UserState = {
 export const userReducer = (state = defaultState, action: UserAction) =>
   produce(state, (draft) => {
     switch (action.type) {
-      case UserActions.FETCH_USERS:
+      case UserActions.FETCH_USER_CONNECTION:
         draft.loading = true;
         draft.connection = null;
         draft.error = null;
         break;
 
-      case UserActions.FETCH_USERS_SUCCESS:
+      case UserActions.FETCH_USER_SUCCESS:
         draft.loading = false;
         draft.connection = action.payload.connection;
         draft.error = null;
         break;
 
-      case UserActions.FETCH_USERS_FAIL:
+      case UserActions.FETCH_USER_FAIL:
         draft.loading = false;
         draft.connection = null;
         draft.error = action.payload.error;
