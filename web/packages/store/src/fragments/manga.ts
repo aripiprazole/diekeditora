@@ -1,7 +1,7 @@
 import {gql} from '@apollo/client';
 
-export const BASIC_MANGA_FRAGMENT = gql`
-  fragment BasicMangaFragment on Manga {
+export const MANGA_FRAGMENT = gql`
+  fragment MangaFragment on Manga {
     title
     competing
     summary
@@ -13,7 +13,7 @@ export const BASIC_MANGA_FRAGMENT = gql`
 `;
 
 export const COMPLETE_MANGA_FRAGMENT = gql`
-  fragment MangaFragment on Manga {
+  fragment CompleteMangaFragment on Manga {
     title
     competing
     summary
