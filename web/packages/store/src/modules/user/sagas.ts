@@ -3,26 +3,26 @@ import {graphQLClient} from '~/client';
 
 import {Connection, User} from '~/entities';
 import {USERS_QUERY} from '~/queries';
-import {FetchUsersAction, fetchUsersFail, fetchUsersSuccess, UserActions} from './actions';
+import {FetchUserConnectionAction, fetchUserFail, fetchUserSuccess, UserActions} from './actions';
 
-type FetchUsersResponse = {
+type FetchUserConnectionResponse = {
   users: Connection<User>;
 };
 
 /** Fetch users saga */
-function* fetchUsersSaga(action: FetchUsersAction) {
+function* fetchUserConnectionSaga(action: FetchUserConnectionAction) {
   try {
-    const response: FetchUsersResponse = yield call(() =>
+    const response: FetchUserConnectionResponse = yield call(() =>
       graphQLClient.query({
         query: USERS_QUERY,
         variables: action.payload,
       }),
     );
 
-    yield put(fetchUsersSuccess(response.users));
+    yield put(fetchUserSuccess(response.users));
   } catch (error) {
-    yield put(fetchUsersFail(error));
+    yield put(fetchUserFail(error));
   }
 }
 
-export const userSagas = all([takeEvery(UserActions.FETCH_USERS, fetchUsersSaga)]);
+export const userSagas = all([takeEvery(UserActions.FETCH_USER_CONNECTION, fetchUserConnectionSaga)]);
