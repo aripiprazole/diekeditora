@@ -1,8 +1,8 @@
 import {all, call, put, takeEvery} from 'redux-saga/effects';
 
-import {graphQLClient} from '~/client';
-import {CompleteUser, Connection, User} from '~/entities';
-import {USER_CONNECTION_QUERY} from '~/queries';
+import {graphQLClient} from '@diekeditora/store/client';
+import {CompleteUser, Connection, User} from '@diekeditora/store/entities';
+import {USER_CONNECTION_QUERY} from '@diekeditora/store/queries';
 
 import {
   FetchUserConnectionAction,

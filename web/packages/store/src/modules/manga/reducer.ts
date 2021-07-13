@@ -1,6 +1,6 @@
 import produce from 'immer';
 
-import {CompleteManga, Connection, Manga} from '~/entities';
+import {CompleteManga, Connection, Manga} from '@diekeditora/store/entities';
 
 import {MangaAction, MangaActions} from './actions';
 

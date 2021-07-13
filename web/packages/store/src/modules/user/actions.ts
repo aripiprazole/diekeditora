@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {CompleteUser, Connection, User} from '~/entities';
+import {CompleteUser, Connection, User} from '@diekeditora/store/entities';
 
 export type UserAction =
   | FetchUserConnectionAction

@@ -11,7 +11,8 @@
     "outDir": "dist",
     "rootDir": "src",
     "paths": {
-      "~/*": ["./*"]
+      "@diekeditora/store": ["./"],
+      "@diekeditora/store/*": ["./*"]
     }
   },
   "include": ["src/**/*.ts"],

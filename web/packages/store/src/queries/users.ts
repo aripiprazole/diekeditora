@@ -1,5 +1,5 @@
 import {gql} from '@apollo/client';
-import {USER_FRAGMENT, COMPLETE_USER_FRAGMENT} from '~/fragments';
+import {USER_FRAGMENT, COMPLETE_USER_FRAGMENT} from '@diekeditora/store/fragments';
 
 export const USER_CONNECTION_QUERY = gql`
   ${USER_FRAGMENT}

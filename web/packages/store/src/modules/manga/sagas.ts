@@ -1,8 +1,8 @@
 import {all, call, put, takeEvery} from 'redux-saga/effects';
 
-import {graphQLClient} from '~/client';
-import {CompleteManga, Connection, Manga} from '~/entities';
-import {MANGA_CONNECTION_QUERY, MANGA_QUERY} from '~/queries';
+import {graphQLClient} from '@diekeditora/store/client';
+import {CompleteManga, Connection, Manga} from '@diekeditora/store/entities';
+import {MANGA_CONNECTION_QUERY, MANGA_QUERY} from '@diekeditora/store/queries';
 
 import {
   FetchMangaConnectionAction,
