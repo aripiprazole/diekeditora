@@ -1,9 +1,12 @@
 package com.diekeditora.domain.role
 
 import com.diekeditora.domain.MutableEntity
+import com.diekeditora.domain.dataloader.PaginationArg
+import com.diekeditora.domain.dataloader.toPaginationArg
 import com.diekeditora.domain.id.UniqueId
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
+import graphql.relay.Connection
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
 import org.springframework.data.annotation.Id
@@ -22,12 +25,15 @@ data class Role(
     val updatedAt: LocalDateTime? = null
 ) : MutableEntity<Role> {
     @PreAuthorize("hasAuthority('authority.view')")
-    suspend fun authorities(env: DataFetchingEnvironment): List<String> {
+    suspend fun authorities(
+        env: DataFetchingEnvironment,
+        first: Int,
+        after: String? = null
+    ): Connection<String> {
         return env
-            .getDataLoader<Role, Set<String>>("RoleAuthorityLoader")
-            .load(this)
+            .getDataLoader<PaginationArg<Role, String>, Connection<String>>("RoleAuthoritiesLoader")
+            .load(toPaginationArg(first, after))
             .await()
-            .toList()
     }
 
     @GraphQLIgnore

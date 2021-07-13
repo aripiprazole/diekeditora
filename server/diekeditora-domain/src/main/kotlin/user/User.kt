@@ -1,6 +1,8 @@
 package com.diekeditora.domain.user
 
 import com.diekeditora.domain.MutableEntity
+import com.diekeditora.domain.dataloader.PaginationArg
+import com.diekeditora.domain.dataloader.toPaginationArg
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.profile.Profile
 import com.diekeditora.domain.role.Role
@@ -9,6 +11,7 @@ import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
 import com.fasterxml.jackson.annotation.JsonIgnore
+import graphql.relay.Connection
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
 import org.springframework.data.annotation.Id
@@ -41,30 +44,39 @@ data class User(
     }
 
     @PreAuthorize("hasAuthority('role.view')")
-    suspend fun roles(env: DataFetchingEnvironment): List<Role> {
+    suspend fun roles(
+        env: DataFetchingEnvironment,
+        first: Int,
+        after: String? = null
+    ): Connection<Role> {
         return env
-            .getDataLoader<User, Set<Role>>("UserRoleLoader")
-            .load(this)
+            .getDataLoader<PaginationArg<User, String>, Connection<Role>>("UserRolesLoader")
+            .load(toPaginationArg(first, after))
             .await()
-            .toList()
     }
 
     @PreAuthorize("hasAuthority('authority.view')")
-    suspend fun allAuthorities(env: DataFetchingEnvironment): List<String> {
+    suspend fun allAuthorities(
+        env: DataFetchingEnvironment,
+        first: Int,
+        after: String? = null,
+    ): Connection<String> {
         return env
-            .getDataLoader<User, Set<String>>("AllUserAuthorityLoader")
-            .load(this)
+            .getDataLoader<PaginationArg<User, String>, Connection<String>>("UserAllAuthoritiesLoader")
+            .load(toPaginationArg(first, after))
             .await()
-            .toList()
     }
 
     @PreAuthorize("hasAuthority('authority.view')")
-    suspend fun authorities(env: DataFetchingEnvironment): List<String> {
+    suspend fun authorities(
+        env: DataFetchingEnvironment,
+        first: Int,
+        after: String? = null,
+    ): Connection<String> {
         return env
-            .getDataLoader<User, Set<String>>("UserAuthorityLoader")
-            .load(this)
+            .getDataLoader<PaginationArg<User, String>, Connection<String>>("UserAuthoritiesLoader")
+            .load(toPaginationArg(first, after))
             .await()
-            .toList()
     }
 
     @GraphQLIgnore

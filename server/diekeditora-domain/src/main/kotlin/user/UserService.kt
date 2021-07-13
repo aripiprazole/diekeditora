@@ -1,29 +1,16 @@
 package com.diekeditora.domain.user
 
-import com.diekeditora.domain.page.AppPage
-import com.diekeditora.domain.role.Role
 import com.google.firebase.auth.FirebaseToken
+import graphql.relay.Connection
 import org.springframework.stereotype.Service
 
 @Service
 interface UserService {
+    suspend fun findUsers(first: Int, after: String? = null): Connection<User>
+
     suspend fun findUserByUsername(username: String): User?
 
     suspend fun findOrCreateUserByToken(token: FirebaseToken): User
-
-    suspend fun findPaginatedUsers(page: Int = 1, pageSize: Int = 15): AppPage<User>
-
-    suspend fun findUserRoles(user: User): Set<Role>
-
-    suspend fun findUserAuthorities(user: User): Set<String>
-
-    suspend fun linkRoles(user: User, roles: Set<Role>)
-
-    suspend fun unlinkRoles(user: User, roles: Set<Role>)
-
-    suspend fun linkAuthorities(user: User, authorities: Set<String>)
-
-    suspend fun unlinkAuthorities(user: User, authorities: Set<String>)
 
     suspend fun update(target: User, user: User): User
 
