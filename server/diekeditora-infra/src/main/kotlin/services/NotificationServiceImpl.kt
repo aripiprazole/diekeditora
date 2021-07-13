@@ -5,7 +5,7 @@ import com.diekeditora.domain.id.UniqueIdService
 import com.diekeditora.domain.notification.Notification
 import com.diekeditora.domain.notification.NotificationService
 import com.diekeditora.domain.notification.SimpleNotification
-import com.diekeditora.domain.page.Page
+import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.user.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -29,7 +29,7 @@ internal class NotificationServiceImpl(
         user: User,
         first: Int,
         after: UniqueId
-    ): Page<Notification> {
+    ): AppPage<Notification> {
         TODO("Not yet implemented")
     }
 

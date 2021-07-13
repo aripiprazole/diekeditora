@@ -7,7 +7,7 @@ import com.diekeditora.domain.invoice.MangaChapterInvoice
 import com.diekeditora.domain.invoice.MangaSubscriptionInvoice
 import com.diekeditora.domain.manga.Chapter
 import com.diekeditora.domain.manga.Manga
-import com.diekeditora.domain.page.Page
+import com.diekeditora.domain.page.AppPage
 import kotlinx.coroutines.flow.Flow
 import org.springframework.stereotype.Service
 
@@ -17,7 +17,7 @@ internal class InvoiceServiceImpl : InvoiceService {
         manga: Manga,
         first: Int,
         after: UniqueId
-    ): Page<Invoice> {
+    ): AppPage<Invoice> {
         TODO("Not yet implemented")
     }
 
@@ -33,7 +33,7 @@ internal class InvoiceServiceImpl : InvoiceService {
         manga: Manga,
         first: Int,
         after: UniqueId
-    ): Page<MangaSubscriptionInvoice> {
+    ): AppPage<MangaSubscriptionInvoice> {
         TODO("Not yet implemented")
     }
 
@@ -45,7 +45,7 @@ internal class InvoiceServiceImpl : InvoiceService {
         chapter: Chapter,
         first: Int,
         after: UniqueId
-    ): Page<MangaChapterInvoice> {
+    ): AppPage<MangaChapterInvoice> {
         TODO("Not yet implemented")
     }
 }

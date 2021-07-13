@@ -31,6 +31,10 @@ data class Role(
     }
 
     @GraphQLIgnore
+    override val cursor: String
+        get() = name
+
+    @GraphQLIgnore
     override fun update(with: Role): Role {
         return copy(
             name = with.name,

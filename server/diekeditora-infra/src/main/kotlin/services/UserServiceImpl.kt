@@ -1,6 +1,6 @@
 package com.diekeditora.infra.services
 
-import com.diekeditora.domain.page.Page
+import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
@@ -42,10 +42,10 @@ internal class UserServiceImpl(
     }
 
     @Transactional
-    override suspend fun findPaginatedUsers(page: Int, pageSize: Int): Page<User> {
+    override suspend fun findPaginatedUsers(page: Int, pageSize: Int): AppPage<User> {
         val users = repository.findPaginated(page, pageSize).toList()
 
-        return Page.of(users, pageSize, page, repository.estimateTotalUsers()).also {
+        return AppPage.of(users, pageSize, page, repository.estimateTotalUsers()).also {
             log.trace("Successfully found page of user %d", page)
         }
     }

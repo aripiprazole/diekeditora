@@ -7,6 +7,10 @@ import org.springframework.data.relational.core.mapping.Table
 @Table("newsletter")
 data class Newsletter(val email: String, val active: Boolean = true) : MutableEntity<Newsletter> {
     @GraphQLIgnore
+    override val cursor: String
+        get() = email
+
+    @GraphQLIgnore
     override fun update(with: Newsletter): Newsletter {
         return copy(email = with.email, active = with.active)
     }

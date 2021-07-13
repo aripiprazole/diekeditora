@@ -33,6 +33,10 @@ data class Comment(
     }
 
     @GraphQLIgnore
+    override val cursor: String
+        get() = uid.value
+
+    @GraphQLIgnore
     override fun update(with: Comment): Comment {
         return copy(
             profile = with.profile,

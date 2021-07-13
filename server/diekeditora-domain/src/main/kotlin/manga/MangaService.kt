@@ -1,6 +1,6 @@
 package com.diekeditora.domain.manga
 
-import com.diekeditora.domain.page.Page
+import com.diekeditora.domain.page.AppPage
 
 interface MangaService {
     suspend fun findMangas(
@@ -8,7 +8,7 @@ interface MangaService {
         after: String,
         orderBy: MangaSort = MangaSort.empty(),
         filterBy: Set<String> = emptySet(),
-    ): Page<Manga>
+    ): AppPage<Manga>
 
     suspend fun findMangaByTitle(title: String): Manga?
 
