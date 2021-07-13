@@ -49,6 +49,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.21",
+    "babel-plugin-inline-dotenv": "^1.6.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "firebase": "^8.7.1",
     "firebaseui": "^4.8.0",
     "graphql": "^15.5.1",
