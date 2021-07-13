@@ -6,7 +6,7 @@ import com.diekeditora.domain.user.User
 import kotlinx.coroutines.flow.Flow
 
 interface NotificationService {
-    suspend fun findNotifications(user: User, first: Int, after: UniqueId): AppPage<Notification>
+    suspend fun findNotifications(user: User, first: Int, after: UniqueId? = null): AppPage<Notification>
 
     suspend fun sendNotification(user: User, notification: Notification)
 

@@ -4,8 +4,6 @@ import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.role.RoleService
 import com.expediagroup.graphql.server.operations.Query
 import graphql.relay.Connection
-import graphql.relay.SimpleListConnection
-import graphql.schema.DataFetchingEnvironment
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Component
 
@@ -17,9 +15,7 @@ class RoleQuery(val roleService: RoleService) : Query {
     }
 
     @PreAuthorize("hasAuthority('role.view')")
-    suspend fun roles(page: Int, env: DataFetchingEnvironment): Connection<Role> {
-        val (items) = roleService.findRoles(page)
-
-        return SimpleListConnection(items).get(env)
+    suspend fun roles(first: Int, after: String? = null): Connection<Role> {
+        return roleService.findRoles(first, after)
     }
 }

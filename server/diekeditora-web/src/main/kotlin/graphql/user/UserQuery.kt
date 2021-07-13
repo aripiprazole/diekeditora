@@ -18,7 +18,7 @@ class UserQuery(val userService: UserService) : Query {
 
     @GraphQLDescription("Returns user page")
     @PreAuthorize("hasAuthority('user.view')")
-    suspend fun users(first: Int, after: String): Connection<User> {
-        return userService.findPaginatedUsers(first, after)
+    suspend fun users(first: Int, after: String? = null): Connection<User> {
+        return userService.findUsers(first, after)
     }
 }
