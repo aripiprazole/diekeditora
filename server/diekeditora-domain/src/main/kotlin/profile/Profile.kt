@@ -26,6 +26,10 @@ data class Profile(
         get() = user.username
 
     @GraphQLIgnore
+    override val cursor: String
+        get() = displayName
+
+    @GraphQLIgnore
     override fun update(with: Profile): Profile {
         return copy(
             gender = with.gender,

@@ -3,7 +3,7 @@ package com.diekeditora.domain
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 
 @GraphQLIgnore
-interface MutableEntity<T> : Entity<T> where T : MutableEntity<T>, T : Any {
+interface Entity<T> where T : Entity<T>, T : Any {
     @GraphQLIgnore
-    fun update(with: T): T
+    val cursor: String
 }

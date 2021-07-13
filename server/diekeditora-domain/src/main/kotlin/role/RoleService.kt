@@ -1,9 +1,9 @@
 package com.diekeditora.domain.role
 
-import com.diekeditora.domain.page.Page
+import com.diekeditora.domain.page.AppPage
 
 interface RoleService {
-    suspend fun findPaginatedRoles(page: Int = 1, pageSize: Int = 15): Page<Role>
+    suspend fun findPaginatedRoles(page: Int = 1, pageSize: Int = 15): AppPage<Role>
 
     suspend fun findRoleByName(name: String): Role?
 

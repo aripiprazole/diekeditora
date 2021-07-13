@@ -22,6 +22,10 @@ data class Chapter(
     val updatedAt: LocalDateTime? = null,
 ) : MutableEntity<Chapter> {
     @GraphQLIgnore
+    override val cursor: String
+        get() = number.toString()
+
+    @GraphQLIgnore
     override fun update(with: Chapter): Chapter {
         return copy(
             title = with.title,

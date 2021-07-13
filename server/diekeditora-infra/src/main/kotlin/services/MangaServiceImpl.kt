@@ -3,7 +3,7 @@ package com.diekeditora.infra.services
 import com.diekeditora.domain.manga.Manga
 import com.diekeditora.domain.manga.MangaService
 import com.diekeditora.domain.manga.MangaSort
-import com.diekeditora.domain.page.Page
+import com.diekeditora.domain.page.AppPage
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,7 +13,7 @@ internal class MangaServiceImpl : MangaService {
         after: String,
         orderBy: MangaSort,
         filterBy: Set<String>
-    ): Page<Manga> {
+    ): AppPage<Manga> {
         TODO("Not yet implemented")
     }
 

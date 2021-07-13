@@ -19,6 +19,10 @@ data class Genre(
     val updatedAt: LocalDateTime? = null,
 ) : MutableEntity<Genre> {
     @GraphQLIgnore
+    override val cursor: String
+        get() = title
+
+    @GraphQLIgnore
     override fun update(with: Genre): Genre {
         return copy(
             title = with.title,

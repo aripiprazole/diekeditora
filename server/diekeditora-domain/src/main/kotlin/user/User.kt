@@ -68,6 +68,10 @@ data class User(
     }
 
     @GraphQLIgnore
+    override val cursor: String
+        get() = username
+
+    @GraphQLIgnore
     override fun update(with: User): User {
         return copy(
             username = with.username,

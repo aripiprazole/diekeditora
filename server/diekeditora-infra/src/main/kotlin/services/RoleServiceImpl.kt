@@ -1,6 +1,6 @@
 package com.diekeditora.infra.services
 
-import com.diekeditora.domain.page.Page
+import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.infra.entities.Authority
@@ -22,10 +22,10 @@ internal class RoleServiceImpl(
     private val log by logger()
 
     @Transactional
-    override suspend fun findPaginatedRoles(page: Int, pageSize: Int): Page<Role> {
+    override suspend fun findPaginatedRoles(page: Int, pageSize: Int): AppPage<Role> {
         val roles = repository.findPaginated(page, pageSize).toList()
 
-        return Page.of(roles, pageSize, page, repository.estimateTotalRoles()).also {
+        return AppPage.of(roles, pageSize, page, repository.estimateTotalRoles()).also {
             log.trace("Successfully found page of role %d", page)
         }
     }
