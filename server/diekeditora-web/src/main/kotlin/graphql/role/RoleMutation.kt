@@ -10,20 +10,20 @@ import org.springframework.stereotype.Component
 class RoleMutation(val roleService: RoleService) : Mutation {
     @PreAuthorize("hasAuthority('role.store')")
     suspend fun createRole(input: Role): Role {
-        return roleService.save(input)
+        return roleService.saveRole(input)
     }
 
     @PreAuthorize("hasAuthority('role.update')")
     suspend fun updateRole(name: String, input: Role): Role? {
         val role = roleService.findRoleByName(name) ?: return null
 
-        return roleService.update(role, input)
+        return roleService.updateRole(role, input)
     }
 
     @PreAuthorize("hasAuthority('role.destroy')")
     suspend fun deleteRole(name: String) {
         val role = roleService.findRoleByName(name) ?: return
 
-        roleService.delete(role)
+        roleService.deleteRole(role)
     }
 }

@@ -13,7 +13,7 @@ class UserMutation(private val userService: UserService) : Mutation {
     @GraphQLDescription("Creates an user with the provided data")
     @PreAuthorize("hasAuthority('user.store')")
     suspend fun createUser(input: UserInput): User {
-        return userService.save(input.toUser())
+        return userService.saveUser(input.toUser())
     }
 
     @GraphQLDescription("Updates an user by its username with the provided data")
@@ -21,7 +21,7 @@ class UserMutation(private val userService: UserService) : Mutation {
     suspend fun updateUser(username: String, input: UserInput): User? {
         val user = userService.findUserByUsername(username) ?: return null
 
-        return userService.update(user, input.toUser())
+        return userService.updateUser(user, input.toUser())
     }
 
     @GraphQLDescription("Deletes an user by its username")
@@ -29,6 +29,6 @@ class UserMutation(private val userService: UserService) : Mutation {
     suspend fun deleteUser(username: String): User? {
         val user = userService.findUserByUsername(username) ?: return null
 
-        return userService.delete(user)
+        return userService.deleteUser(user)
     }
 }

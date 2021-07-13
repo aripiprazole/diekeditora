@@ -12,7 +12,7 @@ interface MangaService {
 
     suspend fun findMangaByTitle(title: String): Manga?
 
-    suspend fun createManga(manga: Manga): Manga
+    suspend fun saveManga(manga: Manga): Manga
 
     suspend fun updateManga(manga: Manga): Manga
 

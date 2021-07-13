@@ -36,7 +36,7 @@ internal class UserServiceImpl(
     @Transactional
     override suspend fun findOrCreateUserByToken(token: FirebaseToken): User {
         return repository.findByEmail(token.email)
-            ?: save(
+            ?: saveUser(
                 User(name = token.name, email = token.email, username = generateUsername(token))
             )
     }
@@ -93,14 +93,14 @@ internal class UserServiceImpl(
     }
 
     @Transactional
-    override suspend fun update(target: User, user: User): User {
+    override suspend fun updateUser(target: User, user: User): User {
         return repository.save(target.update(user)).also {
             log.trace("Successfully updated user %s", user)
         }
     }
 
     @Transactional
-    override suspend fun save(user: User): User {
+    override suspend fun saveUser(user: User): User {
         val target = user.copy(createdAt = LocalDateTime.now())
 
         return repository.save(target).also {
@@ -109,7 +109,7 @@ internal class UserServiceImpl(
     }
 
     @Transactional
-    override suspend fun delete(user: User): User {
+    override suspend fun deleteUser(user: User): User {
         return repository.save(user.copy(deletedAt = LocalDateTime.now())).also {
             log.trace("Successfully deleted %s", it)
         }

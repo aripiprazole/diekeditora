@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 class MangaMutation(val mangaService: MangaService) {
     @PreAuthorize("hasAuthority('manga.store')")
     suspend fun createManga(manga: Manga): Manga {
-        return mangaService.createManga(manga)
+        return mangaService.saveManga(manga)
     }
 
     @PreAuthorize("hasAuthority('manga.update')")
