@@ -12,14 +12,14 @@ class UserRoleMutation(val userService: UserService, val roleService: RoleServic
     @PreAuthorize("hasAuthority('role.admin')")
     suspend fun linkRolesToUser(username: String, roles: List<String>): User? {
         return userService.findUserByUsername(username)?.also { user ->
-            userService.linkRoles(user, roles.mapNotNull { roleService.findRoleByName(it) }.toSet())
+            roleService.linkRoles(user, roles.mapNotNull { roleService.findRoleByName(it) }.toSet())
         }
     }
 
     @PreAuthorize("hasAuthority('role.admin')")
     suspend fun unlinkRolesFromUser(username: String, roles: List<String>): User? {
         return userService.findUserByUsername(username)?.also { user ->
-            userService.unlinkRoles(
+            roleService.unlinkRoles(
                 user,
                 roles.mapNotNull { roleService.findRoleByName(it) }.toSet()
             )
