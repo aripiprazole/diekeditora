@@ -19,12 +19,12 @@
     "typescript": "^4.3.4"
   },
   "scripts": {
-    "dev": "run-p app:dev store:dev admin:dev storybook",
+    "dev": "run-p app:dev store:dev studio:dev storybook",
     "lint": "eslint './**/*.ts' './**/*.tsx' './**/*.js' --fix",
     "build": "lerna run --scope @diekeditora/app --stream build",
     "app:start": "lerna run --scope @diekeditora/app --stream start",
     "app:test": "lerna run --scope @diekeditora/app --stream cypress:run",
-    "admin:dev": "lerna run --scope @diekeditora/admin --stream dev",
+    "studio:dev": "lerna run --scope @diekeditora/studio --stream dev",
     "store:dev": "lerna run --scope @diekeditora/store --stream dev",
     "app:dev": "lerna run --scope @diekeditora/app --stream dev -p 3001",
     "ui:storybook": "lerna run --scope @diekeditora/ui storybook",
