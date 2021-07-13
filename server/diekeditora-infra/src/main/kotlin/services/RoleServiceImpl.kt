@@ -59,7 +59,7 @@ internal class RoleServiceImpl(
     }
 
     @Transactional
-    override suspend fun save(role: Role): Role {
+    override suspend fun saveRole(role: Role): Role {
         val target = role.copy(createdAt = LocalDateTime.now())
 
         return repository.save(target).also {
@@ -68,14 +68,14 @@ internal class RoleServiceImpl(
     }
 
     @Transactional
-    override suspend fun update(target: Role, role: Role): Role {
+    override suspend fun updateRole(target: Role, role: Role): Role {
         return repository.save(role.copy(updatedAt = LocalDateTime.now())).also {
             log.trace("Successfully updated role %s", it)
         }
     }
 
     @Transactional
-    override suspend fun delete(role: Role) {
+    override suspend fun deleteRole(role: Role) {
         repository.delete(role)
 
         log.trace("Successfully deleted role %s", role)

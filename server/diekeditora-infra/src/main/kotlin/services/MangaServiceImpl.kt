@@ -21,7 +21,7 @@ internal class MangaServiceImpl : MangaService {
         TODO("Not yet implemented")
     }
 
-    override suspend fun createManga(manga: Manga): Manga {
+    override suspend fun saveManga(manga: Manga): Manga {
         TODO("Not yet implemented")
     }
 

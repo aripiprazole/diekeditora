@@ -14,9 +14,9 @@ interface RoleService {
 
     suspend fun unlinkRoles(user: User, roles: Set<Role>)
 
-    suspend fun save(role: Role): Role
+    suspend fun saveRole(role: Role): Role
 
-    suspend fun update(target: Role, role: Role): Role
+    suspend fun updateRole(target: Role, role: Role): Role
 
-    suspend fun delete(role: Role)
+    suspend fun deleteRole(role: Role)
 }
