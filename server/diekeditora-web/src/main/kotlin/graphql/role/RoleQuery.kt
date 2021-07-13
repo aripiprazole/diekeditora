@@ -18,7 +18,7 @@ class RoleQuery(val roleService: RoleService) : Query {
 
     @PreAuthorize("hasAuthority('role.view')")
     suspend fun roles(page: Int, env: DataFetchingEnvironment): Connection<Role> {
-        val (items) = roleService.findPaginatedRoles(page)
+        val (items) = roleService.findRoles(page)
 
         return SimpleListConnection(items).get(env)
     }

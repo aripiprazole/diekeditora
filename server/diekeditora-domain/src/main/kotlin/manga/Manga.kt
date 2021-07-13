@@ -1,11 +1,14 @@
 package com.diekeditora.domain.manga
 
 import com.diekeditora.domain.MutableEntity
+import com.diekeditora.domain.dataloader.PaginationArg
+import com.diekeditora.domain.dataloader.toPaginationArg
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.profile.Profile
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
+import graphql.relay.Connection
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
 import org.springframework.data.annotation.Id
@@ -61,12 +64,15 @@ data class Manga(
     }
 
     @GraphQLDescription("Returns manga's chapters")
-    suspend fun chapters(env: DataFetchingEnvironment): List<Chapter> {
+    suspend fun chapters(
+        env: DataFetchingEnvironment,
+        first: Int,
+        after: String? = null
+    ): Connection<Chapter> {
         return env
-            .getDataLoader<Manga, Set<Chapter>>("MangaChapterLoader")
-            .load(this)
+            .getDataLoader<PaginationArg<Manga, String>, Connection<Chapter>>("MangaChapterLoader")
+            .load(toPaginationArg(first, after))
             .await()
-            .toList()
     }
 
     @GraphQLDescription("Returns manga's authors")
@@ -77,6 +83,9 @@ data class Manga(
             .await()
             .toList()
     }
+
+    override val cursor: String
+        get() = title
 
     @GraphQLIgnore
     override fun update(with: Manga): Manga {

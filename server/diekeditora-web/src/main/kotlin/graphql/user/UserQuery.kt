@@ -1,6 +1,5 @@
 package com.diekeditora.web.graphql.user
 
-import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
@@ -19,7 +18,7 @@ class UserQuery(val userService: UserService) : Query {
 
     @GraphQLDescription("Returns user page")
     @PreAuthorize("hasAuthority('user.view')")
-    suspend fun users(first: Int, after: UniqueId): Connection<User> {
+    suspend fun users(first: Int, after: String): Connection<User> {
         return userService.findPaginatedUsers(first, after)
     }
 }
