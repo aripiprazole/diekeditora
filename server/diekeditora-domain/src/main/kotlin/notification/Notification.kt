@@ -29,7 +29,7 @@ data class CommentMentionNotification(
     override val uid: UniqueId,
     val comment: Comment,
     override val issuedAt: LocalDateTime = LocalDateTime.now(),
-    abstract val readAt: LocalDateTime? = null,
+    override val readAt: LocalDateTime? = null,
 ) : Notification()
 
 @JsonTypeName("MangaNewsletterNotification")
@@ -41,7 +41,7 @@ data class MangaNewsletterNotification(
     override val uid: UniqueId,
     val manga: Manga,
     override val issuedAt: LocalDateTime = LocalDateTime.now(),
-    abstract val readAt: LocalDateTime? = null,
+    override val readAt: LocalDateTime? = null,
 ) : Notification()
 
 @JsonTypeName("MangaSelfInvoiceUpdatedNotification")
@@ -53,7 +53,7 @@ data class MangaSelfInvoiceUpdatedNotification(
     override val uid: UniqueId,
     val invoice: Invoice,
     override val issuedAt: LocalDateTime = LocalDateTime.now(),
-    abstract val readAt: LocalDateTime? = null,
+    override val readAt: LocalDateTime? = null,
 ) : Notification()
 
 @JsonTypeName("MangaInvoiceUpdatedNotification")
@@ -65,7 +65,7 @@ data class MangaInvoiceUpdatedNotification(
     override val uid: UniqueId,
     val invoice: Invoice,
     override val issuedAt: LocalDateTime = LocalDateTime.now(),
-    abstract val readAt: LocalDateTime? = null,
+    override val readAt: LocalDateTime? = null,
 ) : Notification()
 
 @JsonTypeName("SimpleNotification")
@@ -77,5 +77,5 @@ data class SimpleNotification(
     override val uid: UniqueId,
     val message: String,
     override val issuedAt: LocalDateTime = LocalDateTime.now(),
-    abstract val readAt: LocalDateTime? = null,
+    override val readAt: LocalDateTime? = null,
 ) : Notification()
