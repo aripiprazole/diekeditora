@@ -1,8 +1,9 @@
 import {all, call, put, takeEvery} from 'redux-saga/effects';
 
-import {graphQLClient} from '~/client';
-import {User} from '~/entities';
-import {ME_USER_QUERY} from '~/queries';
+import {graphQLClient} from '@diekeditora/store/client';
+import {User} from '@diekeditora/store/entities';
+import {ME_USER_QUERY} from '@diekeditora/store/queries';
+
 import {AuthActions, LoginAction, loginFail, loginSuccess} from './actions';
 
 type LoginResponse = {

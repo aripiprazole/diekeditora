@@ -1,6 +1,7 @@
 import produce from 'immer';
 
-import {CompleteUser, Connection, User} from '~/entities';
+import {CompleteUser, Connection, User} from '@diekeditora/store/entities';
+
 import {UserAction, UserActions} from './actions';
 
 export type UserState = {

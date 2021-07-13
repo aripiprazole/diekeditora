@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {CompleteManga, Connection, Manga} from '~/entities';
+import {CompleteManga, Connection, Manga} from '@diekeditora/store/entities';
 
 export type MangaAction =
   | FetchMangaConnectionAction

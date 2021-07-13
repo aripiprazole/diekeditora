@@ -1,6 +1,6 @@
 import {gql} from '@apollo/client';
 
-import {COMPLETE_MANGA_FRAGMENT, MANGA_FRAGMENT} from '~/fragments';
+import {COMPLETE_MANGA_FRAGMENT, MANGA_FRAGMENT} from '@diekeditora/store/fragments';
 
 export const MANGA_QUERY = gql`
   ${COMPLETE_MANGA_FRAGMENT}

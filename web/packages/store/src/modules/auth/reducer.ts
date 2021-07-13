@@ -1,6 +1,8 @@
 import firebase from 'firebase';
 import produce from 'immer';
-import {User} from '~/entities';
+
+import {User} from '@diekeditora/store/entities';
+
 import {AuthAction, AuthActions} from './actions';
 
 export type AuthState = {

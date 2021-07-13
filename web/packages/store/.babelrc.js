@@ -1,13 +1,4 @@
 module.exports = {
   presets: ['@babel/preset-env', '@babel/preset-typescript'],
-  plugins: [
-    '@babel/plugin-transform-typescript',
-    [
-      'module-resolver',
-      {
-        root: ['./src'],
-        alias: { '~/': './' },
-      },
-    ],
-  ],
+  plugins: ['@babel/plugin-transform-typescript'],
 };

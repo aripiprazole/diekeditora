@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import firebase from 'firebase';
-import {User} from '~/entities';
+import {User} from '@diekeditora/store/entities';
 
 export type AuthAction = LoginAction | LoginSuccess | LoginFail | LogoutAction;
 
