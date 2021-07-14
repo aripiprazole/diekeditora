@@ -1,15 +1,12 @@
 package com.diekeditora.infra.services
 
-import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.role.RoleService
-import com.diekeditora.infra.entities.Authority
-import com.diekeditora.infra.repositories.RoleAuthorityRepository
+import com.diekeditora.domain.user.User
 import com.diekeditora.infra.repositories.RoleRepository
+import com.diekeditora.infra.repositories.UserRoleRepository
 import com.diekeditora.shared.logger
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.flow.toSet
+import graphql.relay.Connection
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -17,17 +14,13 @@ import java.time.LocalDateTime
 @Service
 internal class RoleServiceImpl(
     val repository: RoleRepository,
-    val roleAuthorityRepository: RoleAuthorityRepository,
+    val userRoleRepository: UserRoleRepository,
 ) : RoleService {
     private val log by logger()
 
     @Transactional
-    override suspend fun findPaginatedRoles(page: Int, pageSize: Int): AppPage<Role> {
-        val roles = repository.findPaginated(page, pageSize).toList()
-
-        return AppPage.of(roles, pageSize, page, repository.estimateTotalRoles()).also {
-            log.trace("Successfully found page of role %d", page)
-        }
+    override suspend fun findRoles(first: Int, after: String?): Connection<Role> {
+        TODO("Not yet implemented")
     }
 
     @Transactional
@@ -38,24 +31,24 @@ internal class RoleServiceImpl(
     }
 
     @Transactional
-    override suspend fun findRoleAuthorities(role: Role): Set<String> {
-        return roleAuthorityRepository.findByRole(role).map { it.value }.toSet().also {
-            log.trace("Successfully found role authorities %s by role", it)
+    override suspend fun findRolesByUser(user: User, first: Int, after: String?): Connection<Role> {
+        return userRoleRepository.findByUser(user).also {
+            log.trace("Successfully found user roles %s by user", it)
         }
     }
 
     @Transactional
-    override suspend fun linkAuthorities(role: Role, authorities: Set<String>) {
-        roleAuthorityRepository.link(role, authorities.map(::Authority))
+    override suspend fun linkRoles(user: User, roles: Set<Role>) {
+        userRoleRepository.link(user, roles)
 
-        log.trace("Successfully linked %s authorities to role %s", authorities, role)
+        log.trace("Successfully linked %s roles to user %s", roles, user)
     }
 
     @Transactional
-    override suspend fun unlinkAuthorities(role: Role, authorities: Set<String>) {
-        roleAuthorityRepository.unlink(role, authorities.map(::Authority))
+    override suspend fun unlinkRoles(user: User, roles: Set<Role>) {
+        userRoleRepository.unlink(user, roles)
 
-        log.trace("Successfully linked %s authorities to role %s", authorities, role)
+        log.trace("Successfully unlinked %s roles to user %s", roles, user)
     }
 
     @Transactional

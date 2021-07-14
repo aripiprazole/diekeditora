@@ -2,19 +2,17 @@ package com.diekeditora.infra.repositories
 
 import com.diekeditora.domain.user.User
 import com.diekeditora.infra.entities.Authority
-import com.diekeditora.infra.utils.read
-import kotlinx.coroutines.flow.Flow
+import graphql.relay.Connection
 import org.intellij.lang.annotations.Language
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
-import org.springframework.r2dbc.core.flow
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 
 @Repository
 interface AuthorityRepository {
-    suspend fun findAll(): Flow<Authority>
+    suspend fun findAll(first: Int, after: String?): Connection<Authority>
 
-    suspend fun findAllByUser(user: User): Flow<Authority>
+    suspend fun findAllByUser(user: User, first: Int, after: String?): Connection<Authority>
 }
 
 @Language("PostgreSQL")
@@ -30,20 +28,15 @@ private const val SELECT_USER_AUTHORITIES = """
 
 @Service
 internal class AuthorityRepositoryImpl(val template: R2dbcEntityTemplate) : AuthorityRepository {
-    override suspend fun findAll(): Flow<Authority> {
-        return template.databaseClient
-            .sql(SELECT_ALL_AUTHORITIES)
-            .map(template.converter.read<Authority>())
-            .flow()
+    override suspend fun findAll(first: Int, after: String?): Connection<Authority> {
+        TODO("Not yet implemented")
     }
 
-    override suspend fun findAllByUser(user: User): Flow<Authority> {
-        val userId = requireNotNull(user.id) { "User id must be not null" }
-
-        return template.databaseClient
-            .sql(SELECT_USER_AUTHORITIES)
-            .bind("user", userId)
-            .map(template.converter.read<Authority>())
-            .flow()
+    override suspend fun findAllByUser(
+        user: User,
+        first: Int,
+        after: String?
+    ): Connection<Authority> {
+        TODO("Not yet implemented")
     }
 }

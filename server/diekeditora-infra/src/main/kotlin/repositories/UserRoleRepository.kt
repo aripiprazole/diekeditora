@@ -3,8 +3,7 @@ package com.diekeditora.infra.repositories
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.user.User
-import com.diekeditora.infra.utils.read
-import kotlinx.coroutines.flow.Flow
+import graphql.relay.Connection
 import kotlinx.coroutines.flow.toList
 import org.intellij.lang.annotations.Language
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service
 
 @Repository
 interface UserRoleRepository {
-    suspend fun findByUser(user: User): Flow<Role>
+    suspend fun findByUser(user: User): Connection<Role>
 
     suspend fun unlink(user: User, roles: Iterable<Role>)
 
@@ -49,14 +48,8 @@ private const val INSERT_ROLE_QUERY = """
 
 @Service
 internal class UserRoleRepositoryImpl(val template: R2dbcEntityTemplate) : UserRoleRepository {
-    override suspend fun findByUser(user: User): Flow<Role> {
-        val userId = requireNotNull(user.id) { "User id must be not null" }
-
-        return template.databaseClient
-            .sql(SELECT_ROLES_QUERY)
-            .bind("user", userId)
-            .map(template.converter.read<Role>())
-            .flow()
+    override suspend fun findByUser(user: User): Connection<Role> {
+        TODO()
     }
 
     override suspend fun unlink(user: User, roles: Iterable<Role>) {
