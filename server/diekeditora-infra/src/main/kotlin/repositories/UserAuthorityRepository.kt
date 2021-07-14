@@ -3,8 +3,7 @@ package com.diekeditora.infra.repositories
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.user.User
 import com.diekeditora.infra.entities.Authority
-import com.diekeditora.infra.utils.read
-import kotlinx.coroutines.flow.Flow
+import graphql.relay.Connection
 import kotlinx.coroutines.flow.toList
 import org.intellij.lang.annotations.Language
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service
 
 @Repository
 interface UserAuthorityRepository {
-    suspend fun findByUser(user: User): Flow<Authority>
+    suspend fun findByUser(user: User, first: Int, after: String?): Connection<Authority>
 
     suspend fun unlink(user: User, authorities: Iterable<Authority>)
 
@@ -50,14 +49,8 @@ private const val INSERT_AUTHORITY_QUERY = """
 @Service
 internal class UserAuthorityRepositoryImpl(val template: R2dbcEntityTemplate) :
     UserAuthorityRepository {
-    override suspend fun findByUser(user: User): Flow<Authority> {
-        requireNotNull(user.id) { "User id must be not null" }
-
-        return template.databaseClient
-            .sql(SELECT_AUTHORITIES_QUERY)
-            .bind("user", user.id)
-            .map(template.converter.read<Authority>())
-            .flow()
+    override suspend fun findByUser(user: User, first: Int, after: String?): Connection<Authority> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun unlink(user: User, authorities: Iterable<Authority>) {

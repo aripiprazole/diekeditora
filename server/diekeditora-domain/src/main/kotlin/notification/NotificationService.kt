@@ -1,12 +1,16 @@
 package com.diekeditora.domain.notification
 
 import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.user.User
+import graphql.relay.Connection
 import kotlinx.coroutines.flow.Flow
 
 interface NotificationService {
-    suspend fun findNotifications(user: User, first: Int, after: UniqueId? = null): AppPage<Notification>
+    suspend fun findNotifications(
+        user: User,
+        first: Int,
+        after: UniqueId? = null
+    ): Connection<Notification>
 
     suspend fun sendNotification(user: User, notification: Notification)
 

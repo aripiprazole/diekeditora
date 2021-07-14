@@ -31,10 +31,6 @@ data class AppPage<T>(
         }
     }
 
-    inline fun <R : Any> map(fn: (Edge<T>) -> Edge<R>): AppPage<R> {
-        return AppPage(getEdges().map(fn), getPageInfo())
-    }
-
     override fun getEdges(): List<Edge<T>> = edges
     override fun getPageInfo(): PageInfo = pageInfo
 }

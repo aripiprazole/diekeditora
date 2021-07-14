@@ -5,8 +5,8 @@ import com.diekeditora.domain.id.UniqueIdService
 import com.diekeditora.domain.notification.Notification
 import com.diekeditora.domain.notification.NotificationService
 import com.diekeditora.domain.notification.SimpleNotification
-import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.user.User
+import graphql.relay.Connection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -28,8 +28,8 @@ internal class NotificationServiceImpl(
     override suspend fun findNotifications(
         user: User,
         first: Int,
-        after: UniqueId
-    ): AppPage<Notification> {
+        after: UniqueId?
+    ): Connection<Notification> {
         TODO("Not yet implemented")
     }
 

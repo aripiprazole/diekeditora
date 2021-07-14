@@ -1,6 +1,7 @@
 package com.diekeditora.domain.manga
 
 import com.diekeditora.domain.page.AppPage
+import com.diekeditora.domain.profile.Profile
 
 interface MangaService {
     suspend fun findMangas(
@@ -17,4 +18,12 @@ interface MangaService {
     suspend fun updateManga(manga: Manga): Manga
 
     suspend fun deleteManga(manga: Manga): Manga
+
+    suspend fun findMangasByProfile(
+        profile: Profile,
+        first: Int,
+        after: String? = null,
+        orderBy: MangaSort = MangaSort.empty(),
+        filterBy: Set<String> = emptySet(),
+    ): List<Manga>
 }

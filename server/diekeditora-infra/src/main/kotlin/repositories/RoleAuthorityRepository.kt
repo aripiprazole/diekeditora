@@ -3,8 +3,7 @@ package com.diekeditora.infra.repositories
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.role.Role
 import com.diekeditora.infra.entities.Authority
-import com.diekeditora.infra.utils.read
-import kotlinx.coroutines.flow.Flow
+import graphql.relay.Connection
 import kotlinx.coroutines.flow.toList
 import org.intellij.lang.annotations.Language
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service
 
 @Repository
 interface RoleAuthorityRepository {
-    suspend fun findByRole(role: Role): Flow<Authority>
+    suspend fun findByRole(role: Role, first: Int, after: String?): Connection<Authority>
 
     suspend fun unlink(role: Role, authorities: Iterable<Authority>)
 
@@ -48,14 +47,8 @@ private const val INSERT_AUTHORITY_QUERY = """
 @Service
 internal class RoleAuthorityRepositoryImpl(val template: R2dbcEntityTemplate) :
     RoleAuthorityRepository {
-    override suspend fun findByRole(role: Role): Flow<Authority> {
-        val roleId = requireNotNull(role.id) { "Role id must be not null" }
-
-        return template.databaseClient
-            .sql(SELECT_ROLES_QUERY)
-            .bind("role", roleId)
-            .map(template.converter.read<Authority>())
-            .flow()
+    override suspend fun findByRole(role: Role, first: Int, after: String?): Connection<Authority> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun unlink(role: Role, authorities: Iterable<Authority>) {
