@@ -9,12 +9,31 @@ import java.util.UUID
 
 @Repository
 interface RoleRepository : CoroutineSortingRepository<Role, UUID> {
-    @Query("""SELECT * FROM role LIMIT :pageSize OFFSET ((:page - 1) * :pageSize)""")
-    suspend fun findPaginated(page: Int, pageSize: Int = 15): Flow<Role>
+    @Query("""select * from "role" order by created_at limit :first""")
+    suspend fun findAll(first: Int): Flow<Role>
 
-    @Query("""SELECT * FROM role WHERE name = :name LIMIT 1""")
+    @Query(
+        """
+        select *
+        from "role"
+        order by created_at
+        limit :first
+            offset (
+                select row_number()
+                over (order by created_at)
+                from "role"
+                where name = :after
+            )
+        """
+    )
+    suspend fun findAll(first: Int, after: String): Flow<Role>
+
+    @Query("""select row_number() over (order by created_at) from "role" where name = :name""")
+    suspend fun findIndex(name: String): Long
+
+    @Query("""select * from "role" where name = :name limit 1""")
     suspend fun findByName(name: String): Role?
 
-    @Query("""SELECT count(id) FROM role""")
+    @Query("""select count(id) from "role"""")
     suspend fun estimateTotalRoles(): Long
 }

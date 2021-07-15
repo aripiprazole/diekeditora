@@ -1,5 +1,6 @@
 package com.diekeditora.infra.services
 
+import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.User
@@ -7,6 +8,7 @@ import com.diekeditora.infra.repositories.RoleRepository
 import com.diekeditora.infra.repositories.UserRoleRepository
 import com.diekeditora.shared.logger
 import graphql.relay.Connection
+import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -20,7 +22,21 @@ internal class RoleServiceImpl(
 
     @Transactional
     override suspend fun findRoles(first: Int, after: String?): Connection<Role> {
-        TODO("Not yet implemented")
+        require(first > 1) { "The size of page must be bigger than 1" }
+        require(first < 50) { "The size of page must be less than 50" }
+
+        val roles = if (after != null) {
+            repository.findAll(first, after).toList()
+        } else {
+            repository.findAll(first).toList()
+        }
+
+        val totalItems = repository.estimateTotalRoles()
+
+        val firstIndex = roles.firstOrNull()?.let { repository.findIndex(it.name) }
+        val lastIndex = roles.lastOrNull()?.let { repository.findIndex(it.name) }
+
+        return AppPage.of(totalItems, roles, first, firstIndex, lastIndex)
     }
 
     @Transactional
