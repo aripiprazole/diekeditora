@@ -32,7 +32,7 @@ class RoleQueryTest(
 
     @Test
     fun `test should retrieve role by name`(): Unit = runBlocking {
-        val role = roleFactory.create()
+        val role = roleService.saveRole(roleFactory.create())
 
         val response = client.request(RoleQuery(role.name)) {
             authenticate("role.view")

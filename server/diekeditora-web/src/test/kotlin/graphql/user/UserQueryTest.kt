@@ -32,7 +32,7 @@ class UserQueryTest(
 
     @Test
     fun `test should retrieve user by username`(): Unit = runBlocking {
-        val user = userFactory.create()
+        val user = userService.saveUser(userFactory.create())
 
         val response = client.request(UserQuery(user.username)) {
             authenticate("user.view")
