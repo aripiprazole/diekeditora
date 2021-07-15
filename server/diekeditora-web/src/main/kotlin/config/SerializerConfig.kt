@@ -1,9 +1,9 @@
 package com.diekeditora.web.config
 
-import com.diekeditora.domain.graphql.GraphQLConnection
-import com.diekeditora.domain.graphql.GraphQLConnectionCursor
-import com.diekeditora.domain.graphql.GraphQLEdge
-import com.diekeditora.domain.graphql.GraphQLPageInfo
+import com.diekeditora.domain.page.AppCursor
+import com.diekeditora.domain.page.AppEdge
+import com.diekeditora.domain.page.AppPage
+import com.diekeditora.domain.page.AppPageInfo
 import com.diekeditora.infra.serializers.time.DateDeserializer
 import com.diekeditora.infra.serializers.time.DateSerializer
 import com.diekeditora.infra.serializers.time.InstantDeserializer
@@ -41,12 +41,9 @@ class SerializerConfig {
                 .addSerializer(LocalDateTime::class.java, LocalDateTimeSerializer())
                 .addDeserializer(LocalDateTime::class.java, LocalDateTimeDeserializer())
 
-                .addAbstractTypeMapping(Connection::class.java, GraphQLConnection::class.java)
-                .addAbstractTypeMapping(Edge::class.java, GraphQLEdge::class.java)
-                .addAbstractTypeMapping(PageInfo::class.java, GraphQLPageInfo::class.java)
-                .addAbstractTypeMapping(
-                    ConnectionCursor::class.java,
-                    GraphQLConnectionCursor::class.java
-                )
+                .addAbstractTypeMapping(Connection::class.java, AppPage::class.java)
+                .addAbstractTypeMapping(Edge::class.java, AppEdge::class.java)
+                .addAbstractTypeMapping(PageInfo::class.java, AppPageInfo::class.java)
+                .addAbstractTypeMapping(ConnectionCursor::class.java, AppCursor::class.java)
         )
 }
