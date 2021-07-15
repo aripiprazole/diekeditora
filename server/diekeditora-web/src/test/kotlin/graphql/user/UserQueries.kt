@@ -41,7 +41,6 @@ data class UserQuery(val username: String) : TestQuery<User?>(
             email
             username
             birthday
-            profile
             createdAt
             updatedAt
             deletedAt
