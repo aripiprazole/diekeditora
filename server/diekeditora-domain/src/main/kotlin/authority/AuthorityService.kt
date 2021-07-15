@@ -7,6 +7,8 @@ import graphql.relay.Connection
 interface AuthorityService {
     suspend fun findAllAuthorities(first: Int, after: String? = null): Connection<String>
 
+    suspend fun findAllAuthoritiesByUser(user: User): Set<String>
+
     suspend fun findAllAuthoritiesByUser(
         user: User,
         first: Int,
