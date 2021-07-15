@@ -57,7 +57,11 @@ class GraphQLSchemaHooks(val objectMapper: ObjectMapper) : SchemaGeneratorHooks 
 
     override fun willGenerateGraphQLType(type: KType): GraphQLType? {
         val name = type.jvmErasure.simpleName.orEmpty().let { typeName ->
-            type.arguments.joinToString("") + typeName
+            val argumentsString = type.arguments.joinToString("") {
+                it.type?.jvmErasure?.simpleName ?: "Any"
+            }
+
+            argumentsString + typeName
         }
 
         // creates a reference if it already exists
