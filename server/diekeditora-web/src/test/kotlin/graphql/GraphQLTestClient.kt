@@ -60,6 +60,7 @@ class GraphQLTestClient(
         return response.data
             ?.entries
             ?.toList()?.get(0)
+            ?.value
             ?.let(objectMapper::writeValueAsString)
             ?.let { objectMapper.readValue<R>(it) }
             ?: throw GraphQLKotlinException("GraphQLResponse.data is null")
@@ -67,8 +68,8 @@ class GraphQLTestClient(
 }
 
 class GraphQLRequestBuilderImpl<R>(
-    val authenticationMocker: AuthenticationMocker,
-    val query: TestQuery<R>
+    private val authenticationMocker: AuthenticationMocker,
+    private val query: TestQuery<R>
 ) : GraphQLRequestBuilder<R> {
     var authentication: Authentication? = null
 
