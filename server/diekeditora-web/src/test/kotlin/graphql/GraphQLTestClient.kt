@@ -4,8 +4,8 @@ import com.diekeditora.web.tests.utils.AuthenticationMocker
 import com.expediagroup.graphql.generator.exceptions.GraphQLKotlinException
 import com.expediagroup.graphql.server.types.GraphQLRequest
 import com.expediagroup.graphql.server.types.GraphQLResponse
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.http.MediaType
 import org.springframework.security.core.Authentication
 import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockAuthentication
@@ -28,11 +28,14 @@ abstract class TestQuery<R>(val content: String) {
 
 @Component
 class GraphQLTestClient(
-    private val authenticationMocker: AuthenticationMocker,
-    private val client: WebTestClient,
-    private val objectMapper: ObjectMapper,
+    val authenticationMocker: AuthenticationMocker,
+    val client: WebTestClient,
+    val objectMapper: ObjectMapper,
 ) {
-    fun <R> request(query: TestQuery<R>, block: GraphQLRequestBuilder<R>.() -> Unit = {}): R {
+    final inline fun <reified R> request(
+        query: TestQuery<R>,
+        block: GraphQLRequestBuilder<R>.() -> Unit = {}
+    ): R {
         val builder = GraphQLRequestBuilderImpl(authenticationMocker, query).apply(block)
 
         val response = client
@@ -58,12 +61,12 @@ class GraphQLTestClient(
             ?.entries
             ?.toList()?.get(0)
             ?.let(objectMapper::writeValueAsString)
-            ?.let { objectMapper.readValue(it, object : TypeReference<R>() {}) }
+            ?.let { objectMapper.readValue<R>(it) }
             ?: throw GraphQLKotlinException("GraphQLResponse.data is null")
     }
 }
 
-private class GraphQLRequestBuilderImpl<R>(
+class GraphQLRequestBuilderImpl<R>(
     val authenticationMocker: AuthenticationMocker,
     val query: TestQuery<R>
 ) : GraphQLRequestBuilder<R> {

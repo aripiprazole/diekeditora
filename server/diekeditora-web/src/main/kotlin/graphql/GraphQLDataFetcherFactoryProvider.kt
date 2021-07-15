@@ -89,7 +89,11 @@ class GraphQLDataFetcher(
                     // rewrite value to be used in real scenario
                     val repr = env.getArgument<Any?>(name)?.let(objectMapper::writeValueAsString)
 
-                    param to objectMapper.readValue(repr, param.type.jvmErasure.java)
+                    if (param.type.isMarkedNullable && repr == null) {
+                        param to null
+                    } else {
+                        param to objectMapper.readValue(repr, param.type.jvmErasure.java)
+                    }
                 } else {
                     null
                 }

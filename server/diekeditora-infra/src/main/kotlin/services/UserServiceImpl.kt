@@ -1,5 +1,6 @@
 package com.diekeditora.infra.services
 
+import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
 import com.diekeditora.infra.repositories.UserRepository
@@ -7,6 +8,7 @@ import com.diekeditora.shared.generateRandomString
 import com.diekeditora.shared.logger
 import com.google.firebase.auth.FirebaseToken
 import graphql.relay.Connection
+import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -17,7 +19,21 @@ internal class UserServiceImpl(val repository: UserRepository) : UserService {
 
     @Transactional
     override suspend fun findUsers(first: Int, after: String?): Connection<User> {
-        TODO("Not yet implemented")
+        require(first > 1) { "The size of page must be bigger than 1" }
+        require(first < 50) { "The size of page must be less than 50" }
+
+        val users = if (after != null) {
+            repository.findAll(first, after).toList()
+        } else {
+            repository.findAll(first).toList()
+        }
+
+        val totalItems = repository.estimateTotalUsers()
+
+        val firstIndex = users.firstOrNull()?.let { repository.findIndex(it.username) }
+        val lastIndex = users.lastOrNull()?.let { repository.findIndex(it.username) }
+
+        return AppPage.of(totalItems, users, first, firstIndex, lastIndex)
     }
 
     @Transactional

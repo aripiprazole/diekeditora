@@ -9,21 +9,37 @@ import java.util.UUID
 
 @Repository
 interface UserRepository : CoroutineSortingRepository<User, UUID> {
-    @Query("""SELECT * FROM "user" WHERE deleted_at IS NOT NULL LIMIT :pageSize OFFSET ((:page - 1) * :pageSize)""")
-    suspend fun findPaginatedDeleted(page: Int, pageSize: Int = 15): Flow<User>
+    @Query("""select * from "user" order by created_at limit :first""")
+    suspend fun findAll(first: Int): Flow<User>
 
-    @Query("""SELECT * FROM "user" WHERE deleted_at IS NULL LIMIT :pageSize OFFSET ((:page - 1) * :pageSize)""")
-    suspend fun findPaginated(page: Int, pageSize: Int = 15): Flow<User>
+    @Query(
+        """
+        select *
+        from "user"
+        order by created_at
+        limit :first
+            offset (
+                select row_number()
+                over (order by created_at)
+                from "user"
+                where username = :after
+            )
+        """
+    )
+    suspend fun findAll(first: Int, after: String): Flow<User>
 
-    @Query("""SELECT * FROM "user" WHERE username = :username LIMIT 1""")
+    @Query("""select row_number() over (order by created_at) from "user" where username = :username""")
+    suspend fun findIndex(username: String): Long
+
+    @Query("""select * from "user" where username = :username limit 1""")
     suspend fun findByUsername(username: String): User?
 
-    @Query("""SELECT * FROM "user" WHERE email = :email LIMIT 1""")
+    @Query("""select * from "user" where email = :email limit 1""")
     suspend fun findByEmail(email: String): User?
 
-    @Query("""SELECT count(id) FROM "user"""")
+    @Query("""select count(id) from "user"""")
     suspend fun estimateTotalUsers(): Long
 
-    @Query("""UPDATE "user" SET deleted_at = CURRENT_TIMESTAMP WHERE username = :username""")
+    @Query("""update "user" set deleted_at = current_database() where username = :username""")
     override suspend fun delete(entity: User)
 }
