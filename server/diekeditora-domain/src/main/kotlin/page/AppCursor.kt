@@ -15,6 +15,8 @@ import graphql.relay.ConnectionCursor
 @JsonDeserialize(using = AppCursorDeserializer::class)
 data class AppCursor(private val value: String) : ConnectionCursor {
     override fun getValue(): String = value
+
+    override fun toString(): String = value
 }
 
 internal class AppCursorDeserializer : JsonDeserializer<AppCursor>() {

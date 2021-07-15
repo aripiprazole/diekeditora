@@ -10,13 +10,14 @@ import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration
 import org.springframework.r2dbc.connection.init.CompositeDatabasePopulator
 import org.springframework.r2dbc.connection.init.ConnectionFactoryInitializer
 import org.springframework.r2dbc.connection.init.ResourceDatabasePopulator
+import java.util.UUID
 
 @Configuration
 @OptIn(ExperimentalStdlibApi::class)
 class DatabaseConfig(val connectionFactory: ConnectionFactory) : AbstractR2dbcConfiguration() {
     override fun getCustomConverters(): List<Any> = buildList {
-        add(Converter<UniqueId, String> { id -> id.value })
-        add(Converter<String, UniqueId> { value -> UniqueId(value) })
+        add(Converter<UniqueId, UUID> { id -> UUID.fromString(id.value) })
+        add(Converter<UUID, UniqueId> { value -> UniqueId(value.toString()) })
     }
 
     @Bean

@@ -4,9 +4,11 @@ import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ValueNode
 import com.fasterxml.jackson.module.kotlin.readValue
+import graphql.Scalars.GraphQLInt
 import graphql.relay.Connection
 import graphql.relay.Relay
 import graphql.schema.Coercing
+import graphql.schema.GraphQLFieldDefinition.newFieldDefinition
 import graphql.schema.GraphQLObjectType
 import graphql.schema.GraphQLScalarType
 import graphql.schema.GraphQLScalarType.newScalar
@@ -23,6 +25,17 @@ typealias TypeConverter = (KType) -> GraphQLType?
 @OptIn(ExperimentalStdlibApi::class)
 class GraphQLSchemaHooks(val objectMapper: ObjectMapper) : SchemaGeneratorHooks {
     private val relay = Relay()
+
+    private val pageInfoType = Relay.pageInfoType
+        .transform { builder ->
+            builder.field(
+                newFieldDefinition()
+                    .name("totalPages")
+                    .type(GraphQLInt)
+                    .description("marks the total pages of connection")
+                    .build()
+            )
+        }
 
     private val types = mutableMapOf<KType, TypeConverter>()
     private val cache = mutableMapOf<String, GraphQLType>()
@@ -43,16 +56,20 @@ class GraphQLSchemaHooks(val objectMapper: ObjectMapper) : SchemaGeneratorHooks 
             .build()
     }
 
-    private fun parseConnection(type: KType): GraphQLObjectType {
-        val generic = requireNotNull(type.arguments.first().type)
-        val name = generic.jvmErasure.simpleName.orEmpty()
-        val edge = relay.edgeType(name, typeRef(name), null, emptyList())
+    private fun parseConnection(type: KType): GraphQLObjectType = relay.run {
+        val name = type.arguments.firstOrNull()
+            ?.type?.jvmErasure?.simpleName
+            ?: error("Unable to get name of type arguments of $type")
 
-        return relay.connectionType(name, edge, emptyList())
+        connectionType(
+            name,
+            edgeType(name, typeRef(name), null, emptyList()),
+            emptyList()
+        )
     }
 
     override fun willBuildSchema(builder: GraphQLSchema.Builder): GraphQLSchema.Builder {
-        return builder.additionalType(Relay.pageInfoType)
+        return builder.additionalType(pageInfoType)
     }
 
     override fun willGenerateGraphQLType(type: KType): GraphQLType? {
