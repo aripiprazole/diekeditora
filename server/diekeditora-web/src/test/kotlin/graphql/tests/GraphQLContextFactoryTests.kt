@@ -1,4 +1,4 @@
-package com.diekeditora.web.tests.graphql
+package com.diekeditora.web.tests.graphql.tests
 
 import com.diekeditora.web.graphql.AuthGraphQLContextFactory
 import com.diekeditora.web.tests.factories.UserFactory
