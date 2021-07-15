@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service
 interface AuthorityRepository {
     suspend fun findAll(first: Int, after: String?): Connection<Authority>
 
+    suspend fun findAllByUser(user: User): Set<Authority>
+
     suspend fun findAllByUser(user: User, first: Int, after: String?): Connection<Authority>
 }
 
@@ -29,6 +31,10 @@ private const val SELECT_USER_AUTHORITIES = """
 @Service
 internal class AuthorityRepositoryImpl(val template: R2dbcEntityTemplate) : AuthorityRepository {
     override suspend fun findAll(first: Int, after: String?): Connection<Authority> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findAllByUser(user: User): Set<Authority> {
         TODO("Not yet implemented")
     }
 
