@@ -28,27 +28,29 @@ interface UserAuthorityRepository {
 
 @Language("PostgreSQL")
 private const val SELECT_AUTHORITIES_QUERY = """
-    SELECT * FROM user_authority WHERE user_id = :user
+    select * from user_authority where user_id = :user
 """
 
 @Language("PostgreSQL")
 private const val REMOVE_AUTHORITIES_QUERY = """
-    DELETE FROM user_authority WHERE user_id = :user AND authority IN (:authorities)
+    delete from user_authority where user_id = :user and authority in (:authorities)
 """
 
 @Language("PostgreSQL")
 private const val CHECK_UNIQUE_AUTHORITY = """
-    SELECT * FROM user_authority WHERE user_id = :user AND authority = :authority
+    select * from user_authority where user_id = :user and authority_id = :authority
 """
 
 @Language("PostgreSQL")
 private const val INSERT_AUTHORITY_QUERY = """
-    INSERT INTO user_authority(user_id, authority) VALUES (:user, :authority)
+    insert into user_authority(user_id, authority_id) values (:user, :authority)
 """
 
 @Service
-internal class UserAuthorityRepositoryImpl(val template: R2dbcEntityTemplate) :
-    UserAuthorityRepository {
+internal class UserAuthorityRepositoryImpl(
+    val authorityRepository: AuthorityRepository,
+    val template: R2dbcEntityTemplate,
+) : UserAuthorityRepository {
     override suspend fun findByUser(user: User, first: Int, after: String?): Connection<Authority> {
         TODO("Not yet implemented")
     }
@@ -78,11 +80,13 @@ internal class UserAuthorityRepositoryImpl(val template: R2dbcEntityTemplate) :
     override suspend fun link(user: User, authorities: Iterable<Authority>) {
         val userId = requireNotNull(user.id) { "User id must be not null" }
 
-        authorities.toSet().forEach { (authority) ->
+        authorities.toSet().forEach { (authorityId, value) ->
+            authorityRepository.save(value)
+
             val canExecute = template.databaseClient
                 .sql(CHECK_UNIQUE_AUTHORITY)
                 .bind("user", userId)
-                .bind("authority", authority)
+                .bind("authority", authorityId)
                 .fetch()
                 .flow()
                 .toList()
@@ -92,7 +96,7 @@ internal class UserAuthorityRepositoryImpl(val template: R2dbcEntityTemplate) :
                 template.databaseClient
                     .sql(INSERT_AUTHORITY_QUERY)
                     .bind("user", userId)
-                    .bind("authority", authority)
+                    .bind("authority", authorityId)
                     .await()
             }
         }
