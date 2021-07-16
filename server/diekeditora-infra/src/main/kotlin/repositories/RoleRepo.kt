@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-interface RoleRepository : CoroutineSortingRepository<Role, UUID> {
+interface RoleRepo : CoroutineSortingRepository<Role, UUID> {
     @Query("""select * from "role" order by created_at limit :first""")
     suspend fun findAll(first: Int): Flow<Role>
 

@@ -3,7 +3,7 @@ package com.diekeditora.infra.services
 import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
-import com.diekeditora.infra.repositories.UserRepository
+import com.diekeditora.infra.repositories.UserRepo
 import com.diekeditora.shared.generateRandomString
 import com.diekeditora.shared.logger
 import com.google.firebase.auth.FirebaseToken
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
-internal class UserServiceImpl(val repository: UserRepository) : UserService {
+internal class UserServiceImpl(val repo: UserRepo) : UserService {
     private val log by logger()
 
     @Transactional
@@ -23,29 +23,29 @@ internal class UserServiceImpl(val repository: UserRepository) : UserService {
         require(first < 50) { "The size of page must be less than 50" }
 
         val users = if (after != null) {
-            repository.findAll(first, after).toList()
+            repo.findAll(first, after).toList()
         } else {
-            repository.findAll(first).toList()
+            repo.findAll(first).toList()
         }
 
-        val totalItems = repository.estimateTotalUsers()
+        val totalItems = repo.estimateTotalUsers()
 
-        val firstIndex = users.firstOrNull()?.let { repository.findIndex(it.username) }
-        val lastIndex = users.lastOrNull()?.let { repository.findIndex(it.username) }
+        val firstIndex = users.firstOrNull()?.let { repo.findIndex(it.username) }
+        val lastIndex = users.lastOrNull()?.let { repo.findIndex(it.username) }
 
         return AppPage.of(totalItems, users, first, firstIndex, lastIndex)
     }
 
     @Transactional
     override suspend fun findUserByUsername(username: String): User? {
-        return repository.findByUsername(username).also {
+        return repo.findByUsername(username).also {
             log.trace("Successfully found user by %s by its username", it)
         }
     }
 
     @Transactional
     override suspend fun findOrCreateUserByToken(token: FirebaseToken): User {
-        return repository.findByEmail(token.email)
+        return repo.findByEmail(token.email)
             ?: saveUser(
                 User(name = token.name, email = token.email, username = generateUsername(token))
             )
@@ -53,7 +53,7 @@ internal class UserServiceImpl(val repository: UserRepository) : UserService {
 
     @Transactional
     override suspend fun updateUser(target: User, user: User): User {
-        return repository.save(target.update(user)).also {
+        return repo.save(target.update(user)).also {
             log.trace("Successfully updated user %s", user)
         }
     }
@@ -62,14 +62,14 @@ internal class UserServiceImpl(val repository: UserRepository) : UserService {
     override suspend fun saveUser(user: User): User {
         val target = user.copy(createdAt = LocalDateTime.now())
 
-        return repository.save(target).also {
+        return repo.save(target).also {
             log.trace("Successfully saved user %s into database", user)
         }
     }
 
     @Transactional
     override suspend fun deleteUser(user: User): User {
-        return repository.save(user.copy(deletedAt = LocalDateTime.now())).also {
+        return repo.save(user.copy(deletedAt = LocalDateTime.now())).also {
             log.trace("Successfully deleted %s", it)
         }
     }

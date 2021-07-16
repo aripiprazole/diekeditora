@@ -4,8 +4,8 @@ import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.User
-import com.diekeditora.infra.repositories.RoleRepository
-import com.diekeditora.infra.repositories.UserRoleRepository
+import com.diekeditora.infra.repositories.RoleRepo
+import com.diekeditora.infra.repositories.UserRoleRepo
 import com.diekeditora.shared.logger
 import graphql.relay.Connection
 import kotlinx.coroutines.flow.toList
@@ -15,8 +15,8 @@ import java.time.LocalDateTime
 
 @Service
 internal class RoleServiceImpl(
-    val repository: RoleRepository,
-    val userRoleRepository: UserRoleRepository,
+    val repo: RoleRepo,
+    val userRoleRepo: UserRoleRepo,
 ) : RoleService {
     private val log by logger()
 
@@ -26,43 +26,43 @@ internal class RoleServiceImpl(
         require(first < 50) { "The size of page must be less than 50" }
 
         val roles = if (after != null) {
-            repository.findAll(first, after).toList()
+            repo.findAll(first, after).toList()
         } else {
-            repository.findAll(first).toList()
+            repo.findAll(first).toList()
         }
 
-        val totalItems = repository.estimateTotalRoles()
+        val totalItems = repo.estimateTotalRoles()
 
-        val firstIndex = roles.firstOrNull()?.let { repository.findIndex(it.name) }
-        val lastIndex = roles.lastOrNull()?.let { repository.findIndex(it.name) }
+        val firstIndex = roles.firstOrNull()?.let { repo.findIndex(it.name) }
+        val lastIndex = roles.lastOrNull()?.let { repo.findIndex(it.name) }
 
         return AppPage.of(totalItems, roles, first, firstIndex, lastIndex)
     }
 
     @Transactional
     override suspend fun findRoleByName(name: String): Role? {
-        return repository.findByName(name)?.also {
+        return repo.findByName(name)?.also {
             log.trace("Successfully found role by %s by its name", it)
         }
     }
 
     @Transactional
     override suspend fun findRolesByUser(user: User, first: Int, after: String?): Connection<Role> {
-        return userRoleRepository.findByUser(user).also {
+        return userRoleRepo.findByUser(user).also {
             log.trace("Successfully found user roles %s by user", it)
         }
     }
 
     @Transactional
     override suspend fun linkRoles(user: User, roles: Set<Role>) {
-        userRoleRepository.link(user, roles)
+        userRoleRepo.link(user, roles)
 
         log.trace("Successfully linked %s roles to user %s", roles, user)
     }
 
     @Transactional
     override suspend fun unlinkRoles(user: User, roles: Set<Role>) {
-        userRoleRepository.unlink(user, roles)
+        userRoleRepo.unlink(user, roles)
 
         log.trace("Successfully unlinked %s roles to user %s", roles, user)
     }
@@ -71,21 +71,21 @@ internal class RoleServiceImpl(
     override suspend fun saveRole(role: Role): Role {
         val target = role.copy(createdAt = LocalDateTime.now())
 
-        return repository.save(target).also {
+        return repo.save(target).also {
             log.trace("Successfully saved role %s into database", it)
         }
     }
 
     @Transactional
     override suspend fun updateRole(target: Role, role: Role): Role {
-        return repository.save(role.copy(updatedAt = LocalDateTime.now())).also {
+        return repo.save(role.copy(updatedAt = LocalDateTime.now())).also {
             log.trace("Successfully updated role %s", it)
         }
     }
 
     @Transactional
     override suspend fun deleteRole(role: Role) {
-        repository.delete(role)
+        repo.delete(role)
 
         log.trace("Successfully deleted role %s", role)
     }
