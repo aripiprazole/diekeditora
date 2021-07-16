@@ -28,7 +28,7 @@ interface UserRepo : CoroutineSortingRepository<User, UUID> {
     )
     suspend fun findAll(first: Int, after: String): Flow<User>
 
-    @Query("""select row_number() over (order by created_at) from "user" where username = :username""")
+    @Query("""select row_number() over (order by created_at) from "user" where username = :username limit 1""")
     suspend fun findIndex(username: String): Long
 
     @Query("""select * from "user" where username = :username limit 1""")

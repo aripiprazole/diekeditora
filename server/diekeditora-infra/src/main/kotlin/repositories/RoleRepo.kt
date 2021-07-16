@@ -28,7 +28,7 @@ interface RoleRepo : CoroutineSortingRepository<Role, UUID> {
     )
     suspend fun findAll(first: Int, after: String): Flow<Role>
 
-    @Query("""select row_number() over (order by created_at) from "role" where name = :name""")
+    @Query("""select row_number() over (order by created_at) from "role" where name = :name limit 1""")
     suspend fun findIndex(name: String): Long
 
     @Query("""select * from "role" where name = :name limit 1""")

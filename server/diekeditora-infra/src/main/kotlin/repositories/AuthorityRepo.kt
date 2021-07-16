@@ -28,7 +28,7 @@ interface AuthorityRepo : CoroutineSortingRepository<Authority, UUID> {
     )
     suspend fun findAll(first: Int, after: String): Flow<Authority>
 
-    @Query("""select row_number() over (order by created_at) from "authority" where value = :value""")
+    @Query("""select row_number() over (order by created_at) from "authority" where value = :value limit 1""")
     suspend fun findIndex(value: String): Long
 
     @Query("""select count(id) from "authority"""")
