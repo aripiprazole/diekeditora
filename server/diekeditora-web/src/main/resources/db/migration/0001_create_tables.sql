@@ -25,7 +25,7 @@ create table if not exists "role"
 create table if not exists "authority"
 (
     id         uuid                     not null default gen_random_uuid(),
-    name       varchar(120) unique      not null,
+    value       varchar(120) unique      not null,
     created_at timestamp with time zone not null default current_timestamp,
     primary key (id)
 );
