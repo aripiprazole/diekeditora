@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 
 @Repository
-interface RoleAuthorityRepository {
+interface RoleAuthorityRepo {
     suspend fun findByRole(role: Role, first: Int, after: String?): Connection<Authority>
 
     suspend fun unlink(role: Role, authorities: Iterable<Authority>)
@@ -41,10 +41,10 @@ private const val INSERT_AUTHORITY_QUERY = """
 """
 
 @Service
-internal class RoleAuthorityRepositoryImpl(
-    val authorityRepository: AuthorityRepository,
+internal class RoleAuthorityRepoImpl(
+    val authorityRepo: AuthorityRepo,
     val template: R2dbcEntityTemplate,
-) : RoleAuthorityRepository {
+) : RoleAuthorityRepo {
     override suspend fun findByRole(role: Role, first: Int, after: String?): Connection<Authority> {
         TODO("Not yet implemented")
     }
@@ -63,7 +63,7 @@ internal class RoleAuthorityRepositoryImpl(
         val roleId = requireNotNull(role.id) { "Role id must be not null" }
 
         authorities.toSet().forEach { (authorityId, value) ->
-            authorityRepository.save(value)
+            authorityRepo.save(value)
 
             val canExecute = template.databaseClient
                 .sql(CHECK_UNIQUE_AUTHORITY)

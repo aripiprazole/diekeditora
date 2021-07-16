@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 
 @Repository
-interface UserRoleRepository {
+interface UserRoleRepo {
     suspend fun findByUser(user: User): Connection<Role>
 
     suspend fun unlink(user: User, roles: Iterable<Role>)
@@ -47,7 +47,7 @@ private const val INSERT_ROLE_QUERY = """
 """
 
 @Service
-internal class UserRoleRepositoryImpl(val template: R2dbcEntityTemplate) : UserRoleRepository {
+internal class UserRoleRepoImpl(val template: R2dbcEntityTemplate) : UserRoleRepo {
     override suspend fun findByUser(user: User): Connection<Role> {
         TODO()
     }
