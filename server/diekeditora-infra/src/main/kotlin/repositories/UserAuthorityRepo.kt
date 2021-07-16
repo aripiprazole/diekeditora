@@ -80,25 +80,28 @@ internal class UserAuthorityRepoImpl(
     override suspend fun link(user: User, authorities: Iterable<Authority>) {
         val userId = requireNotNull(user.id) { "User id must be not null" }
 
-        authorities.toSet().forEach { (authorityId, value) ->
-            authorityRepo.save(value)
+        authorities
+            .toSet()
+            .map { authorityRepo.save(it) }
+            .forEach { authority ->
+                val authorityId = requireNotNull(authority.id) { "Authority id must be not null" }
 
-            val canExecute = template.databaseClient
-                .sql(CHECK_UNIQUE_AUTHORITY)
-                .bind("user", userId)
-                .bind("authority", authorityId)
-                .fetch()
-                .flow()
-                .toList()
-                .isEmpty()
+                val canExecute = template.databaseClient
+                    .sql(CHECK_UNIQUE_AUTHORITY)
+                    .bind("user", userId.value)
+                    .bind("authority", authorityId.value)
+                    .fetch()
+                    .flow()
+                    .toList()
+                    .isEmpty()
 
-            if (canExecute) {
-                template.databaseClient
-                    .sql(INSERT_AUTHORITY_QUERY)
-                    .bind("user", userId)
-                    .bind("authority", authorityId)
-                    .await()
+                if (canExecute) {
+                    template.databaseClient
+                        .sql(INSERT_AUTHORITY_QUERY)
+                        .bind("user", userId.value)
+                        .bind("authority", authorityId.value)
+                        .await()
+                }
             }
-        }
     }
 }
