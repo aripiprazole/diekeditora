@@ -47,7 +47,7 @@ class AuthorityQueryTest(
 
 data class AuthoritiesQuery(val first: Int, val after: String? = null) : TestQuery<AppPage<String>>(
     """
-    query(${"\$first"}: Int!, ${"\$after"}: String!) {
+    query(${"\$first"}: Int!, ${"\$after"}: String) {
         authorities(first: ${"\$first"}, after: ${"\$after"}) {
             pageInfo {
                 hasNextPage
