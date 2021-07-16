@@ -34,6 +34,6 @@ interface AuthorityRepo : CoroutineSortingRepository<Authority, UUID> {
     @Query("""select count(id) from "authority"""")
     suspend fun estimateTotalAuthorities(): Long
 
-    @Query("""insert into authority(value) values (:authority) on conflict (authority) do nothing""")
-    suspend fun save(authority: String): Boolean
+    @Query("""insert into authority(value) values (:authority) on conflict do nothing""")
+    suspend fun save(authority: String)
 }
