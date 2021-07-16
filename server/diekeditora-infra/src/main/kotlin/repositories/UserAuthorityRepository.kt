@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service
 interface UserAuthorityRepository {
     suspend fun findByUser(user: User, first: Int, after: String?): Connection<Authority>
 
+    suspend fun findAllByUser(user: User): Set<Authority>
+
+    suspend fun findAllByUser(user: User, first: Int, after: String?): Connection<Authority>
+
     suspend fun unlink(user: User, authorities: Iterable<Authority>)
 
-    suspend fun unlink(user: User, authority: Authority): Unit = link(user, listOf(authority))
-
     suspend fun link(user: User, authorities: Iterable<Authority>)
-
-    suspend fun link(user: User, authority: Authority): Unit = link(user, listOf(authority))
 }
 
 @Language("PostgreSQL")
@@ -50,6 +50,18 @@ private const val INSERT_AUTHORITY_QUERY = """
 internal class UserAuthorityRepositoryImpl(val template: R2dbcEntityTemplate) :
     UserAuthorityRepository {
     override suspend fun findByUser(user: User, first: Int, after: String?): Connection<Authority> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findAllByUser(user: User): Set<Authority> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findAllByUser(
+        user: User,
+        first: Int,
+        after: String?
+    ): Connection<Authority> {
         TODO("Not yet implemented")
     }
 

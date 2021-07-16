@@ -19,11 +19,7 @@ interface RoleAuthorityRepository {
 
     suspend fun unlink(role: Role, authorities: Iterable<Authority>)
 
-    suspend fun unlink(role: Role, authority: Authority): Unit = link(role, listOf(authority))
-
     suspend fun link(role: Role, authorities: Iterable<Authority>)
-
-    suspend fun link(role: Role, authority: Authority): Unit = link(role, listOf(authority))
 }
 
 @Language("PostgreSQL")

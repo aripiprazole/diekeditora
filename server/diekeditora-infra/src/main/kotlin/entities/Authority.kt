@@ -1,8 +1,24 @@
 package com.diekeditora.infra.entities
 
-import org.springframework.data.relational.core.mapping.Column
+import com.diekeditora.domain.Entity
+import com.diekeditora.domain.id.UniqueId
+import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
+import com.fasterxml.jackson.annotation.JsonIgnore
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Table
+import java.time.LocalDateTime
 
-data class Authority(@Column("authority") val value: String) {
+@Table("authority")
+data class Authority(
+    @Id
+    @JsonIgnore
+    @GraphQLIgnore
+    val id: UniqueId? = null,
+    val value: String,
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+) : Entity<Authority> {
+    override val cursor: String get() = value
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -24,7 +40,7 @@ data class Authority(@Column("authority") val value: String) {
 
     companion object {
         fun of(value: String): Authority {
-            return Authority(value)
+            return Authority(null, value)
         }
     }
 }
