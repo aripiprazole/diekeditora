@@ -26,14 +26,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "tsc": "tsc",
-    "start": "next start",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "start": "next start"
   },
   "dependencies": {
     "@diekeditora/store": "^0.0.1",
-    "@diekeditora/ui": "^0.0.1",
     "react-redux": "^7.2.4",
     "redux": "^4.1.0",
     "redux-persist": "^6.0.0",
@@ -41,7 +37,6 @@
   },
   "devDependencies": {
     "@types/react-redux": "^7.1.18",
-    "cypress": "^7.5.0",
     "eslint": "7.28.0",
     "eslint-config-next": "11.0.0"
   }
