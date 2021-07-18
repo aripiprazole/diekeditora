@@ -19,18 +19,21 @@
     "typescript": "^4.3.4"
   },
   "scripts": {
-    "dev": "run-p app:dev store:dev studio:dev storybook",
+    "dev": "run-p app:dev store:dev",
     "lint": "eslint './**/*.ts' './**/*.tsx' './**/*.js' --fix",
     "build": "lerna run --scope @diekeditora/app --stream build",
     "app:start": "lerna run --scope @diekeditora/app --stream start",
     "app:test": "lerna run --scope @diekeditora/app --stream cypress:run",
     "studio:dev": "lerna run --scope @diekeditora/studio --stream dev",
     "store:dev": "lerna run --scope @diekeditora/store --stream dev",
-    "app:dev": "lerna run --scope @diekeditora/app --stream dev -p 3001",
-    "ui:storybook": "lerna run --scope @diekeditora/ui storybook",
-    "ui:build-storybook": "lerna run --scope @diekeditora/ui --stream build-storybook"
+    "app:dev": "lerna run --scope @diekeditora/app --stream dev"
   },
   "dependencies": {
+    "@chakra-ui/core": "^0.8.0",
+    "@chakra-ui/react": "^1.6.5",
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "framer-motion": "^4.1.17",
     "next": "^11.0.0",
     "next-transpile-modules": "^8.0.0",
     "react": "^17.0.2",
