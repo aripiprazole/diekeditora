@@ -25,24 +25,27 @@ create table if not exists "role"
 create table if not exists "authority"
 (
     id         uuid                     not null default random_uuid(),
-    value       varchar(120)             not null,
+    value      varchar(120)             not null,
     created_at timestamp with time zone not null default current_timestamp
 );
 
 create table if not exists "role_authority"
 (
-    role_id      uuid not null,
-    authority_id uuid not null
+    role_id      uuid                     not null,
+    authority_id uuid                     not null,
+    created_at   timestamp with time zone not null default current_timestamp
 );
 
 create table if not exists "user_authority"
 (
-    user_id      uuid not null,
-    authority_id uuid not null
+    user_id      uuid                     not null,
+    authority_id uuid                     not null,
+    created_at   timestamp with time zone not null default current_timestamp
 );
 
 create table if not exists "user_role"
 (
-    user_id uuid not null,
-    role_id uuid not null
+    user_id    uuid                     not null,
+    role_id    uuid                     not null,
+    created_at timestamp with time zone not null default current_timestamp
 );
