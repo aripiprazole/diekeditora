@@ -40,7 +40,7 @@ interface RoleAuthorityRepo : CoroutineCrudRepository<RoleAuthority, UUID> {
             )
         """
     )
-    suspend fun findAllByRole(role: Role, first: Int, after: String): Flow<Role>
+    suspend fun findAllByRole(role: Role, first: Int, after: String): Flow<Authority>
 
     @Query("""insert into role_authority(role_id, authority_id) values (:id, :authority)""")
     suspend fun link(role: Role, authority: UniqueId)
@@ -56,4 +56,14 @@ interface RoleAuthorityRepo : CoroutineCrudRepository<RoleAuthority, UUID> {
         """
     )
     suspend fun unlink(role: Role, authorities: Iterable<String>)
+
+    @Query(
+        """
+        select row_number() over (order by ra.created_at)
+        from role_authority ra
+        left join authority a on ra.authority_id = a.id
+        where a.value = :authority
+        """
+    )
+    suspend fun findIndex(authority: String): Long
 }

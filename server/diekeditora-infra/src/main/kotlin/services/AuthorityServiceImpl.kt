@@ -1,17 +1,19 @@
 package com.diekeditora.infra.services
 
 import com.diekeditora.domain.authority.AuthorityService
+import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.page.map
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.user.User
-import com.diekeditora.infra.entities.Authority
 import com.diekeditora.infra.repositories.AuthorityRepo
 import com.diekeditora.infra.repositories.RoleAuthorityRepo
 import com.diekeditora.infra.repositories.UserAuthorityRepo
+import com.diekeditora.infra.repositories.assertPageSize
 import com.diekeditora.infra.repositories.findPaginated
 import com.diekeditora.shared.logger
 import graphql.relay.Connection
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.flow.toSet
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -35,23 +37,27 @@ internal class AuthorityServiceImpl(
     }
 
     @Transactional
-    override suspend fun findAllAuthoritiesByUser(
-        user: User,
-        first: Int,
-        after: String?
-    ): Connection<String> {
-        TODO()
-    }
-
-    @Transactional
     override suspend fun findAuthoritiesByUser(
         user: User,
         first: Int,
         after: String?
     ): Connection<String> {
-        return userAuthorityRepo.findAllByUser(user, first, after).map { it.value }.also {
-            log.trace("Successfully found user authorities %s by user", it)
+        assertPageSize(first)
+
+        val items = if (after != null) {
+            userAuthorityRepo.findAllByUser(user, first, after).toList()
+        } else {
+            userAuthorityRepo.findAllByUser(user, first).toList()
         }
+
+        val totalItems = userAuthorityRepo.estimateTotalEntries()
+
+        val firstIndex = items.firstOrNull()?.let { userAuthorityRepo.findIndex(it.value) }
+        val lastIndex = items.lastOrNull()?.let { userAuthorityRepo.findIndex(it.value) }
+
+        return AppPage
+            .of(totalItems, items, first, firstIndex, lastIndex)
+            .map { it.value }
     }
 
     @Transactional
@@ -60,7 +66,22 @@ internal class AuthorityServiceImpl(
         first: Int,
         after: String?
     ): Connection<String> {
-        TODO()
+        assertPageSize(first)
+
+        val items = if (after != null) {
+            roleAuthorityRepo.findAllByRole(role, first, after).toList()
+        } else {
+            roleAuthorityRepo.findAllByRole(role, first).toList()
+        }
+
+        val totalItems = userAuthorityRepo.estimateTotalEntries()
+
+        val firstIndex = items.firstOrNull()?.let { userAuthorityRepo.findIndex(it.value) }
+        val lastIndex = items.lastOrNull()?.let { userAuthorityRepo.findIndex(it.value) }
+
+        return AppPage
+            .of(totalItems, items, first, firstIndex, lastIndex)
+            .map { it.value }
     }
 
     @Transactional

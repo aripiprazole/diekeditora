@@ -22,8 +22,7 @@ internal suspend fun <T, K, ID> CoroutinePagingRepository<T, K, ID>.findPaginate
     after: String? = null,
     keySupplier: (T) -> K,
 ): Connection<T> where T : Any, T : Entity<T> {
-    require(first > 1) { "The size of page must be bigger than 1" }
-    require(first < 50) { "The size of page must be less than 50" }
+    assertPageSize(first)
 
     val items = if (after != null) {
         findAll(first, after).toList()
@@ -37,4 +36,9 @@ internal suspend fun <T, K, ID> CoroutinePagingRepository<T, K, ID>.findPaginate
     val lastIndex = items.lastOrNull()?.let { findIndex(keySupplier(it)) }
 
     return AppPage.of(totalItems, items, first, firstIndex, lastIndex)
+}
+
+internal fun assertPageSize(n: Int) {
+    require(n > 1) { "The size of page must be bigger than 1" }
+    require(n < 50) { "The size of page must be less than 50" }
 }
