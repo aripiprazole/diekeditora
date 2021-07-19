@@ -63,4 +63,14 @@ interface UserAuthorityRepo {
         """
     )
     suspend fun unlink(user: User, authorities: Iterable<String>)
+
+    @Query(
+        """
+        select row_number() over (order by ua.created_at)
+        from user_authority ua
+        left join authority a on ua.authority_id = a.id
+        where a.value = :authority
+        """
+    )
+    suspend fun findIndex(authority: String): Long
 }

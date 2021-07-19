@@ -9,12 +9,6 @@ interface AuthorityService {
 
     suspend fun findAllAuthoritiesByUser(user: User): Set<String>
 
-    suspend fun findAllAuthoritiesByUser(
-        user: User,
-        first: Int,
-        after: String? = null
-    ): Connection<String>
-
     suspend fun findAuthoritiesByUser(
         user: User,
         first: Int,
