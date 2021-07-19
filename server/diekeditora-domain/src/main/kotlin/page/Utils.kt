@@ -9,3 +9,7 @@ inline fun <T, R> Connection<T>.map(fn: (T) -> R): Connection<R> {
 
     return AppPage(edges.map { AppEdge(fn(it.node), it.cursor) }, pageInfo as AppPageInfo)
 }
+
+fun <T> Connection<T>.asNodeList(): List<T> {
+    return edges.map { it.node }
+}

@@ -1,7 +1,6 @@
 package com.diekeditora.infra.services
 
 import com.diekeditora.domain.authority.AuthorityService
-import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.page.map
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.user.User
@@ -9,9 +8,11 @@ import com.diekeditora.infra.entities.Authority
 import com.diekeditora.infra.repositories.AuthorityRepo
 import com.diekeditora.infra.repositories.RoleAuthorityRepo
 import com.diekeditora.infra.repositories.UserAuthorityRepo
+import com.diekeditora.infra.repositories.findPaginated
 import com.diekeditora.shared.logger
 import graphql.relay.Connection
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toSet
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -25,30 +26,12 @@ internal class AuthorityServiceImpl(
 
     @Transactional
     override suspend fun findAllAuthorities(first: Int, after: String?): Connection<String> {
-        require(first > 1) { "The size of page must be bigger than 1" }
-        require(first < 50) { "The size of page must be less than 50" }
-
-        val authorities = if (after != null) {
-            repo.findAll(first, after).toList()
-        } else {
-            repo.findAll(first).toList()
-        }
-
-        val totalItems = repo.estimateTotalAuthorities()
-
-        val firstIndex = authorities.firstOrNull()?.let { repo.findIndex(it.value) }
-        val lastIndex = authorities.lastOrNull()?.let { repo.findIndex(it.value) }
-
-        return AppPage
-            .of(totalItems, authorities, first, firstIndex, lastIndex)
-            .map { it.value }
+        return repo.findPaginated(first, after) { it.value }.map { it.value }
     }
 
     @Transactional
     override suspend fun findAllAuthoritiesByUser(user: User): Set<String> {
-        return userAuthorityRepo.findAllByUser(user).map { it.value }.toSet().also {
-            log.trace("Successfully found all user %s authorities %s", user, it)
-        }
+        return userAuthorityRepo.findAllByUser(user).map { it.value }.toSet()
     }
 
     @Transactional
@@ -57,9 +40,7 @@ internal class AuthorityServiceImpl(
         first: Int,
         after: String?
     ): Connection<String> {
-        return userAuthorityRepo.findAllByUser(user, first, after).map { it.value }.also {
-            log.trace("Successfully found all user %s authorities %s", user, it)
-        }
+        TODO()
     }
 
     @Transactional
@@ -68,7 +49,7 @@ internal class AuthorityServiceImpl(
         first: Int,
         after: String?
     ): Connection<String> {
-        return userAuthorityRepo.findByUser(user, first, after).map { it.value }.also {
+        return userAuthorityRepo.findAllByUser(user, first, after).map { it.value }.also {
             log.trace("Successfully found user authorities %s by user", it)
         }
     }
@@ -79,35 +60,49 @@ internal class AuthorityServiceImpl(
         first: Int,
         after: String?
     ): Connection<String> {
-        return roleAuthorityRepo.findByRole(role, first, after).map { it.value }.also {
-            log.trace("Successfully found role authorities %s by role", it)
-        }
+        TODO()
     }
 
     @Transactional
     override suspend fun linkAuthorities(user: User, authorities: Set<String>) {
-        userAuthorityRepo.link(user, authorities.map { Authority.of(it) })
+        requireNotNull(user.id) { "User id must be not null" }
+
+        authorities
+            .map { repo.save(it) }
+            .forEach loop@{ authority ->
+                val authorityId = requireNotNull(authority.id) { "Authority id must be not null" }
+
+                userAuthorityRepo.link(user, authorityId)
+            }
 
         log.trace("Successfully linked %s authorities to user %s", authorities, user)
     }
 
     @Transactional
     override suspend fun linkAuthorities(role: Role, authorities: Set<String>) {
-        roleAuthorityRepo.link(role, authorities.map { Authority.of(it) })
+        requireNotNull(role.id) { "Role id must be not null" }
+
+        authorities
+            .map { repo.save(it) }
+            .forEach loop@{ authority ->
+                val authorityId = requireNotNull(authority.id) { "Authority id must be not null" }
+
+                roleAuthorityRepo.link(role, authorityId)
+            }
 
         log.trace("Successfully linked %s authorities to role %s", authorities, role)
     }
 
     @Transactional
     override suspend fun unlinkAuthorities(role: Role, authorities: Set<String>) {
-        roleAuthorityRepo.unlink(role, authorities.map { Authority.of(it) })
+        roleAuthorityRepo.unlink(role, authorities)
 
         log.trace("Successfully linked %s authorities to role %s", authorities, role)
     }
 
     @Transactional
     override suspend fun unlinkAuthorities(user: User, authorities: Set<String>) {
-        userAuthorityRepo.unlink(user, authorities.map { Authority.of(it) })
+        userAuthorityRepo.unlink(user, authorities)
 
         log.trace("Successfully unlinked %s authorities from user %s", authorities, user)
     }

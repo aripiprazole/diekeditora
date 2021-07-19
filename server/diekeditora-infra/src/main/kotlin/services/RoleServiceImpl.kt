@@ -40,14 +40,22 @@ internal class RoleServiceImpl(
 
     @Transactional
     override suspend fun linkRoles(user: User, roles: Set<Role>) {
-        userRoleRepo.link(user, roles)
+        requireNotNull(user.id) { "User id must be not null" }
+
+        roles
+            .map { repo.save(it) }
+            .forEach loop@{ role ->
+                val authorityId = requireNotNull(role.id) { "Role id must be not null" }
+
+                userRoleRepo.link(user, authorityId)
+            }
 
         log.trace("Successfully linked %s roles to user %s", roles, user)
     }
 
     @Transactional
     override suspend fun unlinkRoles(user: User, roles: Set<Role>) {
-        userRoleRepo.unlink(user, roles)
+        userRoleRepo.unlink(user, roles.mapNotNull { it.id })
 
         log.trace("Successfully unlinked %s roles to user %s", roles, user)
     }
