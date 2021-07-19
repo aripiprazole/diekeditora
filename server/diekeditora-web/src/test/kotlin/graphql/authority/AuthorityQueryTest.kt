@@ -1,14 +1,12 @@
 package com.diekeditora.web.tests.graphql.authority
 
 import com.diekeditora.domain.authority.AuthorityService
-import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.UserService
 import com.diekeditora.web.tests.factories.AuthorityFactory
 import com.diekeditora.web.tests.factories.RoleFactory
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
-import com.diekeditora.web.tests.graphql.TestQuery
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -44,24 +42,3 @@ class AuthorityQueryTest(
         assertEquals(authorities, response)
     }
 }
-
-data class AuthoritiesQuery(val first: Int, val after: String? = null) : TestQuery<AppPage<String>>(
-    """
-    query(${"\$first"}: Int!, ${"\$after"}: String) {
-        authorities(first: ${"\$first"}, after: ${"\$after"}) {
-            pageInfo {
-                hasNextPage
-                hasPreviousPage
-                startCursor
-                endCursor
-                totalPages
-            }
-            
-            edges {
-                cursor
-                node
-            }
-        }
-    }
-    """.trimIndent()
-)
