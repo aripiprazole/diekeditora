@@ -47,4 +47,14 @@ interface UserRoleRepo {
 
     @Query("""select count(*) from role_authority""")
     suspend fun estimateTotalEntries(): Long
+
+    @Query(
+        """
+        select row_number() over (order by ur.created_at)
+        from user_role ur
+        left join role r on ur.role_id = r.id
+        where r.name = :name
+        """
+    )
+    suspend fun findIndex(name: String): Long
 }
