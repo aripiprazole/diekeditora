@@ -1,13 +1,17 @@
 package com.diekeditora.infra.services
 
+import com.diekeditora.domain.page.AppPage
+import com.diekeditora.domain.page.map
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.User
 import com.diekeditora.infra.repositories.RoleRepo
 import com.diekeditora.infra.repositories.UserRoleRepo
+import com.diekeditora.infra.repositories.assertPageSize
 import com.diekeditora.infra.repositories.findPaginated
 import com.diekeditora.shared.logger
 import graphql.relay.Connection
+import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -33,9 +37,20 @@ internal class RoleServiceImpl(
 
     @Transactional
     override suspend fun findRolesByUser(user: User, first: Int, after: String?): Connection<Role> {
-        return userRoleRepo.findByUser(user).also {
-            log.trace("Successfully found user roles %s by user", it)
+        assertPageSize(first)
+
+        val items = if (after != null) {
+            userRoleRepo.findAllByUser(user, first, after).toList()
+        } else {
+            userRoleRepo.findAllByUser(user, first).toList()
         }
+
+        val totalItems = userRoleRepo.estimateTotalEntries()
+
+        val firstIndex = items.firstOrNull()?.let { userRoleRepo.findIndex(it.name) }
+        val lastIndex = items.lastOrNull()?.let { userRoleRepo.findIndex(it.name) }
+
+        return AppPage.of(totalItems, items, first, firstIndex, lastIndex)
     }
 
     @Transactional
