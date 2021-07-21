@@ -3,12 +3,16 @@ package com.diekeditora.infra.repositories
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.user.User
 import com.diekeditora.infra.entities.Authority
+import com.diekeditora.infra.entities.UserAuthority
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.r2dbc.repository.Query
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
+import java.math.BigInteger
+import java.util.UUID
 
 @Repository
-interface UserAuthorityRepo {
+interface UserAuthorityRepo : CoroutineCrudRepository<UserAuthority, UUID> {
     @Query(
         """
         select * from authority r
@@ -53,7 +57,7 @@ interface UserAuthorityRepo {
     suspend fun link(user: User, authority: UniqueId)
 
     @Query("""select count(*) from user_authority""")
-    suspend fun estimateTotalEntries(): Long
+    suspend fun totalEntries(): Long
 
     @Query(
         """
@@ -72,5 +76,5 @@ interface UserAuthorityRepo {
         where a.value = :authority
         """
     )
-    suspend fun findIndex(authority: String): Long
+    suspend fun index(authority: String): BigInteger
 }

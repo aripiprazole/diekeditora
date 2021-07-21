@@ -1,14 +1,12 @@
 package com.diekeditora.infra.services
 
 import com.diekeditora.domain.page.AppPage
-import com.diekeditora.domain.page.map
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.User
 import com.diekeditora.infra.repositories.RoleRepo
 import com.diekeditora.infra.repositories.UserRoleRepo
-import com.diekeditora.infra.repositories.assertPageSize
-import com.diekeditora.infra.repositories.findPaginated
+import com.diekeditora.infra.utils.assertPageSize
 import com.diekeditora.shared.logger
 import graphql.relay.Connection
 import kotlinx.coroutines.flow.toList
@@ -25,7 +23,20 @@ internal class RoleServiceImpl(
 
     @Transactional
     override suspend fun findRoles(first: Int, after: String?): Connection<Role> {
-        return repo.findPaginated(first, after) { it.name }
+        assertPageSize(first)
+
+        val items = if (after != null) {
+            repo.findAll(first, after).toList()
+        } else {
+            repo.findAll(first).toList()
+        }
+
+        val totalItems = repo.totalEntries()
+
+        val firstIndex = items.firstOrNull()?.let { repo.index(it.name) }
+        val lastIndex = items.lastOrNull()?.let { repo.index(it.name) }
+
+        return AppPage.of(totalItems, items, first, firstIndex, lastIndex)
     }
 
     @Transactional
