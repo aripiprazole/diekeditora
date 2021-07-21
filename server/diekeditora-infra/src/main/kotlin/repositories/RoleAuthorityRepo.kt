@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
+import java.math.BigInteger
 import java.util.UUID
 
 @Repository
@@ -46,7 +47,7 @@ interface RoleAuthorityRepo : CoroutineCrudRepository<RoleAuthority, UUID> {
     suspend fun link(role: Role, authority: UniqueId)
 
     @Query("""select count(*) from role_authority""")
-    suspend fun estimateTotalEntries(): Long
+    suspend fun totalEntries(): Long
 
     @Query(
         """
@@ -65,5 +66,5 @@ interface RoleAuthorityRepo : CoroutineCrudRepository<RoleAuthority, UUID> {
         where a.value = :authority
         """
     )
-    suspend fun findIndex(authority: String): Long
+    suspend fun index(authority: String): BigInteger
 }

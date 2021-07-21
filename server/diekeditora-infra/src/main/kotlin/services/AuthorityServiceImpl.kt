@@ -89,10 +89,10 @@ internal class AuthorityServiceImpl(
             roleAuthorityRepo.findAllByRole(role, first).toList()
         }
 
-        val totalItems = userAuthorityRepo.totalEntries()
+        val totalItems = roleAuthorityRepo.totalEntries()
 
-        val firstIndex = items.firstOrNull()?.let { userAuthorityRepo.index(it.value) }
-        val lastIndex = items.lastOrNull()?.let { userAuthorityRepo.index(it.value) }
+        val firstIndex = items.firstOrNull()?.let { roleAuthorityRepo.index(it.value) }
+        val lastIndex = items.lastOrNull()?.let { roleAuthorityRepo.index(it.value) }
 
         return AppPage
             .of(totalItems, items, first, firstIndex, lastIndex)
