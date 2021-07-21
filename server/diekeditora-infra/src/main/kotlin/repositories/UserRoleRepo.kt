@@ -3,12 +3,16 @@ package com.diekeditora.infra.repositories
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.user.User
+import com.diekeditora.infra.entities.UserRole
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.r2dbc.repository.Query
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
+import java.math.BigInteger
+import java.util.UUID
 
 @Repository
-interface UserRoleRepo {
+interface UserRoleRepo : CoroutineCrudRepository<UserRole, UUID> {
     @Query(
         """
         select * from role r
@@ -56,5 +60,5 @@ interface UserRoleRepo {
         where r.name = :name
         """
     )
-    suspend fun findIndex(name: String): Long
+    suspend fun findIndex(name: String): BigInteger
 }

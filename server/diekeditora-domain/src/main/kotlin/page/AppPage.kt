@@ -4,6 +4,7 @@ import com.diekeditora.domain.Entity
 import graphql.relay.Connection
 import graphql.relay.Edge
 import graphql.relay.PageInfo
+import java.math.BigInteger
 import kotlin.math.round
 
 data class AppPage<T>(
@@ -15,14 +16,14 @@ data class AppPage<T>(
             totalItems: Long,
             items: List<T>,
             size: Int,
-            firstIndex: Long?,
-            lastIndex: Long?,
+            firstIndex: BigInteger?,
+            lastIndex: BigInteger?,
         ): AppPage<T> where T : Any, T : Entity<T> {
             val totalPages = round((totalItems / size).toFloat()).toInt()
             val edges = items.map { AppEdge(it, AppCursor(it.cursor)) }
 
-            val hasNextPage = (lastIndex ?: totalItems) < totalItems
-            val hasPreviousPage = (firstIndex ?: 0) > totalItems
+            val hasNextPage = (lastIndex?.toLong() ?: totalItems) < totalItems
+            val hasPreviousPage = (firstIndex?.toLong() ?: 0L) > totalItems
             val startCursor = edges.firstOrNull()?.cursor
             val endCursor = edges.lastOrNull()?.cursor
 
