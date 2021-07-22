@@ -43,8 +43,8 @@ data class LinkAuthoritiesToUserMutation(val username: String, val authorities: 
         """.trimIndent()
     )
 
-data class UnlinkAuthoritiesFromUserMutation(val name: String, val authorities: List<String>) :
-    TestQuery<Role?>(
+data class UnlinkAuthoritiesFromUserMutation(val username: String, val authorities: List<String>) :
+    TestQuery<User?>(
         """
         mutation(${"\$username"}: String!, ${"\$authorities"}: [String!]!) {
             unlinkAuthoritiesFromUser(username: ${"\$username"}, authorities: ${"\$authorities"}) {

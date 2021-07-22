@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -52,6 +53,28 @@ class AuthorityMutationTests(
 
     @Test
     fun `test should unlink authorities from role`(): Unit = runBlocking {
+        val first = 15
+
+        val authorities = authorityFactory.createMany(first).map(Authority::value).toSet()
+        val role = roleService.saveRole(roleFactory.create()).also {
+            authorityService.linkAuthorities(it, authorities)
+        }
+
+        val currentAuthorities = authorityService.findAuthoritiesByRole(role, first)
+
+        val response =
+            client.request(UnlinkAuthoritiesFromRoleMutation(role.name, authorities.toList())) {
+                authenticate("authority.admin")
+            }
+
+        assertNotNull(response)
+        assertEquals(first, currentAuthorities.edges.size)
+        assertFalse(
+            authorityService
+                .findAuthoritiesByRole(role, first)
+                .asNodeList()
+                .containsAll(authorities)
+        )
     }
 
     @Test
@@ -79,5 +102,27 @@ class AuthorityMutationTests(
 
     @Test
     fun `test should unlink authorities from user`(): Unit = runBlocking {
+        val first = 15
+
+        val authorities = authorityFactory.createMany(first).map(Authority::value).toSet()
+        val user = userService.saveUser(userFactory.create()).also {
+            authorityService.linkAuthorities(it, authorities)
+        }
+
+        val currentAuthorities = authorityService.findAuthoritiesByUser(user, first)
+
+        val response =
+            client.request(UnlinkAuthoritiesFromUserMutation(user.username, authorities.toList())) {
+                authenticate("authority.admin")
+            }
+
+        assertNotNull(response)
+        assertEquals(first, currentAuthorities.edges.size)
+        assertFalse(
+            authorityService
+                .findAuthoritiesByUser(user, first)
+                .asNodeList()
+                .containsAll(authorities)
+        )
     }
 }
