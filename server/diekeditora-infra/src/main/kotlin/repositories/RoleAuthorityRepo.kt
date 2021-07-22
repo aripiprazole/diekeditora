@@ -12,7 +12,7 @@ import java.math.BigInteger
 import java.util.UUID
 
 @Repository
-interface RoleAuthorityRepo : CoroutineCrudRepository<RoleAuthority, UUID> {
+internal interface RoleAuthorityRepo : CoroutineCrudRepository<RoleAuthority, UUID> {
     @Query(
         """
         select * from authority a
