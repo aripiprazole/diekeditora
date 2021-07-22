@@ -9,7 +9,7 @@ import java.math.BigInteger
 import java.util.UUID
 
 @Repository
-interface UserRepo : CoroutineSortingRepository<User, UUID> {
+internal interface UserRepo : CoroutineSortingRepository<User, UUID> {
     @Query("""select * from "user" order by created_at limit :first""")
     suspend fun findAll(first: Int): Flow<User>
 
