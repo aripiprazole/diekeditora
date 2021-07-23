@@ -18,7 +18,6 @@ import java.time.LocalDateTime
 data class Role(
     @Id
     @GraphQLIgnore
-    @JsonIgnore
     val id: UniqueId? = null,
     val name: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),

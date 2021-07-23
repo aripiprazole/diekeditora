@@ -3,6 +3,7 @@ package com.diekeditora.infra.redis
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.data.redis.core.ReactiveRedisTemplate
+import org.springframework.data.redis.core.deleteAndAwait
 import org.springframework.data.redis.core.getAndAwait
 import org.springframework.data.redis.core.hasKeyAndAwait
 import org.springframework.data.redis.core.setAndAwait
@@ -48,6 +49,6 @@ internal class CacheRepoImpl<T : Any>(
     }
 
     override suspend fun delete(key: String) {
-        TODO("Not yet implemented")
+        template.deleteAndAwait(key)
     }
 }

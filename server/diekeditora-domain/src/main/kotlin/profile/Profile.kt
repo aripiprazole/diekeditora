@@ -14,7 +14,6 @@ import java.time.LocalDateTime
 data class Profile(
     @Id
     @GraphQLIgnore
-    @JsonIgnore
     val id: UniqueId? = null,
     val gender: Gender,
     val user: User,

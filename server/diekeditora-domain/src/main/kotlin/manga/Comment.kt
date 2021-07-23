@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 data class Comment(
     @Id
     @GraphQLIgnore
-    @JsonIgnore
     val id: UniqueId? = null,
     val uid: UniqueId,
     val profile: Profile,
