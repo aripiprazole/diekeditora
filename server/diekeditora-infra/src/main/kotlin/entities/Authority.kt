@@ -17,7 +17,8 @@ data class Authority(
     val value: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
 ) : Entity<Authority> {
-    override val cursor: String get() = value
+    @GraphQLIgnore
+    override val cursor: String @JsonIgnore get() = value
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -23,6 +23,7 @@ data class Chapter(
 ) : MutableEntity<Chapter> {
     @GraphQLIgnore
     override val cursor: String
+        @JsonIgnore
         get() = number.toString()
 
     @GraphQLIgnore

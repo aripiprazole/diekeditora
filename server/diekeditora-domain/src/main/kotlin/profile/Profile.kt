@@ -27,6 +27,7 @@ data class Profile(
 
     @GraphQLIgnore
     override val cursor: String
+        @JsonIgnore
         get() = displayName
 
     @GraphQLIgnore
