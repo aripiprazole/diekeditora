@@ -12,7 +12,9 @@ import kotlin.time.toJavaDuration
 
 @OptIn(ExperimentalTime::class)
 interface CacheRepo<T : Any> {
-    suspend fun remember(key: String, expiresIn: Duration, cacheFn: suspend () -> T?): T
+    suspend fun remember(key: String, expiresIn: Duration, cacheFn: suspend () -> T): T
+
+    suspend fun query(key: String, expiresIn: Duration, cacheFn: suspend () -> T?): T?
 
     suspend fun delete(key: String)
 }
@@ -25,22 +27,24 @@ internal class CacheRepoImpl<T : Any>(
     private val objectMapper: ObjectMapper,
 ) : CacheRepo<T> {
     @Suppress("UNCHECKED_CAST")
-    override suspend fun remember(
-        key: String,
-        expiresIn: Duration,
-        cacheFn: suspend () -> T?,
-    ): T {
+    override suspend fun remember(key: String, expiresIn: Duration, cacheFn: suspend () -> T): T {
         if (!template.hasKeyAndAwait(key)) {
-            val value = cacheFn() ?: return null as T
-
-            template.opsForValue().setAndAwait(key, value, expiresIn.toJavaDuration())
-
-            return value
+            return cacheFn().also {
+                template.opsForValue().setAndAwait(key, it, expiresIn.toJavaDuration())
+            }
         }
 
-        val returnedValue = template.opsForValue().getAndAwait(key)
+        return objectMapper.convertValue(template.opsForValue().getAndAwait(key), typeReference)
+    }
 
-        return objectMapper.convertValue(returnedValue, typeReference)
+    override suspend fun query(key: String, expiresIn: Duration, cacheFn: suspend () -> T?): T? {
+        if (!template.hasKeyAndAwait(key)) {
+            return cacheFn()?.also {
+                template.opsForValue().setAndAwait(key, it, expiresIn.toJavaDuration())
+            }
+        }
+
+        return objectMapper.convertValue(template.opsForValue().getAndAwait(key), typeReference)
     }
 
     override suspend fun delete(key: String) {
