@@ -29,7 +29,7 @@ internal class CachedUserService(
     override suspend fun findUserByUsername(username: String): User? {
         return redisFactory
             .repo<User>()
-            .remember("user.$username", expiresIn) {
+            .query("user.$username", expiresIn) {
                 delegate.findUserByUsername(username)
             }
     }
