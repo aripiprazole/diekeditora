@@ -52,8 +52,10 @@ internal class UserServiceImpl(val repo: UserRepo) : UserService {
     }
 
     @Transactional
-    override suspend fun updateUser(target: User, user: User): User {
-        return repo.save(target.update(user)).also {
+    override suspend fun updateUser(user: User): User {
+        requireNotNull(user.id) { "User id must be not null when updating" }
+
+        return repo.save(user).also {
             log.trace("Successfully updated user %s", user)
         }
     }

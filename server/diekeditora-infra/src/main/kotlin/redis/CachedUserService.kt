@@ -28,9 +28,9 @@ internal class CachedUserService(
             }
     }
 
-    override suspend fun updateUser(target: User, user: User): User {
-        return delegate.updateUser(target, user).also {
-            cacheProvider.repo<User>().delete("user.${target.username}")
+    override suspend fun updateUser(user: User): User {
+        return delegate.updateUser(user).also {
+            cacheProvider.repo<User>().delete("user.${user.cursor}")
         }
     }
 

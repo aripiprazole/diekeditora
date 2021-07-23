@@ -16,7 +16,7 @@ interface RoleService {
 
     suspend fun saveRole(role: Role): Role
 
-    suspend fun updateRole(target: Role, role: Role): Role
+    suspend fun updateRole(role: Role): Role
 
     suspend fun deleteRole(role: Role)
 }

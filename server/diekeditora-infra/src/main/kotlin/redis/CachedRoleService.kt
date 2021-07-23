@@ -37,15 +37,15 @@ internal class CachedRoleService(
             }
     }
 
-    override suspend fun updateRole(target: Role, role: Role): Role {
-        return delegate.updateRole(target, role).also {
-            cacheProvider.repo<Role>().delete("role.${target.name}")
+    override suspend fun updateRole(role: Role): Role {
+        return delegate.updateRole(role).also {
+            cacheProvider.repo<Role>().delete("role.${role.cursor}")
         }
     }
 
     override suspend fun deleteRole(role: Role) {
         return delegate.deleteRole(role).also {
-            cacheProvider.repo<Role>().delete("role.${role.name}")
+            cacheProvider.repo<Role>().delete("role.${role.cursor}")
         }
     }
 }

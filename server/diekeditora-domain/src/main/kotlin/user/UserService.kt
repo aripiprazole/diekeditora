@@ -12,7 +12,7 @@ interface UserService {
 
     suspend fun findOrCreateUserByToken(token: FirebaseToken): User
 
-    suspend fun updateUser(target: User, user: User): User
+    suspend fun updateUser(user: User): User
 
     suspend fun saveUser(user: User): User
 
