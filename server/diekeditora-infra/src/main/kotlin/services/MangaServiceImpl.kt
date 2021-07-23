@@ -34,13 +34,7 @@ internal class MangaServiceImpl : MangaService {
         TODO("Not yet implemented")
     }
 
-    override suspend fun findMangasByProfile(
-        profile: Profile,
-        first: Int,
-        after: String?,
-        orderBy: MangaSort,
-        filterBy: Set<String>
-    ): List<Manga> {
+    override suspend fun findMangasByProfile(profile: Profile): List<Manga> {
         TODO("Not yet implemented")
     }
 }

@@ -12,10 +12,12 @@ import kotlin.reflect.KClass
 
 @Service
 class CacheProvider(
-    val objectMapper: ObjectMapper,
+    @PublishedApi
+    internal val objectMapper: ObjectMapper,
     private val connectionFactory: ReactiveRedisConnectionFactory,
 ) {
-    fun <T : Any> template(kClass: KClass<T>): ReactiveRedisTemplate<String, T> {
+    @PublishedApi
+    internal fun <T : Any> template(kClass: KClass<T>): ReactiveRedisTemplate<String, T> {
         val keySerializer = StringRedisSerializer()
         val valueSerializer = Jackson2JsonRedisSerializer(kClass.java).apply {
             setObjectMapper(objectMapper)
