@@ -43,6 +43,7 @@ class Libs {
     val google = Google()
     val mockk = Mockk()
     val ninjaSquad = NinjaSquad()
+    val ozimov = Ozimov()
 
     class NinjaSquad {
         val springMockk = "com.ninja-squad:springmockk:3.0.1"
@@ -134,5 +135,9 @@ class Libs {
     class R2dbc {
         val h2 = "io.r2dbc:r2dbc-h2:0.8.4.RELEASE"
         val postgresql = "io.r2dbc:r2dbc-postgresql:0.8.7.RELEASE"
+    }
+
+    class Ozimov {
+        val embeddedRedis = "it.ozimov:embedded-redis:0.7.3"
     }
 }

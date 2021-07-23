@@ -16,7 +16,7 @@ internal class CachedAuthorityService(
     override suspend fun findAllAuthorities(first: Int, after: String?): Connection<String> {
         return cacheProvider
             .repo<Connection<String>>()
-            .remember("allAuthority.$first.$after", expiresIn) {
+            .remember("authorityConnection.$first.$after", expiresIn) {
                 delegate.findAllAuthorities(first, after)
             }
     }

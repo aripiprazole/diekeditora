@@ -4,10 +4,12 @@ import com.diekeditora.domain.authority.AuthorityService
 import com.diekeditora.domain.page.asNodeList
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.UserService
+import com.diekeditora.infra.redis.CacheProvider
 import com.diekeditora.web.tests.factories.AuthorityFactory
 import com.diekeditora.web.tests.factories.RoleFactory
 import com.diekeditora.web.tests.factories.UserFactory
 import com.diekeditora.web.tests.graphql.GraphQLTestClient
+import graphql.relay.Connection
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,12 +27,14 @@ class AuthorityMutationTests(
     @Autowired val roleFactory: RoleFactory,
     @Autowired val authorityService: AuthorityService,
     @Autowired val authorityFactory: AuthorityFactory,
+    @Autowired val cacheProvider: CacheProvider,
     @Autowired val client: GraphQLTestClient,
 ) {
 
     @Test
     fun `test should link authorities to role`(): Unit = runBlocking {
         val first = 15
+        val after = null
 
         val role = roleService.saveRole(roleFactory.create())
         val currentAuthorities = authorityService.findAuthoritiesByRole(role, first)
@@ -40,6 +44,10 @@ class AuthorityMutationTests(
         val response = client.request(LinkAuthoritiesToRoleMutation(role.name, newAuthorities)) {
             authenticate("authority.admin")
         }
+
+        cacheProvider
+            .repo<Connection<String>>()
+            .delete("roleAuthority.${role.cursor}.$first.$after")
 
         assertNotNull(response)
         assertEquals(0, currentAuthorities.edges.size)
@@ -53,6 +61,7 @@ class AuthorityMutationTests(
     @Test
     fun `test should unlink authorities from role`(): Unit = runBlocking {
         val first = 15
+        val after = null
 
         val authorities = authorityFactory.createMany(first).toSet()
         val role = roleService.saveRole(roleFactory.create()).also {
@@ -65,6 +74,10 @@ class AuthorityMutationTests(
             client.request(UnlinkAuthoritiesFromRoleMutation(role.name, authorities.toList())) {
                 authenticate("authority.admin")
             }
+
+        cacheProvider
+            .repo<Connection<String>>()
+            .delete("roleAuthority.${role.cursor}.$first.$after")
 
         assertNotNull(response)
         assertEquals(first, currentAuthorities.edges.size)
@@ -79,6 +92,7 @@ class AuthorityMutationTests(
     @Test
     fun `test should link authorities to user`(): Unit = runBlocking {
         val first = 15
+        val after = null
 
         val user = userService.saveUser(userFactory.create())
         val currentAuthorities = authorityService.findAuthoritiesByUser(user, first)
@@ -89,6 +103,10 @@ class AuthorityMutationTests(
             client.request(LinkAuthoritiesToUserMutation(user.username, newAuthorities)) {
                 authenticate("authority.admin")
             }
+
+        cacheProvider
+            .repo<Connection<String>>()
+            .delete("userAuthority.${user.cursor}.$first.$after")
 
         assertNotNull(response)
         assertEquals(0, currentAuthorities.edges.size)
@@ -102,6 +120,7 @@ class AuthorityMutationTests(
     @Test
     fun `test should unlink authorities from user`(): Unit = runBlocking {
         val first = 15
+        val after = null
 
         val authorities = authorityFactory.createMany(first).toSet()
         val user = userService.saveUser(userFactory.create()).also {
@@ -114,6 +133,10 @@ class AuthorityMutationTests(
             client.request(UnlinkAuthoritiesFromUserMutation(user.username, authorities.toList())) {
                 authenticate("authority.admin")
             }
+
+        cacheProvider
+            .repo<Connection<String>>()
+            .delete("userAuthority.${user.cursor}.$first.$after")
 
         assertNotNull(response)
         assertEquals(first, currentAuthorities.edges.size)
