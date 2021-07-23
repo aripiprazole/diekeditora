@@ -1,7 +1,7 @@
 package com.diekeditora.domain.manga
 
-import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.profile.Profile
+import graphql.relay.Connection
 
 interface MangaService {
     suspend fun findMangas(
@@ -9,7 +9,9 @@ interface MangaService {
         after: String,
         orderBy: MangaSort = MangaSort.empty(),
         filterBy: Set<String> = emptySet(),
-    ): AppPage<Manga>
+    ): Connection<Manga>
+
+    suspend fun findMangasByProfile(profile: Profile): List<Manga>
 
     suspend fun findMangaByTitle(title: String): Manga?
 
@@ -18,12 +20,4 @@ interface MangaService {
     suspend fun updateManga(manga: Manga): Manga
 
     suspend fun deleteManga(manga: Manga): Manga
-
-    suspend fun findMangasByProfile(
-        profile: Profile,
-        first: Int,
-        after: String? = null,
-        orderBy: MangaSort = MangaSort.empty(),
-        filterBy: Set<String> = emptySet(),
-    ): List<Manga>
 }

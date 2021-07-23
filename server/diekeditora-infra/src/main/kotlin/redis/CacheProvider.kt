@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 import kotlin.reflect.KClass
 
 @Service
-class RedisFactory(
+class CacheProvider(
     val objectMapper: ObjectMapper,
     private val connectionFactory: ReactiveRedisConnectionFactory,
 ) {

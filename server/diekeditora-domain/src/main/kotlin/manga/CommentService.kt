@@ -8,5 +8,5 @@ interface CommentService {
 
     suspend fun createComment(manga: Manga, content: String): Manga
 
-    suspend fun deleteComment(comment: Comment): Manga
+    suspend fun deleteComment(comment: Comment): Comment
 }
