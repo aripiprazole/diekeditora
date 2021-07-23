@@ -6,7 +6,7 @@ import com.diekeditora.domain.notification.Notification
 import com.diekeditora.domain.notification.NotificationService
 import com.diekeditora.domain.notification.SimpleNotification
 import com.diekeditora.domain.user.User
-import com.diekeditora.infra.redis.RedisFactory
+import com.diekeditora.infra.redis.CacheProvider
 import graphql.relay.Connection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -20,7 +20,7 @@ import java.util.concurrent.Executors
 
 @Service
 internal class NotificationServiceImpl(
-    val redisFactory: RedisFactory,
+    val cacheProvider: CacheProvider,
     val uniqueIdService: UniqueIdService,
 ) : NotificationService, CoroutineScope {
     override val coroutineContext = Executors.newFixedThreadPool(4).asCoroutineDispatcher()
@@ -35,7 +35,7 @@ internal class NotificationServiceImpl(
 
     override suspend fun sendNotification(user: User, notification: Notification): Unit =
         withContext(coroutineContext) {
-            redisFactory
+            cacheProvider
                 .template<Notification>()
                 .sendAndAwait(channelNameFor(user), notification)
         }
@@ -48,7 +48,7 @@ internal class NotificationServiceImpl(
     }
 
     override fun subscribeNotifications(user: User): Flow<Notification> {
-        return redisFactory
+        return cacheProvider
             .template<Notification>()
             .listenToChannel(channelNameFor(user))
             .asFlow()

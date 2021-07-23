@@ -5,21 +5,15 @@ import com.diekeditora.domain.user.UserService
 import graphql.relay.Connection
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Service
-import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
-import kotlin.time.hours
 
 @Service
 @Primary
-@OptIn(ExperimentalTime::class)
 internal class CachedUserService(
     val delegate: UserService,
-    val redisFactory: RedisFactory,
-) : CachedService, UserService by delegate {
-    override val expiresIn: Duration = 1.hours
-
+    val cacheProvider: CacheProvider,
+) : UserService by delegate {
     override suspend fun findUsers(first: Int, after: String?): Connection<User> {
-        return redisFactory
+        return cacheProvider
             .repo<Connection<User>>()
             .remember("userConnection.$first.$after", expiresIn) {
                 delegate.findUsers(first, after)
@@ -27,7 +21,7 @@ internal class CachedUserService(
     }
 
     override suspend fun findUserByUsername(username: String): User? {
-        return redisFactory
+        return cacheProvider
             .repo<User>()
             .query("user.$username", expiresIn) {
                 delegate.findUserByUsername(username)
@@ -36,13 +30,13 @@ internal class CachedUserService(
 
     override suspend fun updateUser(target: User, user: User): User {
         return delegate.updateUser(target, user).also {
-            redisFactory.repo<User>().delete("user.${it.username}")
+            cacheProvider.repo<User>().delete("user.${target.username}")
         }
     }
 
     override suspend fun deleteUser(user: User): User {
         return delegate.deleteUser(user).also {
-            redisFactory.repo<User>().delete("user.${it.username}")
+            cacheProvider.repo<User>().delete("user.${it.username}")
         }
     }
 }
