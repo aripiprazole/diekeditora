@@ -34,6 +34,7 @@ data class Comment(
 
     @GraphQLIgnore
     override val cursor: String
+        @JsonIgnore
         get() = uid.value
 
     @GraphQLIgnore

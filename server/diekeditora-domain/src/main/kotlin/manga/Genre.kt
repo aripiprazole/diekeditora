@@ -20,6 +20,7 @@ data class Genre(
 ) : MutableEntity<Genre> {
     @GraphQLIgnore
     override val cursor: String
+        @JsonIgnore
         get() = title
 
     @GraphQLIgnore

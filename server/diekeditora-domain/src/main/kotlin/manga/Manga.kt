@@ -84,7 +84,9 @@ data class Manga(
             .toList()
     }
 
+    @GraphQLIgnore
     override val cursor: String
+        @JsonIgnore
         get() = title
 
     @GraphQLIgnore

@@ -38,6 +38,7 @@ data class Role(
 
     @GraphQLIgnore
     override val cursor: String
+        @JsonIgnore
         get() = name
 
     @GraphQLIgnore

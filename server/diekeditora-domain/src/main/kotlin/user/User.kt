@@ -81,6 +81,7 @@ data class User(
 
     @GraphQLIgnore
     override val cursor: String
+        @JsonIgnore
         get() = username
 
     @GraphQLIgnore
