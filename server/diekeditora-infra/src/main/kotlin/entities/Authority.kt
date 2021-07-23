@@ -9,7 +9,7 @@ import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
 @Table("authority")
-data class Authority(
+internal data class Authority(
     @Id
     @JsonIgnore
     @GraphQLIgnore

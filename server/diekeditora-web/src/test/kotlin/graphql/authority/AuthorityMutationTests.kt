@@ -4,7 +4,6 @@ import com.diekeditora.domain.authority.AuthorityService
 import com.diekeditora.domain.page.asNodeList
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.UserService
-import com.diekeditora.infra.entities.Authority
 import com.diekeditora.web.tests.factories.AuthorityFactory
 import com.diekeditora.web.tests.factories.RoleFactory
 import com.diekeditora.web.tests.factories.UserFactory
@@ -36,7 +35,7 @@ class AuthorityMutationTests(
         val role = roleService.saveRole(roleFactory.create())
         val currentAuthorities = authorityService.findAuthoritiesByRole(role, first)
 
-        val newAuthorities = authorityFactory.createMany(first).map(Authority::value)
+        val newAuthorities = authorityFactory.createMany(first).toList()
 
         val response = client.request(LinkAuthoritiesToRoleMutation(role.name, newAuthorities)) {
             authenticate("authority.admin")
@@ -55,7 +54,7 @@ class AuthorityMutationTests(
     fun `test should unlink authorities from role`(): Unit = runBlocking {
         val first = 15
 
-        val authorities = authorityFactory.createMany(first).map(Authority::value).toSet()
+        val authorities = authorityFactory.createMany(first).toSet()
         val role = roleService.saveRole(roleFactory.create()).also {
             authorityService.linkAuthorities(it, authorities)
         }
@@ -84,7 +83,7 @@ class AuthorityMutationTests(
         val user = userService.saveUser(userFactory.create())
         val currentAuthorities = authorityService.findAuthoritiesByUser(user, first)
 
-        val newAuthorities = authorityFactory.createMany(first).map(Authority::value)
+        val newAuthorities = authorityFactory.createMany(first).toList()
 
         val response =
             client.request(LinkAuthoritiesToUserMutation(user.username, newAuthorities)) {
@@ -104,7 +103,7 @@ class AuthorityMutationTests(
     fun `test should unlink authorities from user`(): Unit = runBlocking {
         val first = 15
 
-        val authorities = authorityFactory.createMany(first).map(Authority::value).toSet()
+        val authorities = authorityFactory.createMany(first).toSet()
         val user = userService.saveUser(userFactory.create()).also {
             authorityService.linkAuthorities(it, authorities)
         }

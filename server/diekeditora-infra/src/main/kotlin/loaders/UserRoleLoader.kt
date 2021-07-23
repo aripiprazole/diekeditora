@@ -10,7 +10,7 @@ import graphql.relay.Connection
 import org.springframework.stereotype.Component
 
 @Component
-class UserRoleLoader(val roleService: RoleService) :
+internal class UserRoleLoader(val roleService: RoleService) :
     KotlinDataLoader<PaginationArg<User, String>, Connection<Role>> by dataLoader("UserRolesLoader")
         .execute({ (user, first, after) ->
             roleService.findRolesByUser(user, first, after)

@@ -30,9 +30,9 @@ class AuthorityQueryTest(
 
         val first = 15
         val authorities = authorityFactory.createMany(first * 2)
-            .map { it.value }
-            .also { authorities -> authorityService.linkAuthorities(user, authorities.toSet()) }
-            .also { authorities -> authorityService.linkAuthorities(role, authorities.toSet()) }
+            .toSet()
+            .also { authorities -> authorityService.linkAuthorities(user, authorities) }
+            .also { authorities -> authorityService.linkAuthorities(role, authorities) }
             .let { authorityService.findAllAuthorities(first) }
 
         val response = client.request(AuthoritiesQuery(first)) {

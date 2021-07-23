@@ -5,7 +5,7 @@ import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
 @Table("user_authority")
-data class UserAuthority(
+internal data class UserAuthority(
     val userId: UniqueId,
     val authorityId: UniqueId,
     val createdAt: LocalDateTime = LocalDateTime.now(),
