@@ -25,7 +25,6 @@ import java.time.LocalDateTime
 data class User(
     @Id
     @GraphQLIgnore
-    @JsonIgnore
     val id: UniqueId? = null,
     val name: String,
     val email: String,

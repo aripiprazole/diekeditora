@@ -2,13 +2,14 @@ package com.diekeditora.domain.newsletter
 
 import com.diekeditora.domain.MutableEntity
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.relational.core.mapping.Table
 
 @Table("newsletter")
 data class Newsletter(val email: String, val active: Boolean = true) : MutableEntity<Newsletter> {
     @GraphQLIgnore
     override val cursor: String
-        get() = email
+        @JsonIgnore get() = email
 
     @GraphQLIgnore
     override fun update(with: Newsletter): Newsletter {

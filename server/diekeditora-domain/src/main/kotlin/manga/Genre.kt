@@ -12,7 +12,6 @@ import java.time.LocalDateTime
 data class Genre(
     @Id
     @GraphQLIgnore
-    @JsonIgnore
     val id: UniqueId? = null,
     val title: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
