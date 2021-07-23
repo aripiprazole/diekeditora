@@ -19,7 +19,7 @@ class RoleMutation(val userService: UserService, val roleService: RoleService) :
     suspend fun updateRole(name: String, input: Role): Role? {
         val role = roleService.findRoleByName(name) ?: return null
 
-        return roleService.updateRole(role, input)
+        return roleService.updateRole(role.update(input))
     }
 
     @PreAuthorize("hasAuthority('role.destroy')")

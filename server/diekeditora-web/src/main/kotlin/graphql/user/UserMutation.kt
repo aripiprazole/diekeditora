@@ -21,7 +21,7 @@ class UserMutation(private val userService: UserService) : Mutation {
     suspend fun updateUser(username: String, input: UserInput): User? {
         val user = userService.findUserByUsername(username) ?: return null
 
-        return userService.updateUser(user, input.toUser())
+        return userService.updateUser(user.update(input.toUser()))
     }
 
     @GraphQLDescription("Deletes an user by its username")

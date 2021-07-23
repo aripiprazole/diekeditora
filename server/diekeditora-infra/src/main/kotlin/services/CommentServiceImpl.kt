@@ -21,7 +21,7 @@ internal class CommentServiceImpl : CommentService {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteComment(comment: Comment): Manga {
+    override suspend fun deleteComment(comment: Comment): Comment {
         TODO("Not yet implemented")
     }
 }

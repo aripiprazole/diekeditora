@@ -96,8 +96,10 @@ internal class RoleServiceImpl(
     }
 
     @Transactional
-    override suspend fun updateRole(target: Role, role: Role): Role {
-        return repo.save(role.copy(updatedAt = LocalDateTime.now())).also {
+    override suspend fun updateRole(role: Role): Role {
+        requireNotNull(role.id) { "Role id must be not null when updating" }
+
+        return repo.save(role).also {
             log.trace("Successfully updated role %s", it)
         }
     }
