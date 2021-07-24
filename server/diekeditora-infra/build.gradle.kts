@@ -9,5 +9,7 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.shared)
 
+    implementation(libs.awssdk.s3)
+
     implementation(libs.springBoot.dataR2dbc)
 }

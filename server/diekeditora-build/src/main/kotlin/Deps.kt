@@ -44,6 +44,7 @@ class Libs {
     val mockk = Mockk()
     val ninjaSquad = NinjaSquad()
     val ozimov = Ozimov()
+    val awssdk = Awssdk()
 
     class NinjaSquad {
         val springMockk = "com.ninja-squad:springmockk:3.0.1"
@@ -139,5 +140,9 @@ class Libs {
 
     class Ozimov {
         val embeddedRedis = "it.ozimov:embedded-redis:0.7.3"
+    }
+
+    class Awssdk {
+        val s3 = "software.amazon.awssdk:s3:2.17.3"
     }
 }
