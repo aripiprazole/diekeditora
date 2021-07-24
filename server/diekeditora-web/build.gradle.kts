@@ -17,6 +17,8 @@ dependencies {
     implementation(libs.springBoot.securityOAuth2ResourceServer)
     implementation(libs.springSecurity.oauth2Client)
 
+    implementation(libs.awssdk.s3)
+
     runtimeOnly(libs.postgresql.postgresql)
 
     implementation(libs.r2dbc.postgresql)
