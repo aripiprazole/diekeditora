@@ -1,6 +1,6 @@
 FROM openjdk:11 AS build
 
-COPY  . /app
+COPY server/ /app
 WORKDIR /app
 
 RUN /app/gradlew build --no-daemon --no-watch-fs

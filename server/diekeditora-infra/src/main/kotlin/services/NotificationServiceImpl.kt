@@ -23,7 +23,9 @@ internal class NotificationServiceImpl(
     val cacheProvider: CacheProvider,
     val uniqueIdService: UniqueIdService,
 ) : NotificationService, CoroutineScope {
-    override val coroutineContext = Executors.newFixedThreadPool(4).asCoroutineDispatcher()
+    override val coroutineContext = Executors
+        .newFixedThreadPool(NOTIFICATION_POOL_SIZE)
+        .asCoroutineDispatcher()
 
     override suspend fun findNotifications(
         user: User,
@@ -57,4 +59,8 @@ internal class NotificationServiceImpl(
 
     private fun channelNameFor(user: User): String =
         "NOTIFICATION_USER_${user.username}"
+
+    companion object {
+        private const val NOTIFICATION_POOL_SIZE = 4
+    }
 }
