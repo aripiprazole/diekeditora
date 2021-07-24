@@ -8,7 +8,7 @@ data class AppPageInfo(
     private val hasPreviousPage: Boolean,
     private val startCursor: ConnectionCursor?,
     private val endCursor: ConnectionCursor?,
-    private val totalPages: Int,
+    val totalPages: Int,
 ) : PageInfo {
     override fun getStartCursor(): ConnectionCursor? = startCursor
     override fun getEndCursor(): ConnectionCursor? = endCursor

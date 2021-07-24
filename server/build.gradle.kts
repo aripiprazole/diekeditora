@@ -1,5 +1,6 @@
 import com.diekeditora.build.kotlin
 import com.diekeditora.build.libs
+import com.diekeditora.build.projects
 
 buildscript {
     repositories {
@@ -16,6 +17,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     id("io.gitlab.arturbosch.detekt") version "1.16.0"
     id("composite-build")
+    application
 }
 
 group = "com.diekeditora"
@@ -23,11 +25,19 @@ version = "0.0.1-SNAPSHOT"
 
 dependencies {
     ktlintRuleset(libs.pinterest.ktlint)
+    implementation(projects.web)
+    implementation(projects.domain)
+    implementation(projects.infra)
+    implementation(projects.shared)
 }
 
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
     gradleVersion = "7.0.2"
+}
+
+application {
+    mainClass.set("com.diekeditora.web.DiekEditoraAppKt")
 }
 
 allprojects {
