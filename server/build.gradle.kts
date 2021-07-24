@@ -31,21 +31,6 @@ dependencies {
     implementation(projects.shared)
 }
 
-tasks {
-    wrapper {
-        distributionType = Wrapper.DistributionType.ALL
-        gradleVersion = "7.0.2"
-    }
-
-    jar {
-        manifest {
-            attributes["Main-Class"] = "com.diekeditora.web.DiekEditoraAppKt"
-        }
-
-        from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
-    }
-}
-
 application {
     mainClass.set("com.diekeditora.web.DiekEditoraAppKt")
 }
@@ -147,5 +132,29 @@ allprojects {
         detekt.configure {
             jvmTarget = "11"
         }
+    }
+}
+
+tasks {
+    bootBuildImage {
+        docker {
+            val env = project.findProperty("env")
+            val registryName = project.findProperty("registry-name")
+            val imageName = project.findProperty("image-name")
+            val version = project.findProperty("image-version")
+
+            if (env == "prod") {
+                publishRegistry {
+                    url =
+                        "registry.digitalocean.com/$registryName/$imageName:$(echo ${{ version }} | head -c7)"
+                    token = System.getenv("DIGITALOCEAN_ACCESS_TOKEN")
+                }
+            }
+        }
+    }
+
+    wrapper {
+        distributionType = Wrapper.DistributionType.ALL
+        gradleVersion = "7.0.2"
     }
 }
