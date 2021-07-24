@@ -31,9 +31,19 @@ dependencies {
     implementation(projects.shared)
 }
 
-tasks.wrapper {
-    distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = "7.0.2"
+tasks {
+    wrapper {
+        distributionType = Wrapper.DistributionType.ALL
+        gradleVersion = "7.0.2"
+    }
+
+    jar {
+        manifest {
+            attributes["Main-Class"] = "com.diekeditora.web.DiekEditoraAppKt"
+        }
+
+        from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    }
 }
 
 application {

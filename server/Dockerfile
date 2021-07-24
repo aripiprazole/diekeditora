@@ -1,9 +1,9 @@
 FROM openjdk:11 AS build
 
-COPY server/ /app
+COPY . /app
 WORKDIR /app
 
-RUN /app/gradlew build --no-daemon --no-watch-fs
+RUN /app/gradlew build --no-daemon --no-watch-fs -x test
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.3
 
