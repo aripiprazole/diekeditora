@@ -1,6 +1,4 @@
-const withTM = require('next-transpile-modules')(['@diekeditora/store']);
-
-module.exports = withTM({
+module.exports = {
   pageExtensions: ['tsx'],
   reactStrictMode: true,
-});
+};
