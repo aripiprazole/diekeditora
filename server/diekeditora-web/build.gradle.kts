@@ -33,3 +33,11 @@ dependencies {
     testImplementation(libs.ozimov.embeddedRedis)
     testImplementation(libs.serpro69.kotlinFaker)
 }
+
+tasks {
+    bootBuildImage {
+        project.findProperty("imageName")?.toString()?.let {
+            imageName = it
+        }
+    }
+}
