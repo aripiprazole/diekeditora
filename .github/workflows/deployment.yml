@@ -6,7 +6,8 @@ on:
       - main
 
 env:
-  IMAGE_NAME: diekeditora
+  APP_NAME: diekeditora
+  IMAGE_NAME: diekeditora-web
   REGISTRY_NAME: diekeditora
 
 jobs:
@@ -39,7 +40,7 @@ jobs:
 
       - name: Build image with Gradle
         working-directory: ./server
-        run: ./gradlew bootBuildImage -PimageName=registry.digitalocean.com/${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:$(echo ${{ github.sha }} | head -c7)
+        run: ./gradlew diekeditora-web:bootBuildImage -PimageName=registry.digitalocean.com/${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:$(echo ${{ github.sha }} | head -c7)
 
       - name: Push image to DigitalOcean Container Registry
         run: docker push registry.digitalocean.com/${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:$(echo ${{ github.sha }} | head -c7)
@@ -54,4 +55,4 @@ jobs:
         run: kubectl apply -f $GITHUB_WORKSPACE/k8s/deployment.yml
 
       - name: Verify deployment
-        run: kubectl rollout status deployment/${{ env.IMAGE_NAME }}
+        run: kubectl rollout status deployment/${{ env.APP_NAME }}
