@@ -61,7 +61,7 @@ items:
 
               env:
                 - name: GOOGLE_APPLICATION_CREDENTIALS
-                  value: '/diekeditora-config/firebase-cred.yml'
+                  value: '/diekeditora-config/firebase-cred.json'
 
                 - name: DB_NAME
                   valueFrom:
