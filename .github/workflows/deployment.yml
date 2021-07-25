@@ -37,7 +37,8 @@ jobs:
           distribution: 'adopt'
 
       - name: Build image and push to registry with Gradle
-        run: server/gradlew bootBuildImage -Penv=prod -Pimage-name=$REGISTRY_NAME -Pimage-name=$IMAGE_NAME -Pimage-version=$GITHUB_SAH
+        working-directory: ./server
+        run: ./gradlew bootBuildImage -Penv=prod -Pimage-name=$REGISTRY_NAME -Pimage-name=$IMAGE_NAME -Pimage-version=$GITHUB_SAH
 
       - name: Update deployment file
         run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/$REGISTRY_NAME/$IMAGE_NAME:'${TAG}'|' $GITHUB_WORKSPACE/k8s/deployment.yml
