@@ -26,6 +26,7 @@ spec:
       containers:
         - name: diekeditora
           image: <IMAGE>
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           resources:
@@ -34,7 +35,7 @@ spec:
             limits:
               cpu: 100m
       imagePullSecrets:
-      - name: regcred
+        - name: diekeditora
 
 ---
 apiVersion: v1
