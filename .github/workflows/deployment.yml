@@ -39,13 +39,13 @@ jobs:
 
       - name: Build image with Gradle
         working-directory: ./server
-        run: ./gradlew bootBuildImage -PimageName=registry.digitalocean.com/$REGISTRY_NAME/$IMAGE_NAME:$(echo ${{ github.sha }} | head -c7)
+        run: ./gradlew bootBuildImage -PimageName=registry.digitalocean.com/${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:$(echo ${{ github.sha }} | head -c7)
 
       - name: Push image to DigitalOcean Container Registry
-        run: docker push registry.digitalocean.com/$REGISTRY_NAME/$IMAGE_NAME:$(echo ${{ github.sha }} | head -c7)
+        run: docker push registry.digitalocean.com/${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:$(echo ${{ github.sha }} | head -c7)
 
       - name: Update deployment file
-        run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/$REGISTRY_NAME/$IMAGE_NAME:'${TAG}'|' $GITHUB_WORKSPACE/k8s/deployment.yml
+        run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:'${TAG}'|' $GITHUB_WORKSPACE/k8s/deployment.yml
 
       - name: Save DigitalOcean kubeconfig with short-lived credentials
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.DIGITALOCEAN_CLUSTER_NAME }}
@@ -54,4 +54,4 @@ jobs:
         run: kubectl apply -f $GITHUB_WORKSPACE/k8s/deployment.yml
 
       - name: Verify deployment
-        run: kubectl rollout status deployment/$IMAGE_NAME
+        run: kubectl rollout status deployment/${{ env.IMAGE_NAME }}
