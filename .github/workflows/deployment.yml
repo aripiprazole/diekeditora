@@ -1,4 +1,4 @@
-name: Docker
+name: Server deployment to k8s
 
 on:
   push:
@@ -10,7 +10,8 @@ env:
   REGISTRY_NAME: diekeditora
 
 jobs:
-  push:
+  build:
+    name: Build, push and deploy
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
 
@@ -36,9 +37,12 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Build image and push to registry with Gradle
+      - name: Build image with Gradle
         working-directory: ./server
-        run: ./gradlew bootBuildImage -Penv=prod -Pimage-name=$REGISTRY_NAME -Pimage-name=$IMAGE_NAME -Pimage-version=$GITHUB_SAH
+        run: ./gradlew bootBuildImage -PimageName=registry.digitalocean.com/$REGISTRY_NAME/$IMAGE_NAME:$(echo ${{ github.sha }} | head -c7)
+
+      - name: Push image to DigitalOcean Container Registry
+        run: docker push registry.digitalocean.com/$REGISTRY_NAME/$IMAGE_NAME:$(echo ${{ github.sha }} | head -c7)
 
       - name: Update deployment file
         run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/$REGISTRY_NAME/$IMAGE_NAME:'${TAG}'|' $GITHUB_WORKSPACE/k8s/deployment.yml
