@@ -55,7 +55,14 @@ items:
                 limits:
                   cpu: 100m
 
+              volumeMounts:
+                - mountPath: /diekeditora-config
+                  name: diekeditora-config
+
               env:
+                - name: GOOGLE_APPLICATION_CREDENTIALS
+                  value: '/diekeditora-config/firebase-cred.yml'
+
                 - name: DB_NAME
                   valueFrom:
                     secretKeyRef:
@@ -87,3 +94,11 @@ items:
                       key: db_password
           imagePullSecrets:
             - name: diekeditora
+
+          volumes:
+            - name: diekeditora-config
+              configMap:
+                name: firebase-credentials
+                items:
+                  - key: firebase-cred
+                    path: 'firebase-cred.json'
