@@ -43,7 +43,7 @@ items:
         spec:
           containers:
             - name: diekeditora
-              image: ${{IMAGE}}
+              image: <IMAGE>
               imagePullPolicy: Always
               ports:
                 - containerPort: 80
@@ -97,8 +97,8 @@ items:
 
           volumes:
             - name: diekeditora-config
-              configMap:
-                name: firebase-credentials
+              secret:
+                secretName: firebase-credentials
                 items:
                   - key: firebase-cred
                     path: 'firebase-cred.json'
