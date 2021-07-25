@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: diekeditora
+
+    spec:
+      type: LoadBalancer
+      ports:
+        - name: http
+          protocol: TCP
+          port: 80
+          targetPort: 80
+
+      selector:
+        app: diekeditora
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: diekeditora
+      labels:
+        app: diekeditora
+
+    spec:
+      replicas: 1
+      minReadySeconds: 5
+      selector:
+        matchLabels:
+          app: diekeditora
+
+      strategy:
+        rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 1
+
+      template:
+        metadata:
+          labels:
+            app: diekeditora
+
+        spec:
+          containers:
+            - name: diekeditora
+              image: ${{IMAGE}}
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 80
+
+              resources:
+                requests:
+                  cpu: 100m
+
+                limits:
+                  cpu: 100m
+
+              env:
+                - name: DB_NAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: diekeditora-env
+                      key: db_name
+
+                - name: DB_PORT
+                  valueFrom:
+                    secretKeyRef:
+                      name: diekeditora-env
+                      key: db_port
+
+                - name: DB_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: diekeditora-env
+                      key: db_host
+
+                - name: DB_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: diekeditora-env
+                      key: db_username
+
+                - name: DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: diekeditora-env
+                      key: db_password
+          imagePullSecrets:
+            - name: diekeditora

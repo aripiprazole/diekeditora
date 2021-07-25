@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: diekeditora-redis-config
+data:
+  redis-conf: |
+    stop-writes-on-bgsave-error no
