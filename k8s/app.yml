@@ -63,6 +63,9 @@ items:
                 - name: GOOGLE_APPLICATION_CREDENTIALS
                   value: '/diekeditora-config/firebase-cred.json'
 
+                - name: DB_SSL_MODE
+                  value: 'require'
+
                 - name: DB_NAME
                   valueFrom:
                     secretKeyRef:

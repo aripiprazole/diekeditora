@@ -11,6 +11,8 @@ spring:
     name: ${DB_NAME}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+    properties:
+      sslMode: ${DB_SSL_MODE:disable}
 
 logging:
   level:
