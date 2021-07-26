@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: diekeditora
-          image: <IMAGE>
+          image: registry.digitalocean.com/diekeditora/server
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

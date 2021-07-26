@@ -6,9 +6,7 @@ on:
       - main
 
 env:
-  APP_NAME: diekeditora
-  IMAGE_NAME: diekeditora-web
-  REGISTRY_NAME: diekeditora
+  IMAGE_NAME: registry.digitalocean.com/diekeditora/server
 
 jobs:
   build:
@@ -40,13 +38,28 @@ jobs:
 
       - name: Build image with Gradle
         working-directory: ./server
-        run: ./gradlew diekeditora-web:bootBuildImage -PimageName=registry.digitalocean.com/${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:$(echo ${{ github.sha }} | head -c7)
+        run: ./gradlew diekeditora-web:bootBuildImage -PimageName=
 
-      - name: Push image to DigitalOcean Container Registry
-        run: docker push registry.digitalocean.com/${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:$(echo ${{ github.sha }} | head -c7)
+      - name: Publish image to DigitalOcean Container Registry
+        run: |
+          IMAGE_ID=$IMAGE_NAME
 
-      - name: Update deployment file
-        run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/${{ env.REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:'${TAG}'|' $GITHUB_WORKSPACE/k8s/app-deployment.yml
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "main" ] && VERSION=latest
+
+          echo "Deploying image: $IMAGE_ID"
+
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
 
       - name: Save DigitalOcean kubeconfig with short-lived credentials
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.DIGITALOCEAN_CLUSTER_NAME }}
