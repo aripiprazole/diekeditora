@@ -28,6 +28,7 @@
     "app:test": "lerna run --scope @diekeditora/app --stream cypress:run",
     "app:dev": "lerna run --scope @diekeditora/app --stream dev",
     "studio:dev": "lerna run --scope @diekeditora/studio --stream dev",
+    "studio:build": "lerna run --scope @diekeditora/studio --stream build",
     "store:dev": "lerna run --scope @diekeditora/store --stream dev"
   },
   "dependencies": {
