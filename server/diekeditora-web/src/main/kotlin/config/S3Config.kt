@@ -9,6 +9,7 @@ import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.S3AsyncClient
 import software.amazon.awssdk.services.s3.S3Client
+import java.net.URI
 
 @Configuration
 class S3Config(val props: S3Props) {
@@ -30,6 +31,7 @@ class S3Config(val props: S3Props) {
         if (!props.enabled) return null
 
         return S3AsyncClient.builder()
+            .endpointOverride(URI.create(validateEndpoint()))
             .credentialsProvider(credentialsProvider)
             .region(Region.of(validateRegion()))
             .build()
@@ -42,8 +44,15 @@ class S3Config(val props: S3Props) {
 
         return S3Client.builder()
             .credentialsProvider(credentialsProvider)
+            .endpointOverride(URI.create(validateEndpoint()))
             .region(Region.of(validateRegion()))
             .build()
+    }
+
+    private fun validateEndpoint(): String {
+        return requireNotNull(props.endpoint) {
+            "S3 endpoint should not be null when s3 is enabled"
+        }
     }
 
     private fun validateRegion(): String {
