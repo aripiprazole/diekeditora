@@ -10,6 +10,7 @@ import kotlin.properties.ReadOnlyProperty
  * @param T target logger class
  * @return the new logger
  */
+@Suppress("unused")
 inline fun <reified T : Any> getLogger(): Logger {
     return LoggerFactory.getLogger(T::class.java)
 }

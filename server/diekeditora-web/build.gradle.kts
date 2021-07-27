@@ -32,6 +32,8 @@ dependencies {
     testImplementation(libs.ninjaSquad.springMockk)
     testImplementation(libs.ozimov.embeddedRedis)
     testImplementation(libs.serpro69.kotlinFaker)
+
+    annotationProcessor(libs.springBoot.configurationProcessor)
 }
 
 tasks {
