@@ -1,4 +1,4 @@
-@file:Suppress("EXPERIMENTAL_FEATURE_WARNING", "unused")
+@file:Suppress("EXPERIMENTAL_FEATURE_WARNING", "MemberNameEqualsClassName", "unused")
 
 package com.diekeditora.build
 
@@ -111,6 +111,7 @@ class Libs {
         val dataRedisReactive =
             "org.springframework.boot:spring-boot-starter-data-redis-reactive:2.4.5"
         val test = "org.springframework.boot:spring-boot-starter-test:2.4.5"
+        val configurationProcessor = "org.springframework.boot:spring-boot-configuration-processor"
     }
 
     class SpringSecurity {

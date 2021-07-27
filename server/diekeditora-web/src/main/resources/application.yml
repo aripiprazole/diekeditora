@@ -14,6 +14,9 @@ spring:
     properties:
       sslMode: ${DB_SSL_MODE:disable}
 
+firebase:
+  google-application-credentials: ${GOOGLE_APPLICATION_CREDENTIALS}
+
 logging:
   level:
     root: ${LOG_LEVEL:info}
