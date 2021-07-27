@@ -1,4 +1,4 @@
-package com.diekeditora.web.graphql.manga
+package com.diekeditora.web.resources.manga
 
 import com.diekeditora.domain.manga.Manga
 import com.diekeditora.domain.manga.MangaService

@@ -1,4 +1,4 @@
-package com.diekeditora.web.graphql.me
+package com.diekeditora.web.resources.me
 
 import com.diekeditora.domain.notification.Notification
 import com.diekeditora.domain.notification.NotificationService

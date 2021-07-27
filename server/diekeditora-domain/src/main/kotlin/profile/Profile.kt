@@ -2,10 +2,14 @@ package com.diekeditora.domain.profile
 
 import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.domain.image.AvatarKind
+import com.diekeditora.domain.image.FileKind
 import com.diekeditora.domain.user.User
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
+import graphql.schema.DataFetchingEnvironment
+import kotlinx.coroutines.future.await
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
@@ -19,10 +23,20 @@ data class Profile(
     val user: User,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
+    @GraphQLIgnore
+    val avatarId: UniqueId,
 ) : MutableEntity<Profile> {
     @GraphQLDescription("Returns profile's display name")
     val displayName: String
         get() = user.username
+
+    @GraphQLDescription("Returns profile's avatar image url")
+    suspend fun avatar(env: DataFetchingEnvironment): String {
+        return env
+            .getDataLoader<FileKind, String>("FileLinkLoader")
+            .load(AvatarKind(this))
+            .await()
+    }
 
     @GraphQLIgnore
     override val cursor: String
