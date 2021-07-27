@@ -7,7 +7,7 @@ import javax.annotation.PostConstruct
 import javax.annotation.PreDestroy
 
 @Configuration
-class RedisConfig(props: RedisProps) {
+class RedisTestConfig(props: RedisProps) {
     val redisServer = RedisServer(props.redisPort)
 
     @PostConstruct

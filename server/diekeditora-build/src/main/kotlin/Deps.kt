@@ -111,7 +111,7 @@ class Libs {
         val dataRedisReactive =
             "org.springframework.boot:spring-boot-starter-data-redis-reactive:2.4.5"
         val test = "org.springframework.boot:spring-boot-starter-test:2.4.5"
-        val configurationProcessor = "org.springframework.boot:spring-boot-configuration-processor"
+        val configurationProcessor = "org.springframework.boot:spring-boot-configuration-processor:2.5.3"
     }
 
     class SpringSecurity {

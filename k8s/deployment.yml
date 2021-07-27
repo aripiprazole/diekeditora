@@ -80,6 +80,30 @@ spec:
                 secretKeyRef:
                   name: diekeditora-env
                   key: db_password
+
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: aws_access_key
+
+            - name: AWS_ACCESS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: aws_access_secret
+
+            - name: AWS_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: aws_endpoint
+
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: aws_region
       imagePullSecrets:
         - name: diekeditora
 
