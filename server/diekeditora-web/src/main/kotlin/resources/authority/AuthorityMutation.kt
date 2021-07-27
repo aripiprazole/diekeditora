@@ -1,4 +1,4 @@
-package com.diekeditora.web.graphql.authority
+package com.diekeditora.web.resources.authority
 
 import com.diekeditora.domain.authority.AuthorityService
 import com.diekeditora.domain.role.Role
