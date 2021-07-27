@@ -15,7 +15,16 @@ spring:
       sslMode: ${DB_SSL_MODE:disable}
 
 firebase:
+  enabled: true
   google-application-credentials: ${GOOGLE_APPLICATION_CREDENTIALS}
+
+s3:
+  enabled: true
+  bucket: ${AWS_BUCKET}
+  access-key: ${AWS_ACCESS_KEY}
+  access-secret: ${AWS_ACCESS_SECRET}
+  endpoint: ${AWS_ENDPOINT}
+  region: ${AWS_REGION}
 
 logging:
   level:

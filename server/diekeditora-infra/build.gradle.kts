@@ -12,4 +12,6 @@ dependencies {
     implementation(libs.awssdk.s3)
 
     implementation(libs.springBoot.dataR2dbc)
+
+    annotationProcessor(libs.springBoot.configurationProcessor)
 }

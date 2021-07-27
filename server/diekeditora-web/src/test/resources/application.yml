@@ -13,6 +13,12 @@ spring:
     ansi:
       enabled: ALWAYS
 
+firebase:
+  enabled: false
+
+s3:
+  enabled: false
+
 graphql:
   packages:
     - com.diekeditora.domain
