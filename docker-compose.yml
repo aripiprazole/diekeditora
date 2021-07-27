@@ -1,32 +1,34 @@
 version: '3'
 
 services:
-  backend:
-    build:
-      context: ./server
+  server:
+    image: registry.digitalocean.com/diekeditora/server:latest
     volumes:
       - ./server:/var/server
+      - ./.credentials/firebase.json:/firebase.json
+    env_file:
+      - ./server/.env
     depends_on:
-      - app_db
+      - database
     networks:
       - diekeditora
 
-  frontend:
-    build:
-      context: ./web
-    volumes:
-      - ./web:/var/www
+  database:
+    image: postgres:13.2
+    restart: always
+    env_file:
+      - ./dev/database/.env
     ports:
-      - ${PORT:-3000}:3000
+      - ${POSTGRES_PORT:-5432}:5432
     networks:
       - diekeditora
 
-  cache:
+  redis:
     image: redis:alpine
     ports:
       - 6379:6379
     volumes:
-      - ./config/redis.conf:/redis.conf
+      - ./dev/config/redis.conf:/redis.conf
     command: [ 'redis-server', '/redis.conf' ]
     networks:
       - diekeditora
