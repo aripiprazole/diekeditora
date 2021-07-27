@@ -1,5 +1,6 @@
 package com.diekeditora.web.graphql
 
+import com.diekeditora.domain.id.UniqueId
 import com.expediagroup.graphql.generator.execution.FlowSubscriptionExecutionStrategy
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -19,6 +20,13 @@ class GraphQLConfig(val objectMapper: ObjectMapper) {
 
     @Bean
     fun hooks(): SchemaGeneratorHooks = GraphQLSchemaHooks(objectMapper).apply {
+        withScalar<UniqueId>(
+            newScalar()
+                .name("UniqueId")
+                .coercing(jacksonCoercing<UniqueId, String> { it })
+                .build()
+        )
+
         withScalar<Instant>(
             newScalar()
                 .name("Instant")
