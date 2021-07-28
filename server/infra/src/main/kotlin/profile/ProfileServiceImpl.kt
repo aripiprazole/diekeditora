@@ -6,7 +6,6 @@ import com.diekeditora.domain.profile.Profile
 import com.diekeditora.domain.profile.ProfileService
 import com.diekeditora.domain.user.User
 import com.diekeditora.shared.logger
-import graphql.relay.Connection
 import org.springframework.stereotype.Service
 
 @Service
@@ -15,10 +14,6 @@ internal class ProfileServiceImpl(
     val uidService: UniqueIdService,
 ) : ProfileService {
     private val log by logger()
-
-    override suspend fun findProfiles(first: Int, after: String?): Connection<Profile> {
-        TODO("Not yet implemented")
-    }
 
     override suspend fun findOrCreateProfileByUser(user: User): Profile {
         val ownerId = requireNotNull(user.id) { "Owner id must be not null" }
