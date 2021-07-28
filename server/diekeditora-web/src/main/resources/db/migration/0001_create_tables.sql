@@ -1,13 +1,13 @@
 create table if not exists "user"
 (
-    id                uuid                     not null default gen_random_uuid(),
-    name              varchar(120)             not null,
-    username          varchar(50) unique       not null,
-    email             varchar(120) unique      not null,
-    birthday          timestamp with time zone          default null,
-    updated_at        timestamp with time zone          default null,
-    deleted_at        timestamp with time zone          default null,
-    created_at        timestamp with time zone not null default current_timestamp,
+    id         uuid                     not null default gen_random_uuid(),
+    name       varchar(120)             not null,
+    username   varchar(50) unique       not null,
+    email      varchar(120) unique      not null,
+    birthday   timestamp with time zone          default null,
+    updated_at timestamp with time zone          default null,
+    deleted_at timestamp with time zone          default null,
+    created_at timestamp with time zone not null default current_timestamp,
     primary key (id)
 );
 
@@ -72,3 +72,28 @@ create table if not exists "user_role"
         foreign key (role_id)
             references role (id)
 );
+
+do
+'
+begin
+if not exists(select 1 from pg_type where typname = $$gender$$) then
+    create type gender as enum ($$Male$$, $$Female$$, $$NonBinary$$);
+    create cast (character varying as gender) with inout as assignment;
+    end if;
+--more types here...
+end;
+' language plpgsql;
+
+create table if not exists "profile"
+(
+    id              uuid                     not null default gen_random_uuid(),
+    gender          gender                   not null,
+    uid             uuid unique              not null,
+    owner_id        uuid unique              not null,
+    created_at      timestamp with time zone not null default current_timestamp,
+    updated_at      timestamp with time zone          default null,
+
+    constraint fk_owner_id
+        foreign key (owner_id)
+            references "user" (id)
+)

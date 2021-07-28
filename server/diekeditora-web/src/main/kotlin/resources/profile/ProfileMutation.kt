@@ -1,4 +1,4 @@
-package com.diekeditora.web.resources
+package com.diekeditora.web.resources.profile
 
 import com.diekeditora.domain.image.AvatarKind
 import com.diekeditora.domain.image.FileService

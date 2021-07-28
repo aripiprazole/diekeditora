@@ -6,6 +6,9 @@ server:
       enabled: false
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
+
   r2dbc:
     url: r2dbc:postgresql://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
     name: ${DB_NAME}
