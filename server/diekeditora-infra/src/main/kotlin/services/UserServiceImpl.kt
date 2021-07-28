@@ -1,5 +1,6 @@
 package com.diekeditora.infra.services
 
+import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
@@ -34,6 +35,10 @@ internal class UserServiceImpl(val repo: UserRepo) : UserService {
         val lastIndex = items.lastOrNull()?.let { repo.index(it.username) }
 
         return AppPage.of(totalItems, items, first, firstIndex, lastIndex)
+    }
+
+    override suspend fun findUserById(id: UniqueId): User? {
+        return repo.findById(id.toUUID())
     }
 
     @Transactional

@@ -8,6 +8,6 @@ sealed class FileKind(val private: Boolean = false) {
 
 class AvatarKind(val profile: Profile) : FileKind() {
     override fun generateKey(): String {
-        return "profile-avatars/${profile.avatarId}"
+        return "profile-avatars/${profile.uid}"
     }
 }

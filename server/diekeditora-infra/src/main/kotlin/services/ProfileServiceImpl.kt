@@ -5,25 +5,42 @@ import com.diekeditora.domain.profile.Gender
 import com.diekeditora.domain.profile.Profile
 import com.diekeditora.domain.profile.ProfileService
 import com.diekeditora.domain.user.User
+import com.diekeditora.infra.repositories.ProfileRepo
+import com.diekeditora.shared.logger
 import graphql.relay.Connection
 import org.springframework.stereotype.Service
 
 @Service
-internal class ProfileServiceImpl(val uidService: UniqueIdService) : ProfileService {
+internal class ProfileServiceImpl(
+    val repo: ProfileRepo,
+    val uidService: UniqueIdService,
+) : ProfileService {
+    private val log by logger()
+
     override suspend fun findProfiles(first: Int, after: String?): Connection<Profile> {
         TODO("Not yet implemented")
     }
 
     override suspend fun findOrCreateProfileByUser(user: User): Profile {
-        return Profile(
-            id = uidService.generateUniqueId(),
-            gender = Gender.Female,
-            user = user,
-            avatarId = uidService.generateUniqueId()
-        )
+        val ownerId = requireNotNull(user.id) { "Owner id must be not null" }
+
+        return repo.findByOwnerId(ownerId.toUUID())
+            ?: repo.save(generateDefaultProfile(user))
     }
 
     override suspend fun updateProfile(profile: Profile): Profile {
-        TODO("Not yet implemented")
+        requireNotNull(profile.id) { "Profile id must be not null when updating" }
+
+        return repo.save(profile).also {
+            log.trace("Successfully updated profile %s", profile)
+        }
+    }
+
+    private fun generateDefaultProfile(user: User): Profile {
+        return Profile(
+            uid = uidService.generateUniqueId(),
+            gender = Gender.NonBinary,
+            ownerId = user.id!!
+        )
     }
 }

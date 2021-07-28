@@ -19,16 +19,24 @@ data class Profile(
     @Id
     @GraphQLIgnore
     val id: UniqueId? = null,
+    val uid: UniqueId,
     val gender: Gender,
-    val user: User,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
-    @GraphQLIgnore
-    val avatarId: UniqueId,
+    @GraphQLIgnore val ownerId: UniqueId,
 ) : MutableEntity<Profile> {
     @GraphQLDescription("Returns profile's display name")
-    val displayName: String
-        get() = user.username
+    suspend fun displayName(env: DataFetchingEnvironment): String {
+        return user(env).username
+    }
+
+    @GraphQLDescription("Returns profile's owner")
+    suspend fun user(env: DataFetchingEnvironment): User {
+        return env
+            .getDataLoader<Profile, User>("ProfileOwnerLoader")
+            .load(this)
+            .await()
+    }
 
     @GraphQLDescription("Returns profile's avatar image url")
     suspend fun avatar(env: DataFetchingEnvironment): String {
@@ -41,45 +49,35 @@ data class Profile(
     @GraphQLIgnore
     override val cursor: String
         @JsonIgnore
-        get() = displayName
+        get() = uid.value
 
     @GraphQLIgnore
     override fun update(with: Profile): Profile {
-        return copy(
-            gender = with.gender,
-            user = with.user,
-            updatedAt = LocalDateTime.now()
-        )
+        return copy(gender = with.gender, updatedAt = LocalDateTime.now())
     }
 
-    @GraphQLIgnore
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
         other as Profile
 
-        if (gender != other.gender) return false
-        if (user != other.user) return false
+        if (uid != other.uid) return false
 
         return true
     }
 
-    @GraphQLIgnore
     override fun hashCode(): Int {
-        var result = gender.hashCode()
-        result = 31 * result + user.hashCode()
-        return result
+        return uid.hashCode()
     }
 
     @GraphQLIgnore
     override fun toString(): String {
         return "Profile(" +
+            "uid=$uid, " +
             "gender=$gender, " +
-            "user=$user, " +
             "createdAt=$createdAt, " +
             "updatedAt=$updatedAt, " +
-            "displayName='$displayName'" +
             ")"
     }
 }
