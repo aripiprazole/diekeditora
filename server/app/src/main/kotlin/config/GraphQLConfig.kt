@@ -1,8 +1,8 @@
 package com.diekeditora.app.config
 
+import com.diekeditora.app.graphql.SchemaGeneratorHooksImpl
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.image.Upload
-import com.diekeditora.app.graphql.SchemaGeneratorHooksImpl
 import com.expediagroup.graphql.generator.execution.FlowSubscriptionExecutionStrategy
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -50,7 +50,19 @@ class GraphQLConfig(val objectMapper: ObjectMapper) {
         withScalar<UniqueId>(
             newScalar()
                 .name("UniqueId")
-                .coercing(jacksonCoercing<UniqueId, String> { it })
+                .coercing(object : Coercing<UniqueId, String> {
+                    override fun serialize(dataFetcherResult: Any?): String {
+                        return dataFetcherResult.toString()
+                    }
+
+                    override fun parseValue(input: Any?): UniqueId {
+                        return UniqueId(input.toString())
+                    }
+
+                    override fun parseLiteral(input: Any?): UniqueId {
+                        return UniqueId(input.toString())
+                    }
+                })
                 .build()
         )
 
