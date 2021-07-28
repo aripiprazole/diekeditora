@@ -18,6 +18,10 @@ sealed class Notification {
     abstract val uid: UniqueId
     abstract val issuedAt: LocalDateTime
     abstract val readAt: LocalDateTime?
+
+    companion object Permissions {
+        const val SEND = "notification.send"
+    }
 }
 
 @JsonTypeName("CommentMentionNotification")

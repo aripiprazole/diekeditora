@@ -25,6 +25,10 @@ data class Profile(
     val updatedAt: LocalDateTime? = null,
     @GraphQLIgnore val ownerId: UniqueId,
 ) : MutableEntity<Profile> {
+    companion object Permissions {
+        const val ADMIN = "profile.admin"
+    }
+
     @GraphQLDescription("Returns profile's display name")
     suspend fun displayName(env: DataFetchingEnvironment): String {
         return user(env).username

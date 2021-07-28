@@ -34,6 +34,13 @@ data class User(
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
 ) : MutableEntity<User> {
+    companion object Permissions {
+        const val VIEW = "user.view"
+        const val STORE = "user.store"
+        const val UPDATE = "user.update"
+        const val DESTROY = "user.destroy"
+    }
+
     @GraphQLDescription("Finds the user's profile")
     suspend fun profile(env: DataFetchingEnvironment): Profile {
         return env

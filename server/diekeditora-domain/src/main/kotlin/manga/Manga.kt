@@ -28,6 +28,13 @@ data class Manga(
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
 ) : MutableEntity<Manga> {
+    companion object Permissions {
+        const val VIEW = "manga.view"
+        const val STORE = "manga.store"
+        const val UPDATE = "manga.update"
+        const val DESTROY = "manga.destroy"
+    }
+
     @GraphQLDescription("Returns latest chapter")
     suspend fun latestChapter(env: DataFetchingEnvironment): Chapter {
         return env
