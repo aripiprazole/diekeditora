@@ -1,4 +1,4 @@
-package com.diekeditora.web.config
+package com.diekeditora.app.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

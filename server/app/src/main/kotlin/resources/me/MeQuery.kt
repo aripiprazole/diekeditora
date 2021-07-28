@@ -1,7 +1,7 @@
-package com.diekeditora.web.resources.me
+package com.diekeditora.app.resources.me
 
 import com.diekeditora.domain.user.User
-import com.diekeditora.web.graphql.AuthGraphQLContext
+import com.diekeditora.app.graphql.AuthGraphQLContext
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Query
 import org.springframework.security.access.prepost.PreAuthorize

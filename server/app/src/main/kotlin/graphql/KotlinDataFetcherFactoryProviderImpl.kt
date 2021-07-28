@@ -1,4 +1,4 @@
-package com.diekeditora.web.graphql
+package com.diekeditora.app.graphql
 
 import com.expediagroup.graphql.generator.execution.KotlinDataFetcherFactoryProvider
 import com.expediagroup.graphql.generator.execution.SimpleKotlinDataFetcherFactoryProvider

@@ -1,4 +1,4 @@
-package com.diekeditora.web
+package com.diekeditora.app
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

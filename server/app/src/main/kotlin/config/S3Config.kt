@@ -1,4 +1,4 @@
-package com.diekeditora.web.config
+package com.diekeditora.app.config
 
 import com.diekeditora.infra.props.S3Props
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean

@@ -1,4 +1,4 @@
-package com.diekeditora.web.config
+package com.diekeditora.app.config
 
 import com.diekeditora.domain.page.AppCursor
 import com.diekeditora.domain.page.AppEdge

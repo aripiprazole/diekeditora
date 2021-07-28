@@ -1,4 +1,4 @@
-package com.diekeditora.web.config
+package com.diekeditora.app.config
 
 import com.diekeditora.infra.props.FirebaseProps
 import com.google.auth.oauth2.GoogleCredentials

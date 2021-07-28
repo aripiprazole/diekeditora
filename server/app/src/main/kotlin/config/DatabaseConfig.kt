@@ -1,4 +1,4 @@
-package com.diekeditora.web.config
+package com.diekeditora.app.config
 
 import com.diekeditora.domain.id.UniqueId
 import io.r2dbc.pool.ConnectionPool

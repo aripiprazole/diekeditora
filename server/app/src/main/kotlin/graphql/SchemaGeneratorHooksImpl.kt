@@ -1,4 +1,4 @@
-package com.diekeditora.web.graphql
+package com.diekeditora.app.graphql
 
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.fasterxml.jackson.databind.ObjectMapper
