@@ -23,6 +23,14 @@ data class Role(
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null
 ) : MutableEntity<Role> {
+    companion object Permissions {
+        const val STORE = "role.store"
+        const val UPDATE = "role.update"
+        const val DESTROY = "role.destroy"
+        const val ADMIN = "role.admin"
+        const val VIEW = "role.view"
+    }
+
     @PreAuthorize("hasAuthority('authority.view')")
     suspend fun authorities(
         env: DataFetchingEnvironment,

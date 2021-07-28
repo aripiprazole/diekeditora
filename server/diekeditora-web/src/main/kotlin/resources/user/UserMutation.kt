@@ -5,19 +5,19 @@ import com.diekeditora.domain.user.UserInput
 import com.diekeditora.domain.user.UserService
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
-import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Component
 
 @Component
 class UserMutation(private val userService: UserService) : Mutation {
     @GraphQLDescription("Creates an user with the provided data")
-    @PreAuthorize("hasAuthority('user.store')")
+    @Secured(User.STORE)
     suspend fun createUser(input: UserInput): User {
         return userService.saveUser(input.toUser())
     }
 
     @GraphQLDescription("Updates an user by its username with the provided data")
-    @PreAuthorize("hasAuthority('user.update')")
+    @Secured(User.UPDATE)
     suspend fun updateUser(username: String, input: UserInput): User? {
         val user = userService.findUserByUsername(username) ?: return null
 
@@ -25,7 +25,7 @@ class UserMutation(private val userService: UserService) : Mutation {
     }
 
     @GraphQLDescription("Deletes an user by its username")
-    @PreAuthorize("hasAuthority('user.destroy')")
+    @Secured(User.DESTROY)
     suspend fun deleteUser(username: String): User? {
         val user = userService.findUserByUsername(username) ?: return null
 

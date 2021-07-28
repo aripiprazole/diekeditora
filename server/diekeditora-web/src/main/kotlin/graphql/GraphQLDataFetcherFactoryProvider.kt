@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import graphql.schema.DataFetcherFactory
 import graphql.schema.DataFetchingEnvironment
 import org.springframework.security.access.AccessDeniedException
+import org.springframework.security.access.annotation.Secured
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.util.SimpleMethodInvocation
@@ -46,14 +47,14 @@ class GraphQLDataFetcher(
 
     override fun get(environment: DataFetchingEnvironment): Any? {
         val expression = fn.findAnnotation<PreAuthorize>()?.value
+        val secured = fn.findAnnotation<Secured>()?.value
         val context = environment.getContext<GraphQLContext>() as? AuthGraphQLContext
 
-        if (expression != null && context == null) {
-            throw AccessDeniedException("Not authenticated")
-        }
-
-        if (expression != null && context != null) {
-            context.authenticate(expression, environment)
+        when {
+            expression != null && context == null -> throw AccessDeniedException("Not authenticated")
+            expression != null && context != null -> context.preAuthorize(expression, environment)
+            secured != null && context == null -> throw AccessDeniedException("Not authenticated")
+            secured != null && context != null -> context.secured(secured.toList())
         }
 
         return runFunction(environment)
@@ -87,12 +88,14 @@ class GraphQLDataFetcher(
 
                 if (env.containsArgument(name) || param.type.jvmErasure.isSubclassOf(OptionalInput::class)) {
                     // rewrite value to be used in real scenario
-                    val repr = env.getArgument<Any?>(name)?.let(objectMapper::writeValueAsString)
+                    val value = env.getArgument<Any?>(name)
 
-                    if (param.type.isMarkedNullable && repr == null) {
-                        param to null
-                    } else {
-                        param to objectMapper.readValue(repr, param.type.jvmErasure.java)
+                    when {
+                        param.type.isMarkedNullable && value == null -> param to null
+                        param.type.jvmErasure.isInstance(value) -> param to value
+                        else -> {
+                            param to objectMapper.convertValue(value, param.type.jvmErasure.java)
+                        }
                     }
                 } else {
                     null
@@ -101,7 +104,13 @@ class GraphQLDataFetcher(
         }
     }
 
-    private fun AuthGraphQLContext.authenticate(value: String, env: DataFetchingEnvironment) {
+    private fun AuthGraphQLContext.secured(values: List<String>) {
+        if (!authentication.authorities.map { it.authority }.containsAll(values)) {
+            throw AccessDeniedException("Not enough authorities")
+        }
+    }
+
+    private fun AuthGraphQLContext.preAuthorize(value: String, env: DataFetchingEnvironment) {
         val instance = target ?: env.getSource()
 
         val method = fn.javaMethod ?: error("Could not get java method from function $fn")

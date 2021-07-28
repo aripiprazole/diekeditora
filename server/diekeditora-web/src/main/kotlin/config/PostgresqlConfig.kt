@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class PostgresqlConfig(val props: R2dbcProperties) {
     @Bean("actualConnectionFactory")
-    @ConditionalOnMissingBean()
+    @ConditionalOnMissingBean(name = ["actualConnectionFactory"])
     fun connectionFactory(): ConnectionFactory {
         return PostgresqlConnectionFactory(
             PostgresqlConnectionFactoryProvider
