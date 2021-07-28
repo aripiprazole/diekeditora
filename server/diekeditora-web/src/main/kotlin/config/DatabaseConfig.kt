@@ -21,7 +21,7 @@ import java.util.UUID
 @OptIn(ExperimentalStdlibApi::class)
 class DatabaseConfig(
     @Qualifier("actualConnectionFactory")
-    val connectionFactory: ConnectionFactory,
+    val actualConnectionFactory: ConnectionFactory,
     val r2dbcProperties: R2dbcProperties,
 ) : AbstractR2dbcConfiguration() {
     override fun getCustomConverters(): List<Any> = buildList {
@@ -51,15 +51,15 @@ class DatabaseConfig(
     override fun connectionFactory(): ConnectionPool {
         return ConnectionPool(
             ConnectionPoolConfiguration
-                .builder(connectionFactory)
+                .builder(actualConnectionFactory)
                 .initialSize(r2dbcProperties.pool.initialSize)
-                .maxAcquireTime(r2dbcProperties.pool.maxAcquireTime)
-                .maxCreateConnectionTime(r2dbcProperties.pool.maxCreateConnectionTime)
-                .maxIdleTime(r2dbcProperties.pool.maxIdleTime)
-                .maxLifeTime(r2dbcProperties.pool.maxLifeTime)
+                .apply { r2dbcProperties.pool.maxAcquireTime?.let(::maxAcquireTime) }
+                .apply { r2dbcProperties.pool.maxCreateConnectionTime?.let(::maxCreateConnectionTime) }
+                .apply { r2dbcProperties.pool.maxIdleTime?.let(::maxIdleTime) }
+                .apply { r2dbcProperties.pool.maxLifeTime?.let(::maxLifeTime) }
+                .apply { r2dbcProperties.pool.validationDepth?.let(::validationDepth) }
+                .apply { r2dbcProperties.pool.validationQuery?.let(::validationQuery) }
                 .maxSize(r2dbcProperties.pool.maxSize)
-                .validationQuery(r2dbcProperties.pool.validationQuery)
-                .validationDepth(r2dbcProperties.pool.validationDepth)
                 .build()
         )
     }
