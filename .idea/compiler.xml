@@ -5,10 +5,30 @@
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/2.4.4/f5ccf587cef8b29eb6cadb9b26123256adbdf9c4/spring-boot-configuration-processor-2.4.4.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/2.5.3/dbcb7b9aa82f98f4d079a2d3d7d1dc8a0dd171b1/spring-boot-configuration-processor-2.5.3.jar" />
         </processorPath>
-        <module name="server.diekeditora-web.main" />
+        <module name="server.app.main" />
+        <module name="server.infra.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="diekeditora-build.main" target="15" />
+      <module name="diekeditora-build.test" target="15" />
+      <module name="server.diekeditora-domain" target="11" />
+      <module name="server.diekeditora-domain.main" target="11" />
+      <module name="server.diekeditora-domain.test" target="11" />
+      <module name="server.diekeditora-infra" target="11" />
+      <module name="server.diekeditora-infra.main" target="11" />
+      <module name="server.diekeditora-infra.test" target="11" />
+      <module name="server.diekeditora-shared" target="11" />
+      <module name="server.diekeditora-shared.main" target="11" />
+      <module name="server.diekeditora-shared.test" target="11" />
+      <module name="server.diekeditora-web" target="11" />
+      <module name="server.diekeditora-web.main" target="11" />
+      <module name="server.diekeditora-web.test" target="11" />
+      <module name="server.web" target="11" />
+      <module name="server.web.main" target="11" />
+      <module name="server.web.test" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
