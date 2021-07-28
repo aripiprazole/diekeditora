@@ -1,4 +1,4 @@
-package com.diekeditora.web.resources.role
+package com.diekeditora.app.resources.role
 
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.role.RoleService

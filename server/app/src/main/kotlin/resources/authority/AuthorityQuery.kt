@@ -1,4 +1,4 @@
-package com.diekeditora.web.resources.authority
+package com.diekeditora.app.resources.authority
 
 import com.diekeditora.domain.authority.Authority
 import com.diekeditora.domain.authority.AuthorityService

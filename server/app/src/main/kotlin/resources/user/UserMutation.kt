@@ -1,4 +1,4 @@
-package com.diekeditora.web.resources.user
+package com.diekeditora.app.resources.user
 
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserInput

@@ -1,4 +1,4 @@
-package com.diekeditora.web.security
+package com.diekeditora.app.security
 
 import com.diekeditora.domain.authority.AuthorityService
 import com.diekeditora.domain.user.UserService

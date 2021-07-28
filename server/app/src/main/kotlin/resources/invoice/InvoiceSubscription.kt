@@ -1,4 +1,4 @@
-package com.diekeditora.web.graphql.resources.invoice
+package com.diekeditora.app.graphql.resources.invoice
 
 import com.diekeditora.domain.invoice.Invoice
 import com.diekeditora.domain.invoice.InvoiceService

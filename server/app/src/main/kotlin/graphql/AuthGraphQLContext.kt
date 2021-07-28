@@ -1,4 +1,4 @@
-package com.diekeditora.web.graphql
+package com.diekeditora.app.graphql
 
 import com.diekeditora.domain.user.User
 import com.expediagroup.graphql.server.spring.execution.SpringGraphQLContext

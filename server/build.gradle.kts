@@ -27,7 +27,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("com.diekeditora.web.DiekEditoraAppKt")
+    mainClass.set("com.diekeditora.app.DiekEditoraAppKt")
 }
 
 allprojects {
