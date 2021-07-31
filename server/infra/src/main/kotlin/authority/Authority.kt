@@ -5,24 +5,18 @@ import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.page.Cursor
 import com.diekeditora.domain.page.OrderBy
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
-import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
 @Table("authority")
-@Cursor("value")
-@OrderBy("created_at")
 internal data class Authority(
-    @Id
     @GraphQLIgnore
-    val id: UniqueId? = null,
-    val value: String,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    @Id val id: UniqueId? = null,
+    @Cursor val value: String,
+    @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
 ) : Entity<Authority> {
     @GraphQLIgnore
-    override val cursor: String @JsonIgnore get() = value
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

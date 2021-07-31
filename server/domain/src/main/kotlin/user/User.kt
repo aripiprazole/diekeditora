@@ -24,16 +24,16 @@ import java.time.LocalDateTime
 
 @GraphQLValidObjectLocations([Locations.OBJECT])
 @Table("\"user\"")
-@Cursor("username")
-@OrderBy("created_at")
 data class User(
-    @Id
     @GraphQLIgnore
+    @Id
     val id: UniqueId? = null,
     val name: String,
     val email: String,
+    @Cursor
     val username: String,
     val birthday: LocalDate? = null,
+    @OrderBy
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,

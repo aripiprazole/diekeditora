@@ -4,14 +4,18 @@ import com.diekeditora.domain.Entity
 import com.diekeditora.domain.page.Cursor
 import com.diekeditora.domain.page.OrderBy
 import com.diekeditora.domain.page.PaginationQuery
+import com.diekeditora.shared.findPropertiesByAnnotation
+import com.diekeditora.shared.findPropertyByAnnotation
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.domain.Sort
+import org.springframework.data.mapping.model.MutablePersistentEntity
 import org.springframework.data.r2dbc.convert.R2dbcConverter
 import org.springframework.data.r2dbc.core.R2dbcEntityOperations
 import org.springframework.data.r2dbc.repository.support.SimpleR2dbcRepository
+import org.springframework.data.relational.core.mapping.BasicRelationalPersistentProperty
 import org.springframework.data.relational.core.query.Query.empty
 import org.springframework.data.relational.core.sql.IdentifierProcessing
-import org.springframework.data.relational.repository.query.RelationalEntityInformation
+import org.springframework.data.relational.repository.support.MappingRelationalEntityInformation
 import org.springframework.data.repository.kotlin.CoroutineSortingRepository
 import org.springframework.data.repository.reactive.ReactiveSortingRepository
 import reactor.core.publisher.Flux
@@ -32,14 +36,14 @@ interface CursorBasedPaginationRepository<T, ID> : CoroutineSortingRepository<T,
 
 @Suppress("Detekt.TooManyFunctions")
 internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
-    val entity: RelationalEntityInformation<T, ID>,
+    val entity: MappingRelationalEntityInformation<T, ID>,
     val operations: R2dbcEntityOperations,
     val converter: R2dbcConverter,
     repositoryInterface: Class<*>,
 ) : SimpleR2dbcRepository<T, ID>(entity, operations, converter),
     ReactiveCursorBasedPaginationRepository<T, ID> where T : Any, T : Entity<T> {
     override fun findAll(first: Int, after: String?, sort: Sort?, owner: Any?): Flux<T> {
-        val actualSort = sort ?: metadata.orderBy
+        val actualSort = sort ?: properties.orderBy
 
         val selectQuery = paginationQuery?.selectQuery ?: buildString {
             append("SELECT * FROM ").append(entity.tableName.getReference(IdentifierProcessing.ANSI))
@@ -51,7 +55,7 @@ internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
             append("OFFSET (")
             append(" SELECT ROW_NUMBER() OVER (").append(actualSort.present()).append(")")
             append(" FROM ").append(entity.tableName.getReference(IdentifierProcessing.ANSI))
-            append(" WHERE ").append(metadata.cursor).append(" = :after")
+            append(" WHERE ").append(properties.cursor).append(" = :after")
             append(")")
         }
 
@@ -76,7 +80,7 @@ internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
     override fun indexOf(entity: T?): Mono<Long> {
         if (entity == null) return Mono.empty()
 
-        return operations.count(empty().sort(metadata.orderBy), this.entity.javaType)
+        return operations.count(empty().sort(properties.orderBy), this.entity.javaType)
     }
 
     val paginationQuery: PaginationQuery? = runCatching {
@@ -87,16 +91,43 @@ internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
             .getAnnotation(PaginationQuery::class.java)
     }.getOrNull()
 
-    val metadata: EntityMetadata
-        get() {
-            val orderBy = entity.javaType.kotlin.findAnnotation<OrderBy>()
-                ?: error("Could not find OrderBy annotation in entity")
+    val entityMetadata: MutablePersistentEntity<*, *>
+        get() = entity::class.java
+            .getDeclaredField("entityMetadata")
+            .apply { isAccessible = true }
+            .get(entity) as MutablePersistentEntity<*, *>
 
-            val cursor = entity.javaType.kotlin.findAnnotation<Cursor>()
+    val properties: EntityProperties
+        get() {
+            val entityMetadata = entityMetadata
+
+            val cursor = entity.javaType.kotlin.findPropertyByAnnotation<Cursor, String>()
+                ?.let { entityMetadata.getColumnName(it.name) }
                 ?: error("Could not find Cursor annotation in entity")
 
-            return EntityMetadata(Sort.by(orderBy.direction, orderBy.property), cursor.property)
+            val orderBy = entity.javaType.kotlin
+                .findPropertiesByAnnotation<OrderBy>()
+                .map { it.findAnnotation<OrderBy>() to entityMetadata.getColumnName(it.name) }
+                .mapNotNull { (orderBy, name) ->
+                    if (orderBy == null) return@mapNotNull null
+                    if (name == null) return@mapNotNull null
+
+                    Sort.by(orderBy.direction, name)
+                }
+                .reduce { acc, sort -> acc.and(sort) }
+
+            if (orderBy.isUnsorted || orderBy.isEmpty) {
+                error("Pagination sort could not be unsorted or empty")
+            }
+
+            return EntityProperties(orderBy, cursor)
         }
+
+    private fun MutablePersistentEntity<*, *>.getColumnName(property: String): String? {
+        return (getPersistentProperty(property) as? BasicRelationalPersistentProperty)
+            ?.columnName
+            ?.getReference(IdentifierProcessing.ANSI)
+    }
 
     private fun Sort.present(): String = buildString {
         if (isEmpty || isUnsorted) {
@@ -109,4 +140,4 @@ internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
     }
 }
 
-internal data class EntityMetadata(val orderBy: Sort, val cursor: String)
+internal data class EntityProperties(val orderBy: Sort, val cursor: String)

@@ -17,14 +17,11 @@ import org.springframework.security.access.prepost.PreAuthorize
 import java.time.LocalDateTime
 
 @Table("role")
-@Cursor("name")
-@OrderBy("created_at")
 data class Role(
-    @Id
     @GraphQLIgnore
-    val id: UniqueId? = null,
-    val name: String,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    @Id val id: UniqueId? = null,
+    @Cursor val name: String,
+    @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null
 ) : MutableEntity<Role> {
     companion object Permissions {
