@@ -2,6 +2,8 @@ package com.diekeditora.infra.authority
 
 import com.diekeditora.domain.Entity
 import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.domain.page.Cursor
+import com.diekeditora.domain.page.OrderBy
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.Id
@@ -9,9 +11,10 @@ import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
 @Table("authority")
+@Cursor("value")
+@OrderBy("created_at")
 internal data class Authority(
     @Id
-    @JsonIgnore
     @GraphQLIgnore
     val id: UniqueId? = null,
     val value: String,

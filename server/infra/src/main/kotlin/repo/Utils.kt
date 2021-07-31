@@ -10,11 +10,12 @@ import org.springframework.data.domain.Sort
 internal suspend fun <T, ID> CursorBasedPaginationRepository<T, ID>.findAllAsConnection(
     first: Int,
     after: String? = null,
-    sort: Sort? = null
+    sort: Sort? = null,
+    owner: Any? = null,
 ): Connection<T> where T : Any, T : Entity<T> {
     assertPageSize(first)
 
-    val items = findAll(first, after, sort).toList()
+    val items = findAll(first, after, sort, owner).toList()
     val totalItems = count()
 
     val firstIndex = indexOf(items.firstOrNull())?.toBigInteger()

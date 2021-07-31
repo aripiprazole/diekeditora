@@ -4,6 +4,8 @@ import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.dataloader.PaginationArg
 import com.diekeditora.domain.dataloader.toPaginationArg
 import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.domain.page.Cursor
+import com.diekeditora.domain.page.OrderBy
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
 import graphql.relay.Connection
@@ -15,6 +17,8 @@ import org.springframework.security.access.prepost.PreAuthorize
 import java.time.LocalDateTime
 
 @Table("role")
+@Cursor("name")
+@OrderBy("created_at")
 data class Role(
     @Id
     @GraphQLIgnore

@@ -3,6 +3,7 @@ package com.diekeditora.infra.repo
 import com.diekeditora.domain.Entity
 import com.diekeditora.domain.page.Cursor
 import com.diekeditora.domain.page.OrderBy
+import com.diekeditora.domain.page.PaginationQuery
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.domain.Sort
 import org.springframework.data.r2dbc.convert.R2dbcConverter
@@ -18,13 +19,13 @@ import reactor.core.publisher.Mono
 import kotlin.reflect.full.findAnnotation
 
 interface ReactiveCursorBasedPaginationRepository<T, ID> : ReactiveSortingRepository<T, ID> {
-    fun findAll(first: Int, after: String? = null, sort: Sort? = null): Flux<T>
+    fun findAll(first: Int, after: String? = null, sort: Sort? = null, owner: Any? = null): Flux<T>
 
     fun indexOf(entity: T?): Mono<Long>
 }
 
 interface CursorBasedPaginationRepository<T, ID> : CoroutineSortingRepository<T, ID> {
-    fun findAll(first: Int, after: String? = null, sort: Sort? = null): Flow<T>
+    fun findAll(first: Int, after: String? = null, sort: Sort? = null, owner: Any? = null): Flow<T>
 
     suspend fun indexOf(entity: T?): Long?
 }
@@ -34,29 +35,40 @@ internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
     val entity: RelationalEntityInformation<T, ID>,
     val operations: R2dbcEntityOperations,
     val converter: R2dbcConverter,
+    repositoryInterface: Class<*>,
 ) : SimpleR2dbcRepository<T, ID>(entity, operations, converter),
     ReactiveCursorBasedPaginationRepository<T, ID> where T : Any, T : Entity<T> {
-    override fun findAll(first: Int, after: String?, sort: Sort?): Flux<T> {
+    override fun findAll(first: Int, after: String?, sort: Sort?, owner: Any?): Flux<T> {
         val actualSort = sort ?: metadata.orderBy
 
-        val query = buildString {
+        val selectQuery = paginationQuery?.selectQuery ?: buildString {
             append("SELECT * FROM ").append(entity.tableName.getReference(IdentifierProcessing.ANSI))
-            append(" LIMIT :first ").append(actualSort.present())
+            append(" ").append(actualSort.present())
+            append(" LIMIT :first ")
+        }
+
+        val offsetQuery = paginationQuery?.offsetQuery ?: buildString {
+            append("OFFSET (")
+            append(" SELECT ROW_NUMBER() OVER (").append(actualSort.present()).append(")")
+            append(" FROM ").append(entity.tableName.getReference(IdentifierProcessing.ANSI))
+            append(" WHERE ").append(metadata.cursor).append(" = :after")
+            append(")")
+        }
+
+        val query = buildString {
+            append(selectQuery)
 
             if (after != null) {
                 append(" ")
-
-                append("OFFSET (")
-                append(" SELECT ROW_NUMBER() OVER (").append(actualSort.present()).append(")")
-                append(" FROM ").append(entity.tableName.getReference(IdentifierProcessing.ANSI))
-                append(" WHERE ").append(metadata.cursor).append(" = :after")
-                append(")")
+                append(offsetQuery)
             }
         }
 
-        return operations.databaseClient.sql(query)
+        return operations.databaseClient
+            .sql(query)
             .bind("first", first)
             .run { if (after != null) bind("after", after) else this }
+            .run { if (owner != null) bind("owner", owner) else this }
             .map { row, rowMetadata -> converter.read(entity.javaType, row, rowMetadata) }
             .all()
     }
@@ -66,6 +78,14 @@ internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
 
         return operations.count(empty().sort(metadata.orderBy), this.entity.javaType)
     }
+
+    val paginationQuery: PaginationQuery? = runCatching {
+        repositoryInterface
+            .getDeclaredMethod(
+                "findAll", Int::class.java, String::class.java, Sort::class.java, Any::class.java,
+            )
+            .getAnnotation(PaginationQuery::class.java)
+    }.getOrNull()
 
     val metadata: EntityMetadata
         get() {
