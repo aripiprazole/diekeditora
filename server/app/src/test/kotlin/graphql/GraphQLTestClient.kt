@@ -1,6 +1,6 @@
-package com.diekeditora.web.tests.graphql
+package com.diekeditora.app.tests.graphql
 
-import com.diekeditora.web.tests.utils.AuthenticationMocker
+import com.diekeditora.app.tests.utils.AuthenticationMocker
 import com.expediagroup.graphql.generator.exceptions.GraphQLKotlinException
 import com.expediagroup.graphql.server.types.GraphQLRequest
 import com.expediagroup.graphql.server.types.GraphQLResponse
@@ -18,6 +18,7 @@ interface GraphQLRequestBuilder<R> {
     fun authenticate(vararg authorities: String)
 }
 
+@Suppress("Detekt.UnnecessaryAbstractClass")
 abstract class TestQuery<R>(val content: String) {
     val variables: Map<String, Any?>
         get() = this::class.declaredMemberProperties

@@ -1,4 +1,4 @@
-package com.diekeditora.web.tests.config
+package com.diekeditora.app.tests.config
 
 import io.r2dbc.h2.H2ConnectionConfiguration
 import io.r2dbc.h2.H2ConnectionFactory

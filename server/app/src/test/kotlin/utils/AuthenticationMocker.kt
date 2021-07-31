@@ -1,6 +1,6 @@
-package com.diekeditora.web.tests.utils
+package com.diekeditora.app.tests.utils
 
-import com.diekeditora.web.tests.factories.UserFactory
+import com.diekeditora.app.tests.factories.UserFactory
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority

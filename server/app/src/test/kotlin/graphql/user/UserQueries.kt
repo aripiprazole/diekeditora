@@ -1,8 +1,8 @@
-package com.diekeditora.web.tests.graphql.user
+package com.diekeditora.app.tests.graphql.user
 
 import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.user.User
-import com.diekeditora.web.tests.graphql.TestQuery
+import com.diekeditora.app.tests.graphql.TestQuery
 
 data class UsersQuery(val first: Int, val after: String? = null) : TestQuery<AppPage<User>>(
     """
