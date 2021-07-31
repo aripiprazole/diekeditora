@@ -1,10 +1,10 @@
-package com.diekeditora.web.tests.graphql.user
+package com.diekeditora.app.tests.graphql.user
 
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
 import com.diekeditora.infra.redis.CacheProvider
-import com.diekeditora.web.tests.factories.UserFactory
-import com.diekeditora.web.tests.graphql.GraphQLTestClient
+import com.diekeditora.app.tests.factories.UserFactory
+import com.diekeditora.app.tests.graphql.GraphQLTestClient
 import graphql.relay.Connection
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test

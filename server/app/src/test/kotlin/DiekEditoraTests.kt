@@ -1,4 +1,4 @@
-package com.diekeditora.web.tests
+package com.diekeditora.app.tests
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

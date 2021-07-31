@@ -1,6 +1,6 @@
-package com.diekeditora.web.tests.config
+package com.diekeditora.app.tests.config
 
-import com.diekeditora.web.tests.props.RedisProps
+import com.diekeditora.app.tests.props.RedisProps
 import org.springframework.context.annotation.Configuration
 import redis.embedded.RedisServer
 import javax.annotation.PostConstruct

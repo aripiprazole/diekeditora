@@ -1,7 +1,7 @@
-package com.diekeditora.web.tests.graphql.tests
+package com.diekeditora.app.tests.graphql.tests
 
-import com.diekeditora.web.graphql.AuthGraphQLContextFactory
-import com.diekeditora.web.tests.factories.UserFactory
+import com.diekeditora.app.graphql.AuthGraphQLContextFactory
+import com.diekeditora.app.tests.factories.UserFactory
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.reactor.mono

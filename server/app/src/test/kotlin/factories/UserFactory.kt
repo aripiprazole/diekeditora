@@ -1,4 +1,4 @@
-package com.diekeditora.web.tests.factories
+package com.diekeditora.app.tests.factories
 
 import com.diekeditora.domain.user.User
 import com.diekeditora.shared.generateRandomString

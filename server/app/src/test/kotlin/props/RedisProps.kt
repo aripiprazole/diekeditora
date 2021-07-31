@@ -1,4 +1,4 @@
-package com.diekeditora.web.tests.props
+package com.diekeditora.app.tests.props
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component

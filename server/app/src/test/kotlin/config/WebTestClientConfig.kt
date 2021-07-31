@@ -1,6 +1,6 @@
-package com.diekeditora.web.tests.config
+package com.diekeditora.app.tests.config
 
-import com.diekeditora.web.tests.utils.configure
+import com.diekeditora.app.tests.utils.configure
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean

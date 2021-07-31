@@ -1,14 +1,14 @@
-package com.diekeditora.web.tests.graphql.authority
+package com.diekeditora.app.tests.graphql.authority
 
 import com.diekeditora.domain.authority.AuthorityService
 import com.diekeditora.domain.page.asNodeList
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.UserService
 import com.diekeditora.infra.redis.CacheProvider
-import com.diekeditora.web.tests.factories.AuthorityFactory
-import com.diekeditora.web.tests.factories.RoleFactory
-import com.diekeditora.web.tests.factories.UserFactory
-import com.diekeditora.web.tests.graphql.GraphQLTestClient
+import com.diekeditora.app.tests.factories.AuthorityFactory
+import com.diekeditora.app.tests.factories.RoleFactory
+import com.diekeditora.app.tests.factories.UserFactory
+import com.diekeditora.app.tests.graphql.GraphQLTestClient
 import graphql.relay.Connection
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
