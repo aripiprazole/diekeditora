@@ -4,6 +4,8 @@ import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.dataloader.PaginationArg
 import com.diekeditora.domain.dataloader.toPaginationArg
 import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.domain.page.Cursor
+import com.diekeditora.domain.page.OrderBy
 import com.diekeditora.domain.profile.Profile
 import com.diekeditora.domain.role.Role
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
@@ -22,6 +24,8 @@ import java.time.LocalDateTime
 
 @GraphQLValidObjectLocations([Locations.OBJECT])
 @Table("\"user\"")
+@Cursor("username")
+@OrderBy("created_at")
 data class User(
     @Id
     @GraphQLIgnore
