@@ -1,3 +1,4 @@
 package com.diekeditora.domain.page
 
-annotation class Cursor(val property: String)
+@Target(AnnotationTarget.PROPERTY)
+annotation class Cursor
