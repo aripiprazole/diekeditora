@@ -1,15 +1,15 @@
 package com.diekeditora.infra.user
 
 import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
-import com.diekeditora.infra.utils.assertPageSize
+import com.diekeditora.infra.repo.findAllAsConnection
 import com.diekeditora.shared.generateRandomString
 import com.diekeditora.shared.logger
 import com.google.firebase.auth.FirebaseToken
 import graphql.relay.Connection
-import kotlinx.coroutines.flow.toList
+import org.springframework.data.domain.Sort
+import org.springframework.data.domain.Sort.Direction.ASC
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -20,20 +20,7 @@ internal class UserServiceImpl(val repo: UserRepo) : UserService {
 
     @Transactional
     override suspend fun findUsers(first: Int, after: String?): Connection<User> {
-        assertPageSize(first)
-
-        val items = if (after != null) {
-            repo.findAll(first, after).toList()
-        } else {
-            repo.findAll(first).toList()
-        }
-
-        val totalItems = repo.totalEntries()
-
-        val firstIndex = items.firstOrNull()?.let { repo.index(it.username) }
-        val lastIndex = items.lastOrNull()?.let { repo.index(it.username) }
-
-        return AppPage.of(totalItems, items, first, firstIndex, lastIndex)
+        return repo.findAllAsConnection(first, after, Sort.by(ASC, "created_at"))
     }
 
     override suspend fun findUserById(id: UniqueId): User? {
