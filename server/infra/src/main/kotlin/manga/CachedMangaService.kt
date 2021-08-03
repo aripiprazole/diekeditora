@@ -1,5 +1,6 @@
 package com.diekeditora.infra.manga
 
+import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.manga.Manga
 import com.diekeditora.domain.manga.MangaService
 import com.diekeditora.domain.manga.MangaSort
@@ -20,7 +21,7 @@ internal class CachedMangaService(
 ) : MangaService by delegate {
     override suspend fun findMangas(
         first: Int,
-        after: String,
+        after: UniqueId?,
         orderBy: MangaSort,
         filterBy: Set<String>
     ): Connection<Manga> {
@@ -33,26 +34,12 @@ internal class CachedMangaService(
             }
     }
 
-    override suspend fun findMangasByProfile(profile: Profile): List<Manga> {
+    override suspend fun findAuthorsByManga(manga: Manga): List<Profile> {
         return cacheProvider
-            .repo<List<Manga>>()
-            .remember("profileMangaList.${profile.cursor}", expiresIn) {
-                delegate.findMangasByProfile(profile)
+            .repo<List<Profile>>()
+            .remember("profileMangaList.${manga.cursor}", expiresIn) {
+                delegate.findAuthorsByManga(manga)
             }
-    }
-
-    override suspend fun findMangaByTitle(title: String): Manga? {
-        return cacheProvider
-            .repo<Manga>()
-            .query("manga.$title", expiresIn) {
-                delegate.findMangaByTitle(title)
-            }
-    }
-
-    override suspend fun updateManga(manga: Manga): Manga {
-        return delegate.updateManga(manga).also {
-            cacheProvider.repo<Manga>().delete("manga.${manga.cursor}")
-        }
     }
 
     override suspend fun deleteManga(manga: Manga): Manga {

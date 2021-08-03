@@ -1,6 +1,7 @@
-package com.diekeditora.domain.manga
+package com.diekeditora.domain.comment
 
 import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.domain.manga.Manga
 import graphql.relay.Connection
 
 interface CommentService {

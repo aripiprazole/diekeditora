@@ -7,6 +7,7 @@ import com.expediagroup.graphql.generator.execution.FlowSubscriptionExecutionStr
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.fasterxml.jackson.databind.ObjectMapper
 import graphql.execution.ExecutionStrategy
+import graphql.language.StringValue
 import graphql.schema.Coercing
 import graphql.schema.GraphQLScalarType.newScalar
 import org.springframework.context.annotation.Bean
@@ -60,7 +61,9 @@ class GraphQLConfig(val objectMapper: ObjectMapper) {
                     }
 
                     override fun parseLiteral(input: Any?): UniqueId {
-                        return UniqueId(input.toString())
+                        if (input !is StringValue) error("Could not parse unique id from non-string value")
+
+                        return UniqueId(input.value)
                     }
                 })
                 .build()

@@ -1,13 +1,18 @@
 package com.diekeditora.domain.manga
 
 import com.diekeditora.domain.MutableEntity
+import com.diekeditora.domain.chapter.Chapter
 import com.diekeditora.domain.dataloader.PaginationArg
 import com.diekeditora.domain.dataloader.toPaginationArg
+import com.diekeditora.domain.genre.Genre
 import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.domain.page.Cursor
+import com.diekeditora.domain.page.OrderBy
 import com.diekeditora.domain.profile.Profile
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
-import com.fasterxml.jackson.annotation.JsonIgnore
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
 import graphql.relay.Connection
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
@@ -15,21 +20,21 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
+@GraphQLValidObjectLocations([Locations.OBJECT])
 @Table("manga")
 data class Manga(
-    @Id
     @GraphQLIgnore
-    val id: UniqueId? = null,
+    @Id val id: UniqueId? = null,
+    @Cursor val uid: UniqueId,
     val title: String,
     val competing: Boolean,
     val summary: String,
-    val advisory: AgeAdvisory = AgeAdvisory.Free,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    val advisory: Int = 0,
+    @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
 ) : MutableEntity<Manga> {
     companion object Permissions {
-        const val VIEW = "manga.view"
         const val STORE = "manga.store"
         const val UPDATE = "manga.update"
         const val DESTROY = "manga.destroy"
@@ -39,14 +44,6 @@ data class Manga(
     suspend fun latestChapter(env: DataFetchingEnvironment): Chapter {
         return env
             .getDataLoader<Manga, Chapter>("MangaLatestChapterLoader")
-            .load(this)
-            .await()
-    }
-
-    @GraphQLDescription("Returns manga's summary rating")
-    suspend fun summaryRating(env: DataFetchingEnvironment): Rating {
-        return env
-            .getDataLoader<Manga, Rating>("MangaRatingLoader")
             .load(this)
             .await()
     }
@@ -89,11 +86,6 @@ data class Manga(
             .await()
             .toList()
     }
-
-    @GraphQLIgnore
-    override val cursor: String
-        @JsonIgnore
-        get() = title
 
     @GraphQLIgnore
     override fun update(with: Manga): Manga {

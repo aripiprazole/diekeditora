@@ -1,27 +1,30 @@
 package com.diekeditora.app.resources.manga
 
+import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.manga.Manga
+import com.diekeditora.domain.manga.MangaInput
 import com.diekeditora.domain.manga.MangaService
+import com.expediagroup.graphql.server.operations.Mutation
 import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Component
 
 @Component
-class MangaMutation(val mangaService: MangaService) {
+class MangaMutation(val mangaService: MangaService) : Mutation {
     @Secured(Manga.STORE)
-    suspend fun createManga(manga: Manga): Manga {
-        return mangaService.saveManga(manga)
+    suspend fun createManga(input: MangaInput): Manga {
+        return mangaService.saveManga(input)
+    }
+
+    @Secured(Manga.UPDATE)
+    suspend fun updateManga(uid: UniqueId, input: MangaInput): Manga? {
+        val target = mangaService.findMangaByUid(uid) ?: return null
+
+        return mangaService.updateManga(target, input)
     }
 
     @Secured(Manga.DESTROY)
-    suspend fun updateManga(title: String, manga: Manga): Manga? {
-        val target = mangaService.findMangaByTitle(title) ?: return null
-
-        return mangaService.updateManga(target.update(manga))
-    }
-
-    @Secured(Manga.DESTROY)
-    suspend fun deleteManga(title: String): Manga? {
-        val manga = mangaService.findMangaByTitle(title) ?: return null
+    suspend fun deleteManga(uid: UniqueId): Manga? {
+        val manga = mangaService.findMangaByUid(uid) ?: return null
 
         return mangaService.deleteManga(manga)
     }

@@ -101,7 +101,7 @@ internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
         get() {
             val entityMetadata = entityMetadata
 
-            val cursor = entity.javaType.kotlin.findPropertyByAnnotation<Cursor, String>()
+            val cursor = entity.javaType.kotlin.findPropertyByAnnotation<Cursor>()
                 ?.let { entityMetadata.getColumnName(it.name) }
                 ?: error("Could not find Cursor annotation in entity")
 

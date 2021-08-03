@@ -1,4 +1,4 @@
-package com.diekeditora.domain.manga
+package com.diekeditora.domain.genre
 
 import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.id.UniqueId
@@ -8,29 +8,24 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
-@Table("chapter")
-data class Chapter(
+@Table("genre")
+data class Genre(
     @Id
     @GraphQLIgnore
     val id: UniqueId? = null,
     val title: String,
-    val number: Int,
-    val pages: Int,
-    val enabled: Boolean = false,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
-) : MutableEntity<Chapter> {
+) : MutableEntity<Genre> {
     @GraphQLIgnore
     override val cursor: String
         @JsonIgnore
-        get() = number.toString()
+        get() = title
 
     @GraphQLIgnore
-    override fun update(with: Chapter): Chapter {
+    override fun update(with: Genre): Genre {
         return copy(
             title = with.title,
-            pages = with.pages,
-            enabled = with.enabled,
             updatedAt = LocalDateTime.now(),
         )
     }
@@ -40,29 +35,22 @@ data class Chapter(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Chapter
+        other as Genre
 
         if (title != other.title) return false
-        if (pages != other.pages) return false
-        if (enabled != other.enabled) return false
 
         return true
     }
 
     @GraphQLIgnore
     override fun hashCode(): Int {
-        var result = title.hashCode()
-        result = 31 * result + pages
-        result = 31 * result + enabled.hashCode()
-        return result
+        return title.hashCode()
     }
 
     @GraphQLIgnore
     override fun toString(): String {
-        return "Chapter(" +
+        return "Genre(" +
             "title='$title', " +
-            "pages=$pages, " +
-            "enabled=$enabled, " +
             "createdAt=$createdAt, " +
             "updatedAt=$updatedAt" +
             ")"

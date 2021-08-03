@@ -1,8 +1,8 @@
 package com.diekeditora.infra.comment
 
+import com.diekeditora.domain.comment.Comment
+import com.diekeditora.domain.comment.CommentService
 import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.manga.Comment
-import com.diekeditora.domain.manga.CommentService
 import com.diekeditora.domain.manga.Manga
 import graphql.relay.Connection
 import org.springframework.stereotype.Service

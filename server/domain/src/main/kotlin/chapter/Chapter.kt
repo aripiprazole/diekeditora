@@ -1,31 +1,32 @@
-package com.diekeditora.domain.manga
+package com.diekeditora.domain.chapter
 
 import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.domain.page.Cursor
+import com.diekeditora.domain.page.OrderBy
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
-import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
-@Table("genre")
-data class Genre(
-    @Id
+@Table("chapter")
+data class Chapter(
     @GraphQLIgnore
-    val id: UniqueId? = null,
+    @Id val id: UniqueId? = null,
+    @Cursor val uid: UniqueId,
     val title: String,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    val number: Int,
+    val pages: Int,
+    val enabled: Boolean = false,
+    @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
-) : MutableEntity<Genre> {
+) : MutableEntity<Chapter> {
     @GraphQLIgnore
-    override val cursor: String
-        @JsonIgnore
-        get() = title
-
-    @GraphQLIgnore
-    override fun update(with: Genre): Genre {
+    override fun update(with: Chapter): Chapter {
         return copy(
             title = with.title,
+            pages = with.pages,
+            enabled = with.enabled,
             updatedAt = LocalDateTime.now(),
         )
     }
@@ -35,22 +36,29 @@ data class Genre(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Genre
+        other as Chapter
 
         if (title != other.title) return false
+        if (pages != other.pages) return false
+        if (enabled != other.enabled) return false
 
         return true
     }
 
     @GraphQLIgnore
     override fun hashCode(): Int {
-        return title.hashCode()
+        var result = title.hashCode()
+        result = 31 * result + pages
+        result = 31 * result + enabled.hashCode()
+        return result
     }
 
     @GraphQLIgnore
     override fun toString(): String {
-        return "Genre(" +
+        return "Chapter(" +
             "title='$title', " +
+            "pages=$pages, " +
+            "enabled=$enabled, " +
             "createdAt=$createdAt, " +
             "updatedAt=$updatedAt" +
             ")"

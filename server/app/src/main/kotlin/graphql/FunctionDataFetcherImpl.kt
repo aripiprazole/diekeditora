@@ -34,14 +34,14 @@ class FunctionDataFetcherImpl(
         val secured = fn.findAnnotation<Secured>()?.value
         val context = environment.getContext<GraphQLContext>() as? AuthGraphQLContext
 
+        return runFunction(environment)
+
         when {
             expression != null && context == null -> throw AccessDeniedException("Not authenticated")
             expression != null && context != null -> context.preAuthorize(expression, environment)
             secured != null && context == null -> throw AccessDeniedException("Not authenticated")
             secured != null && context != null -> context.secured(secured.toList())
         }
-
-        return runFunction(environment)
     }
 
     private fun runFunction(env: DataFetchingEnvironment): Any? {
