@@ -1,11 +1,11 @@
 package com.diekeditora.infra.invoice
 
+import com.diekeditora.domain.chapter.Chapter
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.invoice.Invoice
 import com.diekeditora.domain.invoice.InvoiceService
 import com.diekeditora.domain.invoice.MangaChapterInvoice
 import com.diekeditora.domain.invoice.MangaSubscriptionInvoice
-import com.diekeditora.domain.manga.Chapter
 import com.diekeditora.domain.manga.Manga
 import com.diekeditora.domain.page.AppPage
 import kotlinx.coroutines.flow.Flow

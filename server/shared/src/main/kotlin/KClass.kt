@@ -9,8 +9,6 @@ inline fun <reified T : Annotation> KClass<out Any>.findPropertiesByAnnotation()
     return declaredMemberProperties.filter { it.hasAnnotation<T>() }
 }
 
-inline fun <reified T : Annotation, R> KClass<out Any>.findPropertyByAnnotation(): KProperty1<out Any, R>? {
-    return declaredMemberProperties
-        .filterIsInstance<KProperty1<out Any, R>>()
-        .find { it.hasAnnotation<T>() }
+inline fun <reified T : Annotation> KClass<out Any>.findPropertyByAnnotation(): KProperty1<out Any, Any?>? {
+    return declaredMemberProperties.find { it.hasAnnotation<T>() }
 }

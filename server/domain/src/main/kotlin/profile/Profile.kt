@@ -4,6 +4,8 @@ import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.image.AvatarKind
 import com.diekeditora.domain.image.FileKind
+import com.diekeditora.domain.page.Cursor
+import com.diekeditora.domain.page.OrderBy
 import com.diekeditora.domain.user.User
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
@@ -16,12 +18,11 @@ import java.time.LocalDateTime
 
 @Table("profile")
 data class Profile(
-    @Id
     @GraphQLIgnore
-    val id: UniqueId? = null,
-    val uid: UniqueId,
+    @Id val id: UniqueId? = null,
+    @Cursor val uid: UniqueId,
     val gender: Gender,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     @GraphQLIgnore val ownerId: UniqueId,
 ) : MutableEntity<Profile> {

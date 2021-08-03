@@ -26,15 +26,12 @@ import java.time.LocalDateTime
 @Table("\"user\"")
 data class User(
     @GraphQLIgnore
-    @Id
-    val id: UniqueId? = null,
+    @Id val id: UniqueId? = null,
     val name: String,
     val email: String,
-    @Cursor
-    val username: String,
+    @Cursor val username: String,
     val birthday: LocalDate? = null,
-    @OrderBy
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
 ) : MutableEntity<User> {

@@ -1,7 +1,7 @@
 package com.diekeditora.domain.invoice
 
+import com.diekeditora.domain.chapter.Chapter
 import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.manga.Chapter
 import com.diekeditora.domain.manga.Manga
 import com.diekeditora.domain.page.AppPage
 import kotlinx.coroutines.flow.Flow
