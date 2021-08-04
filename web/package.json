@@ -1,6 +1,7 @@
 {
-  "name": "root",
+  "name": "diekeditora",
   "private": true,
+  "workspaces": ["packages/store","packages/studio", "packages/app"],
   "devDependencies": {
     "@types/node": "^15.12.3",
     "@types/react": "^17.0.11",
@@ -11,7 +12,6 @@
     "eslint": "^7.29.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.24.0",
-    "lerna": "^3.22.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.3.1",
     "stylelint": "^13.13.1",
@@ -19,17 +19,17 @@
     "typescript": "^4.3.4"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "postinstall": "lerna bootstrap",
     "lint": "eslint './**/*.ts' './**/*.tsx' './**/*.js' --fix",
-    "dev": "run-p app:dev store:dev",
-    "app:build": "lerna run --scope @diekeditora/app --stream build",
-    "app:start": "lerna run --scope @diekeditora/app --stream start",
-    "app:test": "lerna run --scope @diekeditora/app --stream cypress:run",
-    "app:dev": "lerna run --scope @diekeditora/app --stream dev",
-    "studio:dev": "lerna run --scope @diekeditora/studio --stream dev",
-    "studio:build": "lerna run --scope @diekeditora/studio --stream build",
-    "store:dev": "lerna run --scope @diekeditora/store --stream dev"
+    "dev": "run-p app:dev studio:dev",
+    "app:build": "yarn workspace @diekeditora/app run build",
+    "app:start": "yarn workspace @diekeditora/app run start",
+    "app:test": "yarn workspace @diekeditora/app run cypress:run",
+    "app:dev": "run-p store:dev app:dev-start",
+    "app:dev-start": "yarn workspace @diekeditora/app run dev",
+    "studio:dev": "run-p store:dev studio:dev-start",
+    "studio:dev-start": "yarn workspace @diekeditora/studio run dev",
+    "studio:build": "yarn workspace @diekeditora/studio run build",
+    "store:dev": "yarn workspace @diekeditora/store run dev"
   },
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
