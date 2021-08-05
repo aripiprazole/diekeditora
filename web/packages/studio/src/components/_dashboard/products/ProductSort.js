@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import chevronUpFill from '@iconify/icons-eva/chevron-up-fill';

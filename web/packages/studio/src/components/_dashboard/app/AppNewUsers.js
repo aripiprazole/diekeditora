@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Icon } from '@iconify/react';
 import appleFilled from '@iconify/icons-ant-design/apple-filled';
 // material

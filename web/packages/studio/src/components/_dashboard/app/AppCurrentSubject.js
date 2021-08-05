@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 // material

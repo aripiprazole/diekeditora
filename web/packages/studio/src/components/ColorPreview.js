@@ -1,5 +1,3 @@
-import React from 'react';
-
 import PropTypes from 'prop-types';
 // material
 import { alpha, experimentalStyled as styled } from '@material-ui/core/styles';
