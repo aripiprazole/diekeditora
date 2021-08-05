@@ -7,14 +7,13 @@ module.exports = {
       (plugin) => !(plugin instanceof ModuleScopePlugin)
     );
     config.resolve.plugins.push(new JsconfigPathsPlugin());
+    
+    config.resolve.alias['@diekeditora/admin'] = './src';
 
     return config;
   },
 
   paths(paths) {
-    paths['@diekeditora/admin'] = './src';
-    paths['@diekeditora/admin/*'] = './src/*';
-
     return paths;
   }
 };
