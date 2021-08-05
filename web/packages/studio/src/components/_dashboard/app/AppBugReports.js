@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Icon } from '@iconify/react';
 import bugFilled from '@iconify/icons-ant-design/bug-filled';
 // material

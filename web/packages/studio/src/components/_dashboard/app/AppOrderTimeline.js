@@ -1,5 +1,3 @@
-import React from 'react';
-
 import faker from 'faker';
 import PropTypes from 'prop-types';
 // material

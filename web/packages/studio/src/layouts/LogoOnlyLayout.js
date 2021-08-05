@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Link as RouterLink, Outlet } from 'react-router-dom';
 // material
 import { experimentalStyled as styled } from '@material-ui/core/styles';

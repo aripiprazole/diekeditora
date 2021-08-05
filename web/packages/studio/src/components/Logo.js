@@ -1,5 +1,3 @@
-import React from 'react';
-
 import PropTypes from 'prop-types';
 // material
 import { Box } from '@material-ui/core';
