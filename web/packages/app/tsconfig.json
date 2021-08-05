@@ -6,8 +6,6 @@
     "paths": {
       "@diekeditora/app/*": ["./*"],
       "@diekeditora/app": ["./"],
-      "@diekeditora/ui/*": ["../ui/*"],
-      "@diekeditora/ui": ["../ui"],
       "@diekeditora/store/*": ["../store/*"],
       "@diekeditora/store": ["../store"]
     },

@@ -11,6 +11,13 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": "packages",
+    "paths": {
+      "@diekeditora/admin/*": ["studio/src/*"],
+      "@diekeditora/admin": ["studio/src"],
+      "@diekeditora/store/*": ["store/dist/*"],
+      "@diekeditora/store": ["store/dist"]
+    }
   }
 }

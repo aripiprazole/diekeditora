@@ -54,6 +54,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
     'react/jsx-key': 1,
     'react-hooks/rules-of-hooks': 2,
+    'import/no-unresolved': 0,
     'no-unused-vars': [
       1,
       {
