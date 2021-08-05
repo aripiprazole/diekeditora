@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import searchFill from '@iconify/icons-eva/search-fill';
