@@ -1,8 +1,6 @@
-import {all, call, put, takeEvery} from 'redux-saga/effects';
+import {all, put, takeEvery} from 'redux-saga/effects';
 
-import {graphQLClient} from '@diekeditora/store/client';
-import {CompleteUser, Connection, User} from '@diekeditora/store/entities';
-import {USER_CONNECTION_QUERY} from '@diekeditora/store/queries';
+import { todo } from '@diekeditora/store/utils';
 
 import {
   FetchUserConnectionAction,
@@ -13,25 +11,10 @@ import {
   fetchUserSuccess,
 } from './actions';
 
-type FetchUserConnectionResponse = {
-  users: Connection<User>;
-};
-
-type FetchUserResponse = {
-  user: CompleteUser;
-};
-
 /** Fetch user connection saga */
 function* fetchUserConnectionSaga(action: FetchUserConnectionAction) {
   try {
-    const response: FetchUserConnectionResponse = yield call(() =>
-      graphQLClient.query({
-        query: USER_CONNECTION_QUERY,
-        variables: action.payload,
-      }),
-    );
-
-    yield put(fetchUserConnectionSuccess(response.users));
+    yield put(fetchUserConnectionSuccess(todo()));
   } catch (error) {
     yield put(fetchUserFail(error));
   }
@@ -40,14 +23,7 @@ function* fetchUserConnectionSaga(action: FetchUserConnectionAction) {
 /** Fetch user saga */
 function* fetchUserSaga(action: FetchUserAction) {
   try {
-    const response: FetchUserResponse = yield call(() =>
-      graphQLClient.query({
-        query: USER_CONNECTION_QUERY,
-        variables: action.payload,
-      }),
-    );
-
-    yield put(fetchUserSuccess(response.user));
+    yield put(fetchUserSuccess(todo()));
   } catch (error) {
     yield put(fetchUserFail(error));
   }

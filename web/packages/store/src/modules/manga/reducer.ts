@@ -1,12 +1,10 @@
 import produce from 'immer';
 
-import {CompleteManga, Connection, Manga} from '@diekeditora/store/entities';
-
 import {MangaAction, MangaActions} from './actions';
 
 export type MangaState = {
-  manga: CompleteManga | null;
-  connection: Connection<Manga> | null;
+  manga: {} | null;
+  connection: {} | null;
   error: Error | null;
   loading: boolean;
 };

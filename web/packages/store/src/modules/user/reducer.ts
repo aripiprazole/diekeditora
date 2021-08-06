@@ -1,12 +1,10 @@
 import produce from 'immer';
 
-import {CompleteUser, Connection, User} from '@diekeditora/store/entities';
-
 import {UserAction, UserActions} from './actions';
 
 export type UserState = {
-  user: CompleteUser | null;
-  connection: Connection<User> | null;
+  user: {} | null;
+  connection: {} | null;
   error: Error | null;
   loading: boolean;
 };
