@@ -1,6 +1,4 @@
 /* eslint-disable no-unused-vars */
-import {CompleteUser, Connection, User} from '@diekeditora/store/entities';
-
 export type UserAction =
   | FetchUserConnectionAction
   | FetchUserConnectionSuccessAction
@@ -21,12 +19,12 @@ export type FetchUserAction = {
 
 export type FetchUserSuccessAction = {
   type: UserActions.FETCH_USER_SUCCESS;
-  payload: { user: CompleteUser };
+  payload: { user: {} };
 };
 
 export type FetchUserConnectionSuccessAction = {
   type: UserActions.FETCH_USER_CONNECTION_SUCCESS;
-  payload: { connection: Connection<User> };
+  payload: { connection: {} };
 };
 
 export type FetchUserFailAction = {
@@ -47,12 +45,12 @@ export const fetchUserConnection = (first: number, after?: string): FetchUserCon
   payload: {first, after},
 });
 
-export const fetchUserSuccess = (user: CompleteUser): FetchUserSuccessAction => ({
+export const fetchUserSuccess = (user: {}): FetchUserSuccessAction => ({
   type: UserActions.FETCH_USER_SUCCESS,
   payload: {user},
 });
 
-export const fetchUserConnectionSuccess = (connection: Connection<User>): FetchUserConnectionSuccessAction => ({
+export const fetchUserConnectionSuccess = (connection: {}): FetchUserConnectionSuccessAction => ({
   type: UserActions.FETCH_USER_CONNECTION_SUCCESS,
   payload: {connection},
 });

@@ -1,6 +1,4 @@
 /* eslint-disable no-unused-vars */
-import {CompleteManga, Connection, Manga} from '@diekeditora/store/entities';
-
 export type MangaAction =
   | FetchMangaConnectionAction
   | FetchMangaAction
@@ -20,12 +18,12 @@ export type FetchMangaConnectionAction = {
 
 export type FetchMangaSuccessAction = {
   type: MangaActions.FETCH_MANGA_SUCCESS;
-  payload: { manga: CompleteManga };
+  payload: { manga: {} };
 };
 
 export type FetchMangaConnectionSuccessAction = {
   type: MangaActions.FETCH_MANGA_CONNECTION_SUCCESS;
-  payload: { connection: Connection<Manga> };
+  payload: { connection: {} };
 };
 
 export type FetchMangaFailAction = {
@@ -51,12 +49,12 @@ export const fetchManga = (title: string): FetchMangaAction => ({
   payload: {title},
 });
 
-export const fetchMangaSuccess = (manga: CompleteManga): FetchMangaSuccessAction => ({
+export const fetchMangaSuccess = (manga: {}): FetchMangaSuccessAction => ({
   type: MangaActions.FETCH_MANGA_SUCCESS,
   payload: {manga},
 });
 
-export const fetchMangaConnectionSuccess = (connection: Connection<Manga>): FetchMangaConnectionSuccessAction => ({
+export const fetchMangaConnectionSuccess = (connection: {}): FetchMangaConnectionSuccessAction => ({
   type: MangaActions.FETCH_MANGA_CONNECTION_SUCCESS,
   payload: {connection},
 });

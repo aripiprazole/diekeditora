@@ -1,13 +1,11 @@
 import firebase from 'firebase';
 import produce from 'immer';
 
-import {User} from '@diekeditora/store/entities';
-
 import {AuthAction, AuthActions} from './actions';
 
 export type AuthState = {
   token: firebase.User | null;
-  user: User | null;
+  user: {} | null;
   error: Error | null;
   loading: boolean;
 };

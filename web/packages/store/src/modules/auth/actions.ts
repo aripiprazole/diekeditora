@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import firebase from 'firebase';
-import {User} from '@diekeditora/store/entities';
 
 export type AuthAction = LoginAction | LoginSuccess | LoginFail | LogoutAction;
 
@@ -16,7 +15,7 @@ export type LoginFail = {
 
 export type LoginSuccess = {
   type: AuthActions.LOGIN_SUCCESS;
-  payload: { user: User };
+  payload: { user: {} };
 };
 
 export type LogoutAction = {
@@ -35,7 +34,7 @@ export const login = (token: firebase.User): LoginAction => ({
   payload: {token},
 });
 
-export const loginSuccess = (user: User): LoginSuccess => ({
+export const loginSuccess = (user: {}): LoginSuccess => ({
   type: AuthActions.LOGIN_SUCCESS,
   payload: {user},
 });
