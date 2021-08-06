@@ -1,38 +1,30 @@
 // scroll bar
 import 'simplebar/src/simplebar.css';
 
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
-import { Provider } from 'react-redux';
-import { ApolloProvider } from '@apollo/client';
-import { PersistGate } from 'redux-persist/integration/react';
-import { graphQLClient, makeStore, store, persistor } from '@diekeditora/store';
+import {BrowserRouter} from 'react-router-dom';
+import {HelmetProvider} from 'react-helmet-async';
+import {RelayEnvironmentProvider} from 'react-relay/hooks';
+// ----------------------------------------------------------------------
 
-//
+import RelayEnvironment from '@diekeditora/store';
+// ----------------------------------------------------------------------
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
-
-//
-
 // ----------------------------------------------------------------------
 
-makeStore();
-
 ReactDOM.render(
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <ApolloProvider client={graphQLClient}>
-        <HelmetProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </HelmetProvider>
-      </ApolloProvider>
-    </PersistGate>
-  </Provider>,
-  document.getElementById('root')
+    <RelayEnvironmentProvider environment={RelayEnvironment}>
+      <HelmetProvider>
+        <BrowserRouter>
+          <App/>
+        </BrowserRouter>
+      </HelmetProvider>
+    </RelayEnvironmentProvider>,
+    document.getElementById('root'),
 );
 
 // If you want to enable client cache, register instead.

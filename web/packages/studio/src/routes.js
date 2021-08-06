@@ -1,4 +1,4 @@
-import { Navigate, useRoutes } from 'react-router-dom';
+import {Navigate, useRoutes} from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
@@ -16,22 +16,22 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard/app" replace /> },
-        { path: 'app', element: <DashboardApp /> },
-        { path: 'user', element: <User /> }
-      ]
+        {path: '/', element: <Navigate to="/dashboard/app" replace />},
+        {path: 'app', element: <DashboardApp />},
+        {path: 'user', element: <User />},
+      ],
     },
     {
       path: '/',
       element: <LogoOnlyLayout />,
       children: [
-        { path: 'login', element: <Login /> },
-        { path: '404', element: <NotFound /> },
-        { path: '/', element: <Navigate to="/dashboard" /> },
-        { path: '*', element: <Navigate to="/404" /> }
-      ]
+        {path: 'login', element: <Login />},
+        {path: '404', element: <NotFound />},
+        {path: '/', element: <Navigate to="/dashboard" />},
+        {path: '*', element: <Navigate to="/404" />},
+      ],
     },
 
-    { path: '*', element: <Navigate to="/404" replace /> }
+    {path: '*', element: <Navigate to="/404" replace />},
   ]);
 }
