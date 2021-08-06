@@ -1,40 +1,40 @@
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 // material
-import { experimentalStyled as styled } from '@material-ui/core/styles';
-import { Card, Stack, Link, Container, Typography } from '@material-ui/core';
+import {experimentalStyled as styled} from '@material-ui/core/styles';
+import {Card, Stack, Link, Container, Typography} from '@material-ui/core';
 // layouts
 import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
-import { MHidden } from '../components/@material-extend';
-import { LoginForm } from '../components/authentication/login';
+import {MHidden} from '../components/@material-extend';
+import {LoginForm} from '../components/authentication/login';
 import AuthSocial from '../components/authentication/AuthSocial';
 
 // ----------------------------------------------------------------------
 
-const RootStyle = styled(Page)(({ theme }) => ({
+const RootStyle = styled(Page)(({theme}) => ({
   [theme.breakpoints.up('md')]: {
-    display: 'flex'
-  }
+    display: 'flex',
+  },
 }));
 
-const SectionStyle = styled(Card)(({ theme }) => ({
+const SectionStyle = styled(Card)(({theme}) => ({
   width: '100%',
   maxWidth: 464,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  margin: theme.spacing(2, 0, 2, 2)
+  margin: theme.spacing(2, 0, 2, 2),
 }));
 
-const ContentStyle = styled('div')(({ theme }) => ({
+const ContentStyle = styled('div')(({theme}) => ({
   maxWidth: 480,
   margin: 'auto',
   display: 'flex',
   minHeight: '100vh',
   flexDirection: 'column',
   justifyContent: 'center',
-  padding: theme.spacing(12, 0)
+  padding: theme.spacing(12, 0),
 }));
 
 // ----------------------------------------------------------------------
@@ -51,7 +51,7 @@ export default function Login() {
 
       <MHidden width="mdDown">
         <SectionStyle>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+          <Typography variant="h3" sx={{px: 5, mt: 10, mb: 5}}>
             Olá, bem vindo de volta!
           </Typography>
           <img src="/static/illustrations/illustration_login.png" alt="login" />
@@ -60,18 +60,18 @@ export default function Login() {
 
       <Container maxWidth="sm">
         <ContentStyle>
-          <Stack sx={{ mb: 5 }}>
+          <Stack sx={{mb: 5}}>
             <Typography variant="h4" gutterBottom>
               Sign in to Minimal
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+            <Typography sx={{color: 'text.secondary'}}>Enter your details below.</Typography>
           </Stack>
           <AuthSocial />
 
           <LoginForm />
 
           <MHidden width="smUp">
-            <Typography variant="body2" align="center" sx={{ mt: 3 }}>
+            <Typography variant="body2" align="center" sx={{mt: 3}}>
               Don’t have an account?&nbsp;
               <Link variant="subtitle2" component={RouterLink} to="register">
                 Get started

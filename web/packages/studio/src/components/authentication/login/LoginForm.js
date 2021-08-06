@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useFormik, Form, FormikProvider } from 'formik';
-import { Icon } from '@iconify/react';
+import {useState} from 'react';
+import {Link as RouterLink, useNavigate} from 'react-router-dom';
+import {useFormik, Form, FormikProvider} from 'formik';
+import {Icon} from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // material
@@ -13,9 +13,9 @@ import {
   TextField,
   IconButton,
   InputAdornment,
-  FormControlLabel
+  FormControlLabel,
 } from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
+import {LoadingButton} from '@material-ui/lab';
 import firebase from 'firebase';
 
 // ----------------------------------------------------------------------
@@ -26,27 +26,27 @@ export default function LoginForm() {
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
+    password: Yup.string().required('Password is required'),
   });
 
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
-      remember: true
+      remember: true,
     },
     validationSchema: LoginSchema,
-    onSubmit: async ({ email, password }) => {
+    onSubmit: async ({email, password}) => {
       const credentials = await firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then((data) => data.user);
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then((data) => data.user);
 
-      navigate('/dashboard', { replace: true });
-    }
+      navigate('/dashboard', {replace: true});
+    },
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const {errors, touched, values, isSubmitting, handleSubmit, getFieldProps} = formik;
 
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
@@ -79,14 +79,14 @@ export default function LoginForm() {
                     <Icon icon={showPassword ? eyeFill : eyeOffFill} />
                   </IconButton>
                 </InputAdornment>
-              )
+              ),
             }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
           />
         </Stack>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{my: 2}}>
           <FormControlLabel
             control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
             label="Remember me"
