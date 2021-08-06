@@ -6,7 +6,7 @@
     "store",
     "diekeditora"
   ],
-  "author": "Lorenzo Guimarães <lorenzooguimaraes@gmail.com>",
+  "author": "Gabrielle Guimarães <lorenzooguimaraes@gmail.com>",
   "homepage": "https://github.com/diekeditora/diekeditora",
   "license": "ISC",
   "main": "dist/index.js",
