@@ -5,7 +5,7 @@
     "declaration": true,
     "composite": true,
     "noEmit": false,
-    "target": "ES3",
+    "target": "ES6",
     "emitDeclarationOnly": true,
     "isolatedModules": true,
     "outDir": "dist",

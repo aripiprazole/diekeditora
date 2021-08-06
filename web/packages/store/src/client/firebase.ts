@@ -11,4 +11,4 @@ firebase.initializeApp({
 });
 firebase.analytics();
 
-export {firebase};
+export default firebase;

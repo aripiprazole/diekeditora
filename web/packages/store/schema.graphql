@@ -1,0 +1,418 @@
+type Chapter {
+  createdAt: LocalDateTime!
+  enabled: Boolean!
+  number: Int!
+  pages: Int!
+  title: String!
+  uid: UniqueId!
+  updatedAt: LocalDateTime
+}
+
+# A connection to a list of items.
+type ChapterConnection {
+  # a list of edges
+  edges: [ChapterEdge]
+
+  # details about this specific page
+  pageInfo: PageInfo!
+}
+
+# An edge in a connection
+type ChapterEdge {
+  # The item at the end of the edge
+  node: Chapter
+
+  # cursor marks a unique position or index into the connection
+  cursor: String!
+}
+
+type Comment {
+  content: String!
+  createdAt: LocalDateTime!
+  deletedAt: LocalDateTime
+  uid: UniqueId!
+  updatedAt: LocalDateTime
+
+  # Returns comment's likes
+  likes: Int!
+
+  # Returns comment's author
+  profile: Profile!
+}
+
+type CommentMentionNotification implements Notification {
+  comment: Comment!
+  issuedAt: LocalDateTime!
+  readAt: LocalDateTime
+  uid: UniqueId!
+}
+
+enum Gender {
+  Male
+  Female
+  NonBinary
+}
+
+type Genre {
+  createdAt: LocalDateTime!
+  title: String!
+  updatedAt: LocalDateTime
+}
+
+interface Invoice {
+  createdAt: LocalDateTime!
+  payer: User!
+  state: InvoiceState!
+  totalValue: Int!
+  uid: UniqueId!
+  updatedAt: LocalDateTime
+  valuePaid: Int!
+}
+
+enum InvoiceState {
+  Chargeback
+  Waiting
+  Paid
+}
+
+scalar LocalDate
+
+scalar LocalDateTime
+
+type Manga {
+  advisory: Int!
+  competing: Boolean!
+  createdAt: LocalDateTime!
+  deletedAt: LocalDateTime
+  summary: String!
+  title: String!
+  uid: UniqueId!
+  updatedAt: LocalDateTime
+
+  # Returns manga's authors
+  authors: [Profile!]!
+
+  # Returns manga's chapters
+  chapters(first: Int!, after: String): ChapterConnection!
+
+  # Returns manga's genres
+  genres: [Genre!]!
+
+  # Returns latest chapter
+  latestChapter: Chapter!
+
+  # Returns manga's ratings
+  ratings: [Int!]!
+}
+
+type MangaChapterInvoice implements Invoice {
+  createdAt: LocalDateTime!
+  payer: User!
+  state: InvoiceState!
+  totalValue: Int!
+  uid: UniqueId!
+  updatedAt: LocalDateTime
+  valuePaid: Int!
+}
+
+# A connection to a list of items.
+type MangaConnection {
+  # a list of edges
+  edges: [MangaEdge]
+
+  # details about this specific page
+  pageInfo: PageInfo!
+}
+
+# An edge in a connection
+type MangaEdge {
+  # The item at the end of the edge
+  node: Manga
+
+  # cursor marks a unique position or index into the connection
+  cursor: String!
+}
+
+input MangaInput {
+  advisory: Int!
+  competing: Boolean!
+  summary: String!
+  title: String!
+}
+
+type MangaInvoiceUpdatedNotification implements Notification {
+  invoice: Invoice!
+  issuedAt: LocalDateTime!
+  readAt: LocalDateTime
+  uid: UniqueId!
+}
+
+type MangaNewsletterNotification implements Notification {
+  issuedAt: LocalDateTime!
+  manga: Manga!
+  readAt: LocalDateTime
+  uid: UniqueId!
+}
+
+type MangaSelfInvoiceUpdatedNotification implements Notification {
+  invoice: Invoice!
+  issuedAt: LocalDateTime!
+  readAt: LocalDateTime
+  uid: UniqueId!
+}
+
+enum MangaSort {
+  Empty
+  Recent
+  Older
+  MostRead
+  BestRated
+}
+
+type MangaSubscriptionInvoice implements Invoice {
+  createdAt: LocalDateTime!
+  payer: User!
+  state: InvoiceState!
+  totalValue: Int!
+  uid: UniqueId!
+  updatedAt: LocalDateTime
+  valuePaid: Int!
+}
+
+type Mutation {
+  linkAuthoritiesToRole(name: String!, authorities: [String!]!): Role
+  linkAuthoritiesToUser(username: String!, authorities: [String!]!): User
+  unlinkAuthoritiesFromRole(name: String!, authorities: [String!]!): Role
+  unlinkAuthoritiesFromUser(username: String!, authorities: [String!]!): User
+  createManga(input: MangaInput!): Manga!
+  deleteManga(uid: UniqueId!): Manga
+  updateManga(uid: UniqueId!, input: MangaInput!): Manga
+
+  # Sends notification to user with username and message specified
+  sendNotification(username: String!, message: String!): SimpleNotification
+
+  # Updates username's profile avatar
+  uploadProfileAvatar(username: String!, image: Upload!): Unit!
+  createRole(input: RoleInput!): Role!
+  deleteRole(name: String!): Unit!
+  linkRolesToUser(username: String!, roles: [String!]!): User
+  unlinkRolesFromUser(username: String!, roles: [String!]!): User
+  updateRole(name: String!, input: RoleInput!): Role
+
+  # Creates an user with the provided data
+  createUser(input: UserInput!): User!
+
+  # Deletes an user by its username
+  deleteUser(username: String!): User
+
+  # Updates an user by its username with the provided data
+  updateUser(username: String!, input: UserInput!): User
+}
+
+interface Notification {
+  issuedAt: LocalDateTime!
+  readAt: LocalDateTime
+  uid: UniqueId!
+}
+
+# A connection to a list of items.
+type NotificationConnection {
+  # a list of edges
+  edges: [NotificationEdge]
+
+  # details about this specific page
+  pageInfo: PageInfo!
+}
+
+# An edge in a connection
+type NotificationEdge {
+  # The item at the end of the edge
+  node: Notification
+
+  # cursor marks a unique position or index into the connection
+  cursor: String!
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+
+  # marks the total pages of connection
+  totalPages: Int
+}
+
+type Profile {
+  createdAt: LocalDateTime!
+  gender: Gender!
+  uid: UniqueId!
+  updatedAt: LocalDateTime
+
+  # Returns profile's avatar image url
+  avatar: String!
+
+  # Returns profile's display name
+  displayName: String!
+
+  # Returns profile's owner
+  user: User!
+}
+
+type Query {
+  authorities(first: Int!, after: String): StringConnection!
+
+  # Finds manga by its unique id
+  manga(uid: UniqueId!): Manga
+
+  # Finds manga connection
+  mangas(
+    # Node list size
+    first: Int!
+
+    # Manga title
+    after: UniqueId
+
+    # Manga search order
+    orderBy: MangaSort
+
+    # Manga search filter categories
+    filterBy: [String!]
+  ): MangaConnection!
+
+  # Returns current user context
+  me: User!
+
+  # Finds notification connection
+  notifications(
+    # Node list size
+    first: Int!
+
+    # After notification id
+    after: UniqueId
+  ): NotificationConnection!
+  role(name: String!): Role
+  roles(first: Int!, after: String): RoleConnection!
+
+  # Returns user's details by its username
+  user(username: String!): User
+
+  # Returns user page
+  users(first: Int!, after: String): UserConnection!
+}
+
+type Role {
+  createdAt: LocalDateTime!
+  name: String!
+  updatedAt: LocalDateTime
+  authorities(first: Int!, after: String): StringConnection!
+}
+
+# A connection to a list of items.
+type RoleConnection {
+  # a list of edges
+  edges: [RoleEdge]
+
+  # details about this specific page
+  pageInfo: PageInfo!
+}
+
+# An edge in a connection
+type RoleEdge {
+  # The item at the end of the edge
+  node: Role
+
+  # cursor marks a unique position or index into the connection
+  cursor: String!
+}
+
+input RoleInput {
+  createdAt: LocalDateTime!
+  name: String!
+  updatedAt: LocalDateTime
+}
+
+type SimpleNotification implements Notification {
+  issuedAt: LocalDateTime!
+  message: String!
+  readAt: LocalDateTime
+  uid: UniqueId!
+}
+
+# A connection to a list of items.
+type StringConnection {
+  # a list of edges
+  edges: [StringEdge]
+
+  # details about this specific page
+  pageInfo: PageInfo!
+}
+
+# An edge in a connection
+type StringEdge {
+  # The item at the end of the edge
+  node: String
+
+  # cursor marks a unique position or index into the connection
+  cursor: String!
+}
+
+type Subscription {
+  # Subscribes current user for its new notifications
+  notificationIssued: Notification!
+}
+
+scalar UniqueId
+
+scalar Unit
+
+scalar Upload
+
+type User {
+  birthday: LocalDate
+  createdAt: LocalDateTime!
+  deletedAt: LocalDateTime
+  email: String!
+  name: String!
+  updatedAt: LocalDateTime
+  username: String!
+  allAuthorities(first: Int!, after: String): StringConnection!
+  authorities(first: Int!, after: String): StringConnection!
+
+  # Finds the user's profile
+  profile: Profile!
+  roles(first: Int!, after: String): RoleConnection!
+}
+
+# A connection to a list of items.
+type UserConnection {
+  # a list of edges
+  edges: [UserEdge]
+
+  # details about this specific page
+  pageInfo: PageInfo!
+}
+
+# An edge in a connection
+type UserEdge {
+  # The item at the end of the edge
+  node: User
+
+  # cursor marks a unique position or index into the connection
+  cursor: String!
+}
+
+input UserInput {
+  birthday: LocalDate!
+  email: String!
+  name: String!
+  username: String!
+}

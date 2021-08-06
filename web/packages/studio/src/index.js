@@ -8,7 +8,7 @@ import {HelmetProvider} from 'react-helmet-async';
 import {RelayEnvironmentProvider} from 'react-relay/hooks';
 // ----------------------------------------------------------------------
 
-import RelayEnvironment from '@diekeditora/store';
+import {RelayEnvironment} from '@diekeditora/store';
 // ----------------------------------------------------------------------
 
 import App from './App';
