@@ -8,13 +8,16 @@
   ],
   "devDependencies": {
     "@babel/preset-react": "^7.14.5",
+    "@babel/runtime": "^7.14.8",
     "@types/node": "^15.12.3",
     "@types/react": "^17.0.11",
+    "@types/relay-runtime": "^11.0.2",
     "@types/styled-components": "^5.1.10",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
+    "babel-plugin-relay": "^11.0.2",
     "eslint": "^7.29.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-react-app": "^6.0.0",
@@ -27,25 +30,31 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.3.1",
+    "relay-compiler": "^11.0.2",
+    "relay-compiler-language-typescript": "^14.0.0",
     "stylelint": "^13.13.1",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
     "typescript": "^4.3.4"
   },
   "scripts": {
     "lint": "eslint './**/*.ts' './**/*.tsx' './**/*.js' --fix",
-    "dev": "run-p app:dev studio:dev",
+    "dev": "run-p app:dev studio:dev relay:watch",
     "app:build": "yarn workspace @diekeditora/app run build",
     "app:start": "yarn workspace @diekeditora/app run start",
     "app:test": "yarn workspace @diekeditora/app run cypress:run",
-    "app:dev": "run-p store:dev app:dev-start",
+    "app:dev": "run-p store:dev app:dev-start relay:watch",
     "app:dev-start": "yarn workspace @diekeditora/app run dev",
-    "studio:dev": "run-p store:dev studio:dev-start",
+    "relay": "yarn workspace @diekeditora/store run relay",
+    "relay:watch": "yarn workspace @diekeditora/store run relay --watch",
+    "studio:dev": "run-p store:dev studio:dev-start relay:watch",
     "studio:dev-start": "yarn workspace @diekeditora/studio run dev",
     "studio:build": "yarn workspace @diekeditora/studio run build",
     "store:dev": "yarn workspace @diekeditora/store run dev"
   },
   "dependencies": {
     "@firebase/app": "^0.6.29",
-    "@firebase/database": "^0.10.9"
+    "@firebase/database": "^0.10.9",
+    "graphql": "^15.5.1",
+    "relay-runtime": "^11.0.2"
   }
 }

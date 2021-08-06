@@ -30,6 +30,7 @@
     "watch:build": "babel src --watch --extensions \".ts\" --out-dir dist",
     "compile": "babel src --extensions \".ts\" --out-dir dist",
     "gen-decl": "tsc",
+    "relay": "yarn run relay-compiler --artifactDirectory './src/__generated__' --exclude '**/node_modules/**', '**/.next/**', '**/__generated__/**' --extensions 'ts' 'tsx' --language 'typescript' --schema './schema.graphql' --src './src' $@",
     "build": "yarn run gen-decl && yarn run compile"
   },
   "bugs": {
@@ -43,14 +44,20 @@
     "@babel/preset-typescript": "^7.14.5",
     "@types/node": "^16.0.0",
     "@types/react": "^17.0.14",
-    "@types/react-redux": "^7.1.18",
+    "@types/react-relay": "^11.0.2",
+    "@types/relay-runtime": "^11.0.2",
     "babel-helper-regex": "^6.26.0",
+    "babel-plugin-relay": "^11.0.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.3.2",
+    "relay-compiler": "^11.0.2",
+    "relay-compiler-language-typescript": "^14.0.0",
+    "relay-config": "^11.0.2",
     "typescript": "^4.3.5"
   },
   "dependencies": {
     "@apollo/client": "^3.3.21",
+    "axios": "^0.21.1",
     "babel-plugin-inline-dotenv": "^1.6.0",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "firebase": "^8.7.1",
@@ -58,9 +65,7 @@
     "graphql": "^15.5.1",
     "immer": "^9.0.5",
     "react": "^17.0.2",
-    "react-redux": "^7.2.4",
-    "redux": "^4.1.0",
-    "redux-persist": "^6.0.0",
-    "redux-saga": "^1.1.3"
+    "react-relay": "^11.0.2",
+    "relay-runtime": "^11.0.2"
   }
 }
