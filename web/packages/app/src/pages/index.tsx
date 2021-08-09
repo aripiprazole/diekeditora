@@ -10,10 +10,6 @@ const Home: React.VFC = () => {
         <meta name="description" content="Diek editora website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main></main>
-
-      <footer></footer>
     </div>
   );
 };
