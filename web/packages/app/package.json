@@ -2,7 +2,7 @@
   "name": "@diekeditora/app",
   "version": "0.0.1",
   "description": "Diek editora main app",
-  "author": "Gabrielle Guimarães <lorenzooguimaraes@gmail.com>",
+  "author": "Gabrielle Guimarães <gabrielle1guim@gmail.com>",
   "homepage": "https://github.com/diekeditora/diekeditora",
   "license": "ISC",
   "main": "lib/ui.js",
