@@ -1,1 +1,1 @@
-export {default as RelayEnvironment} from './Environment';
+export {default as getRelayEnvironment} from './Environment';

@@ -2627,7 +2627,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chakra-ui/theme@npm:1.10.0":
+"@chakra-ui/theme@npm:1.10.0, @chakra-ui/theme@npm:^1.10.0":
   version: 1.10.0
   resolution: "@chakra-ui/theme@npm:1.10.0"
   dependencies:
@@ -2808,14 +2808,20 @@ __metadata:
   resolution: "@diekeditora/app@workspace:packages/app"
   dependencies:
     "@chakra-ui/react": ^1.6.6
+    "@chakra-ui/theme": ^1.10.0
     "@diekeditora/store": ^0.0.1
     "@emotion/react": ^11.4.1
     "@emotion/styled": ^11.3.0
     "@types/node": ^16.4.13
     "@types/react": ^17.0.16
+    axios: ^0.21.1
+    encoding: ^0.1.13
+    follow-redirects: ^1.14.1
     next: ^11.0.1
+    next-transpile-modules: ^8.0.0
     react: ^17.0.2
     react-dom: ^17.0.2
+    react-relay: ^11.0.2
     typescript: ^4.3.5
   languageName: unknown
   linkType: soft
@@ -2851,6 +2857,7 @@ __metadata:
     relay-config: ^11.0.2
     relay-runtime: ^11.0.2
     typescript: ^4.3.5
+    watchman: ^1.0.0
   languageName: unknown
   linkType: soft
 
@@ -8412,6 +8419,7 @@ __metadata:
   dependencies:
     "@babel/preset-react": ^7.14.5
     "@babel/runtime": ^7.14.8
+    "@chakra-ui/theme": ^1.10.0
     "@emotion/react": ^11.4.1
     "@emotion/styled": ^11.3.0
     "@firebase/app": ^0.6.29
@@ -8424,6 +8432,7 @@ __metadata:
     babel-eslint: ^10.1.0
     babel-loader: ^8.2.2
     babel-plugin-relay: ^11.0.2
+    encoding: ^0.1.13
     eslint: ^7.29.0
     eslint-config-google: ^0.14.0
     eslint-config-react-app: ^6.0.0
@@ -8434,8 +8443,10 @@ __metadata:
     eslint-plugin-prettier: ^3.4.0
     eslint-plugin-react: ^7.24.0
     eslint-plugin-react-hooks: ^4.2.0
+    follow-redirects: ^1.14.1
     framer-motion: ^4.1.17
     graphql: ^15.5.1
+    next-transpile-modules: ^8.0.0
     npm-run-all: ^4.1.5
     prettier: ^2.3.1
     relay-compiler: ^11.0.2
@@ -8800,7 +8811,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"encoding@npm:0.1.13, encoding@npm:^0.1.12":
+"encoding@npm:0.1.13, encoding@npm:^0.1.12, encoding@npm:^0.1.13":
   version: 0.1.13
   resolution: "encoding@npm:0.1.13"
   dependencies:
@@ -9954,7 +9965,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.10.0":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.10.0, follow-redirects@npm:^1.14.1":
   version: 1.14.1
   resolution: "follow-redirects@npm:1.14.1"
   peerDependenciesMeta:
@@ -13748,6 +13759,16 @@ fsevents@^1.2.7:
   version: 1.0.0
   resolution: "next-tick@npm:1.0.0"
   checksum: 83fcb3d4f8d9380210b1c2b8a610463602d80283f0c0c8571c1688e1ad6cbf3a16b345f5bb7212617d4898bedcfa10dff327dc09ec20a112a5bf43a0271375fb
+  languageName: node
+  linkType: hard
+
+"next-transpile-modules@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "next-transpile-modules@npm:8.0.0"
+  dependencies:
+    enhanced-resolve: ^5.7.0
+    escalade: ^3.1.1
+  checksum: 5535e385fd3a4efa25c46b472b2555436c9f3c0fa27f1a80f0c84f5d4c419981ded6896b03d0b418e7476d30bb41714ca0657204daa7c257a002b77a02b7783a
   languageName: node
   linkType: hard
 

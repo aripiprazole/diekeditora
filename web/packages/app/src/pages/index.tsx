@@ -1,16 +1,12 @@
 import React from 'react';
 
-import Head from 'next/head';
+import {Page} from '@diekeditora/app';
 
 const Home: React.VFC = () => {
   return (
-    <div>
-      <Head>
-        <title>Diek editora - Home</title>
-        <meta name="description" content="Diek editora website" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-    </div>
+    <Page>
+      Hello, world
+    </Page>
   );
 };
 

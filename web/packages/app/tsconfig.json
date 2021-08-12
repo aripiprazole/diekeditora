@@ -4,10 +4,8 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "@diekeditora/app/*": ["./*"],
-      "@diekeditora/app": ["./"],
-      "@diekeditora/store/*": ["../store/*"],
-      "@diekeditora/store": ["../store"]
+      "@diekeditora/app/*": ["./src/*"],
+      "@diekeditora/app": ["./src"]
     },
     "target": "es5"
   },
