@@ -6,8 +6,8 @@
     "paths": {
       "@diekeditora/app/*": ["./src/*"],
       "@diekeditora/app": ["./src"],
-      "@diekeditora/store/*": ["../store/src/*"],
-      "@diekeditora/store": ["../store/src"]
+      "@diekeditora/graphql/*": ["../graphql/src/*"],
+      "@diekeditora/graphql": ["../graphql/src"]
     },
     "target": "es5"
   },

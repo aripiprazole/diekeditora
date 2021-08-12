@@ -2,7 +2,7 @@
   "name": "diekeditora",
   "private": true,
   "workspaces": [
-    "packages/store",
+    "packages/graphql",
     "packages/studio",
     "packages/app"
   ],
@@ -42,14 +42,13 @@
     "app:build": "yarn workspace @diekeditora/app run build",
     "app:start": "yarn workspace @diekeditora/app run start",
     "app:test": "yarn workspace @diekeditora/app run cypress:run",
-    "app:dev": "run-p store:dev app:dev-start relay:watch",
+    "app:dev": "run-p graphql:dev app:dev-start",
     "app:dev-start": "yarn workspace @diekeditora/app run dev",
-    "relay": "yarn workspace @diekeditora/store run relay",
-    "relay:watch": "yarn workspace @diekeditora/store run relay:watch",
-    "studio:dev": "run-p store:dev studio:dev-start relay:watch",
+    "relay": "yarn workspace @diekeditora/graphql run relay",
+    "studio:dev": "run-p graphql:dev studio:dev-start",
     "studio:dev-start": "yarn workspace @diekeditora/studio run dev",
     "studio:build": "yarn workspace @diekeditora/studio run build",
-    "store:dev": "yarn workspace @diekeditora/store run dev"
+    "graphql:dev": "yarn workspace @diekeditora/graphql run dev"
   },
   "dependencies": {
     "@chakra-ui/theme": "^1.10.0",

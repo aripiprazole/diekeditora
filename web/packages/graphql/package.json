@@ -1,9 +1,9 @@
 {
-  "name": "@diekeditora/store",
+  "name": "@diekeditora/graphql",
   "version": "0.0.1",
-  "description": "Diek editora store",
+  "description": "Diek editora graphql queries",
   "keywords": [
-    "store",
+    "graphql",
     "diekeditora"
   ],
   "author": "Gabrielle Guimarães <gabrielle1guim@gmail.com>",

@@ -5,8 +5,8 @@
     "paths": {
       "@diekeditora/admin/*": ["src/*"],
       "@diekeditora/admin": ["src"],
-      "@diekeditora/store/*": ["../store/dist/*"],
-      "@diekeditora/store": ["../store/dist"]
+      "@diekeditora/graphql/*": ["../graphql/dist/*"],
+      "@diekeditora/graphql": ["../graphql/dist"]
     }
   },
   "include": ["**/*.d.ts", "**/*.ts", "**/*.js", "**/*.jsx", "**/*.tsx"],
