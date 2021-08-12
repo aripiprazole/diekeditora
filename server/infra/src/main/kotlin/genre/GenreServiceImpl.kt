@@ -12,7 +12,7 @@ internal class GenreServiceImpl(val genreRepo: GenreRepo) : GenreService {
     }
 
     override suspend fun createGenre(title: String): Genre {
-        return genreRepo.save(Genre(title = title))
+        return genreRepo.save(Genre(name = title))
     }
 
     override suspend fun deleteGenre(title: String) {

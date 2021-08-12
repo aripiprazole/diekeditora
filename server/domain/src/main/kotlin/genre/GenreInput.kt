@@ -5,14 +5,14 @@ import com.diekeditora.domain.graphql.Min
 import com.diekeditora.domain.graphql.NotBlank
 
 @Suppress("Detekt.MagicNumber")
-data class GenreInput(@NotBlank @Max(32) @Min(4) val title: String) {
+data class GenreInput(@NotBlank @Max(32) @Min(4) val name: String) {
     fun toGenre(): Genre {
-        return Genre(title = title)
+        return Genre(name = name)
     }
 
     companion object {
         fun from(genre: Genre): GenreInput {
-            return GenreInput(title = genre.title)
+            return GenreInput(name = genre.name)
         }
     }
 }

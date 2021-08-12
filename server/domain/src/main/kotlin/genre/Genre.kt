@@ -2,10 +2,10 @@ package com.diekeditora.domain.genre
 
 import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.domain.page.Cursor
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
-import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
@@ -13,22 +13,16 @@ import java.time.LocalDateTime
 @GraphQLValidObjectLocations([Locations.OBJECT])
 @Table("genre")
 data class Genre(
-    @Id
     @GraphQLIgnore
-    val id: UniqueId? = null,
-    val title: String,
+    @Id val id: UniqueId? = null,
+    @Cursor val name: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
 ) : MutableEntity<Genre> {
     @GraphQLIgnore
-    override val cursor: String
-        @JsonIgnore
-        get() = title
-
-    @GraphQLIgnore
     override fun update(with: Genre): Genre {
         return copy(
-            title = with.title,
+            name = with.name,
             updatedAt = LocalDateTime.now(),
         )
     }
@@ -40,20 +34,20 @@ data class Genre(
 
         other as Genre
 
-        if (title != other.title) return false
+        if (name != other.name) return false
 
         return true
     }
 
     @GraphQLIgnore
     override fun hashCode(): Int {
-        return title.hashCode()
+        return name.hashCode()
     }
 
     @GraphQLIgnore
     override fun toString(): String {
         return "Genre(" +
-            "title='$title', " +
+            "title='$name', " +
             "createdAt=$createdAt, " +
             "updatedAt=$updatedAt" +
             ")"
