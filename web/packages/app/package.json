@@ -31,13 +31,13 @@
   "dependencies": {
     "@chakra-ui/react": "^1.6.6",
     "@chakra-ui/theme": "^1.10.0",
-    "@diekeditora/store": "^0.0.1",
+    "@diekeditora/store": "workspace:packages/store",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "axios": "^0.21.1",
     "encoding": "^0.1.13",
     "follow-redirects": "^1.14.1",
-    "next": "^11.0.1",
+    "next": "11",
     "next-transpile-modules": "^8.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -46,6 +46,7 @@
   "devDependencies": {
     "@types/node": "^16.4.13",
     "@types/react": "^17.0.16",
+    "babel-preset-next": "^1.4.0",
     "typescript": "^4.3.5"
   }
 }

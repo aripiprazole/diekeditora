@@ -16,6 +16,8 @@
     "paths": {
       "@diekeditora/admin/*": ["studio/src/*"],
       "@diekeditora/admin": ["studio/src"],
+      "@diekeditora/store/*": ["store/src/*"],
+      "@diekeditora/store": ["store/src"],
       "@diekeditora/app/*": ["app/src/*"],
       "@diekeditora/app": ["app/src"]
     }

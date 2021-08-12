@@ -5,7 +5,9 @@
     "baseUrl": ".",
     "paths": {
       "@diekeditora/app/*": ["./src/*"],
-      "@diekeditora/app": ["./src"]
+      "@diekeditora/app": ["./src"],
+      "@diekeditora/store/*": ["../store/src/*"],
+      "@diekeditora/store": ["../store/src"]
     },
     "target": "es5"
   },
