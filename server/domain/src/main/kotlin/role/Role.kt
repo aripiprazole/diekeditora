@@ -7,6 +7,8 @@ import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.page.Cursor
 import com.diekeditora.domain.page.OrderBy
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
 import com.fasterxml.jackson.annotation.JsonIgnore
 import graphql.relay.Connection
 import graphql.schema.DataFetchingEnvironment
@@ -16,6 +18,7 @@ import org.springframework.data.relational.core.mapping.Table
 import org.springframework.security.access.prepost.PreAuthorize
 import java.time.LocalDateTime
 
+@GraphQLValidObjectLocations([Locations.OBJECT])
 @Table("role")
 data class Role(
     @GraphQLIgnore

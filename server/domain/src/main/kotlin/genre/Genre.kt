@@ -3,11 +3,14 @@ package com.diekeditora.domain.genre
 import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.id.UniqueId
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
+@GraphQLValidObjectLocations([Locations.OBJECT])
 @Table("genre")
 data class Genre(
     @Id
