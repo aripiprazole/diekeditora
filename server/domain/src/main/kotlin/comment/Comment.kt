@@ -7,6 +7,8 @@ import com.diekeditora.domain.page.OrderBy
 import com.diekeditora.domain.profile.Profile
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
 import com.fasterxml.jackson.annotation.JsonIgnore
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
@@ -14,6 +16,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
+@GraphQLValidObjectLocations([Locations.OBJECT])
 @Table("comment")
 data class Comment(
     @GraphQLIgnore

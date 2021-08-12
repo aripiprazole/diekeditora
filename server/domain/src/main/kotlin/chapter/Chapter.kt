@@ -5,10 +5,13 @@ import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.page.Cursor
 import com.diekeditora.domain.page.OrderBy
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
+import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
+@GraphQLValidObjectLocations([Locations.OBJECT])
 @Table("chapter")
 data class Chapter(
     @GraphQLIgnore
