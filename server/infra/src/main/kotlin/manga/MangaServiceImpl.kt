@@ -56,7 +56,7 @@ internal class MangaServiceImpl(
             uid = uidService.generateUniqueId(),
             title = input.title,
             competing = input.competing,
-            summary = input.summary,
+            description = input.description,
             advisory = input.advisory,
         )
 
@@ -72,7 +72,7 @@ internal class MangaServiceImpl(
                 uid = uidService.generateUniqueId(),
                 title = input.title,
                 competing = input.competing,
-                summary = input.summary,
+                description = input.description,
                 advisory = input.advisory,
             ),
         )

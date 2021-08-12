@@ -9,6 +9,7 @@ import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocation
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @GraphQLValidObjectLocations([Locations.OBJECT])
@@ -18,18 +19,18 @@ data class Chapter(
     @Id val id: UniqueId? = null,
     @Cursor val uid: UniqueId,
     val title: String,
-    val number: Int,
-    val pages: Int,
+    val index: Int,
     val enabled: Boolean = false,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
+    val releasedOn: LocalDate? = null,
     val updatedAt: LocalDateTime? = null,
 ) : MutableEntity<Chapter> {
     @GraphQLIgnore
     override fun update(with: Chapter): Chapter {
         return copy(
             title = with.title,
-            pages = with.pages,
             enabled = with.enabled,
+            releasedOn = with.releasedOn,
             updatedAt = LocalDateTime.now(),
         )
     }
@@ -42,7 +43,6 @@ data class Chapter(
         other as Chapter
 
         if (title != other.title) return false
-        if (pages != other.pages) return false
         if (enabled != other.enabled) return false
 
         return true
@@ -51,7 +51,6 @@ data class Chapter(
     @GraphQLIgnore
     override fun hashCode(): Int {
         var result = title.hashCode()
-        result = 31 * result + pages
         result = 31 * result + enabled.hashCode()
         return result
     }
@@ -60,7 +59,6 @@ data class Chapter(
     override fun toString(): String {
         return "Chapter(" +
             "title='$title', " +
-            "pages=$pages, " +
             "enabled=$enabled, " +
             "createdAt=$createdAt, " +
             "updatedAt=$updatedAt" +

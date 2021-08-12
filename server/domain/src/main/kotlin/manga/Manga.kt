@@ -28,8 +28,8 @@ data class Manga(
     @Cursor val uid: UniqueId,
     val title: String,
     val competing: Boolean,
-    val summary: String,
-    val advisory: Int = 0,
+    val description: String,
+    val advisory: Int? = null,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
@@ -92,7 +92,7 @@ data class Manga(
         return copy(
             title = with.title,
             competing = with.competing,
-            summary = with.summary,
+            description = with.description,
             advisory = with.advisory,
             updatedAt = LocalDateTime.now(),
         )
@@ -107,7 +107,7 @@ data class Manga(
 
         if (title != other.title) return false
         if (competing != other.competing) return false
-        if (summary != other.summary) return false
+        if (description != other.description) return false
         if (advisory != other.advisory) return false
 
         return true
@@ -117,7 +117,7 @@ data class Manga(
     override fun hashCode(): Int {
         var result = title.hashCode()
         result = 31 * result + competing.hashCode()
-        result = 31 * result + summary.hashCode()
+        result = 31 * result + description.hashCode()
         result = 31 * result + advisory.hashCode()
         return result
     }
@@ -127,7 +127,7 @@ data class Manga(
         return "Manga(" +
             "title='$title', " +
             "competing=$competing, " +
-            "summary='$summary', " +
+            "summary='$description', " +
             "advisory=$advisory, " +
             "createdAt=$createdAt, " +
             "updatedAt=$updatedAt, " +
