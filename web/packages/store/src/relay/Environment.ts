@@ -1,24 +1,25 @@
-import {Environment, GraphQLResponse, Network, RecordSource, RequestParameters, Store, Variables} from 'relay-runtime';
+import {
+  Environment,
+  GraphQLResponse,
+  Network,
+  RecordSource,
+  RequestParameters,
+  Store,
+  Variables,
+} from 'relay-runtime';
 
-import axios from 'axios';
+import {AxiosInstance} from 'axios';
 
-const http = axios.create({
-  baseURL: process.env.REACT_APP_GRAPHQL_API_URL,
-});
+const fetchGraphQL = (http: AxiosInstance) =>
+  async (params: RequestParameters, variables: Variables): Promise<GraphQLResponse> => {
+    const response = await http.post<GraphQLResponse>('/graphql', {query: params.text, variables});
 
-/**
- * Fetches graphql with axios
- *
- * @param params
- * @param variables
- */
-async function fetchGraphQL(params: RequestParameters, variables: Variables): Promise<GraphQLResponse> {
-  const response = await http.post<GraphQLResponse>('/graphql', {query: params.text, variables});
+    return response.data;
+  };
 
-  return response.data;
-}
-
-export default new Environment({
-  network: Network.create(fetchGraphQL),
-  store: new Store(new RecordSource()),
-});
+export default function getRelayEnvironment(http: AxiosInstance): Environment {
+  return new Environment({
+    network: Network.create(fetchGraphQL(http)),
+    store: new Store(new RecordSource()),
+  });
+};

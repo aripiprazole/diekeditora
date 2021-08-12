@@ -45,19 +45,23 @@
     "app:dev": "run-p store:dev app:dev-start relay:watch",
     "app:dev-start": "yarn workspace @diekeditora/app run dev",
     "relay": "yarn workspace @diekeditora/store run relay",
-    "relay:watch": "yarn workspace @diekeditora/store run relay --watch",
+    "relay:watch": "yarn workspace @diekeditora/store run relay:watch",
     "studio:dev": "run-p store:dev studio:dev-start relay:watch",
     "studio:dev-start": "yarn workspace @diekeditora/studio run dev",
     "studio:build": "yarn workspace @diekeditora/studio run build",
     "store:dev": "yarn workspace @diekeditora/store run dev"
   },
   "dependencies": {
+    "@chakra-ui/theme": "^1.10.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@firebase/app": "^0.6.29",
     "@firebase/database": "^0.10.9",
+    "encoding": "^0.1.13",
+    "follow-redirects": "^1.14.1",
     "framer-motion": "^4.1.17",
     "graphql": "^15.5.1",
+    "next-transpile-modules": "^8.0.0",
     "relay-runtime": "^11.0.2"
   }
 }

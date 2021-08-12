@@ -31,6 +31,7 @@
     "compile": "babel src --extensions \".ts\" --out-dir dist",
     "gen-decl": "tsc",
     "relay": "yarn run relay-compiler --artifactDirectory './src/__generated__' --exclude '**/node_modules/**', '**/.next/**', '**/__generated__/**' --extensions 'ts' 'tsx' --language 'typescript' --schema './schema.graphql' --src './src' $@",
+    "relay:watch": "yarn run relay --watch",
     "build": "yarn run gen-decl && yarn run compile"
   },
   "bugs": {
@@ -52,7 +53,8 @@
     "relay-compiler": "^11.0.2",
     "relay-compiler-language-typescript": "^14.0.0",
     "relay-config": "^11.0.2",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "watchman": "^1.0.0"
   },
   "dependencies": {
     "@apollo/client": "^3.3.21",

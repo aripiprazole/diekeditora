@@ -1,19 +1,22 @@
 import React from 'react';
 
-import {Global} from '@emotion/react';
-import {ChakraProvider} from '@chakra-ui/react';
-
 import {AppProps} from 'next/app';
+import {RelayEnvironmentProvider} from 'react-relay';
 
-import {globalStyles} from '@diekeditora/app/src/styles';
+import {Global} from '@emotion/react';
+
+import {getRelayEnvironment} from '@diekeditora/store';
+import {ThemeProvider, http, globalStyles} from '@diekeditora/app';
 
 const MyApp: React.VFC<AppProps> = ({Component, pageProps}) => {
   return (
-    <ChakraProvider>
-      <Global styles={globalStyles} />
+    <RelayEnvironmentProvider environment={getRelayEnvironment(http)}>
+      <ThemeProvider>
+        <Global styles={globalStyles} />
 
-      <Component {...pageProps} />
-    </ChakraProvider>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </RelayEnvironmentProvider>
   );
 };
 
