@@ -1,4 +1,4 @@
-const withTM = require('next-transpile-modules')(['@diekeditora/store'], {resolveSymlinks: true});
+const withTM = require('next-transpile-modules')(['@diekeditora/graphql'], {resolveSymlinks: true});
 
 module.exports = withTM({
   pageExtensions: ['tsx'],

@@ -11,8 +11,8 @@
     "outDir": "dist",
     "rootDir": "src",
     "paths": {
-      "@diekeditora/store": ["./"],
-      "@diekeditora/store/*": ["./*"]
+      "@diekeditora/graphql": ["./"],
+      "@diekeditora/graphql/*": ["./*"]
     }
   },
   "include": ["src/**/*.ts"],

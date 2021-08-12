@@ -5,7 +5,7 @@ import {RelayEnvironmentProvider} from 'react-relay';
 
 import {Global} from '@emotion/react';
 
-import {getRelayEnvironment} from '@diekeditora/store';
+import {getRelayEnvironment} from '@diekeditora/graphql';
 import {ThemeProvider, http, globalStyles} from '@diekeditora/app';
 
 const MyApp: React.VFC<AppProps> = ({Component, pageProps}) => {
