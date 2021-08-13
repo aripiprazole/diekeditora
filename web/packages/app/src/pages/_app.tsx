@@ -1,26 +1,39 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 
-import {AppProps} from 'next/app';
+import {AppContext, AppProps} from 'next/app';
 import {RelayEnvironmentProvider} from 'react-relay';
 
-import {Global} from '@emotion/react';
+import {ChakraProvider, cookieStorageManager} from '@chakra-ui/react';
 
 import {getRelayEnvironment} from '@diekeditora/graphql';
-import {ThemeProvider, initAuth, http, globalStyles} from '@diekeditora/app';
+import {GlobalStyles, http, initAuth, theme} from '@diekeditora/app';
 
 // Inits the firebase authentication
 initAuth();
 
-const MyApp: React.VFC<AppProps> = ({Component, pageProps}) => {
+type MyAppProps = { cookie?: string };
+
+type MyAppType = ComponentType<AppProps & MyAppProps> & {
+  getInitialProps?(context: AppContext): MyAppProps
+}
+
+const MyApp: MyAppType = ({Component, pageProps, cookie}) => {
   return (
     <RelayEnvironmentProvider environment={getRelayEnvironment(http)}>
-      <ThemeProvider>
-        <Global styles={globalStyles} />
+      <ChakraProvider
+        theme={theme}
+        colorModeManager={cookieStorageManager(cookie ?? document.cookie)}
+      >
+        <GlobalStyles />
 
         <Component {...pageProps} />
-      </ThemeProvider>
+      </ChakraProvider>
     </RelayEnvironmentProvider>
   );
 };
+
+MyApp.getInitialProps = ({ctx}) => ({
+  cookie: ctx.req.headers.cookie,
+});
 
 export default MyApp;
