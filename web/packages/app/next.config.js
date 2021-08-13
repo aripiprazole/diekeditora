@@ -1,6 +1,6 @@
 const withTM = require('next-transpile-modules')(['@diekeditora/graphql'], {resolveSymlinks: true});
 
 module.exports = withTM({
-  pageExtensions: ['tsx'],
+  pageExtensions: ['tsx', 'ts'],
   reactStrictMode: true,
 });
