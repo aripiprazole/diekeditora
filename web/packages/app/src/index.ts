@@ -1,3 +1,3 @@
 export * from './styles';
-export * from './theme';
+export * from './theming';
 export * from './misc';
