@@ -131,7 +131,7 @@ create table if not exists "comment"
 create table if not exists "genre"
 (
     id         uuid unique              not null default gen_random_uuid(),
-    title      varchar(120)             not null,
+    name       varchar(120)             not null,
     created_at timestamp with time zone not null default current_timestamp,
     updated_at timestamp with time zone          default null
 );

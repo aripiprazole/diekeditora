@@ -7,5 +7,5 @@ import java.util.UUID
 
 @Repository
 internal interface GenreRepo : CoroutineSortingRepository<Genre, UUID> {
-    suspend fun findByTitle(title: String): Genre?
+    suspend fun findByName(name: String): Genre?
 }
