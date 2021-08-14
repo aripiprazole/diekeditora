@@ -6,6 +6,7 @@ import com.diekeditora.domain.user.User
 import com.diekeditora.infra.repo.findAllAsConnection
 import com.diekeditora.shared.logger
 import graphql.relay.Connection
+import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -81,7 +82,8 @@ internal class RoleServiceImpl(
         log.trace("Successfully deleted role %s", role)
     }
 
-    override suspend fun userHasRole(role: Role): Boolean {
-        TODO("Not yet implemented")
+    @Transactional
+    override suspend fun userHasRole(user: User, role: Role): Boolean {
+        return userRoleRepo.findUsersByRole(role).toList().contains(user)
     }
 }

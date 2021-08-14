@@ -20,5 +20,5 @@ interface RoleService {
 
     suspend fun deleteRole(role: Role)
 
-    suspend fun userHasRole(role: Role): Boolean
+    suspend fun userHasRole(user: User, role: Role): Boolean
 }
