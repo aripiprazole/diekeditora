@@ -1,55 +1,44 @@
 package com.diekeditora.infra.role
 
 import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.domain.page.PaginationQuery
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.user.User
+import com.diekeditora.infra.repo.CursorBasedPaginationRepository
 import kotlinx.coroutines.flow.Flow
+import org.springframework.data.domain.Sort
 import org.springframework.data.r2dbc.repository.Query
-import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
-import java.math.BigInteger
 import java.util.UUID
 
 @Repository
-internal interface UserRoleRepo : CoroutineCrudRepository<UserRole, UUID> {
-    @Query(
-        """
-        select * from role r
-        left join user_role ur on r.id = ur.role_id
-        where ur.user_id = :id
-        order by ur.created_at
-        limit :first
-        """
-    )
-    suspend fun findAllByUser(user: User, first: Int): Flow<Role>
-
-    @Query(
-        """
-        select *
-        from role r
-        left join user_role ur on r.id = ur.role_id
-        order by ur.created_at
-        limit :first
-            offset (
-                select row_number()
-                over (order by ur.created_at)
-                from user_role ur
-                left join role r
-                on r.id = ur.role_id
-                where r.name = :after
+internal interface UserRoleRepo : CursorBasedPaginationRepository<Role, UUID> {
+    @PaginationQuery(
+        selectQuery = """
+            select * from role r
+            left join user_role ur on r.id = ur.role_id
+            where ur.user_id = :owner
+            order by ur.created_at
+            limit :first
+        """,
+        offsetQuery = """
+            select *
+            from role r
+            left join user_role ur on r.id = ur.role_id
+            where ur.user_id = :owner
+            order by ur.created_at
+            limit :first
+                offset (
+                    select row_number()
+                    over (order by ur.created_at)
+                    from user_role ur
+                    left join role r
+                    on r.id = ur.role_id
+                    where r.name = :after
             )
         """
     )
-    suspend fun findAllByUser(user: User, first: Int, after: String): Flow<Role>
-
-    @Query(""" delete from user_role where user_id = :id and role_id in (:authorities)""")
-    suspend fun unlink(user: User, authorities: Iterable<UniqueId>)
-
-    @Query("""insert into user_authority(user_id, authority_id) values (:id, :authority)""")
-    suspend fun link(user: User, authority: UniqueId)
-
-    @Query("""select count(*) from role_authority""")
-    suspend fun estimateTotalEntries(): Long
+    override fun findAll(first: Int, after: String?, sort: Sort?, owner: Any?): Flow<Role>
 
     @Query(
         """
@@ -59,5 +48,11 @@ internal interface UserRoleRepo : CoroutineCrudRepository<UserRole, UUID> {
         where r.name = :name
         """
     )
-    suspend fun findIndex(name: String): BigInteger
+    override suspend fun indexOf(entity: Role?): Long?
+
+    @Query(""" delete from user_role where user_id = :id and role_id in (:authorities)""")
+    suspend fun unlink(user: User, authorities: Iterable<UniqueId>)
+
+    @Query("""insert into user_authority(user_id, authority_id) values (:id, :authority)""")
+    suspend fun link(user: User, authority: UniqueId)
 }
