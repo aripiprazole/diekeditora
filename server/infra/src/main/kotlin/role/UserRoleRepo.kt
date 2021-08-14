@@ -55,4 +55,7 @@ internal interface UserRoleRepo : CursorBasedPaginationRepository<Role, UUID> {
 
     @Query("""insert into user_authority(user_id, authority_id) values (:id, :authority)""")
     suspend fun link(user: User, authority: UniqueId)
+
+    @Query("""select u.* from "user" u left join user_role ur on u.id = ur.user_id where ur.role_id = :id""")
+    suspend fun findUsersByRole(role: Role): Flow<User>
 }
