@@ -1,11 +1,11 @@
 package com.diekeditora.app.resources.user
 
+import com.diekeditora.domain.graphql.Secured
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserInput
 import com.diekeditora.domain.user.UserService
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
-import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Component
 
 @Component

@@ -1,4 +1,4 @@
-package com.diekeditora.domain.image
+package com.diekeditora.domain.file
 
 import org.springframework.http.codec.multipart.FilePart
 

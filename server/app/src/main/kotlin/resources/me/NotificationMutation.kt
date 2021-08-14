@@ -1,12 +1,12 @@
 package com.diekeditora.app.resources.me
 
+import com.diekeditora.domain.graphql.Secured
 import com.diekeditora.domain.notification.Notification
 import com.diekeditora.domain.notification.NotificationService
 import com.diekeditora.domain.notification.SimpleNotification
 import com.diekeditora.domain.user.UserService
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
-import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Component
 
 @Component

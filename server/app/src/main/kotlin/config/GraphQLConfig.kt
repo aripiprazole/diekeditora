@@ -1,8 +1,8 @@
 package com.diekeditora.app.config
 
 import com.diekeditora.app.graphql.SchemaGeneratorHooksImpl
+import com.diekeditora.domain.file.Upload
 import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.image.Upload
 import com.expediagroup.graphql.generator.execution.FlowSubscriptionExecutionStrategy
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.fasterxml.jackson.databind.ObjectMapper

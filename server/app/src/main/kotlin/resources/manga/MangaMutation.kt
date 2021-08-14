@@ -1,11 +1,11 @@
 package com.diekeditora.app.resources.manga
 
+import com.diekeditora.domain.graphql.Secured
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.manga.Manga
 import com.diekeditora.domain.manga.MangaInput
 import com.diekeditora.domain.manga.MangaService
 import com.expediagroup.graphql.server.operations.Mutation
-import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Component
 
 @Component

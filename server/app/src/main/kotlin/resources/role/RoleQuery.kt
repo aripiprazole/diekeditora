@@ -1,10 +1,10 @@
 package com.diekeditora.app.resources.role
 
+import com.diekeditora.domain.graphql.Secured
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.role.RoleService
 import com.expediagroup.graphql.server.operations.Query
 import graphql.relay.Connection
-import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Component
 
 @Component
