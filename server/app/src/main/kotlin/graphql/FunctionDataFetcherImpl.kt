@@ -1,5 +1,6 @@
 package com.diekeditora.app.graphql
 
+import com.diekeditora.domain.graphql.Secured
 import com.expediagroup.graphql.generator.annotations.GraphQLName
 import com.expediagroup.graphql.generator.exceptions.CouldNotGetNameOfKParameterException
 import com.expediagroup.graphql.generator.execution.FunctionDataFetcher
@@ -8,7 +9,6 @@ import com.expediagroup.graphql.generator.execution.OptionalInput
 import com.fasterxml.jackson.databind.ObjectMapper
 import graphql.schema.DataFetchingEnvironment
 import org.springframework.security.access.AccessDeniedException
-import org.springframework.security.access.annotation.Secured
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.util.SimpleMethodInvocation
@@ -31,10 +31,8 @@ class FunctionDataFetcherImpl(
 
     override fun get(environment: DataFetchingEnvironment): Any? {
         val expression = fn.findAnnotation<PreAuthorize>()?.value
-        val secured = fn.findAnnotation<Secured>()?.value
+        val secured = fn.findAnnotation<Secured>()?.authorities
         val context = environment.getContext<GraphQLContext>() as? AuthGraphQLContext
-
-        return runFunction(environment)
 
         when {
             expression != null && context == null -> throw AccessDeniedException("Not authenticated")
@@ -42,6 +40,8 @@ class FunctionDataFetcherImpl(
             secured != null && context == null -> throw AccessDeniedException("Not authenticated")
             secured != null && context != null -> context.secured(secured.toList())
         }
+
+        return runFunction(environment)
     }
 
     private fun runFunction(env: DataFetchingEnvironment): Any? {

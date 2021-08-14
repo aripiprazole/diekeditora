@@ -2,12 +2,12 @@ package com.diekeditora.app.resources.authority
 
 import com.diekeditora.domain.authority.Authority
 import com.diekeditora.domain.authority.AuthorityService
+import com.diekeditora.domain.graphql.Secured
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
 import com.expediagroup.graphql.server.operations.Mutation
-import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Component
 
 @Component
