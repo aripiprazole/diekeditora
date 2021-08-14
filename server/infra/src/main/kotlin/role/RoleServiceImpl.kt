@@ -1,13 +1,11 @@
 package com.diekeditora.infra.role
 
-import com.diekeditora.domain.page.AppPage
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.User
-import com.diekeditora.infra.utils.assertPageSize
+import com.diekeditora.infra.repo.findAllAsConnection
 import com.diekeditora.shared.logger
 import graphql.relay.Connection
-import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -21,20 +19,7 @@ internal class RoleServiceImpl(
 
     @Transactional
     override suspend fun findRoles(first: Int, after: String?): Connection<Role> {
-        assertPageSize(first)
-
-        val items = if (after != null) {
-            repo.findAll(first, after).toList()
-        } else {
-            repo.findAll(first).toList()
-        }
-
-        val totalItems = repo.totalEntries()
-
-        val firstIndex = items.firstOrNull()?.let { repo.index(it.name) }
-        val lastIndex = items.lastOrNull()?.let { repo.index(it.name) }
-
-        return AppPage.of(totalItems, items, first, firstIndex, lastIndex)
+        return repo.findAllAsConnection(first, after)
     }
 
     @Transactional
@@ -46,20 +31,7 @@ internal class RoleServiceImpl(
 
     @Transactional
     override suspend fun findRolesByUser(user: User, first: Int, after: String?): Connection<Role> {
-        assertPageSize(first)
-
-        val items = if (after != null) {
-            userRoleRepo.findAllByUser(user, first, after).toList()
-        } else {
-            userRoleRepo.findAllByUser(user, first).toList()
-        }
-
-        val totalItems = userRoleRepo.estimateTotalEntries()
-
-        val firstIndex = items.firstOrNull()?.let { userRoleRepo.findIndex(it.name) }
-        val lastIndex = items.lastOrNull()?.let { userRoleRepo.findIndex(it.name) }
-
-        return AppPage.of(totalItems, items, first, firstIndex, lastIndex)
+        return userRoleRepo.findAllAsConnection(first, after, owner = user.id)
     }
 
     @Transactional
@@ -107,5 +79,9 @@ internal class RoleServiceImpl(
         repo.delete(role)
 
         log.trace("Successfully deleted role %s", role)
+    }
+
+    override suspend fun userHasRole(role: Role): Boolean {
+        TODO("Not yet implemented")
     }
 }
