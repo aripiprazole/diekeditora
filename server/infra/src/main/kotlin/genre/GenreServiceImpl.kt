@@ -16,7 +16,7 @@ internal class GenreServiceImpl(val genreRepo: GenreRepo) : GenreService {
     }
 
     override suspend fun deleteGenre(title: String) {
-        val genre = genreRepo.findByTitle(title) ?: return
+        val genre = genreRepo.findByName(title) ?: return
 
         genreRepo.delete(genre)
     }

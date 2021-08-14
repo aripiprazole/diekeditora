@@ -2,6 +2,7 @@ package com.diekeditora.app.resources.role
 
 import com.diekeditora.domain.graphql.Secured
 import com.diekeditora.domain.role.Role
+import com.diekeditora.domain.role.RoleInput
 import com.diekeditora.domain.role.RoleService
 import com.diekeditora.domain.user.User
 import com.diekeditora.domain.user.UserService
@@ -11,15 +12,15 @@ import org.springframework.stereotype.Component
 @Component
 class RoleMutation(val userService: UserService, val roleService: RoleService) : Mutation {
     @Secured(Role.STORE)
-    suspend fun createRole(input: Role): Role {
-        return roleService.saveRole(input)
+    suspend fun createRole(input: RoleInput): Role {
+        return roleService.saveRole(input.toRole())
     }
 
     @Secured(Role.UPDATE)
-    suspend fun updateRole(name: String, input: Role): Role? {
+    suspend fun updateRole(name: String, input: RoleInput): Role? {
         val role = roleService.findRoleByName(name) ?: return null
 
-        return roleService.updateRole(role.update(input))
+        return roleService.updateRole(role.update(input.toRole()))
     }
 
     @Secured(Role.DESTROY)
