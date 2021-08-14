@@ -55,7 +55,7 @@ enum Gender {
 
 type Genre {
   createdAt: LocalDateTime!
-  title: String!
+  name: String!
   updatedAt: LocalDateTime
 }
 
@@ -262,6 +262,9 @@ type Profile {
 
   # Returns profile's display name
   displayName: String!
+
+  # Returns profile's user name
+  name: String!
 
   # Returns profile's owner
   user: User!

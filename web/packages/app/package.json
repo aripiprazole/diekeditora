@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.6",
-    "@chakra-ui/theme": "^1.10.0",
     "@diekeditora/graphql": "workspace:packages/graphql",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
@@ -52,6 +51,7 @@
   "devDependencies": {
     "@types/node": "^16.4.13",
     "@types/react": "^17.0.16",
+    "@types/react-relay": "^11.0.2",
     "babel-preset-next": "^1.4.0",
     "typescript": "^4.3.5"
   }
