@@ -1,7 +1,7 @@
-package com.diekeditora.app.graphql
+package com.diekeditora.infra.graphql
 
 import com.diekeditora.domain.graphql.Scalar
-import com.diekeditora.infra.graphql.SecuredWiring
+import com.diekeditora.infra.graphql.directives.SecuredWiring
 import com.expediagroup.graphql.generator.directives.KotlinDirectiveWiringFactory
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import graphql.Scalars.GraphQLInt
@@ -22,7 +22,7 @@ import kotlin.reflect.typeOf
 
 @Service
 @OptIn(ExperimentalStdlibApi::class)
-class SchemaGeneratorHooksImpl(val scalars: List<Scalar<*, *>>) : SchemaGeneratorHooks {
+class DiekEditoraSchemaGeneratorHooks(val scalars: List<Scalar<*, *>>) : SchemaGeneratorHooks {
     override val wiringFactory = KotlinDirectiveWiringFactory(buildMap {
         put("secured", SecuredWiring())
     })

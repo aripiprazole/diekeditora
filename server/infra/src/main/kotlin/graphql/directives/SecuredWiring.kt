@@ -1,5 +1,6 @@
-package com.diekeditora.infra.graphql
+package com.diekeditora.infra.graphql.directives
 
+import com.diekeditora.infra.graphql.AuthGraphQLContext
 import com.expediagroup.graphql.generator.annotations.GraphQLName
 import com.expediagroup.graphql.generator.directives.KotlinFieldDirectiveEnvironment
 import com.expediagroup.graphql.generator.directives.KotlinSchemaDirectiveEnvironment
@@ -12,7 +13,6 @@ import org.springframework.security.access.expression.method.DefaultMethodSecuri
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.security.util.SimpleMethodInvocation
-import org.springframework.stereotype.Service
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.KProperty1
@@ -21,9 +21,8 @@ import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.jvm.javaMethod
 
-@Service
-class SecuredWiring : KotlinSchemaDirectiveWiring {
-    val handler = DefaultMethodSecurityExpressionHandler()
+internal class SecuredWiring : KotlinSchemaDirectiveWiring {
+    private val handler = DefaultMethodSecurityExpressionHandler()
 
     override fun onField(environment: KotlinFieldDirectiveEnvironment): GraphQLFieldDefinition {
         val dataFetcher = environment.getDataFetcher()
