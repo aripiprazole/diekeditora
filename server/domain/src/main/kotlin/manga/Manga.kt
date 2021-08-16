@@ -24,7 +24,7 @@ import java.time.LocalDateTime
 @Table("manga")
 data class Manga(
     @GraphQLIgnore
-    @Id val id: UniqueId? = null,
+    @Id override val id: UniqueId? = null,
     @Cursor val uid: UniqueId,
     val title: String,
     val competing: Boolean,

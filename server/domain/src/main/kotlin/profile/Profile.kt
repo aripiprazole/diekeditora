@@ -1,9 +1,11 @@
 package com.diekeditora.domain.profile
 
 import com.diekeditora.domain.MutableEntity
+import com.diekeditora.domain.Owned
+import com.diekeditora.domain.file.AvatarKind
+import com.diekeditora.domain.file.FileKind
+import com.diekeditora.domain.graphql.Secured
 import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.image.AvatarKind
-import com.diekeditora.domain.image.FileKind
 import com.diekeditora.domain.page.Cursor
 import com.diekeditora.domain.page.OrderBy
 import com.diekeditora.domain.user.User
@@ -16,19 +18,20 @@ import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
+import org.springframework.security.access.prepost.PreAuthorize
 import java.time.LocalDateTime
 
 @GraphQLValidObjectLocations([Locations.OBJECT])
 @Table("profile")
 data class Profile(
     @GraphQLIgnore
-    @Id val id: UniqueId? = null,
+    @Id override val id: UniqueId? = null,
     @Cursor val uid: UniqueId,
     val gender: Gender,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
-    @GraphQLIgnore val ownerId: UniqueId,
-) : MutableEntity<Profile> {
+    @GraphQLIgnore override val ownerId: UniqueId,
+) : MutableEntity<Profile>, Owned<User> {
     companion object Permissions {
         const val ADMIN = "profile.admin"
     }
@@ -38,7 +41,9 @@ data class Profile(
         return user(env).username
     }
 
+    @Secured
     @GraphQLDescription("Returns profile's owner")
+    @PreAuthorize("authentication.principal.own(this)")
     suspend fun user(env: DataFetchingEnvironment): User {
         return env
             .getDataLoader<Profile, User>("ProfileOwnerLoader")
