@@ -101,8 +101,10 @@ internal class SecuredDirectiveWiring : KotlinSchemaDirectiveWiring {
 
         return handler.expressionParser
             .parseExpression(expression)
-            .getValue(handler.createEvaluationContext(authentication, invocation).apply {
-                setVariable("this", instance)
-            })
+            .getValue(
+                handler.createEvaluationContext(authentication, invocation).apply {
+                    setVariable("this", instance)
+                }
+            )
     }
 }

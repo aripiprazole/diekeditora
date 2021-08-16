@@ -7,7 +7,6 @@ import com.expediagroup.graphql.generator.execution.GraphQLContext
 import com.expediagroup.graphql.generator.execution.OptionalInput
 import com.fasterxml.jackson.databind.ObjectMapper
 import graphql.schema.DataFetchingEnvironment
-import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
 import kotlin.reflect.full.findAnnotation
