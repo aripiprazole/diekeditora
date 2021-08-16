@@ -23,9 +23,11 @@ import kotlin.reflect.typeOf
 @Service
 @OptIn(ExperimentalStdlibApi::class)
 class DiekEditoraSchemaGeneratorHooks(val scalars: List<Scalar<*, *>>) : SchemaGeneratorHooks {
-    override val wiringFactory = KotlinDirectiveWiringFactory(buildMap {
-        put("secured", SecuredDirectiveWiring())
-    })
+    override val wiringFactory = KotlinDirectiveWiringFactory(
+        buildMap {
+            put("secured", SecuredDirectiveWiring())
+        }
+    )
 
     private val relay = Relay()
 
