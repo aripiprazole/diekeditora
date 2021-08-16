@@ -1,7 +1,7 @@
 package com.diekeditora.domain.role
 
-import com.diekeditora.domain.graphql.NotBlank
-import com.diekeditora.domain.graphql.Size
+import com.diekeditora.domain.validation.NotBlank
+import com.diekeditora.domain.validation.Size
 
 @Suppress("Detekt.MagicNumber")
 data class RoleInput(@NotBlank @Size(min = 4, max = 32) val name: String) {
