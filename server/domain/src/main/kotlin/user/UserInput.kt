@@ -1,16 +1,15 @@
 package com.diekeditora.domain.user
 
 import com.diekeditora.domain.graphql.Email
-import com.diekeditora.domain.graphql.Max
-import com.diekeditora.domain.graphql.Min
 import com.diekeditora.domain.graphql.NotBlank
 import com.diekeditora.domain.graphql.Past
+import com.diekeditora.domain.graphql.Size
 import java.time.LocalDate
 
 @Suppress("Detekt.MagicNumber")
 data class UserInput(
-    @NotBlank @Max(32) @Min(4) val name: String,
-    @NotBlank @Max(16) @Min(4) val username: String,
+    @NotBlank @Size(min = 4, max = 32) val name: String,
+    @NotBlank @Size(min = 4, max = 16) val username: String,
     @Email val email: String,
     @Past val birthday: LocalDate,
 ) {

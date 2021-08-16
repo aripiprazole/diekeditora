@@ -4,6 +4,7 @@ import com.diekeditora.domain.graphql.DivisibleBy
 import com.diekeditora.domain.graphql.Max
 import com.diekeditora.domain.graphql.Min
 import com.diekeditora.domain.graphql.NotBlank
+import com.diekeditora.domain.graphql.Size
 import com.diekeditora.domain.id.UniqueId
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
@@ -11,8 +12,8 @@ import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocation
 @GraphQLValidObjectLocations([Locations.INPUT_OBJECT])
 @Suppress("Detekt.MagicNumber")
 data class MangaInput(
-    @NotBlank @Max(32) @Min(4) val title: String,
-    @NotBlank @Max(1000) val description: String,
+    @NotBlank @Size(min = 8, max = 32) val title: String,
+    @NotBlank @Size(max = 2000) val description: String,
     @DivisibleBy(2) @Max(18) @Min(10) val advisory: Int? = null,
     val competing: Boolean,
 ) {
