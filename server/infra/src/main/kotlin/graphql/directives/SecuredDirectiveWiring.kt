@@ -21,7 +21,7 @@ import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.jvm.javaMethod
 
-internal class SecuredWiring : KotlinSchemaDirectiveWiring {
+internal class SecuredDirectiveWiring : KotlinSchemaDirectiveWiring {
     private val handler = DefaultMethodSecurityExpressionHandler()
 
     override fun onField(environment: KotlinFieldDirectiveEnvironment): GraphQLFieldDefinition {
