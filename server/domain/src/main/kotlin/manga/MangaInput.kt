@@ -1,11 +1,11 @@
 package com.diekeditora.domain.manga
 
-import com.diekeditora.domain.graphql.DivisibleBy
-import com.diekeditora.domain.graphql.Max
-import com.diekeditora.domain.graphql.Min
-import com.diekeditora.domain.graphql.NotBlank
-import com.diekeditora.domain.graphql.Size
 import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.domain.validation.DivisibleBy
+import com.diekeditora.domain.validation.Max
+import com.diekeditora.domain.validation.Min
+import com.diekeditora.domain.validation.NotBlank
+import com.diekeditora.domain.validation.Size
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
 

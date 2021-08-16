@@ -1,10 +1,10 @@
 package com.diekeditora.domain.chapter
 
-import com.diekeditora.domain.graphql.Future
-import com.diekeditora.domain.graphql.Min
-import com.diekeditora.domain.graphql.NotBlank
-import com.diekeditora.domain.graphql.Size
 import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.domain.validation.Future
+import com.diekeditora.domain.validation.Min
+import com.diekeditora.domain.validation.NotBlank
+import com.diekeditora.domain.validation.Size
 import java.time.LocalDate
 
 @Suppress("Detekt.MagicNumber")

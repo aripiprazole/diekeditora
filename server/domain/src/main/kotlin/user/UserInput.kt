@@ -1,9 +1,9 @@
 package com.diekeditora.domain.user
 
-import com.diekeditora.domain.graphql.Email
-import com.diekeditora.domain.graphql.NotBlank
-import com.diekeditora.domain.graphql.Past
-import com.diekeditora.domain.graphql.Size
+import com.diekeditora.domain.validation.Email
+import com.diekeditora.domain.validation.NotBlank
+import com.diekeditora.domain.validation.Past
+import com.diekeditora.domain.validation.Size
 import java.time.LocalDate
 
 @Suppress("Detekt.MagicNumber")

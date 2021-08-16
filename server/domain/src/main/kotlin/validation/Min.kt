@@ -1,4 +1,4 @@
-package com.diekeditora.domain.graphql
+package com.diekeditora.domain.validation
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDirective
 import graphql.introspection.Introspection.DirectiveLocation.ARGUMENT_DEFINITION
