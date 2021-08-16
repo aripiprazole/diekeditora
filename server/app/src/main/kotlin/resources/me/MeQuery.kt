@@ -1,6 +1,6 @@
 package com.diekeditora.app.resources.me
 
-import com.diekeditora.app.graphql.AuthGraphQLContext
+import com.diekeditora.infra.graphql.AuthGraphQLContext
 import com.diekeditora.domain.graphql.Authenticated
 import com.diekeditora.domain.user.User
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription

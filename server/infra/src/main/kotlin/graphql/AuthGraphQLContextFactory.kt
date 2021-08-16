@@ -1,4 +1,4 @@
-package com.diekeditora.app.graphql
+package com.diekeditora.infra.graphql
 
 import com.expediagroup.graphql.server.spring.execution.SpringGraphQLContextFactory
 import kotlinx.coroutines.reactive.awaitSingleOrNull

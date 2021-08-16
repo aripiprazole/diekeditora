@@ -11,7 +11,9 @@ dependencies {
 
     implementation(libs.awssdk.s3)
 
+    implementation(libs.springBoot.security)
     implementation(libs.springBoot.dataR2dbc)
+    implementation(libs.springSecurity.oauth2Client)
 
     annotationProcessor(libs.springBoot.configurationProcessor)
 }

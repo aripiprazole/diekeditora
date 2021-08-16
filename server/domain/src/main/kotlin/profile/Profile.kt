@@ -4,6 +4,7 @@ import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.Owned
 import com.diekeditora.domain.file.AvatarKind
 import com.diekeditora.domain.file.FileKind
+import com.diekeditora.domain.graphql.Authenticated
 import com.diekeditora.domain.graphql.Secured
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.page.Cursor
@@ -42,8 +43,9 @@ data class Profile(
     }
 
     @Secured
-    @GraphQLDescription("Returns profile's owner")
+    @Authenticated
     @PreAuthorize("authentication.principal.own(this)")
+    @GraphQLDescription("Returns profile's owner")
     suspend fun user(env: DataFetchingEnvironment): User {
         return env
             .getDataLoader<Profile, User>("ProfileOwnerLoader")

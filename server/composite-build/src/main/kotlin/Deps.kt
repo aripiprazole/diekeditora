@@ -102,7 +102,7 @@ class Libs {
     }
 
     class SpringBoot {
-        val security = "org.springframework.boot:spring-boot-starter-security"
+        val security = "org.springframework.boot:spring-boot-starter-security:2.4.5"
         val actuator = "org.springframework.boot:spring-boot-starter-actuator"
         val securityOAuth2ResourceServer =
             "org.springframework.boot:spring-boot-starter-oauth2-resource-server"

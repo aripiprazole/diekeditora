@@ -1,6 +1,7 @@
 package com.diekeditora.domain.graphql
 
-import com.expediagroup.graphql.generator.annotations.GraphQLDirective
+import org.springframework.security.access.prepost.PreAuthorize
 
-@GraphQLDirective
+@Retention(AnnotationRetention.RUNTIME)
+@PreAuthorize("isAuthenticated()")
 annotation class Authenticated
