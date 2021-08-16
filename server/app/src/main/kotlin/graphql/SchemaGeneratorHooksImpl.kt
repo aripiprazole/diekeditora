@@ -1,5 +1,7 @@
 package com.diekeditora.app.graphql
 
+import com.diekeditora.infra.graphql.SecuredWiring
+import com.expediagroup.graphql.generator.directives.KotlinDirectiveWiringFactory
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ValueNode
@@ -22,7 +24,11 @@ import kotlin.reflect.typeOf
 
 @OptIn(ExperimentalStdlibApi::class)
 class SchemaGeneratorHooksImpl(val objectMapper: ObjectMapper) : SchemaGeneratorHooks {
-    private val relay = Relay()
+    override val wiringFactory = KotlinDirectiveWiringFactory(buildMap {
+        put("secured", SecuredWiring())
+    })
+
+private val relay = Relay()
 
     private val pageInfoType = Relay.pageInfoType
         .transform { builder ->

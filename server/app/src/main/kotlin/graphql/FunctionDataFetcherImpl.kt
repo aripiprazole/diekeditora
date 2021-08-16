@@ -1,6 +1,5 @@
 package com.diekeditora.app.graphql
 
-import com.diekeditora.domain.graphql.Secured
 import com.expediagroup.graphql.generator.annotations.GraphQLName
 import com.expediagroup.graphql.generator.exceptions.CouldNotGetNameOfKParameterException
 import com.expediagroup.graphql.generator.execution.FunctionDataFetcher
@@ -8,39 +7,21 @@ import com.expediagroup.graphql.generator.execution.GraphQLContext
 import com.expediagroup.graphql.generator.execution.OptionalInput
 import com.fasterxml.jackson.databind.ObjectMapper
 import graphql.schema.DataFetchingEnvironment
-import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler
-import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.security.util.SimpleMethodInvocation
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.instanceParameter
 import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.valueParameters
-import kotlin.reflect.jvm.javaMethod
 import kotlin.reflect.jvm.jvmErasure
 
 class FunctionDataFetcherImpl(
     private val objectMapper: ObjectMapper,
     private val target: Any?,
     private val fn: KFunction<*>,
-    private val handler: DefaultMethodSecurityExpressionHandler
 ) : FunctionDataFetcher(target, fn, objectMapper) {
-    private val parser = handler.expressionParser
-
     override fun get(environment: DataFetchingEnvironment): Any? {
-        val expression = fn.findAnnotation<PreAuthorize>()?.value
-        val secured = fn.findAnnotation<Secured>()?.authorities
-        val context = environment.getContext<GraphQLContext>() as? AuthGraphQLContext
-
-        when {
-            expression != null && context == null -> throw AccessDeniedException("Not authenticated")
-            expression != null && context != null -> context.preAuthorize(expression, environment)
-            secured != null && context == null -> throw AccessDeniedException("Not authenticated")
-            secured != null && context != null -> context.secured(secured.toList())
-        }
-
         return runFunction(environment)
     }
 
@@ -85,29 +66,6 @@ class FunctionDataFetcherImpl(
                     null
                 }
             }
-        }
-    }
-
-    private fun AuthGraphQLContext.secured(values: List<String>) {
-        if (!authentication.authorities.map { it.authority }.containsAll(values)) {
-            throw AccessDeniedException("Not enough authorities")
-        }
-    }
-
-    private fun AuthGraphQLContext.preAuthorize(value: String, env: DataFetchingEnvironment) {
-        val instance = target ?: env.getSource()
-
-        val method = fn.javaMethod ?: error("Could not get java method from function $fn")
-        val invocation = SimpleMethodInvocation(instance, method, env.arguments.values)
-
-        val result = parser
-            .parseExpression(value)
-            .getValue(handler.createEvaluationContext(authentication, invocation).apply {
-                setVariable("this", instance)
-            })
-
-        if (result == false) {
-            throw AccessDeniedException("Not enough authorities")
         }
     }
 }

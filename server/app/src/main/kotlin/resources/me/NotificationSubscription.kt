@@ -2,7 +2,7 @@ package com.diekeditora.app.resources.me
 
 import com.diekeditora.domain.notification.Notification
 import com.diekeditora.domain.notification.NotificationService
-import com.diekeditora.app.graphql.AuthGraphQLContext
+import com.diekeditora.infra.graphql.AuthGraphQLContext
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Subscription
 import kotlinx.coroutines.ExperimentalCoroutinesApi
