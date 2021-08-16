@@ -1,38 +1,53 @@
 package com.diekeditora.app.graphql
 
+import com.diekeditora.domain.graphql.Scalar
 import com.diekeditora.infra.graphql.SecuredWiring
 import com.expediagroup.graphql.generator.directives.KotlinDirectiveWiringFactory
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.node.ValueNode
-import com.fasterxml.jackson.module.kotlin.readValue
 import graphql.Scalars.GraphQLInt
 import graphql.relay.Connection
 import graphql.relay.Relay
 import graphql.schema.Coercing
 import graphql.schema.GraphQLFieldDefinition.newFieldDefinition
 import graphql.schema.GraphQLObjectType
-import graphql.schema.GraphQLScalarType
 import graphql.schema.GraphQLScalarType.newScalar
 import graphql.schema.GraphQLSchema
 import graphql.schema.GraphQLType
 import graphql.schema.GraphQLTypeReference.typeRef
+import org.springframework.stereotype.Service
 import kotlin.reflect.KType
-import kotlin.reflect.full.isSubtypeOf
+import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.typeOf
 
+@Service
 @OptIn(ExperimentalStdlibApi::class)
-class SchemaGeneratorHooksImpl(val objectMapper: ObjectMapper) : SchemaGeneratorHooks {
+class SchemaGeneratorHooksImpl(val scalars: List<Scalar<*, *>>) : SchemaGeneratorHooks {
     override val wiringFactory = KotlinDirectiveWiringFactory(buildMap {
         put("secured", SecuredWiring())
     })
 
-private val relay = Relay()
+    private val relay = Relay()
 
-    private val pageInfoType = Relay.pageInfoType
-        .transform { builder ->
-            builder.field(
+    private val cache = mutableMapOf<String, GraphQLType>()
+    private val types = mutableMapOf<KType, (KType) -> GraphQLType?>().apply {
+        set(typeOf<Unit>(), ::parseUnit)
+        set(typeOf<Connection<*>>(), ::parseConnection)
+
+        scalars.forEach { scalar ->
+            set(scalar.klass.starProjectedType) {
+                newScalar()
+                    .name(scalar.name)
+                    .description(scalar.description)
+                    .coercing(scalar.coercing)
+                    .build()
+            }
+        }
+    }
+
+    override fun willBuildSchema(builder: GraphQLSchema.Builder): GraphQLSchema.Builder {
+        val pageInfoType = Relay.pageInfoType.transform {
+            it.field(
                 newFieldDefinition()
                     .name("totalPages")
                     .type(GraphQLInt)
@@ -41,38 +56,6 @@ private val relay = Relay()
             )
         }
 
-    private val types = mutableMapOf<KType, (KType) -> GraphQLType?>()
-    private val cache = mutableMapOf<String, GraphQLType>()
-
-    init {
-        withSerializer<Unit>(::parseUnit)
-        withSerializer<Connection<*>>(::parseConnection)
-    }
-
-    private fun parseUnit(type: KType): GraphQLType {
-        return newScalar()
-            .name(type.jvmErasure.simpleName ?: "Unit")
-            .coercing(object : Coercing<Unit, Unit> {
-                override fun serialize(dataFetcherResult: Any?): Unit = Unit
-                override fun parseValue(input: Any?) = Unit
-                override fun parseLiteral(input: Any?) = Unit
-            })
-            .build()
-    }
-
-    private fun parseConnection(type: KType): GraphQLObjectType = relay.run {
-        val name = type.arguments.firstOrNull()
-            ?.type?.jvmErasure?.simpleName
-            ?: error("Unable to get name of type arguments of $type")
-
-        connectionType(
-            name,
-            edgeType(name, typeRef(name), null, emptyList()),
-            emptyList()
-        )
-    }
-
-    override fun willBuildSchema(builder: GraphQLSchema.Builder): GraphQLSchema.Builder {
         return builder.additionalType(pageInfoType)
     }
 
@@ -95,44 +78,29 @@ private val relay = Relay()
         }
     }
 
-    inline fun <reified I, reified O> jacksonCoercing(
-        noinline transform: (String) -> O,
-    ): Coercing<I, O> = object : Coercing<I, O> {
-        override fun serialize(result: Any?): O {
-            return transform(objectMapper.valueToTree<ValueNode>(result).asText())
-        }
-
-        override fun parseValue(input: Any?): I {
-            if (typeOf<O>().isSubtypeOf(typeOf<String>())) {
-                return objectMapper.readValue("\"$input\"")
-            }
-
-            return objectMapper.readValue(input.toString())
-        }
-
-        override fun parseLiteral(input: Any?): I {
-            if (typeOf<O>().isSubtypeOf(typeOf<String>())) {
-                return objectMapper.readValue("\"$input\"")
-            }
-
-            return objectMapper.readValue(input.toString())
-        }
-    }
-
-    fun withScalar(type: KType, scalar: GraphQLScalarType) {
-        types[type] = { scalar }
-    }
-
-    inline fun <reified T : Any> withScalar(scalar: GraphQLScalarType) {
-        withScalar(typeOf<T>(), scalar)
-    }
-
-    private inline fun <reified T : Any> withSerializer(noinline parser: (KType) -> GraphQLType?) {
-        types[typeOf<T>()] = parser
-    }
-
     private fun parser(type: KType): ((KType) -> GraphQLType?)? {
         return types.entries
             .find { it.key.jvmErasure.qualifiedName == type.jvmErasure.qualifiedName }?.value
+    }
+
+    private fun parseUnit(type: KType): GraphQLType {
+        return newScalar()
+            .name(type.jvmErasure.simpleName ?: "Unit")
+            .coercing(object : Coercing<Unit, Unit> {
+                override fun serialize(dataFetcherResult: Any?): Unit = Unit
+                override fun parseValue(input: Any?) = Unit
+                override fun parseLiteral(input: Any?) = Unit
+            })
+            .build()
+    }
+
+    private fun parseConnection(type: KType): GraphQLObjectType = relay.run {
+        val name = type.arguments.firstOrNull()
+            ?.type?.jvmErasure?.simpleName
+            ?: error("Unable to get name of type arguments of $type")
+
+        val edgeType = edgeType(name, typeRef(name), null, emptyList())
+
+        connectionType(name, edgeType, emptyList())
     }
 }
