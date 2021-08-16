@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 @Table("genre")
 data class Genre(
     @GraphQLIgnore
-    @Id val id: UniqueId? = null,
+    @Id override val id: UniqueId? = null,
     @Cursor val name: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,

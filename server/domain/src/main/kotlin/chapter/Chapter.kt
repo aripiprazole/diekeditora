@@ -16,7 +16,7 @@ import java.time.LocalDateTime
 @Table("chapter")
 data class Chapter(
     @GraphQLIgnore
-    @Id val id: UniqueId? = null,
+    @Id override val id: UniqueId? = null,
     @Cursor val uid: UniqueId,
     val title: String,
     val index: Int,

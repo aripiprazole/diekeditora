@@ -20,7 +20,7 @@ import java.time.LocalDateTime
 @Table("comment")
 data class Comment(
     @GraphQLIgnore
-    @Id val id: UniqueId? = null,
+    @Id override val id: UniqueId? = null,
     @Cursor val uid: UniqueId,
     val content: String,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),

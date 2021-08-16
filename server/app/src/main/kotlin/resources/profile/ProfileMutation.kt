@@ -2,7 +2,7 @@ package com.diekeditora.app.resources.profile
 
 import com.diekeditora.domain.file.Upload
 import com.diekeditora.domain.graphql.Secured
-import com.diekeditora.domain.image.AvatarKind
+import com.diekeditora.domain.file.AvatarKind
 import com.diekeditora.domain.image.FileService
 import com.diekeditora.domain.profile.Profile
 import com.diekeditora.domain.profile.ProfileService

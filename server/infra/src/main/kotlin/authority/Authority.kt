@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 @Table("authority")
 internal data class Authority(
     @GraphQLIgnore
-    @Id val id: UniqueId? = null,
+    @Id override val id: UniqueId? = null,
     @Cursor val value: String,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
 ) : Entity<Authority> {

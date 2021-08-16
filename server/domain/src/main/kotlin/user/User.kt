@@ -1,8 +1,10 @@
 package com.diekeditora.domain.user
 
 import com.diekeditora.domain.MutableEntity
+import com.diekeditora.domain.authority.Authority
 import com.diekeditora.domain.dataloader.PaginationArg
 import com.diekeditora.domain.dataloader.toPaginationArg
+import com.diekeditora.domain.graphql.Secured
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.page.Cursor
 import com.diekeditora.domain.page.OrderBy
@@ -18,7 +20,6 @@ import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
-import org.springframework.security.access.prepost.PreAuthorize
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -26,7 +27,7 @@ import java.time.LocalDateTime
 @Table("\"user\"")
 data class User(
     @GraphQLIgnore
-    @Id val id: UniqueId? = null,
+    @Id override val id: UniqueId? = null,
     val name: String,
     val email: String,
     @Cursor val username: String,
@@ -50,7 +51,7 @@ data class User(
             .await()
     }
 
-    @PreAuthorize("hasAuthority('role.view')")
+    @Secured(Role.VIEW)
     suspend fun roles(
         env: DataFetchingEnvironment,
         first: Int,
@@ -62,7 +63,7 @@ data class User(
             .await()
     }
 
-    @PreAuthorize("hasAuthority('authority.view')")
+    @Secured(Authority.VIEW)
     suspend fun allAuthorities(
         env: DataFetchingEnvironment,
         first: Int,
@@ -74,7 +75,7 @@ data class User(
             .await()
     }
 
-    @PreAuthorize("hasAuthority('authority.view')")
+    @Secured(Authority.VIEW)
     suspend fun authorities(
         env: DataFetchingEnvironment,
         first: Int,
@@ -86,8 +87,8 @@ data class User(
             .await()
     }
 
-    @GraphQLIgnore
     override val cursor: String
+        @GraphQLIgnore
         @JsonIgnore
         get() = username
 

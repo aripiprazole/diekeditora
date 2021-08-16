@@ -22,7 +22,7 @@ import java.time.LocalDateTime
 @Table("role")
 data class Role(
     @GraphQLIgnore
-    @Id val id: UniqueId? = null,
+    @Id override val id: UniqueId? = null,
     @Cursor val name: String,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null

@@ -1,5 +1,6 @@
 package com.diekeditora.domain.image
 
+import com.diekeditora.domain.file.FileKind
 import org.springframework.http.MediaType
 
 interface FileService {

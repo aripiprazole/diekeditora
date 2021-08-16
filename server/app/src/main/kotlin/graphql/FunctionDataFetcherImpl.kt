@@ -102,7 +102,9 @@ class FunctionDataFetcherImpl(
 
         val result = parser
             .parseExpression(value)
-            .getValue(handler.createEvaluationContext(authentication, invocation))
+            .getValue(handler.createEvaluationContext(authentication, invocation).apply {
+                setVariable("this", instance)
+            })
 
         if (result == false) {
             throw AccessDeniedException("Not enough authorities")

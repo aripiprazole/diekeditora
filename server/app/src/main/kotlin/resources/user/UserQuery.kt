@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component
 @Component
 class UserQuery(val userService: UserService) : Query {
     @GraphQLDescription("Returns user's details by its username")
-    @Secured(User.VIEW)
     suspend fun user(username: String): User? {
         return userService.findUserByUsername(username)
     }
