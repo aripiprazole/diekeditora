@@ -45,6 +45,7 @@ class Libs {
     val ninjaSquad = NinjaSquad()
     val ozimov = Ozimov()
     val awssdk = Awssdk()
+    val valiktor = Valiktor()
 
     class NinjaSquad {
         val springMockk = "com.ninja-squad:springmockk:3.0.1"
@@ -145,5 +146,9 @@ class Libs {
 
     class Awssdk {
         val s3 = "software.amazon.awssdk:s3:2.17.3"
+    }
+
+    class Valiktor {
+        val valiktor = "org.valiktor:valiktor-core:0.12.0"
     }
 }

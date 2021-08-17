@@ -15,5 +15,7 @@ dependencies {
     implementation(libs.springBoot.dataR2dbc)
     implementation(libs.springSecurity.oauth2Client)
 
+    implementation(libs.valiktor.valiktor)
+
     annotationProcessor(libs.springBoot.configurationProcessor)
 }
