@@ -150,5 +150,6 @@ class Libs {
 
     class Valiktor {
         val valiktor = "org.valiktor:valiktor-core:0.12.0"
+        val valiktorSpring = "org.valiktor:valiktor-spring:0.12.0"
     }
 }

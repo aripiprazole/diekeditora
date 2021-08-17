@@ -20,7 +20,7 @@ import org.springframework.web.reactive.function.server.awaitMultipartData
 
 @Service
 @Primary
-class SpringGraphQLRequestParserImpl(val objectMapper: ObjectMapper) :
+class GraphQLRequestParser(val objectMapper: ObjectMapper) :
     SpringGraphQLRequestParser(objectMapper) {
     @Suppress("Detekt.ReturnCount")
     override suspend fun parseRequest(request: ServerRequest): GraphQLServerRequest? {
