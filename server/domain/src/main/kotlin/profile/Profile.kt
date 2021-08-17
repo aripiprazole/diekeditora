@@ -14,7 +14,6 @@ import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
-import com.fasterxml.jackson.annotation.JsonIgnore
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
 import org.springframework.data.annotation.Id
@@ -33,24 +32,9 @@ data class Profile(
     val updatedAt: LocalDateTime? = null,
     @GraphQLIgnore override val ownerId: UniqueId,
 ) : MutableEntity<Profile>, Owned<User> {
-    companion object Permissions {
-        const val ADMIN = "profile.admin"
-    }
-
     @GraphQLDescription("Returns profile's display name")
     suspend fun displayName(env: DataFetchingEnvironment): String {
         return user(env).username
-    }
-
-    @Secured
-    @Authenticated
-    @PreAuthorize("authentication.principal.own(this)")
-    @GraphQLDescription("Returns profile's owner")
-    suspend fun user(env: DataFetchingEnvironment): User {
-        return env
-            .getDataLoader<Profile, User>("ProfileOwnerLoader")
-            .load(this)
-            .await()
     }
 
     @GraphQLDescription("Returns profile's avatar image url")
@@ -61,10 +45,16 @@ data class Profile(
             .await()
     }
 
-    @GraphQLIgnore
-    override val cursor: String
-        @JsonIgnore
-        get() = uid.value
+    @Secured
+    @Authenticated
+    @PreAuthorize("hasAuthority('user.view') or authentication.principal.own(this)")
+    @GraphQLDescription("Returns profile's owner")
+    suspend fun user(env: DataFetchingEnvironment): User {
+        return env
+            .getDataLoader<Profile, User>("ProfileOwnerLoader")
+            .load(this)
+            .await()
+    }
 
     @GraphQLIgnore
     override fun update(with: Profile): Profile {

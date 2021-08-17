@@ -3,13 +3,14 @@ package com.diekeditora.domain.role
 import com.diekeditora.domain.MutableEntity
 import com.diekeditora.domain.dataloader.PaginationArg
 import com.diekeditora.domain.dataloader.toPaginationArg
+import com.diekeditora.domain.graphql.Secured
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.page.Cursor
 import com.diekeditora.domain.page.OrderBy
+import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
-import com.fasterxml.jackson.annotation.JsonIgnore
 import graphql.relay.Connection
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
@@ -27,15 +28,10 @@ data class Role(
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null
 ) : MutableEntity<Role> {
-    companion object Permissions {
-        const val STORE = "role.store"
-        const val UPDATE = "role.update"
-        const val DESTROY = "role.destroy"
-        const val ADMIN = "role.admin"
-        const val VIEW = "role.view"
-    }
 
+    @Secured
     @PreAuthorize("hasAuthority('authority.view')")
+    @GraphQLDescription("Returns authority page")
     suspend fun authorities(
         env: DataFetchingEnvironment,
         first: Int,
@@ -46,11 +42,6 @@ data class Role(
             .load(toPaginationArg(first, after))
             .await()
     }
-
-    @GraphQLIgnore
-    override val cursor: String
-        @JsonIgnore
-        get() = name
 
     @GraphQLIgnore
     override fun update(with: Role): Role {
