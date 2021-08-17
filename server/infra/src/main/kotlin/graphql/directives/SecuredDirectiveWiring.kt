@@ -38,7 +38,7 @@ internal class SecuredDirectiveWiring : KotlinSchemaDirectiveWiring {
             val result = parseExpression(value, target, this, environment, context.authentication)
 
             if (result == false || result == null) {
-                throw AccessDeniedException("Not authenticated")
+                throw AccessDeniedException("Not authorized")
             }
         }
     }

@@ -11,8 +11,12 @@ import org.springframework.stereotype.Component
 
 @Component
 class MangaQuery(val mangaService: MangaService) : Query {
+    @GraphQLDescription("Returns manga details by its uid")
+    suspend fun manga(uid: UniqueId): Manga? {
+        return mangaService.findMangaByUid(uid)
+    }
 
-    @GraphQLDescription("Finds manga connection")
+    @GraphQLDescription("Returns manga page")
     suspend fun mangas(
         @GraphQLDescription("Node list size") first: Int,
         @GraphQLDescription("Manga title") after: UniqueId? = null,
@@ -25,10 +29,5 @@ class MangaQuery(val mangaService: MangaService) : Query {
             orderBy ?: MangaSort.Empty,
             filterBy.orEmpty().toSet()
         )
-    }
-
-    @GraphQLDescription("Finds manga by its unique id")
-    suspend fun manga(uid: UniqueId): Manga? {
-        return mangaService.findMangaByUid(uid)
     }
 }

@@ -9,7 +9,6 @@ import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
-import com.fasterxml.jackson.annotation.JsonIgnore
 import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
 import org.springframework.data.annotation.Id
@@ -28,7 +27,7 @@ data class Comment(
     val deletedAt: LocalDateTime? = null,
     @GraphQLIgnore val authorId: UniqueId,
 ) : MutableEntity<Comment> {
-    @GraphQLDescription("Returns comment's author")
+    @GraphQLDescription("Returns the comment's author")
     suspend fun profile(env: DataFetchingEnvironment): Profile {
         return env
             .getDataLoader<Comment, Profile>("CommentAuthorLoader")
@@ -36,18 +35,13 @@ data class Comment(
             .await()
     }
 
-    @GraphQLDescription("Returns comment's likes")
+    @GraphQLDescription("Returns the comment's likes")
     suspend fun likes(env: DataFetchingEnvironment): Int {
         return env
             .getDataLoader<Comment, Int>("CommentLikeLoader")
             .load(this)
             .await()
     }
-
-    @GraphQLIgnore
-    override val cursor: String
-        @JsonIgnore
-        get() = uid.value
 
     @GraphQLIgnore
     override fun update(with: Comment): Comment {

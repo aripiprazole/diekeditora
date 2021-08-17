@@ -1,7 +1,7 @@
 package com.diekeditora.domain.user
 
 import com.diekeditora.domain.MutableEntity
-import com.diekeditora.domain.authority.Authority
+import com.diekeditora.domain.Owned
 import com.diekeditora.domain.dataloader.PaginationArg
 import com.diekeditora.domain.dataloader.toPaginationArg
 import com.diekeditora.domain.graphql.Secured
@@ -20,6 +20,7 @@ import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.future.await
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
+import org.springframework.security.access.prepost.PreAuthorize
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -35,15 +36,13 @@ data class User(
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
-) : MutableEntity<User> {
-    companion object Permissions {
-        const val VIEW = "user.view"
-        const val STORE = "user.store"
-        const val UPDATE = "user.update"
-        const val DESTROY = "user.destroy"
-    }
+) : MutableEntity<User>, Owned<User> {
+    override val ownerId: UniqueId
+        @GraphQLIgnore
+        @JsonIgnore
+        get() = id ?: error("Can not be owned without be fetched")
 
-    @GraphQLDescription("Finds the user's profile")
+    @GraphQLDescription("Returns this user's profile details")
     suspend fun profile(env: DataFetchingEnvironment): Profile {
         return env
             .getDataLoader<User, Profile>("UserProfileLoader")
@@ -51,7 +50,9 @@ data class User(
             .await()
     }
 
-    @Secured(Role.VIEW)
+    @Secured
+    @PreAuthorize("hasAuthority('role.view') or authentication.principal.own(this)")
+    @GraphQLDescription("Returns role page")
     suspend fun roles(
         env: DataFetchingEnvironment,
         first: Int,
@@ -63,7 +64,9 @@ data class User(
             .await()
     }
 
-    @Secured(Authority.VIEW)
+    @Secured
+    @PreAuthorize("hasAuthority('authority.view') or authentication.principal.own(this)")
+    @GraphQLDescription("Returns all authority page")
     suspend fun allAuthorities(
         env: DataFetchingEnvironment,
         first: Int,
@@ -75,7 +78,9 @@ data class User(
             .await()
     }
 
-    @Secured(Authority.VIEW)
+    @Secured
+    @PreAuthorize("hasAuthority('authority.view') or authentication.principal.own(this)")
+    @GraphQLDescription("Returns authority page")
     suspend fun authorities(
         env: DataFetchingEnvironment,
         first: Int,
@@ -86,11 +91,6 @@ data class User(
             .load(toPaginationArg(first, after))
             .await()
     }
-
-    override val cursor: String
-        @GraphQLIgnore
-        @JsonIgnore
-        get() = username
 
     @GraphQLIgnore
     override fun update(with: User): User {

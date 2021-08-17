@@ -34,13 +34,7 @@ data class Manga(
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
 ) : MutableEntity<Manga> {
-    companion object Permissions {
-        const val STORE = "manga.store"
-        const val UPDATE = "manga.update"
-        const val DESTROY = "manga.destroy"
-    }
-
-    @GraphQLDescription("Returns latest chapter")
+    @GraphQLDescription("Returns the manga's latest chapter")
     suspend fun latestChapter(env: DataFetchingEnvironment): Chapter {
         return env
             .getDataLoader<Manga, Chapter>("MangaLatestChapterLoader")
@@ -48,7 +42,7 @@ data class Manga(
             .await()
     }
 
-    @GraphQLDescription("Returns manga's ratings")
+    @GraphQLDescription("Returns the manga's ratings")
     suspend fun ratings(env: DataFetchingEnvironment): List<Int> {
         return env
             .getDataLoader<Manga, Set<Int>>("MangaRatingsLoader")
@@ -57,7 +51,7 @@ data class Manga(
             .toList()
     }
 
-    @GraphQLDescription("Returns manga's genres")
+    @GraphQLDescription("Returns the manga's genres")
     suspend fun genres(env: DataFetchingEnvironment): List<Genre> {
         return env
             .getDataLoader<Manga, Set<Genre>>("MangaGenreLoader")
@@ -66,7 +60,7 @@ data class Manga(
             .toList()
     }
 
-    @GraphQLDescription("Returns manga's chapters")
+    @GraphQLDescription("Returns the manga's chapters")
     suspend fun chapters(
         env: DataFetchingEnvironment,
         first: Int,
