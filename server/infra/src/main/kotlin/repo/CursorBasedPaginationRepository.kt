@@ -3,7 +3,7 @@ package com.diekeditora.infra.repo
 import com.diekeditora.domain.Entity
 import com.diekeditora.domain.page.Cursor
 import com.diekeditora.domain.page.OrderBy
-import com.diekeditora.domain.page.PaginationQuery
+import com.diekeditora.infra.role.PaginationQuery
 import com.diekeditora.shared.findPropertiesByAnnotation
 import com.diekeditora.shared.findPropertyByAnnotation
 import kotlinx.coroutines.flow.Flow

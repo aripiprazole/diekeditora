@@ -1,7 +1,6 @@
 package com.diekeditora.infra.role
 
 import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.page.PaginationQuery
 import com.diekeditora.domain.role.Role
 import com.diekeditora.domain.user.User
 import com.diekeditora.infra.repo.CursorBasedPaginationRepository
