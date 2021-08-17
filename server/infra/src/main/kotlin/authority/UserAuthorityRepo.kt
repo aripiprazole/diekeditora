@@ -1,9 +1,9 @@
 package com.diekeditora.infra.authority
 
 import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.page.PaginationQuery
 import com.diekeditora.domain.user.User
 import com.diekeditora.infra.repo.CursorBasedPaginationRepository
+import com.diekeditora.infra.role.PaginationQuery
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.domain.Sort
 import org.springframework.data.r2dbc.repository.Query
