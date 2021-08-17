@@ -1,4 +1,4 @@
-package com.diekeditora.app.graphql
+package com.diekeditora.infra.graphql
 
 import com.expediagroup.graphql.generator.annotations.GraphQLName
 import com.expediagroup.graphql.generator.exceptions.CouldNotGetNameOfKParameterException
@@ -15,10 +15,10 @@ import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.valueParameters
 import kotlin.reflect.jvm.jvmErasure
 
-class FunctionDataFetcherImpl(
+internal class DiekEditoraDataFetcher(
+    val target: Any?,
+    val fn: KFunction<*>,
     private val objectMapper: ObjectMapper,
-    private val target: Any?,
-    private val fn: KFunction<*>,
 ) : FunctionDataFetcher(target, fn, objectMapper) {
     override fun get(environment: DataFetchingEnvironment): Any? {
         return runFunction(environment)
