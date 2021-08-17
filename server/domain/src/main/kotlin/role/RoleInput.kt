@@ -5,14 +5,8 @@ import org.valiktor.validate
 
 @Suppress("Detekt.MagicNumber")
 data class RoleInput(val name: String) {
-    init {
-        validate(this) {
-            validate(RoleInput::name).hasSize(min = 4, max = 32)
-        }
-    }
-
-    fun toRole(): Role {
-        return Role(name = name)
+    fun toRole(): Role = validate(Role(name = name)) {
+        validate(Role::name).hasSize(min = 4, max = 32)
     }
 
     companion object {

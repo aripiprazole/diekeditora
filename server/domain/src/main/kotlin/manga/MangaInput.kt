@@ -16,22 +16,15 @@ data class MangaInput(
     val advisory: Int? = null,
     val competing: Boolean,
 ) {
-    init {
-        validate(this) {
-            validate(MangaInput::title).hasSize(min = 4, max = 32).isNotBlank()
-            validate(MangaInput::description).hasSize(max = 1000).isNotBlank()
-            validate(MangaInput::advisory).isIn(10, 12, 14, 16, 18)
-        }
-    }
-
-    fun toManga(uid: UniqueId): Manga {
-        return Manga(
-            uid = uid,
-            title = title,
-            description = description,
-            competing = competing,
-            advisory = advisory,
+    fun toManga(uid: UniqueId): Manga = validate(
+        Manga(
+            uid = uid, title = title, description = description,
+            competing = competing, advisory = advisory,
         )
+    ) {
+        validate(Manga::title).hasSize(min = 4, max = 32).isNotBlank()
+        validate(Manga::description).hasSize(max = 1000).isNotBlank()
+        validate(Manga::advisory).isIn(10, 12, 14, 16, 18)
     }
 
     companion object {
