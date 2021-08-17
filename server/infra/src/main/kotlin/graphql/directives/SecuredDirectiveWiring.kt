@@ -3,11 +3,9 @@ package com.diekeditora.infra.graphql.directives
 import com.diekeditora.infra.graphql.AuthGraphQLContext
 import com.diekeditora.infra.graphql.DiekEditoraDataFetcher
 import com.expediagroup.graphql.generator.directives.KotlinFieldDirectiveEnvironment
-import com.expediagroup.graphql.generator.directives.KotlinSchemaDirectiveEnvironment
 import com.expediagroup.graphql.generator.directives.KotlinSchemaDirectiveWiring
 import graphql.schema.DataFetchingEnvironment
 import graphql.schema.GraphQLFieldDefinition
-import graphql.schema.GraphQLInputObjectField
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler
 import org.springframework.security.access.prepost.PreAuthorize
@@ -28,12 +26,6 @@ internal class SecuredDirectiveWiring : KotlinSchemaDirectiveWiring {
             dataFetcher.get(dataFetchingEnvironment)
         }
 
-        return environment.element
-    }
-
-    override fun onInputObjectField(
-        environment: KotlinSchemaDirectiveEnvironment<GraphQLInputObjectField>,
-    ): GraphQLInputObjectField {
         return environment.element
     }
 
