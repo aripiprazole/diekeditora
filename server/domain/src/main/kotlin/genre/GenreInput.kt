@@ -1,10 +1,7 @@
 package com.diekeditora.domain.genre
 
-import com.diekeditora.domain.validation.NotBlank
-import com.diekeditora.domain.validation.Size
-
 @Suppress("Detekt.MagicNumber")
-data class GenreInput(@NotBlank @Size(min = 4, max = 32) val name: String) {
+data class GenreInput(val name: String) {
     fun toGenre(): Genre {
         return Genre(name = name)
     }
