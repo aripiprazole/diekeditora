@@ -14,18 +14,13 @@ data class UserInput(
     val email: String,
     val birthday: LocalDate,
 ) {
-    init {
-        validate(this) {
-            validate(UserInput::name).hasSize(min = 4, max = 32).isNotBlank()
-            validate(UserInput::username).hasSize(min = 4, max = 16).isNotBlank()
-            validate(UserInput::email).isEmail()
-            validate(UserInput::birthday).isLessThan(LocalDate.now())
+    fun toUser(): User =
+        validate(User(name = name, email = email, username = username, birthday = birthday)) {
+            validate(User::name).hasSize(min = 4, max = 32).isNotBlank()
+            validate(User::username).hasSize(min = 4, max = 16).isNotBlank()
+            validate(User::email).isEmail()
+            validate(User::birthday).isLessThan(LocalDate.now())
         }
-    }
-
-    fun toUser(): User {
-        return User(name = name, email = email, username = username, birthday = birthday)
-    }
 
     companion object {
         fun from(user: User): UserInput {

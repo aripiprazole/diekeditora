@@ -13,22 +13,12 @@ data class ChapterInput(
     val releasedOn: LocalDate? = null,
     val enabled: Boolean = false,
 ) {
-    init {
-        validate(this) {
-            validate(ChapterInput::title).hasSize(min = 4, max = 32)
-            validate(ChapterInput::index).isGreaterThan(0)
-            validate(ChapterInput::releasedOn).isGreaterThan(LocalDate.now())
-        }
-    }
-
-    fun toChapter(uid: UniqueId): Chapter {
-        return Chapter(
-            uid = uid,
-            title = title,
-            index = index,
-            enabled = enabled,
-            releasedOn = releasedOn,
-        )
+    fun toChapter(uid: UniqueId): Chapter = validate(
+        Chapter(uid = uid, title = title, index = index, enabled = enabled, releasedOn = releasedOn)
+    ) {
+        validate(Chapter::title).hasSize(min = 4, max = 32)
+        validate(Chapter::index).isGreaterThan(0)
+        validate(Chapter::releasedOn).isGreaterThan(LocalDate.now())
     }
 
     companion object {

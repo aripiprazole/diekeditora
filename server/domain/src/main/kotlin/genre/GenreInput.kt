@@ -5,14 +5,8 @@ import org.valiktor.validate
 
 @Suppress("Detekt.MagicNumber")
 data class GenreInput(val name: String) {
-    init {
-        validate(this) {
-            validate(GenreInput::name).hasSize(min = 4, max = 32)
-        }
-    }
-
-    fun toGenre(): Genre {
-        return Genre(name = name)
+    fun toGenre(): Genre = validate(Genre(name = name)) {
+        validate(Genre::name).hasSize(min = 4, max = 32)
     }
 
     companion object {
