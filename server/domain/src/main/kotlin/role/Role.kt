@@ -28,7 +28,6 @@ data class Role(
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null
 ) : MutableEntity<Role> {
-
     @Secured
     @PreAuthorize("hasAuthority('authority.view')")
     @GraphQLDescription("Returns authority page")

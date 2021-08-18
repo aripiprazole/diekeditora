@@ -1,6 +1,7 @@
 package com.diekeditora.domain.comment
 
 import com.diekeditora.domain.MutableEntity
+import com.diekeditora.domain.Owned
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.page.Cursor
 import com.diekeditora.domain.page.OrderBy
@@ -25,8 +26,9 @@ data class Comment(
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
-    @GraphQLIgnore val authorId: UniqueId,
-) : MutableEntity<Comment> {
+    @GraphQLIgnore val mangaId: UniqueId,
+    @GraphQLIgnore override val ownerId: UniqueId,
+) : MutableEntity<Comment>, Owned {
     @GraphQLDescription("Returns the comment's author")
     suspend fun profile(env: DataFetchingEnvironment): Profile {
         return env

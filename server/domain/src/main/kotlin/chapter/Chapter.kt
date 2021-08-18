@@ -1,12 +1,18 @@
 package com.diekeditora.domain.chapter
 
 import com.diekeditora.domain.MutableEntity
+import com.diekeditora.domain.Owned
+import com.diekeditora.domain.file.ChapterCoverKind
+import com.diekeditora.domain.file.FileKind
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.page.Cursor
 import com.diekeditora.domain.page.OrderBy
+import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
+import graphql.schema.DataFetchingEnvironment
+import kotlinx.coroutines.future.await
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDate
@@ -23,8 +29,26 @@ data class Chapter(
     val enabled: Boolean = false,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val releasedOn: LocalDate? = null,
+    val deletedAt: LocalDateTime? = null,
     val updatedAt: LocalDateTime? = null,
-) : MutableEntity<Chapter> {
+    @GraphQLIgnore override val ownerId: UniqueId,
+) : MutableEntity<Chapter>, Owned {
+    @GraphQLDescription("Returns the chapter's cover")
+    suspend fun cover(env: DataFetchingEnvironment): String {
+        return env
+            .getDataLoader<FileKind, String>("FileLinkLoader")
+            .load(ChapterCoverKind(this))
+            .await()
+    }
+
+    @GraphQLDescription("Returns the chapter's pages")
+    suspend fun pages(env: DataFetchingEnvironment): List<String> {
+        return env
+            .getDataLoader<Chapter, List<String>>("ChapterPagesLoader")
+            .load(this)
+            .await()
+    }
+
     @GraphQLIgnore
     override fun update(with: Chapter): Chapter {
         return copy(

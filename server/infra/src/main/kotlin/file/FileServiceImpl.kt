@@ -1,7 +1,7 @@
 package com.diekeditora.infra.file
 
 import com.diekeditora.domain.file.FileKind
-import com.diekeditora.domain.image.FileService
+import com.diekeditora.domain.file.FileService
 import com.diekeditora.infra.props.S3Props
 import kotlinx.coroutines.future.await
 import org.springframework.http.MediaType

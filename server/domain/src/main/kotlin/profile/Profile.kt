@@ -28,10 +28,11 @@ data class Profile(
     @Id override val id: UniqueId? = null,
     @Cursor val uid: UniqueId,
     val gender: Gender,
+    val bio: String,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     @GraphQLIgnore override val ownerId: UniqueId,
-) : MutableEntity<Profile>, Owned<User> {
+) : MutableEntity<Profile>, Owned {
     @GraphQLDescription("Returns profile's display name")
     suspend fun displayName(env: DataFetchingEnvironment): String {
         return user(env).username

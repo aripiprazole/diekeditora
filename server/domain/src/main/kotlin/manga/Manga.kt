@@ -42,6 +42,14 @@ data class Manga(
             .await()
     }
 
+    @GraphQLDescription("Returns the manga's total ratings")
+    suspend fun totalRatings(env: DataFetchingEnvironment): Int {
+        return env
+            .getDataLoader<Manga, Int>("MangaRatingsLoader")
+            .load(this)
+            .await()
+    }
+
     @GraphQLDescription("Returns the manga's ratings")
     suspend fun ratings(env: DataFetchingEnvironment): List<Int> {
         return env
