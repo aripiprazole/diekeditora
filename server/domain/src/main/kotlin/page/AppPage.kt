@@ -12,6 +12,18 @@ data class AppPage<T>(
     private val pageInfo: AppPageInfo,
 ) : Connection<T> {
     companion object {
+        fun <T> empty(): AppPage<T> {
+            val pageInfo = AppPageInfo(
+                hasNextPage = false,
+                hasPreviousPage = false,
+                startCursor = null,
+                endCursor = null,
+                totalPages = 0,
+            )
+
+            return AppPage(emptyList(), pageInfo)
+        }
+
         fun <T> of(
             totalItems: Long,
             items: List<T>,

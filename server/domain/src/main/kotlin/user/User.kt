@@ -6,6 +6,7 @@ import com.diekeditora.domain.dataloader.PaginationArg
 import com.diekeditora.domain.dataloader.toPaginationArg
 import com.diekeditora.domain.graphql.Secured
 import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.domain.manga.Manga
 import com.diekeditora.domain.page.Cursor
 import com.diekeditora.domain.page.OrderBy
 import com.diekeditora.domain.profile.Profile
@@ -36,17 +37,38 @@ data class User(
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
-) : MutableEntity<User>, Owned<User> {
-    override val ownerId: UniqueId
-        @GraphQLIgnore
-        @JsonIgnore
-        get() = id ?: error("Can not be owned without be fetched")
-
+) : MutableEntity<User>, Owned {
     @GraphQLDescription("Returns this user's profile details")
     suspend fun profile(env: DataFetchingEnvironment): Profile {
         return env
             .getDataLoader<User, Profile>("UserProfileLoader")
             .load(this)
+            .await()
+    }
+
+    @Secured
+    @GraphQLDescription("Returns favorite manga page")
+    suspend fun favoriteMangas(
+        env: DataFetchingEnvironment,
+        first: Int,
+        after: UniqueId? = null
+    ): Connection<Manga> {
+        return env
+            .getDataLoader<PaginationArg<User, UniqueId>, Connection<Manga>>("UserFavoriteMangaLoader")
+            .load(toPaginationArg(first, after))
+            .await()
+    }
+
+    @Secured
+    @GraphQLDescription("Returns last read manga page")
+    suspend fun lastReadMangas(
+        env: DataFetchingEnvironment,
+        first: Int,
+        after: UniqueId? = null
+    ): Connection<Manga> {
+        return env
+            .getDataLoader<PaginationArg<User, UniqueId>, Connection<Manga>>("UserLastReadMangaLoader")
+            .load(toPaginationArg(first, after))
             .await()
     }
 
@@ -91,6 +113,11 @@ data class User(
             .load(toPaginationArg(first, after))
             .await()
     }
+
+    override val ownerId: UniqueId
+        @GraphQLIgnore
+        @JsonIgnore
+        get() = id ?: error("Can not be owned without be fetched")
 
     @GraphQLIgnore
     override fun update(with: User): User {

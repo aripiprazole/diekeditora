@@ -11,16 +11,11 @@ interface Entity<T> where T : Entity<T>, T : Any {
     @get:GraphQLIgnore
     val id: UniqueId?
 
-    @get:GraphQLIgnore
-    @get:JsonIgnore
     val cursor: String
+        @GraphQLIgnore
+        @JsonIgnore
         get() = this::class.findPropertyByAnnotation<Cursor>()?.getter
             ?.call(this)
             ?.toString()
             ?: error("Can not find cursor in entity ${this::class.simpleName}")
-
-    @GraphQLIgnore
-    fun own(owned: Owned<T>): Boolean {
-        return owned.ownerId == id
-    }
 }

@@ -1,6 +1,6 @@
 package com.diekeditora.domain.comment
 
-enum class Report {
+enum class ReportReason {
     Harmful,
     Suicide,
     Spam,

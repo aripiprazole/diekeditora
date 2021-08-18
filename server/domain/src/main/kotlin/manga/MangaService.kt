@@ -2,13 +2,46 @@ package com.diekeditora.domain.manga
 
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.profile.Profile
+import com.diekeditora.domain.user.User
 import graphql.relay.Connection
 
 interface MangaService {
     suspend fun findMangas(
         first: Int,
         after: UniqueId? = null,
-        orderBy: MangaSort = MangaSort.empty(),
+        orderBy: MangaSort = MangaSort.Empty,
+        filterBy: Set<String> = emptySet(),
+    ): Connection<Manga>
+
+    suspend fun findSimilarMangas(
+        manga: Manga,
+        first: Int,
+        after: UniqueId? = null,
+        orderBy: MangaSort = MangaSort.Empty,
+        filterBy: Set<String> = emptySet(),
+    ): Connection<Manga>
+
+    suspend fun findRecommendedMangas(
+        user: User,
+        first: Int,
+        after: UniqueId? = null,
+        orderBy: MangaSort = MangaSort.Empty,
+        filterBy: Set<String> = emptySet(),
+    ): Connection<Manga>
+
+    suspend fun findFavoriteMangas(
+        user: User,
+        first: Int,
+        after: UniqueId? = null,
+        orderBy: MangaSort = MangaSort.Empty,
+        filterBy: Set<String> = emptySet(),
+    ): Connection<Manga>
+
+    suspend fun findLastReadMangas(
+        user: User,
+        first: Int,
+        after: UniqueId? = null,
+        orderBy: MangaSort = MangaSort.Empty,
         filterBy: Set<String> = emptySet(),
     ): Connection<Manga>
 

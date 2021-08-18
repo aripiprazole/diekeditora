@@ -1,6 +1,5 @@
-package com.diekeditora.domain.image
+package com.diekeditora.domain.file
 
-import com.diekeditora.domain.file.FileKind
 import org.springframework.http.MediaType
 
 interface FileService {
@@ -10,6 +9,13 @@ interface FileService {
      * @return file link
      */
     suspend fun uploadFile(content: ByteArray, kind: FileKind, type: MediaType): String
+
+    /**
+     * Deletes a file by its kind
+     *
+     * @return file link
+     */
+    suspend fun deleteFile(kind: FileKind)
 
     suspend fun getLink(path: String): String
 
