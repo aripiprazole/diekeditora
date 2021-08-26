@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import {useState} from 'react';
+import {Outlet} from 'react-router-dom';
 // material
-import { experimentalStyled as styled } from '@material-ui/core/styles';
+import {experimentalStyled as styled} from '@material-ui/core/styles';
 //
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
@@ -14,10 +14,10 @@ const APP_BAR_DESKTOP = 92;
 const RootStyle = styled('div')({
   display: 'flex',
   minHeight: '100%',
-  overflow: 'hidden'
+  overflow: 'hidden',
 });
 
-const MainStyle = styled('div')(({ theme }) => ({
+const MainStyle = styled('div')(({theme}) => ({
   flexGrow: 1,
   overflow: 'auto',
   minHeight: '100%',
@@ -26,8 +26,8 @@ const MainStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     paddingTop: APP_BAR_DESKTOP + 24,
     paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
-  }
+    paddingRight: theme.spacing(2),
+  },
 }));
 
 // ----------------------------------------------------------------------

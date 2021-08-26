@@ -1,0 +1,48 @@
+server:
+  port: ${PORT:8080}
+
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  r2dbc:
+    url: r2dbc:postgresql://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    name: ${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    properties:
+      sslMode: ${DB_SSL_MODE:disable}
+
+firebase:
+  enabled: true
+  google-application-credentials: ${GOOGLE_APPLICATION_CREDENTIALS}
+
+s3:
+  enabled: true
+  bucket: ${AWS_BUCKET}
+  access-key: ${AWS_ACCESS_KEY}
+  access-secret: ${AWS_ACCESS_SECRET}
+  endpoint: ${AWS_ENDPOINT}
+  region: ${AWS_REGION}
+
+logging:
+  level:
+    root: ${LOG_LEVEL:info}
+    org.springframework.web:
+      - error
+      - warn
+      - info
+    graphql.execution.SimpleDataFetcherExceptionHandler: info
+    com.expediagroup.graphql.server.spring.NonFederatedSchemaAutoConfiguration: error
+    com.expediagroup.graphql: error
+    notprivacysafe.graphql.GraphQL: error
+
+graphql:
+  packages:
+    - com.diekeditora.domain
+    - com.diekeditora.web
+    - graphql.relay

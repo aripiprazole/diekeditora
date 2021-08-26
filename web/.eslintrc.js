@@ -18,10 +18,12 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['react', 'react-hooks', '@typescript-eslint'],
   rules: {
     'max-len': ['error', {code: 120}],
-    'valid-jsdoc': [0],
-    'react/prop-types': [0],
+    'valid-jsdoc': 'off',
+    'require-jsdoc': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
   },
 };

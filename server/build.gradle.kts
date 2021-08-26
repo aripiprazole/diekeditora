@@ -1,6 +1,5 @@
 import com.diekeditora.build.kotlin
 import com.diekeditora.build.libs
-import com.diekeditora.build.projects
 
 buildscript {
     repositories {
@@ -25,14 +24,10 @@ version = "0.0.1-SNAPSHOT"
 
 dependencies {
     ktlintRuleset(libs.pinterest.ktlint)
-    implementation(projects.web)
-    implementation(projects.domain)
-    implementation(projects.infra)
-    implementation(projects.shared)
 }
 
 application {
-    mainClass.set("com.diekeditora.web.DiekEditoraAppKt")
+    mainClass.set("com.diekeditora.app.DiekEditoraAppKt")
 }
 
 allprojects {

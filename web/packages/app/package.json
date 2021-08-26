@@ -2,7 +2,7 @@
   "name": "@diekeditora/app",
   "version": "0.0.1",
   "description": "Diek editora main app",
-  "author": "Lorenzo Guimarães <lorenzooguimaraes@gmail.com>",
+  "author": "Gabrielle Guimarães <gabrielle1guim@gmail.com>",
   "homepage": "https://github.com/diekeditora/diekeditora",
   "license": "ISC",
   "main": "lib/ui.js",
@@ -29,15 +29,30 @@
     "start": "next start"
   },
   "dependencies": {
-    "@diekeditora/store": "^0.0.1",
-    "react-redux": "^7.2.4",
-    "redux": "^4.1.0",
-    "redux-persist": "^6.0.0",
-    "redux-saga": "^1.1.3"
+    "@chakra-ui/react": "^1.6.6",
+    "@diekeditora/graphql": "workspace:packages/graphql",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "axios": "^0.21.1",
+    "depd": "^2.0.0",
+    "encoding": "^0.1.13",
+    "firebase": "^8.9.1",
+    "firebase-admin": "^9.11.0",
+    "follow-redirects": "^1.14.1",
+    "keygrip": "^1.1.0",
+    "next": "11",
+    "next-firebase-auth": "^0.13.3-alpha.1",
+    "next-transpile-modules": "^8.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-is": "^17.0.2",
+    "react-relay": "^11.0.2"
   },
   "devDependencies": {
-    "@types/react-redux": "^7.1.18",
-    "eslint": "7.28.0",
-    "eslint-config-next": "11.0.0"
+    "@types/node": "^16.4.13",
+    "@types/react": "^17.0.16",
+    "@types/react-relay": "^11.0.2",
+    "babel-preset-next": "^1.4.0",
+    "typescript": "^4.3.5"
   }
 }

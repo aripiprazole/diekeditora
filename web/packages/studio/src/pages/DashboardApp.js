@@ -1,5 +1,5 @@
 // material
-import { Box, Grid, Container, Typography } from '@material-ui/core';
+import {Box, Grid, Container, Typography} from '@material-ui/core';
 // components
 import Page from '../components/Page';
 import {
@@ -10,7 +10,7 @@ import {
   AppCurrentVisits,
   AppWebsiteVisits,
   AppCurrentSubject,
-  AppConversionRates
+  AppConversionRates,
 } from '../components/_dashboard/app';
 
 // ----------------------------------------------------------------------
@@ -19,7 +19,7 @@ export default function DashboardApp() {
   return (
     <Page title="Studio | Diek Editora">
       <Container maxWidth="xl">
-        <Box sx={{ pb: 5 }}>
+        <Box sx={{pb: 5}}>
           <Typography variant="h4">Bem vindo de volta</Typography>
         </Box>
         <Grid container spacing={3}>

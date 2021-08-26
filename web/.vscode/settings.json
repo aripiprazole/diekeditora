@@ -2,6 +2,7 @@
   "cSpell.words": [
     "APPBAR",
     "Cantarell",
+    "Chargeback",
     "Diek",
     "Docgen",
     "Fira",
@@ -20,6 +21,7 @@
     "browserslist",
     "chakra",
     "checkmark",
+    "depd",
     "diekeditora",
     "editora",
     "es",
@@ -29,6 +31,7 @@
     "grayscale",
     "iconify",
     "immer",
+    "keygrip",
     "middlewares",
     "persistor",
     "preconnect",
@@ -46,5 +49,14 @@
   "[typescript]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
     "editor.tabSize": 2
-  }
+  },
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "eslint.nodePath": ".yarn/sdks",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "stylelint.stylelintPath": ".yarn/sdks/stylelint/lib/index.js"
 }

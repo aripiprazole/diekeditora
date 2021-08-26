@@ -4,12 +4,10 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "@diekeditora/app/*": ["./*"],
-      "@diekeditora/app": ["./"],
-      "@diekeditora/ui/*": ["../ui/*"],
-      "@diekeditora/ui": ["../ui"],
-      "@diekeditora/store/*": ["../store/*"],
-      "@diekeditora/store": ["../store"]
+      "@diekeditora/app/*": ["./src/*"],
+      "@diekeditora/app": ["./src"],
+      "@diekeditora/graphql/*": ["../graphql/src/*"],
+      "@diekeditora/graphql": ["../graphql/src"]
     },
     "target": "es5"
   },

@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: diekeditora
+  labels:
+    app: diekeditora
+
+spec:
+  replicas: 1
+  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: diekeditora
+
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+  template:
+    metadata:
+      labels:
+        app: diekeditora
+
+    spec:
+      containers:
+        - name: diekeditora
+          image: registry.digitalocean.com/diekeditora/server
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+
+          resources:
+            requests:
+              cpu: 100m
+
+            limits:
+              cpu: 100m
+
+          volumeMounts:
+            - mountPath: /diekeditora-config
+              name: diekeditora-config
+
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: '/diekeditora-config/firebase-cred.json'
+
+            - name: PORT
+              value: '8080'
+
+            - name: DB_SSL_MODE
+              value: 'require'
+
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: db_name
+
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: db_port
+
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: db_host
+
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: db_username
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: db_password
+
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: aws_access_key
+
+            - name: AWS_ACCESS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: aws_access_secret
+
+            - name: AWS_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: aws_endpoint
+
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: diekeditora-env
+                  key: aws_region
+      imagePullSecrets:
+        - name: diekeditora
+
+      volumes:
+        - name: diekeditora-config
+          secret:
+            secretName: firebase-credentials
+            items:
+              - key: firebase-cred
+                path: 'firebase-cred.json'

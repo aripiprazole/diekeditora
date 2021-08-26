@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import { Form, FormikProvider } from 'formik';
+import {Icon} from '@iconify/react';
+import {Form, FormikProvider} from 'formik';
 import closeFill from '@iconify/icons-eva/close-fill';
 import roundClearAll from '@iconify/icons-ic/round-clear-all';
 import roundFilterList from '@iconify/icons-ic/round-filter-list';
@@ -18,7 +18,7 @@ import {
   IconButton,
   Typography,
   RadioGroup,
-  FormControlLabel
+  FormControlLabel,
 } from '@material-ui/core';
 //
 import Scrollbar from '../../Scrollbar';
@@ -27,18 +27,18 @@ import ColorManyPicker from '../../ColorManyPicker';
 // ----------------------------------------------------------------------
 
 export const SORT_BY_OPTIONS = [
-  { value: 'featured', label: 'Featured' },
-  { value: 'newest', label: 'Newest' },
-  { value: 'priceDesc', label: 'Price: High-Low' },
-  { value: 'priceAsc', label: 'Price: Low-High' }
+  {value: 'featured', label: 'Featured'},
+  {value: 'newest', label: 'Newest'},
+  {value: 'priceDesc', label: 'Price: High-Low'},
+  {value: 'priceAsc', label: 'Price: Low-High'},
 ];
 export const FILTER_GENDER_OPTIONS = ['Men', 'Women', 'Kids'];
 export const FILTER_CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories'];
 export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
 export const FILTER_PRICE_OPTIONS = [
-  { value: 'below', label: 'Below $25' },
-  { value: 'between', label: 'Between $25 - $75' },
-  { value: 'above', label: 'Above $75' }
+  {value: 'below', label: 'Below $25'},
+  {value: 'between', label: 'Between $25 - $75'},
+  {value: 'above', label: 'Above $75'},
 ];
 export const FILTER_COLOR_OPTIONS = [
   '#00AB55',
@@ -48,7 +48,7 @@ export const FILTER_COLOR_OPTIONS = [
   '#FF4842',
   '#1890FF',
   '#94D82D',
-  '#FFC107'
+  '#FFC107',
 ];
 
 // ----------------------------------------------------------------------
@@ -58,7 +58,7 @@ ShopFilterSidebar.propTypes = {
   onResetFilter: PropTypes.func,
   onOpenFilter: PropTypes.func,
   onCloseFilter: PropTypes.func,
-  formik: PropTypes.object
+  formik: PropTypes.object,
 };
 
 export default function ShopFilterSidebar({
@@ -66,9 +66,9 @@ export default function ShopFilterSidebar({
   onResetFilter,
   onOpenFilter,
   onCloseFilter,
-  formik
+  formik,
 }) {
-  const { values, getFieldProps, handleChange } = formik;
+  const {values, getFieldProps, handleChange} = formik;
 
   return (
     <>
@@ -88,16 +88,16 @@ export default function ShopFilterSidebar({
             open={isOpenFilter}
             onClose={onCloseFilter}
             PaperProps={{
-              sx: { width: 280, border: 'none', overflow: 'hidden' }
+              sx: {width: 280, border: 'none', overflow: 'hidden'},
             }}
           >
             <Stack
               direction="row"
               alignItems="center"
               justifyContent="space-between"
-              sx={{ px: 1, py: 2 }}
+              sx={{px: 1, py: 2}}
             >
-              <Typography variant="subtitle1" sx={{ ml: 1 }}>
+              <Typography variant="subtitle1" sx={{ml: 1}}>
                 Filters
               </Typography>
               <IconButton onClick={onCloseFilter}>
@@ -108,7 +108,7 @@ export default function ShopFilterSidebar({
             <Divider />
 
             <Scrollbar>
-              <Stack spacing={3} sx={{ p: 3 }}>
+              <Stack spacing={3} sx={{p: 3}}>
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
                     Gender
@@ -150,7 +150,7 @@ export default function ShopFilterSidebar({
                     colors={FILTER_COLOR_OPTIONS}
                     onChange={handleChange}
                     onChecked={(color) => values.colors.includes(color)}
-                    sx={{ maxWidth: 36 * 4 }}
+                    sx={{maxWidth: 36 * 4}}
                   />
                 </div>
 
@@ -189,16 +189,16 @@ export default function ShopFilterSidebar({
                         }
                         label="& Up"
                         sx={{
-                          my: 0.5,
-                          borderRadius: 1,
-                          '& > :first-of-type': { py: 0.5 },
+                          'my': 0.5,
+                          'borderRadius': 1,
+                          '& > :first-of-type': {py: 0.5},
                           '&:hover': {
-                            opacity: 0.48,
-                            '& > *': { bgcolor: 'transparent' }
+                            'opacity': 0.48,
+                            '& > *': {bgcolor: 'transparent'},
                           },
                           ...(values.rating.includes(item) && {
-                            bgcolor: 'background.neutral'
-                          })
+                            bgcolor: 'background.neutral',
+                          }),
                         }}
                       />
                     ))}
@@ -207,7 +207,7 @@ export default function ShopFilterSidebar({
               </Stack>
             </Scrollbar>
 
-            <Box sx={{ p: 3 }}>
+            <Box sx={{p: 3}}>
               <Button
                 fullWidth
                 size="large"

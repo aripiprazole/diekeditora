@@ -1,0 +1,72 @@
+{
+  "name": "@diekeditora/graphql",
+  "version": "0.0.1",
+  "description": "Diek editora graphql queries",
+  "keywords": [
+    "graphql",
+    "diekeditora"
+  ],
+  "author": "Gabrielle Guimarães <gabrielle1guim@gmail.com>",
+  "homepage": "https://github.com/diekeditora/diekeditora",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diekeditora/diekeditora.git"
+  },
+  "scripts": {
+    "dev": "run-p watch:decl watch:build",
+    "watch:decl": "tsc -w",
+    "watch:build": "babel src --watch --extensions \".ts\" --out-dir dist",
+    "compile": "babel src --extensions \".ts\" --out-dir dist",
+    "gen-decl": "tsc",
+    "relay": "yarn run relay-compiler --artifactDirectory './src/__generated__' --exclude '**/node_modules/**', '**/.next/**', '**/__generated__/**' --extensions 'ts' 'tsx' --language 'typescript' --schema './schema.graphql' --src './src' $@",
+    "relay:watch": "yarn run relay --watch",
+    "build": "yarn run gen-decl && yarn run compile"
+  },
+  "bugs": {
+    "url": "https://github.com/diekeditora/diekeditora/issues"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/plugin-transform-typescript": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-typescript": "^7.14.5",
+    "@types/node": "^16.0.0",
+    "@types/react": "^17.0.14",
+    "@types/react-relay": "^11.0.2",
+    "@types/relay-runtime": "^11.0.2",
+    "babel-helper-regex": "^6.26.0",
+    "babel-plugin-relay": "^11.0.2",
+    "npm-run-all": "^4.1.5",
+    "relay-compiler": "^11.0.2",
+    "relay-compiler-language-typescript": "^14.0.0",
+    "relay-config": "^11.0.2",
+    "typescript": "^4.3.5",
+    "watchman": "^1.0.0"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.3.21",
+    "axios": "^0.21.1",
+    "babel-plugin-inline-dotenv": "^1.6.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "firebase": "^8.7.1",
+    "firebaseui": "^4.8.0",
+    "graphql": "^15.5.1",
+    "immer": "^9.0.5",
+    "react": "^17.0.2",
+    "react-relay": "^11.0.2",
+    "relay-runtime": "^11.0.2"
+  }
+}

@@ -1,30 +1,30 @@
-import { merge } from 'lodash';
+import {merge} from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 // material
-import { Box, Card, CardHeader } from '@material-ui/core';
+import {Box, Card, CardHeader} from '@material-ui/core';
 // utils
-import { BaseOptionChart } from '@diekeditora/admin/components/charts';
+import {useBaseOptionChart} from '@diekeditora/admin/components/charts';
 
-import { fNumber } from '@diekeditora/admin/utils/formatNumber';
+import {fNumber} from '@diekeditora/admin/utils/formatNumber';
 //
 
 // ----------------------------------------------------------------------
 
-const CHART_DATA = [{ data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380] }];
+const CHART_DATA = [{data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]}];
 
 export default function AppConversionRates() {
-  const chartOptions = merge(BaseOptionChart(), {
+  const chartOptions = merge(useBaseOptionChart(), {
     tooltip: {
-      marker: { show: false },
+      marker: {show: false},
       y: {
         formatter: (seriesName) => fNumber(seriesName),
         title: {
-          formatter: (seriesName) => `#${seriesName}`
-        }
-      }
+          formatter: (seriesName) => `#${seriesName}`,
+        },
+      },
     },
     plotOptions: {
-      bar: { horizontal: true, barHeight: '28%', borderRadius: 2 }
+      bar: {horizontal: true, barHeight: '28%', borderRadius: 2},
     },
     xaxis: {
       categories: [
@@ -37,15 +37,15 @@ export default function AppConversionRates() {
         'South Korea',
         'Netherlands',
         'United States',
-        'United Kingdom'
-      ]
-    }
+        'United Kingdom',
+      ],
+    },
   });
 
   return (
     <Card>
       <CardHeader title="Conversion Rates" subheader="(+43%) than last year" />
-      <Box sx={{ mx: 3 }} dir="ltr">
+      <Box sx={{mx: 3}} dir="ltr">
         <ReactApexChart type="bar" series={CHART_DATA} options={chartOptions} height={364} />
       </Box>
     </Card>

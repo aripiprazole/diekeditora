@@ -11,6 +11,15 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": "packages",
+    "paths": {
+      "@diekeditora/admin/*": ["studio/src/*"],
+      "@diekeditora/admin": ["studio/src"],
+      "@diekeditora/graphql/*": ["graphql/src/*"],
+      "@diekeditora/graphql": ["graphql/src"],
+      "@diekeditora/app/*": ["app/src/*"],
+      "@diekeditora/app": ["app/src"]
+    }
   }
 }
