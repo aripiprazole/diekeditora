@@ -17,7 +17,11 @@ internal class CommentServiceImpl : CommentService {
         TODO("Not yet implemented")
     }
 
-    override suspend fun createComment(manga: Manga, content: String): Manga {
+    override suspend fun findCommentByUid(uid: UniqueId): Comment? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun createComment(manga: Manga, comment: Comment): Comment {
         TODO("Not yet implemented")
     }
 

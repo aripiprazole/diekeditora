@@ -35,6 +35,10 @@ internal class FileServiceImpl(
         return getLink(kind.generateKey())
     }
 
+    override suspend fun deleteFile(kind: FileKind) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getLink(path: String): String {
         return s3Client
             .utilities()

@@ -47,7 +47,7 @@ class CommentMutation(
 
         ctx {
             hasAuthority("comment.destroy")
-            own(comment)
+            user.own(comment)
         }
 
         return reportService.reportComment(comment, reason)
@@ -61,7 +61,7 @@ class CommentMutation(
 
         ctx {
             hasAuthority("comment.destroy")
-            own(comment)
+            user.own(comment)
         }
 
         return commentService.deleteComment(comment)

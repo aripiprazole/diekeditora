@@ -7,6 +7,7 @@ import com.diekeditora.domain.manga.MangaInput
 import com.diekeditora.domain.manga.MangaService
 import com.diekeditora.domain.manga.MangaSort
 import com.diekeditora.domain.profile.Profile
+import com.diekeditora.domain.user.User
 import com.diekeditora.infra.repo.findAllAsConnection
 import graphql.relay.Connection
 import org.springframework.data.domain.Sort
@@ -38,6 +39,46 @@ internal class MangaServiceImpl(
         }
 
         return repo.findAllAsConnection(first, after?.toString(), order)
+    }
+
+    override suspend fun findSimilarMangas(
+        manga: Manga,
+        first: Int,
+        after: UniqueId?,
+        orderBy: MangaSort,
+        filterBy: Set<String>
+    ): Connection<Manga> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findRecommendedMangas(
+        user: User,
+        first: Int,
+        after: UniqueId?,
+        orderBy: MangaSort,
+        filterBy: Set<String>
+    ): Connection<Manga> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findFavoriteMangas(
+        user: User,
+        first: Int,
+        after: UniqueId?,
+        orderBy: MangaSort,
+        filterBy: Set<String>
+    ): Connection<Manga> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findLastReadMangas(
+        user: User,
+        first: Int,
+        after: UniqueId?,
+        orderBy: MangaSort,
+        filterBy: Set<String>
+    ): Connection<Manga> {
+        TODO("Not yet implemented")
     }
 
     @Transactional

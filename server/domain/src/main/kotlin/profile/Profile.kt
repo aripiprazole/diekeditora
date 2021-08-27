@@ -28,7 +28,7 @@ data class Profile(
     @Id override val id: UniqueId? = null,
     @Cursor val uid: UniqueId,
     val gender: Gender,
-    val bio: String,
+    val bio: String = "",
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     @GraphQLIgnore override val ownerId: UniqueId,

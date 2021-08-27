@@ -84,7 +84,7 @@ class ChapterMutation(
             }
         }
 
-        fileService.deleteFile(ChapterPageKind(manga, chapter, page))
+        fileService.deleteFile(ChapterPageKind(chapter, page))
 
         return chapter
     }
@@ -103,7 +103,7 @@ class ChapterMutation(
         val manga = mangaService.findMangaByUid(chapter.ownerId)
             ?: error("Could not find the manga owner of target chapter")
 
-        val kind = ChapterPageKind(manga, chapter, page)
+        val kind = ChapterPageKind(chapter, page)
 
         ctx {
             hasAuthority("chapter.update")
@@ -132,7 +132,7 @@ class ChapterMutation(
         val manga = mangaService.findMangaByUid(chapter.ownerId)
             ?: error("Could not find the manga owner of target chapter")
 
-        val kind = ChapterCoverKind(manga, chapter)
+        val kind = ChapterCoverKind(chapter)
 
         ctx {
             hasAuthority("chapter.update")
