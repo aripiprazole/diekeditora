@@ -42,6 +42,7 @@
     "dev": "run-p app:dev studio:dev relay:watch",
     "app:build": "yarn workspace @diekeditora/app run build",
     "app:start": "yarn workspace @diekeditora/app run start",
+    "app:storybook": "yarn workspace @diekeditora/app run storybook",
     "app:test": "yarn workspace @diekeditora/app run cypress:run",
     "app:dev": "run-p graphql:dev app:dev-start",
     "app:dev-start": "yarn workspace @diekeditora/app run dev",

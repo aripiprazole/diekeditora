@@ -12,5 +12,5 @@
     "target": "es5"
   },
   "include": ["**/*.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["cypress", "node_modules"]
+  "exclude": ["cypress", "node_modules", ".storybook", "**/*.stories.tsx", "**/*.stories.mdx"]
 }
