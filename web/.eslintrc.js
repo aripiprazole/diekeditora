@@ -30,6 +30,9 @@ module.exports = {
     'require-jsdoc': 'off',
     'react/react-in-jsx-scope': 'off', // TODO: remove this
     'react/prop-types': 'off',
+    'object-curly-spacing': ['error', 'never'],
+    'array-bracket-spacing': ['error', 'never'],
+    'computed-property-spacing': ['error', 'never'],
     'prettier/prettier': [
       'error',
       {
