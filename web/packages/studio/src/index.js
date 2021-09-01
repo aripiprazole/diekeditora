@@ -17,14 +17,14 @@ import reportWebVitals from './reportWebVitals';
 // ----------------------------------------------------------------------
 
 ReactDOM.render(
-    <RelayEnvironmentProvider environment={RelayEnvironment}>
-      <HelmetProvider>
-        <BrowserRouter>
-          <App/>
-        </BrowserRouter>
-      </HelmetProvider>
-    </RelayEnvironmentProvider>,
-    document.getElementById('root'),
+  <RelayEnvironmentProvider environment={RelayEnvironment}>
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HelmetProvider>
+  </RelayEnvironmentProvider>,
+  document.getElementById('root'),
 );
 
 // If you want to enable client cache, register instead.

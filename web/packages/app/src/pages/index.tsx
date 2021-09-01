@@ -9,17 +9,14 @@ import {MangasQuery} from '@diekeditora/graphql';
 import {Page, relayEnvironment} from '@diekeditora/app';
 
 type Props = {
-  initialQueryRef: PreloadedQuery<MangasQueryType>,
-}
+  initialQueryRef: PreloadedQuery<MangasQueryType>;
+};
 
 const Home: NextPage<Props> = ({initialQueryRef}) => {
+  // eslint-disable-next-line no-unused-vars
   const {mangas} = usePreloadedQuery<MangasQueryType>(MangasQuery, initialQueryRef);
 
-  return (
-    <Page>
-      Hello, world
-    </Page>
-  );
+  return <Page>Hello, world</Page>;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => ({

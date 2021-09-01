@@ -15,9 +15,9 @@ context('Connectors', () => {
   it('.its() - get properties on the current subject', () => {
     // https://on.cypress.io/its
     cy.get('.connectors-its-ul>li')
-    // calls the 'length' property yielding that value
-        .its('length')
-        .should('be.gt', 2);
+      // calls the 'length' property yielding that value
+      .its('length')
+      .should('be.gt', 2);
   });
 
   it('.invoke() - invoke a function on the current subject', () => {
@@ -26,10 +26,10 @@ context('Connectors', () => {
 
     // https://on.cypress.io/invoke
     cy.get('.connectors-div')
-        .should('be.hidden')
-    // call the jquery method 'show' on the 'div.container'
-        .invoke('show')
-        .should('be.visible');
+      .should('be.hidden')
+      // call the jquery method 'show' on the 'div.container'
+      .invoke('show')
+      .should('be.visible');
   });
 
   it('.spread() - spread an array as individual args to callback function', () => {
@@ -56,41 +56,41 @@ context('Connectors', () => {
 
     it('yields the returned value to the next command', () => {
       cy.wrap(1)
-          .then((num) => {
-            expect(num).to.equal(1);
+        .then((num) => {
+          expect(num).to.equal(1);
 
-            return 2;
-          })
-          .then((num) => {
-            expect(num).to.equal(2);
-          });
+          return 2;
+        })
+        .then((num) => {
+          expect(num).to.equal(2);
+        });
     });
 
     it('yields the original subject without return', () => {
       cy.wrap(1)
-          .then((num) => {
-            expect(num).to.equal(1);
+        .then((num) => {
+          expect(num).to.equal(1);
           // note that nothing is returned from this callback
-          })
-          .then((num) => {
+        })
+        .then((num) => {
           // this callback receives the original unchanged value 1
-            expect(num).to.equal(1);
-          });
+          expect(num).to.equal(1);
+        });
     });
 
     it('yields the value yielded by the last Cypress command inside', () => {
       cy.wrap(1)
-          .then((num) => {
-            expect(num).to.equal(1);
-            // note how we run a Cypress command
-            // the result yielded by this Cypress command
-            // will be passed to the second ".then"
-            cy.wrap(2);
-          })
-          .then((num) => {
+        .then((num) => {
+          expect(num).to.equal(1);
+          // note how we run a Cypress command
+          // the result yielded by this Cypress command
+          // will be passed to the second ".then"
+          cy.wrap(2);
+        })
+        .then((num) => {
           // this callback receives the value yielded by "cy.wrap(2)"
-            expect(num).to.equal(2);
-          });
+          expect(num).to.equal(2);
+        });
     });
   });
 });

@@ -11,19 +11,16 @@ import {GlobalStyles, http, initAuth, theme} from '@diekeditora/app';
 // Inits the firebase authentication
 initAuth();
 
-type MyAppProps = { cookie?: string };
+type MyAppProps = {cookie?: string};
 
 type MyAppType = ComponentType<AppProps & MyAppProps> & {
-  getInitialProps?(context: AppContext): MyAppProps
-}
+  getInitialProps?(context: AppContext): MyAppProps;
+};
 
 const MyApp: MyAppType = ({Component, pageProps, cookie}) => {
   return (
     <RelayEnvironmentProvider environment={getRelayEnvironment(http)}>
-      <ChakraProvider
-        theme={theme}
-        colorModeManager={cookieStorageManager(cookie ?? document.cookie)}
-      >
+      <ChakraProvider theme={theme} colorModeManager={cookieStorageManager(cookie ?? document.cookie)}>
         <GlobalStyles />
 
         <Component {...pageProps} />

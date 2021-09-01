@@ -70,7 +70,7 @@ export default function ColorManyPicker({colors, onChecked, sx, ...other}) {
                   '&:before': {
                     opacity: 0.48,
                     width: '100%',
-                    content: '\'\'',
+                    content: "''",
                     height: '100%',
                     borderRadius: '50%',
                     position: 'absolute',

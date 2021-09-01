@@ -183,10 +183,10 @@ export default function NotificationsPopover() {
 
   const handleMarkAllAsRead = () => {
     setNotifications(
-        notifications.map((notification) => ({
-          ...notification,
-          isUnRead: false,
-        })),
+      notifications.map((notification) => ({
+        ...notification,
+        isUnRead: false,
+      })),
     );
   };
 
@@ -207,12 +207,7 @@ export default function NotificationsPopover() {
         </Badge>
       </IconButton>
 
-      <MenuPopover
-        open={open}
-        onClose={handleClose}
-        anchorEl={anchorRef.current}
-        sx={{width: 360}}
-      >
+      <MenuPopover open={open} onClose={handleClose} anchorEl={anchorRef.current} sx={{width: 360}}>
         <Box sx={{display: 'flex', alignItems: 'center', py: 2, px: 2.5}}>
           <Box sx={{flexGrow: 1}}>
             <Typography variant="subtitle1">Notifications</Typography>

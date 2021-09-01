@@ -6,15 +6,7 @@ import {Icon} from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // material
-import {
-  Link,
-  Stack,
-  Checkbox,
-  TextField,
-  IconButton,
-  InputAdornment,
-  FormControlLabel,
-} from '@material-ui/core';
+import {Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel} from '@material-ui/core';
 import {LoadingButton} from '@material-ui/lab';
 import firebase from 'firebase';
 
@@ -37,10 +29,11 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: async ({email, password}) => {
+      // eslint-disable-next-line no-unused-vars
       const credentials = await firebase
-          .auth()
-          .signInWithEmailAndPassword(email, password)
-          .then((data) => data.user);
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then((data) => data.user);
 
       navigate('/dashboard', {replace: true});
     },
@@ -97,13 +90,7 @@ export default function LoginForm() {
           </Link>
         </Stack>
 
-        <LoadingButton
-          fullWidth
-          size="large"
-          type="submit"
-          variant="contained"
-          loading={isSubmitting}
-        >
+        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
           Login
         </LoadingButton>
       </Form>

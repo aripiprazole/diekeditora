@@ -20,15 +20,15 @@ ThemeConfig.propTypes = {
 
 export default function ThemeConfig({children}) {
   const themeOptions = useMemo(
-      () => ({
-        palette,
-        shape,
-        typography,
-        breakpoints,
-        shadows,
-        customShadows,
-      }),
-      [],
+    () => ({
+      palette,
+      shape,
+      typography,
+      breakpoints,
+      shadows,
+      customShadows,
+    }),
+    [],
   );
 
   const theme = createTheme(themeOptions);

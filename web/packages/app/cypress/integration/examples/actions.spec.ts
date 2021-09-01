@@ -8,28 +8,28 @@ context('Actions', () => {
   it('.type() - type into a DOM element', () => {
     // https://on.cypress.io/type
     cy.get('.action-email')
-        .type('fake@email.com')
-        .should('have.value', 'fake@email.com')
+      .type('fake@email.com')
+      .should('have.value', 'fake@email.com')
 
-    // .type() with special character sequences
-        .type('{leftarrow}{rightarrow}{uparrow}{downarrow}')
-        .type('{del}{selectall}{backspace}')
+      // .type() with special character sequences
+      .type('{leftarrow}{rightarrow}{uparrow}{downarrow}')
+      .type('{del}{selectall}{backspace}')
 
-    // .type() with key modifiers
-        .type('{alt}{option}') // these are equivalent
-        .type('{ctrl}{control}') // these are equivalent
-        .type('{meta}{command}{cmd}') // these are equivalent
-        .type('{shift}')
+      // .type() with key modifiers
+      .type('{alt}{option}') // these are equivalent
+      .type('{ctrl}{control}') // these are equivalent
+      .type('{meta}{command}{cmd}') // these are equivalent
+      .type('{shift}')
 
-    // Delay each keypress by 0.1 sec
-        .type('slow.typing@email.com', {delay: 100})
-        .should('have.value', 'slow.typing@email.com');
+      // Delay each keypress by 0.1 sec
+      .type('slow.typing@email.com', {delay: 100})
+      .should('have.value', 'slow.typing@email.com');
 
     cy.get('.action-disabled')
-    // Ignore error checking prior to type
-    // like whether the input is visible or disabled
-        .type('disabled error checking', {force: true})
-        .should('have.value', 'disabled error checking');
+      // Ignore error checking prior to type
+      // like whether the input is visible or disabled
+      .type('disabled error checking', {force: true})
+      .should('have.value', 'disabled error checking');
   });
 
   it('.focus() - focus on a DOM element', () => {
@@ -40,20 +40,20 @@ context('Actions', () => {
   it('.blur() - blur off a DOM element', () => {
     // https://on.cypress.io/blur
     cy.get('.action-blur')
-        .type('About to blur')
-        .blur()
-        .should('have.class', 'error')
-        .prev()
-        .should('have.attr', 'style', 'color: red;');
+      .type('About to blur')
+      .blur()
+      .should('have.class', 'error')
+      .prev()
+      .should('have.attr', 'style', 'color: red;');
   });
 
   it('.clear() - clears an input or textarea element', () => {
     // https://on.cypress.io/clear
     cy.get('.action-clear')
-        .type('Clear this text')
-        .should('have.value', 'Clear this text')
-        .clear()
-        .should('have.value', '');
+      .type('Clear this text')
+      .should('have.value', 'Clear this text')
+      .clear()
+      .should('have.value', '');
   });
 
   it('.submit() - submit a form', () => {
@@ -96,13 +96,13 @@ context('Actions', () => {
     // that controls where the click occurs :)
 
     cy.get('#action-canvas')
-        .click(80, 75) // click 80px on x coord and 75px on y coord
-        .click(170, 75)
-        .click(80, 165)
-        .click(100, 185)
-        .click(125, 190)
-        .click(150, 185)
-        .click(170, 165);
+      .click(80, 75) // click 80px on x coord and 75px on y coord
+      .click(170, 75)
+      .click(80, 165)
+      .click(100, 185)
+      .click(125, 190)
+      .click(150, 185)
+      .click(170, 165);
 
     // click multiple elements by passing multiple: true
     cy.get('.action-labels>.label').click({multiple: true});
@@ -162,9 +162,9 @@ context('Actions', () => {
 
     // .uncheck() accepts an array of values
     cy.get('.action-check [type="checkbox"]')
-        .check(['checkbox1', 'checkbox3'])
-        .uncheck(['checkbox1', 'checkbox3'])
-        .should('not.be.checked');
+      .check(['checkbox1', 'checkbox3'])
+      .uncheck(['checkbox1', 'checkbox3'])
+      .should('not.be.checked');
 
     // Ignore error checking prior to unchecking
     cy.get('.action-check [disabled]').uncheck({force: true}).should('not.be.checked');
@@ -183,21 +183,21 @@ context('Actions', () => {
     cy.get('.action-select').should('have.value', 'fr-apples');
 
     cy.get('.action-select-multiple')
-        .select(['apples', 'oranges', 'bananas'])
-    // when getting multiple values, invoke "val" method first
-        .invoke('val')
-        .should('deep.equal', ['fr-apples', 'fr-oranges', 'fr-bananas']);
+      .select(['apples', 'oranges', 'bananas'])
+      // when getting multiple values, invoke "val" method first
+      .invoke('val')
+      .should('deep.equal', ['fr-apples', 'fr-oranges', 'fr-bananas']);
 
     // Select option(s) with matching value
     cy.get('.action-select')
-        .select('fr-bananas')
-    // can attach an assertion right away to the element
-        .should('have.value', 'fr-bananas');
+      .select('fr-bananas')
+      // can attach an assertion right away to the element
+      .should('have.value', 'fr-bananas');
 
     cy.get('.action-select-multiple')
-        .select(['fr-apples', 'fr-oranges', 'fr-bananas'])
-        .invoke('val')
-        .should('deep.equal', ['fr-apples', 'fr-oranges', 'fr-bananas']);
+      .select(['fr-apples', 'fr-oranges', 'fr-bananas'])
+      .invoke('val')
+      .should('deep.equal', ['fr-apples', 'fr-oranges', 'fr-bananas']);
 
     // assert the selected values include oranges
     cy.get('.action-select-multiple').invoke('val').should('include', 'fr-oranges');
@@ -236,11 +236,11 @@ context('Actions', () => {
     // Here, we invoke jQuery's val() method to set
     // the value and trigger the 'change' event
     cy.get('.trigger-input-range')
-        .invoke('val', 25)
-        .trigger('change')
-        .get('input[type=range]')
-        .siblings('p')
-        .should('have.text', '25');
+      .invoke('val', 25)
+      .trigger('change')
+      .get('input[type=range]')
+      .siblings('p')
+      .should('have.text', '25');
   });
 
   it('cy.scrollTo() - scroll the window or element to a position', () => {

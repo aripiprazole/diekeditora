@@ -31,8 +31,8 @@ export default function Page404() {
               </Typography>
             </motion.div>
             <Typography sx={{color: 'text.secondary'}}>
-              Não foi possível encontrar a página que você está procurando. Talvez você tenha
-              digitado incorretamente o URL? Certifique-se de verificar a ortografia.
+              Não foi possível encontrar a página que você está procurando. Talvez você tenha digitado incorretamente o
+              URL? Certifique-se de verificar a ortografia.
             </Typography>
 
             <motion.div variants={varBounceIn}>
@@ -43,13 +43,7 @@ export default function Page404() {
               />
             </motion.div>
 
-            <Button
-              to="/"
-              size="large"
-              variant="contained"
-              component={RouterLink}
-              style={{textTransform: 'none'}}
-            >
+            <Button to="/" size="large" variant="contained" component={RouterLink} style={{textTransform: 'none'}}>
               Voltar à página inicial
             </Button>
           </Box>

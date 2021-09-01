@@ -80,7 +80,7 @@ export default function BlogPostCard({post, index}) {
               'pt': 'calc(100% * 4 / 3)',
               '&:after': {
                 top: 0,
-                content: '\'\'',
+                content: "''",
                 width: '100%',
                 height: '100%',
                 position: 'absolute',
@@ -134,11 +134,7 @@ export default function BlogPostCard({post, index}) {
             }),
           }}
         >
-          <Typography
-            gutterBottom
-            variant="caption"
-            sx={{color: 'text.disabled', display: 'block'}}
-          >
+          <Typography gutterBottom variant="caption" sx={{color: 'text.disabled', display: 'block'}}>
             {fDate(createdAt)}
           </Typography>
 

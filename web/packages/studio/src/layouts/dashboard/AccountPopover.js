@@ -57,7 +57,7 @@ export default function AccountPopover() {
           ...(open && {
             '&:before': {
               zIndex: 1,
-              content: '\'\'',
+              content: "''",
               width: '100%',
               height: '100%',
               borderRadius: '50%',
@@ -70,12 +70,7 @@ export default function AccountPopover() {
         <Avatar src={account.photoURL} alt="photoURL" />
       </IconButton>
 
-      <MenuPopover
-        open={open}
-        onClose={handleClose}
-        anchorEl={anchorRef.current}
-        sx={{width: 220}}
-      >
+      <MenuPopover open={open} onClose={handleClose} anchorEl={anchorRef.current} sx={{width: 220}}>
         <Box sx={{my: 1.5, px: 2.5}}>
           <Typography variant="subtitle1" noWrap>
             {account.displayName}

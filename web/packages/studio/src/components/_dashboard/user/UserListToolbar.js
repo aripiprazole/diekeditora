@@ -5,15 +5,7 @@ import trash2Fill from '@iconify/icons-eva/trash-2-fill';
 import roundFilterList from '@iconify/icons-ic/round-filter-list';
 // material
 import {experimentalStyled as styled} from '@material-ui/core/styles';
-import {
-  Box,
-  Toolbar,
-  Tooltip,
-  IconButton,
-  Typography,
-  OutlinedInput,
-  InputAdornment,
-} from '@material-ui/core';
+import {Box, Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment} from '@material-ui/core';
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +24,7 @@ const SearchStyle = styled(OutlinedInput)(({theme}) => ({
   }),
   '&.Mui-focused': {width: 320, boxShadow: theme.customShadows.z8},
   '& fieldset': {
-    borderWidth: `1px !important`,
+    borderWidth: '1px !important',
     borderColor: `${theme.palette.grey[500_32]} !important`,
   },
 }));

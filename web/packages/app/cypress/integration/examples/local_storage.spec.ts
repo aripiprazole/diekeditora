@@ -9,12 +9,12 @@ context('Local Storage', () => {
   it('cy.clearLocalStorage() - clear all data in local storage', () => {
     // https://on.cypress.io/clearlocalstorage
     cy.get('.ls-btn')
-        .click()
-        .should(() => {
-          expect(localStorage.getItem('prop1')).to.eq('red');
-          expect(localStorage.getItem('prop2')).to.eq('blue');
-          expect(localStorage.getItem('prop3')).to.eq('magenta');
-        });
+      .click()
+      .should(() => {
+        expect(localStorage.getItem('prop1')).to.eq('red');
+        expect(localStorage.getItem('prop2')).to.eq('blue');
+        expect(localStorage.getItem('prop3')).to.eq('magenta');
+      });
 
     // clearLocalStorage() yields the localStorage object
     cy.clearLocalStorage().should((ls) => {
@@ -25,12 +25,12 @@ context('Local Storage', () => {
 
     // Clear key matching string in Local Storage
     cy.get('.ls-btn')
-        .click()
-        .should(() => {
-          expect(localStorage.getItem('prop1')).to.eq('red');
-          expect(localStorage.getItem('prop2')).to.eq('blue');
-          expect(localStorage.getItem('prop3')).to.eq('magenta');
-        });
+      .click()
+      .should(() => {
+        expect(localStorage.getItem('prop1')).to.eq('red');
+        expect(localStorage.getItem('prop2')).to.eq('blue');
+        expect(localStorage.getItem('prop3')).to.eq('magenta');
+      });
 
     cy.clearLocalStorage('prop1').should((ls) => {
       expect(ls.getItem('prop1')).to.be.null;
@@ -40,12 +40,12 @@ context('Local Storage', () => {
 
     // Clear keys matching regex in Local Storage
     cy.get('.ls-btn')
-        .click()
-        .should(() => {
-          expect(localStorage.getItem('prop1')).to.eq('red');
-          expect(localStorage.getItem('prop2')).to.eq('blue');
-          expect(localStorage.getItem('prop3')).to.eq('magenta');
-        });
+      .click()
+      .should(() => {
+        expect(localStorage.getItem('prop1')).to.eq('red');
+        expect(localStorage.getItem('prop2')).to.eq('blue');
+        expect(localStorage.getItem('prop3')).to.eq('magenta');
+      });
 
     cy.clearLocalStorage(/prop1|2/).should((ls) => {
       expect(ls.getItem('prop1')).to.be.null;

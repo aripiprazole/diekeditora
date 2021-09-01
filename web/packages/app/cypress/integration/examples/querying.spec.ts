@@ -29,8 +29,8 @@ context('Querying', () => {
     // or use assertions directly during 'cy.get()'
     // https://on.cypress.io/assertions
     cy.get('[data-test-id="test-example"]')
-        .should('have.attr', 'data-test-id', 'test-example')
-        .and('have.css', 'position', 'static');
+      .should('have.attr', 'data-test-id', 'test-example')
+      .and('have.css', 'position', 'static');
   });
 
   it('cy.contains() - query DOM elements with matching content', () => {

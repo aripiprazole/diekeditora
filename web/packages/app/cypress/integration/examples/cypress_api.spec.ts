@@ -9,34 +9,34 @@ context('Cypress.Commands', () => {
 
   it('.add() - create a custom command', () => {
     Cypress.Commands.add(
-        'console',
-        {
-          prevSubject: true,
-        },
-        (subject, method) => {
+      'console',
+      {
+        prevSubject: true,
+      },
+      (subject, method) => {
         // the previous subject is automatically received
         // and the commands arguments are shifted
 
-          // allow us to change the console method used
-          method = method || 'log';
+        // allow us to change the console method used
+        method = method || 'log';
 
-          // log the subject to the console
-          // @ts-ignore TS7017
-          console[method]('The subject is', subject);
+        // log the subject to the console
+        // @ts-ignore TS7017
+        console[method]('The subject is', subject);
 
-          // whatever we return becomes the new subject
-          // we don't want to change the subject so
-          // we return whatever was passed in
-          return subject;
-        },
+        // whatever we return becomes the new subject
+        // we don't want to change the subject so
+        // we return whatever was passed in
+        return subject;
+      },
     );
 
     cy.get('button')
-    // @ts-ignore TS2339
-        .console('info')
-        .then(($button: any) => {
+      // @ts-ignore TS2339
+      .console('info')
+      .then(($button: any) => {
         // subject is still $button
-        });
+      });
   });
 });
 

@@ -107,11 +107,11 @@ context('Spies, Stubs, and Clock', () => {
     };
 
     cy.stub(greeter, 'greet')
-        .callThrough() // if you want non-matched calls to call the real method
-        .withArgs(Cypress.sinon.match.string)
-        .returns('Hi')
-        .withArgs(Cypress.sinon.match.number)
-        .throws(new Error('Invalid name'));
+      .callThrough() // if you want non-matched calls to call the real method
+      .withArgs(Cypress.sinon.match.string)
+      .returns('Hi')
+      .withArgs(Cypress.sinon.match.number)
+      .throws(new Error('Invalid name'));
 
     expect(greeter.greet('World')).to.equal('Hi');
     // @ts-ignore
@@ -188,13 +188,13 @@ context('Spies, Stubs, and Clock', () => {
 
     // you can combine several matchers using "and", "or"
     expect(spy).to.be.calledWith(
-        Cypress.sinon.match.number,
-        Cypress.sinon.match(isGreaterThan(2), '> 2').and(Cypress.sinon.match(isLessThan(4), '< 4')),
+      Cypress.sinon.match.number,
+      Cypress.sinon.match(isGreaterThan(2), '> 2').and(Cypress.sinon.match(isLessThan(4), '< 4')),
     );
 
     expect(spy).to.be.calledWith(
-        Cypress.sinon.match.number,
-        Cypress.sinon.match(isGreaterThan(200), '> 200').or(Cypress.sinon.match(3)),
+      Cypress.sinon.match.number,
+      Cypress.sinon.match(isGreaterThan(200), '> 200').or(Cypress.sinon.match(3)),
     );
 
     // matchers can be used from BDD assertions
