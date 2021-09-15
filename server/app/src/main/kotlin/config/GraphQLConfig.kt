@@ -1,6 +1,6 @@
 package com.diekeditora.app.config
 
-import com.diekeditora.app.graphql.GraphQLExceptionHandler
+import graphql.infra.GraphQLExceptionHandler
 import com.expediagroup.graphql.generator.execution.FlowSubscriptionExecutionStrategy
 import graphql.execution.DataFetcherExceptionHandler
 import graphql.execution.ExecutionStrategy

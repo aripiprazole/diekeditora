@@ -1,6 +1,6 @@
 package com.diekeditora.app.tests.auth
 
-import com.diekeditora.app.security.AuthenticationManager
+import com.diekeditora.security.infra.AuthenticationManager
 import com.diekeditora.app.tests.factories.TokenFactory
 import com.diekeditora.app.tests.factories.UserFactory
 import com.diekeditora.domain.authority.AuthorityService

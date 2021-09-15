@@ -1,4 +1,4 @@
-package com.diekeditora.domain
+package com.diekeditora
 
 import com.diekeditora.domain.id.UniqueId
 import com.diekeditora.domain.page.Cursor

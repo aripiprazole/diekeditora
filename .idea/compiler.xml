@@ -27,6 +27,7 @@
       <module name="server.diekeditora-web.main" target="11" />
       <module name="server.diekeditora-web.test" target="11" />
       <module name="server.domain" target="11" />
+      <module name="server.infra" target="11" />
       <module name="server.web" target="11" />
       <module name="server.web.main" target="11" />
       <module name="server.web.test" target="11" />

@@ -1,6 +1,6 @@
-package com.diekeditora.app
+package com.diekeditora
 
-import com.diekeditora.infra.repo.DiekEditoraRepositoryFactoryBean
+import com.diekeditora.repo.DiekEditoraRepositoryFactoryBean
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.ComponentScan

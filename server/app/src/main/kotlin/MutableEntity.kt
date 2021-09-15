@@ -1,4 +1,4 @@
-package com.diekeditora.domain
+package com.diekeditora
 
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 

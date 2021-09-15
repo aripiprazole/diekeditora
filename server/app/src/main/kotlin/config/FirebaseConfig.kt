@@ -1,6 +1,6 @@
 package com.diekeditora.app.config
 
-import com.diekeditora.infra.props.FirebaseProps
+import com.diekeditora.props.FirebaseProps
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
