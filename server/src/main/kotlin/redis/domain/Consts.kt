@@ -1,4 +1,4 @@
-package com.diekeditora.redis
+package com.diekeditora.redis.domain
 
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime

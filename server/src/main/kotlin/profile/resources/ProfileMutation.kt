@@ -1,13 +1,13 @@
-package com.diekeditora.app.profile.resources
+package com.diekeditora.profile.resources
 
-import com.diekeditora.domain.file.AvatarKind
-import com.diekeditora.domain.file.FileService
-import com.diekeditora.domain.file.Upload
-import com.diekeditora.domain.graphql.Secured
-import com.diekeditora.domain.profile.Profile
-import com.diekeditora.domain.profile.ProfileService
-import com.diekeditora.domain.user.UserService
-import com.diekeditora.shared.toByteArray
+import com.diekeditora.file.domain.AvatarKind
+import com.diekeditora.file.domain.FileService
+import com.diekeditora.file.domain.Upload
+import com.diekeditora.profile.domain.Profile
+import com.diekeditora.profile.domain.ProfileService
+import com.diekeditora.security.domain.Secured
+import com.diekeditora.user.domain.UserService
+import com.diekeditora.utils.toByteArray
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
 import org.springframework.security.access.prepost.PreAuthorize

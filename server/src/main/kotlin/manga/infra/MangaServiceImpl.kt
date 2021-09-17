@@ -1,14 +1,14 @@
 package com.diekeditora.manga.infra
 
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.id.UniqueIdService
-import com.diekeditora.domain.manga.Manga
-import com.diekeditora.domain.manga.MangaInput
-import com.diekeditora.domain.manga.MangaService
-import com.diekeditora.domain.manga.MangaSort
-import com.diekeditora.domain.profile.Profile
-import com.diekeditora.domain.user.User
-import com.diekeditora.infra.repo.findAllAsConnection
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.id.domain.UniqueIdService
+import com.diekeditora.manga.domain.Manga
+import com.diekeditora.manga.domain.MangaInput
+import com.diekeditora.manga.domain.MangaService
+import com.diekeditora.manga.domain.MangaSort
+import com.diekeditora.profile.domain.Profile
+import com.diekeditora.user.domain.User
+import com.diekeditora.utils.findAllAsConnection
 import graphql.relay.Connection
 import org.springframework.data.domain.Sort
 import org.springframework.data.domain.Sort.Order.asc

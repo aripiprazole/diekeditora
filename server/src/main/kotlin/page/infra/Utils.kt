@@ -1,4 +1,4 @@
-package com.diekeditora.app.page
+package com.diekeditora.page.infra
 
 import graphql.relay.Connection
 

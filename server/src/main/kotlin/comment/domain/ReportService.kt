@@ -1,6 +1,6 @@
-package com.diekeditora.app.comment.domain
+package com.diekeditora.comment.domain
 
-import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.id.domain.UniqueId
 import graphql.relay.Connection
 
 interface ReportService {

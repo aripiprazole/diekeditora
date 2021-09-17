@@ -1,9 +1,9 @@
-package com.diekeditora.app.config
+package com.diekeditora.config
 
-import com.diekeditora.app.page.AppCursor
-import com.diekeditora.app.page.AppEdge
-import com.diekeditora.domain.page.AppPage
-import com.diekeditora.app.page.AppPageInfo
+import com.diekeditora.page.infra.AppCursor
+import com.diekeditora.page.infra.AppEdge
+import com.diekeditora.page.infra.AppPage
+import com.diekeditora.page.infra.AppPageInfo
 import com.diekeditora.serializers.DateDeserializer
 import com.diekeditora.serializers.DateSerializer
 import com.diekeditora.serializers.InstantDeserializer

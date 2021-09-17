@@ -1,9 +1,9 @@
-package com.diekeditora.app.invoice.domain
+package com.diekeditora.invoice.domain
 
-import com.diekeditora.domain.chapter.Chapter
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.manga.Manga
-import com.diekeditora.domain.page.AppPage
+import com.diekeditora.chapter.domain.Chapter
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.manga.domain.Manga
+import com.diekeditora.page.infra.AppPage
 import kotlinx.coroutines.flow.Flow
 
 interface InvoiceService {

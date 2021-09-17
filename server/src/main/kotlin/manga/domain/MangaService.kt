@@ -1,8 +1,8 @@
-package com.diekeditora.app.manga.domain
+package com.diekeditora.manga.domain
 
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.profile.Profile
-import com.diekeditora.domain.user.User
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.profile.domain.Profile
+import com.diekeditora.user.domain.User
 import graphql.relay.Connection
 
 interface MangaService {

@@ -1,6 +1,6 @@
-package com.diekeditora.app.profile.domain
+package com.diekeditora.profile.domain
 
-import com.diekeditora.domain.user.User
+import com.diekeditora.user.domain.User
 
 interface ProfileService {
     suspend fun findOrCreateProfileByUser(user: User): Profile

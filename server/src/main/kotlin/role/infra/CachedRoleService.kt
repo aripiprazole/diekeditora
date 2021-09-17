@@ -1,10 +1,10 @@
 package com.diekeditora.role.infra
 
-import com.diekeditora.domain.role.Role
-import com.diekeditora.domain.role.RoleService
-import com.diekeditora.domain.user.User
-import com.diekeditora.infra.redis.CacheProvider
-import com.diekeditora.infra.redis.expiresIn
+import com.diekeditora.redis.domain.expiresIn
+import com.diekeditora.redis.infra.CacheProvider
+import com.diekeditora.role.domain.Role
+import com.diekeditora.role.domain.RoleService
+import com.diekeditora.user.domain.User
 import graphql.relay.Connection
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Service

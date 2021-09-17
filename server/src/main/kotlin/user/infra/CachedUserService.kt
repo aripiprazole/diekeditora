@@ -1,9 +1,9 @@
 package com.diekeditora.user.infra
 
-import com.diekeditora.domain.user.User
-import com.diekeditora.domain.user.UserService
-import com.diekeditora.infra.redis.CacheProvider
-import com.diekeditora.infra.redis.expiresIn
+import com.diekeditora.redis.domain.expiresIn
+import com.diekeditora.redis.infra.CacheProvider
+import com.diekeditora.user.domain.User
+import com.diekeditora.user.domain.UserService
 import graphql.relay.Connection
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Service

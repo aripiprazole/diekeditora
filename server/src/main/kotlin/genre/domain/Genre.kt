@@ -1,8 +1,8 @@
-package genre.domain
+package com.diekeditora.genre.domain
 
-import com.diekeditora.domain.MutableEntity
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.page.Cursor
+import com.diekeditora.MutableEntity
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.page.domain.Cursor
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations

@@ -1,7 +1,7 @@
-package com.diekeditora.app.invoice.domain
+package com.diekeditora.invoice.domain
 
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.user.User
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.user.domain.User
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.Id

@@ -1,12 +1,12 @@
 package com.diekeditora.manga.infra
 
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.manga.Manga
-import com.diekeditora.domain.manga.MangaService
-import com.diekeditora.domain.manga.MangaSort
-import com.diekeditora.domain.profile.Profile
-import com.diekeditora.infra.redis.CacheProvider
-import com.diekeditora.infra.redis.expiresIn
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.manga.domain.Manga
+import com.diekeditora.manga.domain.MangaService
+import com.diekeditora.manga.domain.MangaSort
+import com.diekeditora.profile.domain.Profile
+import com.diekeditora.redis.domain.expiresIn
+import com.diekeditora.redis.infra.CacheProvider
 import graphql.relay.Connection
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Service

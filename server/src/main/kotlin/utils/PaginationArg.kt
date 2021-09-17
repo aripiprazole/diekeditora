@@ -1,4 +1,4 @@
-package com.diekeditora.app.dataloader
+package com.diekeditora.utils
 
 data class PaginationArg<Receiver : Any, Subject : Any>(
     val receiver: Receiver,

@@ -1,8 +1,8 @@
 package com.diekeditora.security.infra
 
-import com.diekeditora.domain.authority.AuthorityService
-import com.diekeditora.domain.user.UserService
-import com.diekeditora.shared.await
+import com.diekeditora.authority.domain.AuthorityService
+import com.diekeditora.user.domain.UserService
+import com.diekeditora.utils.await
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.reactor.mono
 import org.springframework.security.access.AccessDeniedException

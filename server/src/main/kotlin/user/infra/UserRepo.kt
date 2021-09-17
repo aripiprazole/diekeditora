@@ -1,7 +1,7 @@
 package com.diekeditora.user.infra
 
-import com.diekeditora.domain.user.User
-import com.diekeditora.infra.repo.CursorBasedPaginationRepository
+import com.diekeditora.com.diekeditora.repo.CursorBasedPaginationRepository
+import com.diekeditora.user.domain.User
 import org.springframework.stereotype.Repository
 import java.util.UUID
 

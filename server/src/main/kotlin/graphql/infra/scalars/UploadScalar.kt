@@ -1,7 +1,7 @@
-package com.diekeditora.infra.graphql.scalars
+package com.diekeditora.graphql.infra.scalars
 
-import com.diekeditora.domain.file.Upload
-import com.diekeditora.domain.graphql.Scalar
+import com.diekeditora.file.domain.Upload
+import com.diekeditora.graphql.domain.Scalar
 import graphql.schema.Coercing
 import org.springframework.http.codec.multipart.FilePart
 import org.springframework.stereotype.Component

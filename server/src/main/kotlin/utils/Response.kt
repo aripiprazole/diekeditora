@@ -1,4 +1,4 @@
-package com.diekeditora.app.utils
+package com.diekeditora.utils
 
 import kotlinx.coroutines.flow.Flow
 import org.springframework.http.ResponseEntity

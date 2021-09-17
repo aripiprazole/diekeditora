@@ -1,4 +1,4 @@
-package file.domain
+package com.diekeditora.file.domain
 
 import org.springframework.http.MediaType
 

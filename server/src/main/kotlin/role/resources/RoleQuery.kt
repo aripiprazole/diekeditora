@@ -1,8 +1,8 @@
-package com.diekeditora.app.role.resources
+package com.diekeditora.role.resources
 
-import com.diekeditora.domain.graphql.Secured
-import com.diekeditora.domain.role.Role
-import com.diekeditora.domain.role.RoleService
+import com.diekeditora.role.domain.Role
+import com.diekeditora.role.domain.RoleService
+import com.diekeditora.security.domain.Secured
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Query
 import graphql.relay.Connection

@@ -1,7 +1,7 @@
 package com.diekeditora.role.infra
 
-import com.diekeditora.domain.role.Role
-import com.diekeditora.infra.repo.CursorBasedPaginationRepository
+import com.diekeditora.com.diekeditora.repo.CursorBasedPaginationRepository
+import com.diekeditora.role.domain.Role
 import org.springframework.stereotype.Repository
 import java.util.UUID
 

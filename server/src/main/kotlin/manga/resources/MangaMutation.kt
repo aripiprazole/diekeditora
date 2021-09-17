@@ -1,10 +1,10 @@
-package com.diekeditora.app.manga.resources
+package com.diekeditora.manga.resources
 
-import com.diekeditora.domain.graphql.Secured
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.manga.Manga
-import com.diekeditora.domain.manga.MangaInput
-import com.diekeditora.domain.manga.MangaService
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.manga.domain.Manga
+import com.diekeditora.manga.domain.MangaInput
+import com.diekeditora.manga.domain.MangaService
+import com.diekeditora.security.domain.Secured
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
 import org.springframework.security.access.prepost.PreAuthorize

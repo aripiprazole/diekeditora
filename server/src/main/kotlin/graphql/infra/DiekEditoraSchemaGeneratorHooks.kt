@@ -1,7 +1,7 @@
 package com.diekeditora.graphql.infra
 
-import com.diekeditora.domain.graphql.Scalar
-import com.diekeditora.infra.graphql.directives.SecuredDirectiveWiring
+import com.diekeditora.graphql.domain.Scalar
+import com.diekeditora.graphql.infra.directives.SecuredDirectiveWiring
 import com.expediagroup.graphql.generator.directives.KotlinDirectiveWiringFactory
 import com.expediagroup.graphql.generator.hooks.SchemaGeneratorHooks
 import graphql.Scalars.GraphQLInt

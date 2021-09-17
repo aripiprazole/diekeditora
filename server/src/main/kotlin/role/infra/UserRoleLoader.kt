@@ -1,10 +1,10 @@
 package com.diekeditora.role.infra
 
-import com.diekeditora.domain.dataloader.PaginationArg
-import com.diekeditora.domain.role.Role
-import com.diekeditora.domain.role.RoleService
-import com.diekeditora.domain.user.User
-import com.diekeditora.shared.dataLoader
+import com.diekeditora.role.domain.Role
+import com.diekeditora.role.domain.RoleService
+import com.diekeditora.user.domain.User
+import com.diekeditora.utils.PaginationArg
+import com.diekeditora.utils.dataLoader
 import com.expediagroup.graphql.server.execution.KotlinDataLoader
 import graphql.relay.Connection
 import org.springframework.stereotype.Component

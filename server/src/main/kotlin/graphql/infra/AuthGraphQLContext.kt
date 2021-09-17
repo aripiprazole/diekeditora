@@ -1,8 +1,8 @@
 package com.diekeditora.graphql.infra
 
-import com.diekeditora.domain.Entity
-import com.diekeditora.domain.Owned
-import com.diekeditora.domain.user.User
+import com.diekeditora.Entity
+import com.diekeditora.Owned
+import com.diekeditora.user.domain.User
 import com.expediagroup.graphql.server.spring.execution.SpringGraphQLContext
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.core.Authentication

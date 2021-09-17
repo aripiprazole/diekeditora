@@ -1,6 +1,6 @@
-package com.diekeditora.app.role.domain
+package com.diekeditora.role.domain
 
-import com.diekeditora.domain.user.User
+import com.diekeditora.user.domain.User
 import graphql.relay.Connection
 
 interface RoleService {

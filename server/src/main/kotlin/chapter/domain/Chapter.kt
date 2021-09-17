@@ -1,12 +1,12 @@
-package com.diekeditora.app.chapter.domain
+package com.diekeditora.chapter.domain
 
-import com.diekeditora.domain.MutableEntity
-import com.diekeditora.domain.Owned
-import com.diekeditora.app.file.ChapterCoverKind
-import com.diekeditora.domain.file.FileKind
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.page.Cursor
-import com.diekeditora.domain.page.OrderBy
+import com.diekeditora.MutableEntity
+import com.diekeditora.Owned
+import com.diekeditora.file.domain.ChapterCoverKind
+import com.diekeditora.file.domain.FileKind
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.page.domain.Cursor
+import com.diekeditora.page.domain.OrderBy
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations

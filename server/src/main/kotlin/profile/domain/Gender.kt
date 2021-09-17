@@ -1,4 +1,4 @@
-package com.diekeditora.app.profile.domain
+package com.diekeditora.profile.domain
 
 enum class Gender {
     Male,

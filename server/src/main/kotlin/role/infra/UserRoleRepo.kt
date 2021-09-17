@@ -1,9 +1,10 @@
 package com.diekeditora.role.infra
 
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.role.Role
-import com.diekeditora.domain.user.User
-import com.diekeditora.infra.repo.CursorBasedPaginationRepository
+import com.diekeditora.com.diekeditora.repo.CursorBasedPaginationRepository
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.page.domain.PaginationQuery
+import com.diekeditora.role.domain.Role
+import com.diekeditora.user.domain.User
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.domain.Sort
 import org.springframework.data.r2dbc.repository.Query

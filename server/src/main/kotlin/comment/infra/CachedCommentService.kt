@@ -1,11 +1,11 @@
 package com.diekeditora.comment.infra
 
-import com.diekeditora.domain.comment.Comment
-import com.diekeditora.domain.comment.CommentService
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.manga.Manga
-import com.diekeditora.infra.redis.CacheProvider
-import com.diekeditora.infra.redis.expiresIn
+import com.diekeditora.comment.domain.Comment
+import com.diekeditora.comment.domain.CommentService
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.manga.domain.Manga
+import com.diekeditora.redis.domain.expiresIn
+import com.diekeditora.redis.infra.CacheProvider
 import graphql.relay.Connection
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Service

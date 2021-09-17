@@ -1,4 +1,4 @@
-package com.diekeditora.app.page
+package com.diekeditora.page.infra
 
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.JsonParser

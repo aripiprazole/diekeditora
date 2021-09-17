@@ -1,9 +1,9 @@
-package com.diekeditora.app.notification.domain
+package com.diekeditora.notification.domain
 
-import com.diekeditora.domain.comment.Comment
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.invoice.Invoice
-import com.diekeditora.domain.manga.Manga
+import com.diekeditora.comment.domain.Comment
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.invoice.domain.Invoice
+import com.diekeditora.manga.domain.Manga
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonTypeInfo

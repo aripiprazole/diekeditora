@@ -1,9 +1,9 @@
-package com.diekeditora.app.user.resources
+package com.diekeditora.user.resources
 
-import com.diekeditora.domain.graphql.Secured
-import com.diekeditora.domain.user.User
-import com.diekeditora.app.user.domain.UserInput
-import com.diekeditora.domain.user.UserService
+import com.diekeditora.security.domain.Secured
+import com.diekeditora.user.domain.User
+import com.diekeditora.user.domain.UserInput
+import com.diekeditora.user.domain.UserService
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
 import org.springframework.security.access.prepost.PreAuthorize

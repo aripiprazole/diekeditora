@@ -1,11 +1,14 @@
-package com.diekeditora.app.me.resources
+package com.diekeditora.me.resources
 
-import com.diekeditora.app.notification.NotificationService
-import com.diekeditora.domain.graphql.Authenticated
-import com.diekeditora.domain.user.User
-import com.diekeditora.infra.graphql.AuthGraphQLContext
+import com.diekeditora.graphql.infra.AuthGraphQLContext
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.notification.domain.Notification
+import com.diekeditora.notification.domain.NotificationService
+import com.diekeditora.security.domain.Authenticated
+import com.diekeditora.user.domain.User
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Query
+import graphql.relay.Connection
 import org.springframework.stereotype.Component
 
 @Component

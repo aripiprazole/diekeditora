@@ -1,12 +1,12 @@
 package com.diekeditora.repo
 
-import com.diekeditora.domain.Entity
-import com.diekeditora.domain.page.Cursor
-import com.diekeditora.domain.page.OrderBy
-import com.diekeditora.role.infra.PaginationQuery
-import com.diekeditora.shared.findPropertiesByAnnotation
-import com.diekeditora.shared.findPropertyByAnnotation
-import kotlinx.coroutines.flow.Flow
+import com.diekeditora.Entity
+import com.diekeditora.page.domain.Cursor
+import com.diekeditora.page.domain.OrderBy
+import com.diekeditora.page.domain.PaginationQuery
+import com.diekeditora.repo.domain.ReactiveCursorBasedPaginationRepository
+import com.diekeditora.utils.findPropertiesByAnnotation
+import com.diekeditora.utils.findPropertyByAnnotation
 import org.springframework.data.domain.Sort
 import org.springframework.data.mapping.model.MutablePersistentEntity
 import org.springframework.data.r2dbc.convert.R2dbcConverter
@@ -16,23 +16,9 @@ import org.springframework.data.relational.core.mapping.BasicRelationalPersisten
 import org.springframework.data.relational.core.query.Query.empty
 import org.springframework.data.relational.core.sql.IdentifierProcessing
 import org.springframework.data.relational.repository.support.MappingRelationalEntityInformation
-import org.springframework.data.repository.kotlin.CoroutineSortingRepository
-import org.springframework.data.repository.reactive.ReactiveSortingRepository
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import kotlin.reflect.full.findAnnotation
-
-interface ReactiveCursorBasedPaginationRepository<T, ID> : ReactiveSortingRepository<T, ID> {
-    fun findAll(first: Int, after: String? = null, sort: Sort? = null, owner: Any? = null): Flux<T>
-
-    fun indexOf(entity: T?): Mono<Long>
-}
-
-interface CursorBasedPaginationRepository<T, ID> : CoroutineSortingRepository<T, ID> {
-    fun findAll(first: Int, after: String? = null, sort: Sort? = null, owner: Any? = null): Flow<T>
-
-    suspend fun indexOf(entity: T?): Long?
-}
 
 @Suppress("Detekt.TooManyFunctions")
 internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
@@ -42,6 +28,9 @@ internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
     repositoryInterface: Class<*>,
 ) : SimpleR2dbcRepository<T, ID>(entity, operations, converter),
     ReactiveCursorBasedPaginationRepository<T, ID> where T : Any, T : Entity<T> {
+
+    internal data class EntityProperties(val orderBy: Sort, val cursor: String)
+
     override fun findAll(first: Int, after: String?, sort: Sort?, owner: Any?): Flux<T> {
         val actualSort = sort ?: properties.orderBy
 
@@ -139,5 +128,3 @@ internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
         append(this@present.toSet().joinToString { "${it.property} ${it.direction}" })
     }
 }
-
-internal data class EntityProperties(val orderBy: Sort, val cursor: String)

@@ -1,11 +1,11 @@
 package com.diekeditora.authority.infra
 
-import com.diekeditora.domain.authority.AuthorityService
-import com.diekeditora.domain.page.map
-import com.diekeditora.domain.role.Role
-import com.diekeditora.domain.user.User
-import com.diekeditora.infra.repo.findAllAsConnection
-import com.diekeditora.shared.logger
+import com.diekeditora.authority.domain.AuthorityService
+import com.diekeditora.page.infra.map
+import com.diekeditora.role.domain.Role
+import com.diekeditora.user.domain.User
+import com.diekeditora.utils.findAllAsConnection
+import com.diekeditora.utils.logger
 import graphql.relay.Connection
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toSet
@@ -37,7 +37,7 @@ internal class AuthorityServiceImpl(
         after: String?
     ): Connection<String> {
         return userAuthorityRepo
-            .findAllAsConnection(first, after, owner = user.id?.toUUID())
+            .findAllAsConnection(first, after, owner = user.id)
             .map(Authority::value)
     }
 

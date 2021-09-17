@@ -1,6 +1,6 @@
 package com.diekeditora.app.tests.factories
 
-import com.diekeditora.shared.generateRandomString
+import com.diekeditora.utils.generateRandomString
 import org.springframework.stereotype.Component
 
 @Component

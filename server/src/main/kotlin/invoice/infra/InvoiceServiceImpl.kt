@@ -1,13 +1,13 @@
 package com.diekeditora.invoice.infra
 
-import com.diekeditora.domain.chapter.Chapter
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.invoice.Invoice
-import com.diekeditora.domain.invoice.InvoiceService
-import com.diekeditora.domain.invoice.MangaChapterInvoice
-import com.diekeditora.domain.invoice.MangaSubscriptionInvoice
-import com.diekeditora.domain.manga.Manga
-import com.diekeditora.domain.page.AppPage
+import com.diekeditora.chapter.domain.Chapter
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.invoice.domain.Invoice
+import com.diekeditora.invoice.domain.InvoiceService
+import com.diekeditora.invoice.domain.MangaChapterInvoice
+import com.diekeditora.invoice.domain.MangaSubscriptionInvoice
+import com.diekeditora.manga.domain.Manga
+import com.diekeditora.page.infra.AppPage
 import kotlinx.coroutines.flow.Flow
 import org.springframework.stereotype.Service
 

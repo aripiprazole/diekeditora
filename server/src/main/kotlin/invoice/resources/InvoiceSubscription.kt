@@ -1,12 +1,12 @@
-package com.diekeditora.app.invoice.resources
+package com.diekeditora.invoice.resources
 
-import com.diekeditora.app.chapter.domain.ChapterService
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.invoice.Invoice
-import com.diekeditora.domain.invoice.InvoiceService
-import com.diekeditora.domain.invoice.MangaChapterInvoice
-import com.diekeditora.domain.invoice.MangaSubscriptionInvoice
-import com.diekeditora.domain.manga.MangaService
+import com.diekeditora.chapter.domain.ChapterService
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.invoice.domain.Invoice
+import com.diekeditora.invoice.domain.InvoiceService
+import com.diekeditora.invoice.domain.MangaChapterInvoice
+import com.diekeditora.invoice.domain.MangaSubscriptionInvoice
+import com.diekeditora.manga.domain.MangaService
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Subscription
 import kotlinx.coroutines.ExperimentalCoroutinesApi

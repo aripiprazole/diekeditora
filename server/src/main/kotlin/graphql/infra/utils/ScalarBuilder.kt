@@ -1,7 +1,6 @@
-package graphql.utils
+package com.diekeditora.graphql.infra.utils
 
-import com.diekeditora.domain.graphql.Scalar
-import com.diekeditora.infra.graphql.utils.coercing
+import com.diekeditora.graphql.domain.Scalar
 import com.fasterxml.jackson.databind.ObjectMapper
 
 internal class ScalarBuilder(private val objectMapper: ObjectMapper) {

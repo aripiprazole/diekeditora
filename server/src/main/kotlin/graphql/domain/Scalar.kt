@@ -1,4 +1,4 @@
-package graphql.domain
+package com.diekeditora.graphql.domain
 
 import graphql.schema.Coercing
 import kotlin.reflect.KClass

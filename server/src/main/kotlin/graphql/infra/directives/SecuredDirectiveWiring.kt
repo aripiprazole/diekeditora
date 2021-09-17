@@ -1,7 +1,7 @@
-package com.diekeditora.infra.graphql.directives
+package com.diekeditora.graphql.infra.directives
 
-import com.diekeditora.infra.graphql.AuthGraphQLContext
-import com.diekeditora.infra.graphql.DiekEditoraDataFetcher
+import com.diekeditora.graphql.infra.AuthGraphQLContext
+import com.diekeditora.graphql.infra.DiekEditoraDataFetcher
 import com.expediagroup.graphql.generator.directives.KotlinFieldDirectiveEnvironment
 import com.expediagroup.graphql.generator.directives.KotlinSchemaDirectiveWiring
 import graphql.schema.DataFetchingEnvironment

@@ -1,4 +1,4 @@
-package com.diekeditora.app.comment.domain
+package com.diekeditora.comment.domain
 
 enum class ReportReason {
     Harmful,

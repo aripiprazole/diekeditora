@@ -1,11 +1,11 @@
 package com.diekeditora.profile.infra
 
-import com.diekeditora.domain.id.UniqueIdService
-import com.diekeditora.domain.profile.Gender
-import com.diekeditora.domain.profile.Profile
-import com.diekeditora.domain.profile.ProfileService
-import com.diekeditora.domain.user.User
-import com.diekeditora.shared.logger
+import com.diekeditora.id.domain.UniqueIdService
+import com.diekeditora.profile.domain.Gender
+import com.diekeditora.profile.domain.Profile
+import com.diekeditora.profile.domain.ProfileService
+import com.diekeditora.user.domain.User
+import com.diekeditora.utils.logger
 import org.springframework.stereotype.Service
 
 @Service

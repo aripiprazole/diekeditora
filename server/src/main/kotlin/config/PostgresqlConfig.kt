@@ -1,7 +1,7 @@
-package com.diekeditora.app.config
+package com.diekeditora.config
 
-import com.diekeditora.app.utils.toOptions
-import com.diekeditora.domain.profile.Gender
+import com.diekeditora.profile.domain.Gender
+import com.diekeditora.utils.toOptions
 import io.r2dbc.postgresql.PostgresqlConnectionFactory
 import io.r2dbc.postgresql.PostgresqlConnectionFactoryProvider
 import io.r2dbc.postgresql.codec.EnumCodec

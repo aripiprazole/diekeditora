@@ -75,7 +75,6 @@ dependencies {
     testImplementation(libs.junit.jupiterApi)
     testRuntimeOnly(libs.junit.jupiterEngine)
 
-
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
     testImplementation(kotlin("test-junit5"))

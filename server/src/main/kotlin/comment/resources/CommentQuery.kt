@@ -1,10 +1,10 @@
-package com.diekeditora.app.comment.resources
+package com.diekeditora.comment.resources
 
-import com.diekeditora.domain.comment.Comment
-import com.diekeditora.domain.comment.CommentService
-import com.diekeditora.app.comment.domain.ReportService
-import com.diekeditora.domain.graphql.Secured
-import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.comment.domain.Comment
+import com.diekeditora.comment.domain.CommentService
+import com.diekeditora.comment.domain.ReportService
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.security.domain.Secured
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Query
 import graphql.relay.Connection

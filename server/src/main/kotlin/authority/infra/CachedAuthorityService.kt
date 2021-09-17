@@ -1,10 +1,10 @@
 package com.diekeditora.authority.infra
 
-import com.diekeditora.domain.authority.AuthorityService
-import com.diekeditora.domain.role.Role
-import com.diekeditora.domain.user.User
-import com.diekeditora.infra.redis.CacheProvider
-import com.diekeditora.infra.redis.expiresIn
+import com.diekeditora.authority.domain.AuthorityService
+import com.diekeditora.redis.domain.expiresIn
+import com.diekeditora.redis.infra.CacheProvider
+import com.diekeditora.role.domain.Role
+import com.diekeditora.user.domain.User
 import graphql.relay.Connection
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Service

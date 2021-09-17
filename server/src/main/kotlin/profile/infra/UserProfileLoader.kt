@@ -1,9 +1,9 @@
 package com.diekeditora.profile.infra
 
-import com.diekeditora.domain.profile.Profile
-import com.diekeditora.domain.profile.ProfileService
-import com.diekeditora.domain.user.User
-import com.diekeditora.shared.dataLoader
+import com.diekeditora.profile.domain.Profile
+import com.diekeditora.profile.domain.ProfileService
+import com.diekeditora.user.domain.User
+import com.diekeditora.utils.dataLoader
 import com.expediagroup.graphql.server.execution.KotlinDataLoader
 import org.springframework.stereotype.Component
 

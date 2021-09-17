@@ -1,7 +1,7 @@
 package com.diekeditora.id.infra
 
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.id.UniqueIdService
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.id.domain.UniqueIdService
 import org.springframework.stereotype.Service
 import java.util.UUID
 

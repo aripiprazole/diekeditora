@@ -1,4 +1,4 @@
-package com.diekeditora.infra.graphql.utils
+package com.diekeditora.graphql.infra.utils
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ValueNode

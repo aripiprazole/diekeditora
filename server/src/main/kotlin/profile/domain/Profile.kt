@@ -1,15 +1,15 @@
-package com.diekeditora.app.profile.domain
+package com.diekeditora.profile.domain
 
-import com.diekeditora.domain.MutableEntity
-import com.diekeditora.domain.Owned
-import com.diekeditora.domain.file.AvatarKind
-import com.diekeditora.domain.file.FileKind
-import com.diekeditora.domain.graphql.Authenticated
-import com.diekeditora.domain.graphql.Secured
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.page.Cursor
-import com.diekeditora.domain.page.OrderBy
-import com.diekeditora.domain.user.User
+import com.diekeditora.MutableEntity
+import com.diekeditora.Owned
+import com.diekeditora.file.domain.AvatarKind
+import com.diekeditora.file.domain.FileKind
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.page.domain.Cursor
+import com.diekeditora.page.domain.OrderBy
+import com.diekeditora.security.domain.Authenticated
+import com.diekeditora.security.domain.Secured
+import com.diekeditora.user.domain.User
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations

@@ -1,12 +1,12 @@
 package com.diekeditora.notification.infra
 
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.id.UniqueIdService
-import com.diekeditora.domain.notification.Notification
-import com.diekeditora.domain.notification.NotificationService
-import com.diekeditora.domain.notification.SimpleNotification
-import com.diekeditora.domain.user.User
-import com.diekeditora.infra.redis.CacheProvider
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.id.domain.UniqueIdService
+import com.diekeditora.notification.domain.Notification
+import com.diekeditora.notification.domain.NotificationService
+import com.diekeditora.notification.domain.SimpleNotification
+import com.diekeditora.redis.infra.CacheProvider
+import com.diekeditora.user.domain.User
 import graphql.relay.Connection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher

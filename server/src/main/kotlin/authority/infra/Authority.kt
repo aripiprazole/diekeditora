@@ -1,9 +1,9 @@
 package com.diekeditora.authority.infra
 
-import com.diekeditora.domain.Entity
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.page.Cursor
-import com.diekeditora.domain.page.OrderBy
+import com.diekeditora.Entity
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.page.domain.Cursor
+import com.diekeditora.page.domain.OrderBy
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table

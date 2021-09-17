@@ -1,4 +1,4 @@
-package com.diekeditora.role.infra
+package com.diekeditora.page.domain
 
 import org.intellij.lang.annotations.Language
 

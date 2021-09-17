@@ -1,6 +1,6 @@
-package com.diekeditora.app.comment.domain
+package com.diekeditora.comment.domain
 
-import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.id.domain.UniqueId
 import org.valiktor.functions.hasSize
 import org.valiktor.validate
 

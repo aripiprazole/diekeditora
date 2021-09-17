@@ -1,5 +1,6 @@
-package com.diekeditora.redis
+package com.diekeditora.redis.infra
 
+import com.diekeditora.redis.domain.CacheRepo
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.data.redis.core.ReactiveRedisTemplate
@@ -10,15 +11,6 @@ import org.springframework.data.redis.core.setAndAwait
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.toJavaDuration
-
-@OptIn(ExperimentalTime::class)
-interface CacheRepo<T : Any> {
-    suspend fun remember(key: String, expiresIn: Duration, cacheFn: suspend () -> T): T
-
-    suspend fun query(key: String, expiresIn: Duration, cacheFn: suspend () -> T?): T?
-
-    suspend fun delete(key: String)
-}
 
 @OptIn(ExperimentalTime::class)
 @PublishedApi

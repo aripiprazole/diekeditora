@@ -2,11 +2,11 @@
 
 package com.diekeditora.authority.infra
 
-import com.diekeditora.domain.authority.AuthorityService
-import com.diekeditora.domain.dataloader.PaginationArg
-import com.diekeditora.domain.role.Role
-import com.diekeditora.domain.user.User
-import com.diekeditora.shared.dataLoader
+import com.diekeditora.authority.domain.AuthorityService
+import com.diekeditora.role.domain.Role
+import com.diekeditora.user.domain.User
+import com.diekeditora.utils.PaginationArg
+import com.diekeditora.utils.dataLoader
 import com.expediagroup.graphql.server.execution.KotlinDataLoader
 import graphql.relay.Connection
 import org.springframework.stereotype.Component

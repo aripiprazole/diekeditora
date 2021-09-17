@@ -1,14 +1,14 @@
-package com.diekeditora.app.manga.domain
+package com.diekeditora.manga.domain
 
-import com.diekeditora.domain.MutableEntity
-import com.diekeditora.domain.chapter.Chapter
-import com.diekeditora.domain.dataloader.PaginationArg
-import com.diekeditora.domain.dataloader.toPaginationArg
-import com.diekeditora.domain.genre.Genre
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.page.Cursor
-import com.diekeditora.domain.page.OrderBy
-import com.diekeditora.domain.profile.Profile
+import com.diekeditora.MutableEntity
+import com.diekeditora.chapter.domain.Chapter
+import com.diekeditora.genre.domain.Genre
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.page.domain.Cursor
+import com.diekeditora.page.domain.OrderBy
+import com.diekeditora.profile.domain.Profile
+import com.diekeditora.utils.PaginationArg
+import com.diekeditora.utils.toPaginationArg
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations

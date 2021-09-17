@@ -1,10 +1,10 @@
 package com.diekeditora.role.infra
 
-import com.diekeditora.domain.role.Role
-import com.diekeditora.domain.role.RoleService
-import com.diekeditora.domain.user.User
-import com.diekeditora.infra.repo.findAllAsConnection
-import com.diekeditora.shared.logger
+import com.diekeditora.role.domain.Role
+import com.diekeditora.role.domain.RoleService
+import com.diekeditora.user.domain.User
+import com.diekeditora.utils.findAllAsConnection
+import com.diekeditora.utils.logger
 import graphql.relay.Connection
 import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service

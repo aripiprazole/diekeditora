@@ -1,4 +1,4 @@
-package genre.domain
+package com.diekeditora.genre.domain
 
 interface GenreService {
     suspend fun findGenres(): List<Genre>

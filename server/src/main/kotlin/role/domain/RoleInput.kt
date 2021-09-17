@@ -1,4 +1,4 @@
-package com.diekeditora.app.role.domain
+package com.diekeditora.role.domain
 
 import org.valiktor.functions.hasSize
 import org.valiktor.validate

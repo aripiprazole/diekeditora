@@ -1,6 +1,6 @@
-package com.diekeditora.app.user.domain
+package com.diekeditora.user.domain
 
-import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.id.domain.UniqueId
 import com.google.firebase.auth.FirebaseToken
 import graphql.relay.Connection
 import org.springframework.stereotype.Service

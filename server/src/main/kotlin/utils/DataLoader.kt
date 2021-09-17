@@ -1,18 +1,10 @@
-package utils
+package com.diekeditora.utils
 
 import com.expediagroup.graphql.server.execution.KotlinDataLoader
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.future.future
 import org.dataloader.DataLoader
 import org.dataloader.DataLoaderOptions
-import java.util.concurrent.Executors
-
-private const val POOL_SIZE = 4
-
-private val dispatcher = Executors.newFixedThreadPool(POOL_SIZE).asCoroutineDispatcher()
-private val futureScope = CoroutineScope(CoroutineName("FutureScope") + dispatcher)
 
 fun dataLoader(name: String): DataLoaderBuilder {
     return DataLoaderBuilder(name)
@@ -25,7 +17,7 @@ class DataLoaderBuilder internal constructor(private val name: String) {
 
             override fun getDataLoader(): DataLoader<K, V> = DataLoader.newDataLoader(
                 { keys ->
-                    futureScope.future { keys.map { function(it) } }
+                    GlobalScope.future { keys.map { function(it) } }
                 },
                 DataLoaderOptions.newOptions()
                     .setCachingEnabled(false)

@@ -1,7 +1,7 @@
 package com.diekeditora.app.tests.factories
 
 import com.diekeditora.domain.user.User
-import com.diekeditora.shared.generateRandomString
+import com.diekeditora.utils.generateRandomString
 import io.github.serpro69.kfaker.Faker
 import org.springframework.stereotype.Component
 import java.time.LocalDate

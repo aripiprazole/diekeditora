@@ -1,8 +1,8 @@
 package com.diekeditora.file.infra
 
-import com.diekeditora.domain.file.FileKind
-import com.diekeditora.domain.file.FileService
-import com.diekeditora.shared.dataLoader
+import com.diekeditora.file.domain.FileKind
+import com.diekeditora.file.domain.FileService
+import com.diekeditora.utils.dataLoader
 import com.expediagroup.graphql.server.execution.KotlinDataLoader
 import org.springframework.stereotype.Component
 

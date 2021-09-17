@@ -1,8 +1,8 @@
 package com.diekeditora.manga.infra
 
-import com.diekeditora.domain.manga.Manga
-import com.diekeditora.domain.profile.Profile
-import com.diekeditora.infra.repo.CursorBasedPaginationRepository
+import com.diekeditora.com.diekeditora.repo.CursorBasedPaginationRepository
+import com.diekeditora.manga.domain.Manga
+import com.diekeditora.profile.domain.Profile
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.stereotype.Repository
 import java.util.UUID

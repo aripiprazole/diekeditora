@@ -1,8 +1,8 @@
-package com.diekeditora.infra.graphql.scalars
+package com.diekeditora.graphql.infra.scalars
 
-import com.diekeditora.domain.graphql.Scalar
+import com.diekeditora.graphql.domain.Scalar
+import com.diekeditora.graphql.infra.utils.jacksonScalar
 import com.fasterxml.jackson.databind.ObjectMapper
-import graphql.utils.jacksonScalar
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 

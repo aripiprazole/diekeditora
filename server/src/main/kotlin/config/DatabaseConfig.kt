@@ -1,6 +1,6 @@
-package com.diekeditora.app.config
+package com.diekeditora.config
 
-import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.id.domain.UniqueId
 import io.r2dbc.pool.ConnectionPool
 import io.r2dbc.pool.ConnectionPoolConfiguration
 import io.r2dbc.spi.ConnectionFactory

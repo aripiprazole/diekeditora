@@ -1,7 +1,7 @@
-package file.domain
+package com.diekeditora.file.domain
 
-import com.diekeditora.domain.chapter.Chapter
-import com.diekeditora.domain.profile.Profile
+import com.diekeditora.chapter.domain.Chapter
+import com.diekeditora.profile.domain.Profile
 
 sealed class FileKind(val private: Boolean = false) {
     abstract fun generateKey(): String

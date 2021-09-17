@@ -1,4 +1,4 @@
-package com.diekeditora.app.user.domain
+package com.diekeditora.user.domain
 
 import org.valiktor.functions.hasSize
 import org.valiktor.functions.isEmail

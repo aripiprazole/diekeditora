@@ -1,7 +1,7 @@
-package com.diekeditora.app.chapter.domain
+package com.diekeditora.chapter.domain
 
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.manga.Manga
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.manga.domain.Manga
 import graphql.relay.Connection
 
 interface ChapterService {

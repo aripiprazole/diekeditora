@@ -1,6 +1,6 @@
-package com.diekeditora.app.chapter.domain
+package com.diekeditora.chapter.domain
 
-import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.id.domain.UniqueId
 import org.valiktor.functions.hasSize
 import org.valiktor.functions.isGreaterThan
 import org.valiktor.validate

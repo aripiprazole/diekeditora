@@ -1,7 +1,7 @@
-package com.diekeditora.app.authority.resource
+package com.diekeditora.authority.resources
 
-import com.diekeditora.domain.authority.AuthorityService
-import com.diekeditora.domain.graphql.Secured
+import com.diekeditora.authority.domain.AuthorityService
+import com.diekeditora.security.domain.Secured
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Query
 import graphql.relay.Connection

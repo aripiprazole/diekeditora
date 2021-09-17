@@ -1,6 +1,6 @@
 package com.diekeditora.genre.infra
 
-import com.diekeditora.domain.genre.Genre
+import com.diekeditora.genre.domain.Genre
 import org.springframework.data.repository.kotlin.CoroutineSortingRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID

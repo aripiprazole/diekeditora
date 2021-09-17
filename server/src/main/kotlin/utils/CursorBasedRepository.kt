@@ -1,8 +1,8 @@
-package com.diekeditora.repo
+package com.diekeditora.utils
 
-import com.diekeditora.domain.Entity
-import com.diekeditora.domain.page.AppPage
-import com.diekeditora.infra.utils.assertPageSize
+import com.diekeditora.Entity
+import com.diekeditora.com.diekeditora.repo.CursorBasedPaginationRepository
+import com.diekeditora.page.infra.AppPage
 import graphql.relay.Connection
 import kotlinx.coroutines.flow.toList
 import org.springframework.data.domain.Sort

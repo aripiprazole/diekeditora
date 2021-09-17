@@ -1,9 +1,9 @@
-package com.diekeditora.app.notification.resources
+package com.diekeditora.notification.resources
 
-import com.diekeditora.app.notification.NotificationService
-import com.diekeditora.app.notification.SimpleNotification
-import com.diekeditora.domain.graphql.Secured
-import com.diekeditora.domain.user.UserService
+import com.diekeditora.notification.domain.NotificationService
+import com.diekeditora.notification.domain.SimpleNotification
+import com.diekeditora.security.domain.Secured
+import com.diekeditora.user.domain.UserService
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
 import org.springframework.security.access.prepost.PreAuthorize

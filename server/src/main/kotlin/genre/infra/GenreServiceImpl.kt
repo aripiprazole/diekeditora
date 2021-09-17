@@ -1,7 +1,7 @@
 package com.diekeditora.genre.infra
 
-import com.diekeditora.domain.genre.Genre
-import com.diekeditora.domain.genre.GenreService
+import com.diekeditora.genre.domain.Genre
+import com.diekeditora.genre.domain.GenreService
 import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 

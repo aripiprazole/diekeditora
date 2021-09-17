@@ -1,5 +1,6 @@
-package com.diekeditora.redis
+package com.diekeditora.redis.infra
 
+import com.diekeditora.redis.domain.CacheRepo
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory

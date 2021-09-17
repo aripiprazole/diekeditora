@@ -1,8 +1,8 @@
-package com.diekeditora.app.user.resources
+package com.diekeditora.user.resources
 
-import com.diekeditora.domain.graphql.Secured
-import com.diekeditora.domain.user.User
-import com.diekeditora.domain.user.UserService
+import com.diekeditora.security.domain.Secured
+import com.diekeditora.user.domain.User
+import com.diekeditora.user.domain.UserService
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Query
 import graphql.relay.Connection

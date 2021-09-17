@@ -1,4 +1,4 @@
-package genre.domain
+package com.diekeditora.genre.domain
 
 import org.valiktor.functions.hasSize
 import org.valiktor.validate

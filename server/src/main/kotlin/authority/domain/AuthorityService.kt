@@ -1,7 +1,7 @@
-package com.diekeditora.app.authority.domain
+package com.diekeditora.authority.domain
 
-import com.diekeditora.domain.role.Role
-import com.diekeditora.domain.user.User
+import com.diekeditora.role.domain.Role
+import com.diekeditora.user.domain.User
 import graphql.relay.Connection
 
 interface AuthorityService {

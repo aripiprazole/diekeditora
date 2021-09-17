@@ -1,7 +1,7 @@
-package com.diekeditora.app.notification.domain
+package com.diekeditora.notification.domain
 
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.user.User
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.user.domain.User
 import graphql.relay.Connection
 import kotlinx.coroutines.flow.Flow
 

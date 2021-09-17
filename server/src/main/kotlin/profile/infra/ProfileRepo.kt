@@ -1,7 +1,7 @@
 package com.diekeditora.profile.infra
 
-import com.diekeditora.domain.id.UniqueId
-import com.diekeditora.domain.profile.Profile
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.profile.domain.Profile
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.repository.kotlin.CoroutineSortingRepository

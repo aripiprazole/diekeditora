@@ -1,10 +1,10 @@
-package com.diekeditora.app.me.resources
+package com.diekeditora.me.resources
 
-import com.diekeditora.domain.graphql.Authenticated
-import com.diekeditora.domain.graphql.Secured
-import com.diekeditora.domain.notification.Notification
-import com.diekeditora.domain.notification.NotificationService
-import com.diekeditora.infra.graphql.AuthGraphQLContext
+import com.diekeditora.graphql.infra.AuthGraphQLContext
+import com.diekeditora.notification.domain.Notification
+import com.diekeditora.notification.domain.NotificationService
+import com.diekeditora.security.domain.Authenticated
+import com.diekeditora.security.domain.Secured
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Subscription
 import kotlinx.coroutines.ExperimentalCoroutinesApi

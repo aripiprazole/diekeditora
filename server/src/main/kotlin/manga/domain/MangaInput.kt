@@ -1,6 +1,6 @@
-package com.diekeditora.app.manga.domain
+package com.diekeditora.manga.domain
 
-import com.diekeditora.domain.id.UniqueId
+import com.diekeditora.id.domain.UniqueId
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
 import org.valiktor.functions.hasSize
