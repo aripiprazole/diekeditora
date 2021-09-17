@@ -33,7 +33,6 @@ data class Manga(
     val advisory: Int? = null,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
-    val deletedAt: LocalDateTime? = null,
 ) : MutableEntity<Manga, MangaId> {
     @GraphQLDescription("Returns the manga's latest chapter")
     suspend fun latestChapter(env: DataFetchingEnvironment): Chapter {
@@ -134,7 +133,6 @@ data class Manga(
             "advisory=$advisory, " +
             "createdAt=$createdAt, " +
             "updatedAt=$updatedAt, " +
-            "deletedAt=$deletedAt" +
             ")"
     }
 }

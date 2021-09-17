@@ -53,5 +53,5 @@ interface MangaService {
 
     suspend fun updateManga(manga: Manga, input: MangaInput): Manga
 
-    suspend fun deleteManga(manga: Manga): Manga
+    suspend fun deleteManga(manga: Manga)
 }

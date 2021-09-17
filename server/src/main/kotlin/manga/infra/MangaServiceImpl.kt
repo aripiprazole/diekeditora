@@ -122,7 +122,7 @@ class MangaServiceImpl(
     }
 
     @Transactional
-    override suspend fun deleteManga(manga: Manga): Manga {
-        return repo.save(manga.copy(deletedAt = LocalDateTime.now()))
+    override suspend fun deleteManga(manga: Manga) {
+        repo.deleteById(manga.id)
     }
 }

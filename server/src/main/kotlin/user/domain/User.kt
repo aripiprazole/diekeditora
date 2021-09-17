@@ -37,7 +37,6 @@ data class User(
     val birthday: LocalDate? = null,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
-    val deletedAt: LocalDateTime? = null,
 ) : MutableEntity<User, UserId>, BelongsTo<UserId> {
     @GraphQLDescription("Returns this user's profile details")
     suspend fun profile(env: DataFetchingEnvironment): Profile {
@@ -163,7 +162,6 @@ data class User(
             "birthday=$birthday, " +
             "createdAt=$createdAt, " +
             "updatedAt=$updatedAt, " +
-            "deletedAt=$deletedAt" +
             ")"
     }
 }

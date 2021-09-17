@@ -42,7 +42,7 @@ class CachedMangaService(
             }
     }
 
-    override suspend fun deleteManga(manga: Manga): Manga {
+    override suspend fun deleteManga(manga: Manga) {
         return delegate.deleteManga(manga).also {
             cacheProvider.repo<Manga>().delete("manga.${manga.cursor}")
         }

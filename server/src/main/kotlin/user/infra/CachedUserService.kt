@@ -38,9 +38,9 @@ class CachedUserService(
         }
     }
 
-    override suspend fun deleteUser(user: User): User {
+    override suspend fun deleteUser(user: User) {
         return delegate.deleteUser(user).also {
-            cacheProvider.repo<User>().delete("user.${it.username}")
+            cacheProvider.repo<User>().delete("user.${user.cursor}")
         }
     }
 }

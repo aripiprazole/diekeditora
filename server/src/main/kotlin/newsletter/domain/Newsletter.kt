@@ -14,7 +14,6 @@ data class Newsletter(
     @Id
     override val id: NewsletterId = NewsletterId.New,
     val email: String,
-    val active: Boolean = true,
 ) : MutableEntity<Newsletter, NewsletterId> {
     @GraphQLIgnore
     override val cursor: String
@@ -22,7 +21,7 @@ data class Newsletter(
 
     @GraphQLIgnore
     override fun update(with: Newsletter): Newsletter {
-        return copy(email = with.email, active = with.active)
+        return copy(email = with.email)
     }
 
     @GraphQLIgnore
@@ -33,23 +32,17 @@ data class Newsletter(
         other as Newsletter
 
         if (email != other.email) return false
-        if (active != other.active) return false
 
         return true
     }
 
     @GraphQLIgnore
     override fun hashCode(): Int {
-        var result = email.hashCode()
-        result = 31 * result + active.hashCode()
-        return result
+        return email.hashCode()
     }
 
     @GraphQLIgnore
     override fun toString(): String {
-        return "Newsletter(" +
-            "email='$email', " +
-            "active=$active" +
-            ")"
+        return "Newsletter(email='$email')"
     }
 }

@@ -31,9 +31,9 @@ class MangaMutation(val mangaService: MangaService) : Mutation {
     @Secured
     @PreAuthorize("hasAuthority('manga.destroy')")
     @GraphQLDescription("Deletes a manga by its uid")
-    suspend fun deleteManga(uid: UniqueId): Manga? {
-        val manga = mangaService.findMangaByUid(uid) ?: return null
+    suspend fun deleteManga(uid: UniqueId): Unit {
+        val manga = mangaService.findMangaByUid(uid) ?: return
 
-        return mangaService.deleteManga(manga)
+        mangaService.deleteManga(manga)
     }
 }

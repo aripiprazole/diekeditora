@@ -1,11 +1,11 @@
 package com.diekeditora.user.infra
 
 import com.diekeditora.id.domain.UniqueId
-import com.diekeditora.user.domain.User
-import com.diekeditora.user.domain.UserService
 import com.diekeditora.shared.infra.findAllAsConnection
 import com.diekeditora.shared.infra.generateRandomString
 import com.diekeditora.shared.infra.logger
+import com.diekeditora.user.domain.User
+import com.diekeditora.user.domain.UserService
 import com.google.firebase.auth.FirebaseToken
 import graphql.relay.Connection
 import org.springframework.data.domain.Sort
@@ -24,7 +24,7 @@ class UserServiceImpl(val repo: UserRepo) : UserService {
     }
 
     override suspend fun findUserById(id: UniqueId): User? {
-        return repo.findById(id.toUUID())
+        return repo.findById(id)
     }
 
     @Transactional
@@ -61,10 +61,10 @@ class UserServiceImpl(val repo: UserRepo) : UserService {
     }
 
     @Transactional
-    override suspend fun deleteUser(user: User): User {
-        return repo.save(user.copy(deletedAt = LocalDateTime.now())).also {
-            log.trace("Successfully deleted %s", it)
-        }
+    override suspend fun deleteUser(user: User) {
+        repo.deleteById(user.id)
+
+        log.trace("Successfully deleted %s", user)
     }
 
     private fun generateUsername(token: FirebaseToken): String {

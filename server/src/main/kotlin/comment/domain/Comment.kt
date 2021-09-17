@@ -28,7 +28,6 @@ data class Comment(
     val content: String,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
-    val deletedAt: LocalDateTime? = null,
     @GraphQLIgnore val mangaId: MangaId,
     @GraphQLIgnore override val ownerId: UserId,
 ) : MutableEntity<Comment, CommentId>, BelongsTo<UserId> {

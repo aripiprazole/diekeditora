@@ -19,5 +19,5 @@ interface UserService {
 
     suspend fun saveUser(user: User): User
 
-    suspend fun deleteUser(user: User): User
+    suspend fun deleteUser(user: User)
 }
