@@ -1,9 +1,9 @@
 package com.diekeditora.authority.infra
 
 import com.diekeditora.Entity
-import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
+import com.diekeditora.shared.refs.AuthorityId
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
@@ -12,10 +12,10 @@ import java.time.LocalDateTime
 @Table("authority")
 data class Authority(
     @GraphQLIgnore
-    @Id override val id: UniqueId? = null,
+    @Id override val id: AuthorityId = AuthorityId.New,
     @Cursor val value: String,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
-) : Entity<Authority> {
+) : Entity<AuthorityId> {
     @GraphQLIgnore
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -38,7 +38,7 @@ data class Authority(
 
     companion object {
         fun of(value: String): Authority {
-            return Authority(null, value)
+            return Authority(value = value)
         }
     }
 }

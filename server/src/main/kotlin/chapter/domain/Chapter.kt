@@ -1,12 +1,14 @@
 package com.diekeditora.chapter.domain
 
 import com.diekeditora.MutableEntity
-import com.diekeditora.Owned
+import com.diekeditora.BelongsTo
 import com.diekeditora.file.domain.ChapterCoverKind
 import com.diekeditora.file.domain.FileKind
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
+import com.diekeditora.shared.refs.ChapterId
+import com.diekeditora.shared.refs.MangaId
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
@@ -22,7 +24,7 @@ import java.time.LocalDateTime
 @Table("chapter")
 data class Chapter(
     @GraphQLIgnore
-    @Id override val id: UniqueId? = null,
+    @Id override val id: ChapterId = ChapterId.New,
     @Cursor val uid: UniqueId,
     val title: String,
     val index: Int,
@@ -31,8 +33,8 @@ data class Chapter(
     val releasedOn: LocalDate? = null,
     val deletedAt: LocalDateTime? = null,
     val updatedAt: LocalDateTime? = null,
-    @GraphQLIgnore override val ownerId: UniqueId,
-) : MutableEntity<Chapter>, Owned {
+    @GraphQLIgnore override val ownerId: MangaId,
+) : MutableEntity<Chapter, ChapterId>, BelongsTo<MangaId> {
     @GraphQLDescription("Returns the chapter's cover")
     suspend fun cover(env: DataFetchingEnvironment): String {
         return env

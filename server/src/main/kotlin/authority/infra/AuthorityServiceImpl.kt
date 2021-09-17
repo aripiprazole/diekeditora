@@ -48,7 +48,7 @@ class AuthorityServiceImpl(
         after: String?
     ): Connection<String> {
         return roleAuthorityRepo
-            .findAllAsConnection(first, after, owner = role.id?.toUUID())
+            .findAllAsConnection(first, after, owner = role.id)
             .map(Authority::value)
     }
 

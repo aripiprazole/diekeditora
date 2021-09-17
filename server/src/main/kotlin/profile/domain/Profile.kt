@@ -1,7 +1,7 @@
 package com.diekeditora.profile.domain
 
 import com.diekeditora.MutableEntity
-import com.diekeditora.Owned
+import com.diekeditora.BelongsTo
 import com.diekeditora.file.domain.AvatarKind
 import com.diekeditora.file.domain.FileKind
 import com.diekeditora.id.domain.UniqueId
@@ -9,6 +9,8 @@ import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.security.domain.Authenticated
 import com.diekeditora.security.domain.Secured
+import com.diekeditora.shared.refs.ProfileId
+import com.diekeditora.shared.refs.UserId
 import com.diekeditora.user.domain.User
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
@@ -25,14 +27,14 @@ import java.time.LocalDateTime
 @Table("profile")
 data class Profile(
     @GraphQLIgnore
-    @Id override val id: UniqueId? = null,
+    @Id override val id: ProfileId = ProfileId.New,
     @Cursor val uid: UniqueId,
     val gender: Gender,
     val bio: String = "",
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
-    @GraphQLIgnore override val ownerId: UniqueId,
-) : MutableEntity<Profile>, Owned {
+    @GraphQLIgnore override val ownerId: UserId,
+) : MutableEntity<Profile, ProfileId>, BelongsTo<UserId> {
     @GraphQLDescription("Returns profile's display name")
     suspend fun displayName(env: DataFetchingEnvironment): String {
         return user(env).username

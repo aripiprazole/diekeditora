@@ -9,6 +9,7 @@ import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.profile.domain.Profile
 import com.diekeditora.shared.infra.PaginationArg
 import com.diekeditora.shared.infra.toPaginationArg
+import com.diekeditora.shared.refs.MangaId
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
@@ -24,7 +25,7 @@ import java.time.LocalDateTime
 @Table("manga")
 data class Manga(
     @GraphQLIgnore
-    @Id override val id: UniqueId? = null,
+    @Id override val id: MangaId = MangaId.New,
     @Cursor val uid: UniqueId,
     val title: String,
     val competing: Boolean,
@@ -33,7 +34,7 @@ data class Manga(
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
-) : MutableEntity<Manga> {
+) : MutableEntity<Manga, MangaId> {
     @GraphQLDescription("Returns the manga's latest chapter")
     suspend fun latestChapter(env: DataFetchingEnvironment): Chapter {
         return env

@@ -2,6 +2,7 @@ package com.diekeditora.newsletter.domain
 
 import com.diekeditora.MutableEntity
 import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.shared.refs.NewsletterId
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.Id
@@ -11,10 +12,10 @@ import org.springframework.data.relational.core.mapping.Table
 data class Newsletter(
     @GraphQLIgnore
     @Id
-    override val id: UniqueId? = null,
+    override val id: NewsletterId = NewsletterId.New,
     val email: String,
     val active: Boolean = true,
-) : MutableEntity<Newsletter> {
+) : MutableEntity<Newsletter, NewsletterId> {
     @GraphQLIgnore
     override val cursor: String
         @JsonIgnore get() = email

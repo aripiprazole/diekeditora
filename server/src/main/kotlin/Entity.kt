@@ -1,15 +1,14 @@
 package com.diekeditora
 
-import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.id.domain.RefId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.shared.infra.findPropertyByAnnotation
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
 
 @GraphQLIgnore
-interface Entity<T> where T : Entity<T>, T : Any {
-    @get:GraphQLIgnore
-    val id: UniqueId?
+interface Entity<ID : RefId<*>> {
+    val id: ID @GraphQLIgnore get
 
     val cursor: String
         @GraphQLIgnore

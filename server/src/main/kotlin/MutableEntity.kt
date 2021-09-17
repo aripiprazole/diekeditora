@@ -1,9 +1,10 @@
 package com.diekeditora
 
+import com.diekeditora.id.domain.RefId
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 
 @GraphQLIgnore
-interface MutableEntity<T> : Entity<T> where T : MutableEntity<T>, T : Any {
+interface MutableEntity<E, ID : RefId<*>> : Entity<ID> {
     @GraphQLIgnore
-    fun update(with: T): T
+    fun update(with: E): E
 }

@@ -1,12 +1,12 @@
 package com.diekeditora.role.domain
 
 import com.diekeditora.MutableEntity
-import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.security.domain.Secured
 import com.diekeditora.shared.infra.PaginationArg
 import com.diekeditora.shared.infra.toPaginationArg
+import com.diekeditora.shared.refs.RoleId
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
@@ -23,11 +23,11 @@ import java.time.LocalDateTime
 @Table("role")
 data class Role(
     @GraphQLIgnore
-    @Id override val id: UniqueId? = null,
+    @Id override val id: RoleId = RoleId.New,
     @Cursor val name: String,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null
-) : MutableEntity<Role> {
+) : MutableEntity<Role, RoleId> {
     @Secured
     @PreAuthorize("hasAuthority('authority.view')")
     @GraphQLDescription("Returns authority page")

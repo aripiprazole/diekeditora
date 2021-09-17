@@ -3,6 +3,7 @@ package com.diekeditora.genre.domain
 import com.diekeditora.MutableEntity
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.page.domain.Cursor
+import com.diekeditora.shared.refs.GenreId
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations
@@ -14,11 +15,11 @@ import java.time.LocalDateTime
 @Table("genre")
 data class Genre(
     @GraphQLIgnore
-    @Id override val id: UniqueId? = null,
+    @Id override val id: GenreId = GenreId.New,
     @Cursor val name: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
-) : MutableEntity<Genre> {
+) : MutableEntity<Genre, GenreId> {
     @GraphQLIgnore
     override fun update(with: Genre): Genre {
         return copy(

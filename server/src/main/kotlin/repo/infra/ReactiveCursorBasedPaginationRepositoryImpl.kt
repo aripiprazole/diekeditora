@@ -1,6 +1,7 @@
 package com.diekeditora.repo.infra
 
 import com.diekeditora.Entity
+import com.diekeditora.id.domain.RefId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.page.domain.PaginationQuery
@@ -21,13 +22,13 @@ import reactor.core.publisher.Mono
 import kotlin.reflect.full.findAnnotation
 
 @Suppress("Detekt.TooManyFunctions")
-class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
+class ReactiveCursorBasedPaginationRepositoryImpl<T : Entity<ID>, ID : RefId<*>>(
     val entity: MappingRelationalEntityInformation<T, ID>,
     val operations: R2dbcEntityOperations,
     val converter: R2dbcConverter,
     repositoryInterface: Class<*>,
 ) : SimpleR2dbcRepository<T, ID>(entity, operations, converter),
-    ReactiveCursorBasedPaginationRepository<T, ID> where T : Any, T : Entity<T> {
+    ReactiveCursorBasedPaginationRepository<T, ID> {
 
     data class EntityProperties(val orderBy: Sort, val cursor: String)
 

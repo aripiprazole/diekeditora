@@ -58,7 +58,8 @@ class ChapterMutation(
             hasAuthority("chapter.update")
 
             required {
-                user.own(chapter)
+//                TODO
+//                user.own(chapter)
                 manga.own(chapter)
             }
         }
@@ -79,7 +80,8 @@ class ChapterMutation(
             hasAuthority("chapter.update")
 
             required {
-                user.own(chapter)
+//                TODO
+//                user.own(chapter)
                 manga.own(chapter)
             }
         }
@@ -109,7 +111,8 @@ class ChapterMutation(
             hasAuthority("chapter.update")
 
             required {
-                user.own(chapter)
+//                TODO
+//                user.own(chapter)
                 manga.own(chapter)
             }
         }
@@ -138,7 +141,8 @@ class ChapterMutation(
             hasAuthority("chapter.update")
 
             required {
-                user.own(chapter)
+//                TODO
+//                user.own(chapter)
                 manga.own(chapter)
             }
         }

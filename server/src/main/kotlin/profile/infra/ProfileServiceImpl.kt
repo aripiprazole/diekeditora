@@ -34,7 +34,7 @@ class ProfileServiceImpl(
         return Profile(
             uid = uidService.generateUniqueId(),
             gender = Gender.NonBinary,
-            ownerId = user.id!!,
+            ownerId = user.id,
         )
     }
 }

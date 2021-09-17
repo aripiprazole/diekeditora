@@ -1,7 +1,7 @@
 package com.diekeditora.user.domain
 
 import com.diekeditora.MutableEntity
-import com.diekeditora.Owned
+import com.diekeditora.BelongsTo
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.manga.domain.Manga
 import com.diekeditora.page.domain.Cursor
@@ -11,6 +11,7 @@ import com.diekeditora.role.domain.Role
 import com.diekeditora.security.domain.Secured
 import com.diekeditora.shared.infra.PaginationArg
 import com.diekeditora.shared.infra.toPaginationArg
+import com.diekeditora.shared.refs.UserId
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
@@ -29,7 +30,7 @@ import java.time.LocalDateTime
 @Table("\"user\"")
 data class User(
     @GraphQLIgnore
-    @Id override val id: UniqueId? = null,
+    @Id override val id: UserId = UserId.New,
     val name: String,
     val email: String,
     @Cursor val username: String,
@@ -37,7 +38,7 @@ data class User(
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
-) : MutableEntity<User>, Owned {
+) : MutableEntity<User, UserId>, BelongsTo<UserId> {
     @GraphQLDescription("Returns this user's profile details")
     suspend fun profile(env: DataFetchingEnvironment): Profile {
         return env
@@ -114,10 +115,10 @@ data class User(
             .await()
     }
 
-    override val ownerId: UniqueId
+    override val ownerId: UserId
         @GraphQLIgnore
         @JsonIgnore
-        get() = id ?: error("Can not be owned without be fetched")
+        get() = id
 
     @GraphQLIgnore
     override fun update(with: User): User {

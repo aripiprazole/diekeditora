@@ -1,6 +1,7 @@
 package com.diekeditora.chapter.domain
 
 import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.shared.refs.MangaId
 import org.valiktor.functions.hasSize
 import org.valiktor.functions.isGreaterThan
 import org.valiktor.validate
@@ -14,7 +15,7 @@ data class ChapterInput(
     val releasedOn: LocalDate? = null,
     val enabled: Boolean = false,
 ) {
-    fun toChapter(uid: UniqueId, mangaId: UniqueId): Chapter = validate(
+    fun toChapter(uid: UniqueId, mangaId: MangaId): Chapter = validate(
         Chapter(
             uid = uid, title = title, index = index,
             enabled = enabled, releasedOn = releasedOn, ownerId = mangaId

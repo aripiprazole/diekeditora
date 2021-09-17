@@ -1,6 +1,7 @@
 package com.diekeditora.invoice.domain
 
 import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.shared.refs.InvoiceId
 import com.diekeditora.user.domain.User
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -9,7 +10,7 @@ import java.time.LocalDateTime
 
 sealed class Invoice {
     @GraphQLIgnore
-    abstract val id: UniqueId?
+    abstract val id: InvoiceId
     abstract val uid: UniqueId
     abstract val payer: User
     abstract val totalValue: Int
@@ -23,7 +24,7 @@ data class MangaSubscriptionInvoice(
     @Id
     @JsonIgnore
     @GraphQLIgnore
-    override val id: UniqueId? = null,
+    override val id: InvoiceId = InvoiceId.New,
     override val uid: UniqueId,
     override val payer: User,
     override val totalValue: Int,
@@ -37,7 +38,7 @@ data class MangaChapterInvoice(
     @Id
     @JsonIgnore
     @GraphQLIgnore
-    override val id: UniqueId? = null,
+    override val id: InvoiceId = InvoiceId.New,
     override val uid: UniqueId,
     override val payer: User,
     override val totalValue: Int,

@@ -29,8 +29,8 @@ class CommentMutation(
         val manga = mangaService.findMangaByUid(input.mangaUid) ?: return null
 
         val uid = uidService.generateUniqueId()
-        val mangaId = manga.id ?: error("Manga id must be not null")
-        val userId = ctx.user.id ?: error("User id must be not null")
+        val mangaId = manga.id
+        val userId = ctx.user.id
 
         return commentService.createComment(manga, input.toComment(uid, mangaId, userId))
     }

@@ -1,11 +1,14 @@
 package com.diekeditora.comment.domain
 
 import com.diekeditora.MutableEntity
-import com.diekeditora.Owned
+import com.diekeditora.BelongsTo
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.profile.domain.Profile
+import com.diekeditora.shared.refs.CommentId
+import com.diekeditora.shared.refs.MangaId
+import com.diekeditora.shared.refs.UserId
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
@@ -20,15 +23,15 @@ import java.time.LocalDateTime
 @Table("comment")
 data class Comment(
     @GraphQLIgnore
-    @Id override val id: UniqueId? = null,
+    @Id override val id: CommentId = CommentId.New,
     @Cursor val uid: UniqueId,
     val content: String,
     @OrderBy val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime? = null,
     val deletedAt: LocalDateTime? = null,
-    @GraphQLIgnore val mangaId: UniqueId,
-    @GraphQLIgnore override val ownerId: UniqueId,
-) : MutableEntity<Comment>, Owned {
+    @GraphQLIgnore val mangaId: MangaId,
+    @GraphQLIgnore override val ownerId: UserId,
+) : MutableEntity<Comment, CommentId>, BelongsTo<UserId> {
     @GraphQLDescription("Returns the comment's author")
     suspend fun profile(env: DataFetchingEnvironment): Profile {
         return env

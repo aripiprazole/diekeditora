@@ -1,7 +1,8 @@
 package com.diekeditora.graphql.infra
 
 import com.diekeditora.Entity
-import com.diekeditora.Owned
+import com.diekeditora.BelongsTo
+import com.diekeditora.id.domain.RefId
 import com.diekeditora.user.domain.User
 import com.expediagroup.graphql.server.spring.execution.SpringGraphQLContext
 import org.springframework.security.access.AccessDeniedException
@@ -20,7 +21,7 @@ class AuthGraphQLContext(val authentication: Authentication, request: ServerRequ
             queries += value
         }
 
-        fun <T> T.own(owned: Owned) where T : Any, T : Entity<T> {
+        fun <E : Entity<ID>, ID : RefId<*>> E.own(owned: BelongsTo<ID>) {
             queries += owned.belongsTo(this)
         }
 
