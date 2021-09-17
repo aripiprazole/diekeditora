@@ -1,7 +1,7 @@
 package com.diekeditora.utils
 
 import com.diekeditora.Entity
-import com.diekeditora.com.diekeditora.repo.CursorBasedPaginationRepository
+import com.diekeditora.repo.domain.CursorBasedPaginationRepository
 import com.diekeditora.page.infra.AppPage
 import graphql.relay.Connection
 import kotlinx.coroutines.flow.toList

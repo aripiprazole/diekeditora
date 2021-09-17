@@ -1,8 +1,8 @@
 package com.diekeditora.role.infra
 
-import com.diekeditora.com.diekeditora.repo.CursorBasedPaginationRepository
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.page.domain.PaginationQuery
+import com.diekeditora.repo.domain.CursorBasedPaginationRepository
 import com.diekeditora.role.domain.Role
 import com.diekeditora.user.domain.User
 import kotlinx.coroutines.flow.Flow
