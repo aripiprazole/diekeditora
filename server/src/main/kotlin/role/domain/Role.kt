@@ -6,7 +6,7 @@ import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.security.domain.Secured
 import com.diekeditora.shared.infra.PaginationArg
 import com.diekeditora.shared.infra.toPaginationArg
-import com.diekeditora.shared.refs.RoleId
+import com.diekeditora.database.domain.RoleId
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations

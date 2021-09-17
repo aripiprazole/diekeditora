@@ -1,4 +1,4 @@
-package com.diekeditora.config
+package com.diekeditora.database.infra
 
 import com.diekeditora.profile.domain.Gender
 import com.diekeditora.shared.infra.toOptions

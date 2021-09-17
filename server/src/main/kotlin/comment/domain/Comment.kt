@@ -6,9 +6,9 @@ import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.profile.domain.Profile
-import com.diekeditora.shared.refs.CommentId
-import com.diekeditora.shared.refs.MangaId
-import com.diekeditora.shared.refs.UserId
+import com.diekeditora.database.domain.CommentId
+import com.diekeditora.database.domain.MangaId
+import com.diekeditora.database.domain.UserId
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations

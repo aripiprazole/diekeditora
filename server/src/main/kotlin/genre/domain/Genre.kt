@@ -2,7 +2,7 @@ package com.diekeditora.genre.domain
 
 import com.diekeditora.shared.domain.MutableEntity
 import com.diekeditora.page.domain.Cursor
-import com.diekeditora.shared.refs.GenreId
+import com.diekeditora.database.domain.GenreId
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations.Locations

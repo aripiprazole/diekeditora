@@ -9,8 +9,8 @@ import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.security.domain.Authenticated
 import com.diekeditora.security.domain.Secured
-import com.diekeditora.shared.refs.ProfileId
-import com.diekeditora.shared.refs.UserId
+import com.diekeditora.database.domain.ProfileId
+import com.diekeditora.database.domain.UserId
 import com.diekeditora.user.domain.User
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore

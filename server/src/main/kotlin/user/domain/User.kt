@@ -11,7 +11,7 @@ import com.diekeditora.role.domain.Role
 import com.diekeditora.security.domain.Secured
 import com.diekeditora.shared.infra.PaginationArg
 import com.diekeditora.shared.infra.toPaginationArg
-import com.diekeditora.shared.refs.UserId
+import com.diekeditora.database.domain.UserId
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations

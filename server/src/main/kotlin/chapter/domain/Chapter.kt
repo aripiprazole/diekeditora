@@ -7,8 +7,8 @@ import com.diekeditora.file.domain.FileKind
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
-import com.diekeditora.shared.refs.ChapterId
-import com.diekeditora.shared.refs.MangaId
+import com.diekeditora.database.domain.ChapterId
+import com.diekeditora.database.domain.MangaId
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations

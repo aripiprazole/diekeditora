@@ -1,4 +1,4 @@
-package com.diekeditora.config
+package com.diekeditora.shared.infra
 
 import com.diekeditora.page.infra.AppCursor
 import com.diekeditora.page.infra.AppEdge

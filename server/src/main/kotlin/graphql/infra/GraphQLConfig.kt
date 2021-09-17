@@ -1,4 +1,4 @@
-package com.diekeditora.config
+package com.diekeditora.graphql.infra
 
 import com.expediagroup.graphql.generator.execution.FlowSubscriptionExecutionStrategy
 import graphql.execution.DataFetcherExceptionHandler

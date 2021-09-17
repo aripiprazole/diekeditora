@@ -1,13 +1,13 @@
-package com.diekeditora.shared.refs
+package com.diekeditora.database.domain
 
 import com.diekeditora.id.domain.IdNotPersistedDelegate
 import com.diekeditora.id.domain.RefId
 import java.util.UUID
 
-sealed class InvoiceId : RefId<UUID>() {
-    class Persisted(override val value: UUID) : InvoiceId()
+sealed class CommentId : RefId<UUID>() {
+    class Persisted(override val value: UUID) : CommentId()
 
-    object New : InvoiceId() {
+    object New : CommentId() {
         override val value by IdNotPersistedDelegate<UUID>()
     }
 }

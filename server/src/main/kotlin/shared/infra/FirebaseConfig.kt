@@ -1,4 +1,4 @@
-package com.diekeditora.config
+package com.diekeditora.shared.infra
 
 import com.diekeditora.props.FirebaseProps
 import com.google.auth.oauth2.GoogleCredentials

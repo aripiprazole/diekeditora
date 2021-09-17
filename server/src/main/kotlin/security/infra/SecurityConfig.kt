@@ -1,4 +1,4 @@
-package com.diekeditora.config
+package com.diekeditora.security.infra
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

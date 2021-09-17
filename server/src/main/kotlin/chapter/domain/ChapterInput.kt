@@ -1,7 +1,7 @@
 package com.diekeditora.chapter.domain
 
 import com.diekeditora.id.domain.UniqueId
-import com.diekeditora.shared.refs.MangaId
+import com.diekeditora.database.domain.MangaId
 import org.valiktor.functions.hasSize
 import org.valiktor.functions.isGreaterThan
 import org.valiktor.validate
