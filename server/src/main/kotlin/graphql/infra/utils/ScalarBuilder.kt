@@ -3,8 +3,9 @@ package com.diekeditora.graphql.infra.utils
 import com.diekeditora.graphql.domain.Scalar
 import com.fasterxml.jackson.databind.ObjectMapper
 
-class ScalarBuilder(private val objectMapper: ObjectMapper) {
-    private var description = ""
+class ScalarBuilder(val objectMapper: ObjectMapper) {
+    var description = ""
+        private set
 
     fun description(description: String) {
         this.description = description
