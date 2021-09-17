@@ -1,6 +1,6 @@
 package com.diekeditora.page.infra
 
-import com.diekeditora.Entity
+import com.diekeditora.shared.domain.Entity
 import graphql.relay.Connection
 import graphql.relay.Edge
 import graphql.relay.PageInfo

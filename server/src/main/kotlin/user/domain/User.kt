@@ -1,7 +1,7 @@
 package com.diekeditora.user.domain
 
-import com.diekeditora.MutableEntity
-import com.diekeditora.BelongsTo
+import com.diekeditora.shared.domain.MutableEntity
+import com.diekeditora.shared.domain.BelongsTo
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.manga.domain.Manga
 import com.diekeditora.page.domain.Cursor

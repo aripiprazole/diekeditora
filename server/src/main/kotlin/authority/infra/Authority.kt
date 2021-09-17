@@ -1,6 +1,6 @@
 package com.diekeditora.authority.infra
 
-import com.diekeditora.Entity
+import com.diekeditora.shared.domain.Entity
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.shared.refs.AuthorityId

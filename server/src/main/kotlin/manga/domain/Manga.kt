@@ -1,6 +1,6 @@
 package com.diekeditora.manga.domain
 
-import com.diekeditora.MutableEntity
+import com.diekeditora.shared.domain.MutableEntity
 import com.diekeditora.chapter.domain.Chapter
 import com.diekeditora.genre.domain.Genre
 import com.diekeditora.id.domain.UniqueId

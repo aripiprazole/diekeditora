@@ -1,8 +1,8 @@
 package com.diekeditora.shared.infra
 
-import com.diekeditora.Entity
 import com.diekeditora.repo.domain.CursorBasedPaginationRepository
 import com.diekeditora.page.infra.AppPage
+import com.diekeditora.shared.domain.Entity
 import graphql.relay.Connection
 import kotlinx.coroutines.flow.toList
 import org.springframework.data.domain.Sort

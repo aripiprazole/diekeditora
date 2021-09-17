@@ -1,7 +1,6 @@
 package com.diekeditora.genre.domain
 
-import com.diekeditora.MutableEntity
-import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.shared.domain.MutableEntity
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.shared.refs.GenreId
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore

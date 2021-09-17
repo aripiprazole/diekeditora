@@ -1,6 +1,6 @@
 package com.diekeditora.role.domain
 
-import com.diekeditora.MutableEntity
+import com.diekeditora.shared.domain.MutableEntity
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.security.domain.Secured

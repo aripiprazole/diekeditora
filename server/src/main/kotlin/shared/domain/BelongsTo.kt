@@ -1,7 +1,6 @@
-package com.diekeditora
+package com.diekeditora.shared.domain
 
 import com.diekeditora.id.domain.RefId
-import com.diekeditora.id.domain.UniqueId
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 
 @GraphQLIgnore

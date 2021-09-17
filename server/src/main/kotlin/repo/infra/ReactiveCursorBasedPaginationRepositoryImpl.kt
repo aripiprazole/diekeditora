@@ -1,6 +1,6 @@
 package com.diekeditora.repo.infra
 
-import com.diekeditora.Entity
+import com.diekeditora.shared.domain.Entity
 import com.diekeditora.id.domain.RefId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy

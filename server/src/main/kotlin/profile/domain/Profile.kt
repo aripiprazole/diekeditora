@@ -1,7 +1,7 @@
 package com.diekeditora.profile.domain
 
-import com.diekeditora.MutableEntity
-import com.diekeditora.BelongsTo
+import com.diekeditora.shared.domain.MutableEntity
+import com.diekeditora.shared.domain.BelongsTo
 import com.diekeditora.file.domain.AvatarKind
 import com.diekeditora.file.domain.FileKind
 import com.diekeditora.id.domain.UniqueId
