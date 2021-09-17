@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component
 import java.time.Instant
 
 @Component
-internal class InstantScalar(objectMapper: ObjectMapper) :
+class InstantScalar(objectMapper: ObjectMapper) :
     Scalar<Instant, Long> by jacksonScalar(objectMapper)
         .deserialize(String::toLong)

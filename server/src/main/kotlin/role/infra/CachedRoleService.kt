@@ -13,7 +13,7 @@ import kotlin.time.ExperimentalTime
 @Service
 @Primary
 @OptIn(ExperimentalTime::class)
-internal class CachedRoleService(
+class CachedRoleService(
     val delegate: RoleService,
     val cacheProvider: CacheProvider,
 ) : RoleService by delegate {

@@ -8,7 +8,7 @@ import graphql.relay.Connection
 import org.springframework.stereotype.Service
 
 @Service
-internal class ReportServiceImpl : ReportService {
+class ReportServiceImpl : ReportService {
     override suspend fun findReportedComments(first: Int, after: UniqueId?): Connection<Comment> {
         TODO("Not yet implemented")
     }

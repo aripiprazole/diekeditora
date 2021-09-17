@@ -7,7 +7,7 @@ import graphql.schema.Coercing
 import org.springframework.stereotype.Component
 
 @Component
-internal class UniqueIdScalar : Scalar<UniqueId, String> {
+class UniqueIdScalar : Scalar<UniqueId, String> {
     override val klass = UniqueId::class
     override val coercing = object : Coercing<UniqueId, String> {
         override fun serialize(dataFetcherResult: Any?): String {

@@ -8,7 +8,7 @@ import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.typeOf
 
 @OptIn(ExperimentalStdlibApi::class)
-internal inline fun <reified I, reified O> ObjectMapper.coercing(noinline fn: (String) -> O) =
+inline fun <reified I, reified O> ObjectMapper.coercing(noinline fn: (String) -> O) =
     object : Coercing<I, O> {
         override fun serialize(result: Any?): O {
             return fn(valueToTree<ValueNode>(result).asText())

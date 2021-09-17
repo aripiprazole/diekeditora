@@ -7,7 +7,7 @@ import graphql.relay.Connection
 import kotlinx.coroutines.flow.toList
 import org.springframework.data.domain.Sort
 
-internal suspend fun <T, ID> CursorBasedPaginationRepository<T, ID>.findAllAsConnection(
+suspend fun <T, ID> CursorBasedPaginationRepository<T, ID>.findAllAsConnection(
     first: Int,
     after: String? = null,
     sort: Sort? = null,

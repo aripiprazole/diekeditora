@@ -10,7 +10,7 @@ import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
 
 @Table("authority")
-internal data class Authority(
+data class Authority(
     @GraphQLIgnore
     @Id override val id: UniqueId? = null,
     @Cursor val value: String,

@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
-internal class MangaServiceImpl(
+class MangaServiceImpl(
     val uidService: UniqueIdService,
     val repo: MangaRepo,
     val mangaProfileRepo: MangaProfileRepo,

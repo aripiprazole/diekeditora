@@ -15,7 +15,7 @@ import software.amazon.awssdk.services.s3.model.ObjectCannedACL
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
 
 @Service
-internal class FileServiceImpl(
+class FileServiceImpl(
     val s3AsyncClient: S3AsyncClient,
     val s3Client: S3Client,
     val props: S3Props,

@@ -3,7 +3,7 @@ package com.diekeditora.graphql.infra.utils
 import com.diekeditora.graphql.domain.Scalar
 import com.fasterxml.jackson.databind.ObjectMapper
 
-internal class ScalarBuilder(private val objectMapper: ObjectMapper) {
+class ScalarBuilder(private val objectMapper: ObjectMapper) {
     private var description = ""
 
     fun description(description: String) {
@@ -25,4 +25,4 @@ internal class ScalarBuilder(private val objectMapper: ObjectMapper) {
         }
 }
 
-internal fun jacksonScalar(objectMapper: ObjectMapper): ScalarBuilder = ScalarBuilder(objectMapper)
+fun jacksonScalar(objectMapper: ObjectMapper): ScalarBuilder = ScalarBuilder(objectMapper)

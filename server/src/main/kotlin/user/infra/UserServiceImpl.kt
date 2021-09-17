@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
-internal class UserServiceImpl(val repo: UserRepo) : UserService {
+class UserServiceImpl(val repo: UserRepo) : UserService {
     private val log by logger()
 
     @Transactional

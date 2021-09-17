@@ -1,4 +1,4 @@
-package com.diekeditora.repo
+package com.diekeditora.repo.infra
 
 import com.diekeditora.Entity
 import com.diekeditora.page.domain.Cursor
@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono
 import kotlin.reflect.full.findAnnotation
 
 @Suppress("Detekt.TooManyFunctions")
-internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
+class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
     val entity: MappingRelationalEntityInformation<T, ID>,
     val operations: R2dbcEntityOperations,
     val converter: R2dbcConverter,
@@ -29,7 +29,7 @@ internal class ReactiveCursorBasedPaginationRepositoryImpl<T, ID>(
 ) : SimpleR2dbcRepository<T, ID>(entity, operations, converter),
     ReactiveCursorBasedPaginationRepository<T, ID> where T : Any, T : Entity<T> {
 
-    internal data class EntityProperties(val orderBy: Sort, val cursor: String)
+    data class EntityProperties(val orderBy: Sort, val cursor: String)
 
     override fun findAll(first: Int, after: String?, sort: Sort?, owner: Any?): Flux<T> {
         val actualSort = sort ?: properties.orderBy

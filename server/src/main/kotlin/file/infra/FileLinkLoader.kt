@@ -7,7 +7,7 @@ import com.expediagroup.graphql.server.execution.KotlinDataLoader
 import org.springframework.stereotype.Component
 
 @Component
-internal class FileLinkLoader(val fileService: FileService) :
+class FileLinkLoader(val fileService: FileService) :
     KotlinDataLoader<FileKind, String> by dataLoader("FileLinkLoader")
         .execute({
             fileService.getLink(it.generateKey())

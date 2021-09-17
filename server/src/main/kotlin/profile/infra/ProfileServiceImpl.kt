@@ -9,7 +9,7 @@ import com.diekeditora.utils.logger
 import org.springframework.stereotype.Service
 
 @Service
-internal class ProfileServiceImpl(
+class ProfileServiceImpl(
     val repo: ProfileRepo,
     val uidService: UniqueIdService,
 ) : ProfileService {

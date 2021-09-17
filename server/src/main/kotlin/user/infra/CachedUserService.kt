@@ -12,7 +12,7 @@ import kotlin.time.ExperimentalTime
 @Service
 @Primary
 @OptIn(ExperimentalTime::class)
-internal class CachedUserService(
+class CachedUserService(
     val delegate: UserService,
     val cacheProvider: CacheProvider,
 ) : UserService by delegate {

@@ -14,7 +14,7 @@ import kotlin.time.ExperimentalTime
 @Primary
 @Service
 @OptIn(ExperimentalTime::class)
-internal class CachedCommentService(
+class CachedCommentService(
     val delegate: CommentService,
     val cacheProvider: CacheProvider,
 ) : CommentService by delegate {

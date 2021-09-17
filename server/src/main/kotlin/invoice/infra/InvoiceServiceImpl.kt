@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import org.springframework.stereotype.Service
 
 @Service
-internal class InvoiceServiceImpl : InvoiceService {
+class InvoiceServiceImpl : InvoiceService {
     override suspend fun findAllMangaInvoices(
         manga: Manga,
         first: Int,

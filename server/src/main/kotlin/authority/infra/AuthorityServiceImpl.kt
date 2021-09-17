@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-internal class AuthorityServiceImpl(
+class AuthorityServiceImpl(
     val repo: AuthorityRepo,
     val userAuthorityRepo: UserAuthorityRepo,
     val roleAuthorityRepo: RoleAuthorityRepo,

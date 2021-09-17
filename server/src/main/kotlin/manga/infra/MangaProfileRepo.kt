@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-internal interface MangaProfileRepo : CursorBasedPaginationRepository<Profile, UUID> {
+interface MangaProfileRepo : CursorBasedPaginationRepository<Profile, UUID> {
     @Query(
         """
         select p.* from profile p

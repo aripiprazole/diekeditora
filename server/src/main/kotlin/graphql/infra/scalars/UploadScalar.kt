@@ -7,7 +7,7 @@ import org.springframework.http.codec.multipart.FilePart
 import org.springframework.stereotype.Component
 
 @Component
-internal class UploadScalar : Scalar<Upload, Unit> {
+class UploadScalar : Scalar<Upload, Unit> {
     override val klass = Upload::class
     override val coercing = object : Coercing<Upload, Unit> {
         override fun serialize(dataFetcherResult: Any?) {

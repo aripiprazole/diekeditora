@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component
 import java.util.Date
 
 @Component
-internal class DateScalar(objectMapper: ObjectMapper) :
+class DateScalar(objectMapper: ObjectMapper) :
     Scalar<Date, Long> by jacksonScalar(objectMapper)
         .deserialize(String::toLong)

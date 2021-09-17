@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
-internal class RoleServiceImpl(
+class RoleServiceImpl(
     val repo: RoleRepo,
     val userRoleRepo: UserRoleRepo,
 ) : RoleService {

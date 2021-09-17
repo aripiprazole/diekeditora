@@ -15,7 +15,7 @@ import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.valueParameters
 import kotlin.reflect.jvm.jvmErasure
 
-internal class DiekEditoraDataFetcher(
+class DiekEditoraDataFetcher(
     val target: Any?,
     val fn: KFunction<*>,
     private val objectMapper: ObjectMapper,

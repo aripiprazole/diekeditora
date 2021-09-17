@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-internal interface AuthorityRepo : CursorBasedPaginationRepository<Authority, UUID> {
+interface AuthorityRepo : CursorBasedPaginationRepository<Authority, UUID> {
     suspend fun findByValue(value: String): Authority?
 }

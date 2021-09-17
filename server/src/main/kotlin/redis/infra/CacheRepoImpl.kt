@@ -13,8 +13,7 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.toJavaDuration
 
 @OptIn(ExperimentalTime::class)
-@PublishedApi
-internal class CacheRepoImpl<T : Any>(
+class CacheRepoImpl<T : Any>(
     private val typeReference: TypeReference<T>,
     private val template: ReactiveRedisTemplate<String, T>,
     private val objectMapper: ObjectMapper,

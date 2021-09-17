@@ -13,7 +13,7 @@ import kotlin.time.ExperimentalTime
 @Service
 @Primary
 @OptIn(ExperimentalTime::class)
-internal class CachedAuthorityService(
+class CachedAuthorityService(
     val delegate: AuthorityService,
     val cacheProvider: CacheProvider,
 ) : AuthorityService by delegate {

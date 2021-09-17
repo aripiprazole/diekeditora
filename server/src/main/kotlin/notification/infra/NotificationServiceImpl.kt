@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service
 import java.util.concurrent.Executors
 
 @Service
-internal class NotificationServiceImpl(
+class NotificationServiceImpl(
     val cacheProvider: CacheProvider,
     val uniqueIdService: UniqueIdService,
 ) : NotificationService, CoroutineScope {

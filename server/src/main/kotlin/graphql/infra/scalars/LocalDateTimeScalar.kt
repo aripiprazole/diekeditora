@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
 @Component
-internal class LocalDateTimeScalar(objectMapper: ObjectMapper) :
+class LocalDateTimeScalar(objectMapper: ObjectMapper) :
     Scalar<LocalDateTime, String> by jacksonScalar(objectMapper)
         .deserializeString()

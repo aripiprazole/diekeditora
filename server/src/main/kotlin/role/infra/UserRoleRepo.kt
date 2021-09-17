@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-internal interface UserRoleRepo : CursorBasedPaginationRepository<Role, UUID> {
+interface UserRoleRepo : CursorBasedPaginationRepository<Role, UUID> {
     @PaginationQuery(
         selectQuery = """
             select * from role r

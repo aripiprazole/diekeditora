@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 
 @Service
-internal class GenreServiceImpl(val genreRepo: GenreRepo) : GenreService {
+class GenreServiceImpl(val genreRepo: GenreRepo) : GenreService {
     override suspend fun findGenres(): List<Genre> {
         return genreRepo.findAll().toList()
     }

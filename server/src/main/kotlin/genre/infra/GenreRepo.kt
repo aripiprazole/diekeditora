@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-internal interface GenreRepo : CoroutineSortingRepository<Genre, UUID> {
+interface GenreRepo : CoroutineSortingRepository<Genre, UUID> {
     suspend fun findByName(name: String): Genre?
 }

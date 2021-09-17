@@ -12,14 +12,14 @@ import graphql.relay.Connection
 import org.springframework.stereotype.Component
 
 @Component
-internal class RoleAuthorityLoader(val authorityService: AuthorityService) :
+class RoleAuthorityLoader(val authorityService: AuthorityService) :
     KotlinDataLoader<PaginationArg<Role, String>, Connection<String>> by dataLoader("RoleAuthoritiesLoader")
         .execute({ (role, first, after) ->
             authorityService.findAuthoritiesByRole(role, first, after)
         })
 
 @Component
-internal class UserAuthorityLoader(val authorityService: AuthorityService) :
+class UserAuthorityLoader(val authorityService: AuthorityService) :
     KotlinDataLoader<PaginationArg<User, String>, Connection<String>> by dataLoader("UserAuthoritiesLoader")
         .execute({ (user, first, after) ->
             authorityService.findAuthoritiesByUser(user, first, after)

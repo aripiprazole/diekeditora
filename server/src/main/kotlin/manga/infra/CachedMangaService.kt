@@ -15,7 +15,7 @@ import kotlin.time.ExperimentalTime
 @Service
 @Primary
 @OptIn(ExperimentalTime::class)
-internal class CachedMangaService(
+class CachedMangaService(
     val delegate: MangaService,
     val cacheProvider: CacheProvider,
 ) : MangaService by delegate {

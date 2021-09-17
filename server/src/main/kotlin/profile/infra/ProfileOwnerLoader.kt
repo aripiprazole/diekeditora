@@ -8,7 +8,7 @@ import com.expediagroup.graphql.server.execution.KotlinDataLoader
 import org.springframework.stereotype.Component
 
 @Component
-internal class ProfileOwnerLoader(val userService: UserService) :
+class ProfileOwnerLoader(val userService: UserService) :
     KotlinDataLoader<Profile, User> by dataLoader("ProfileOwnerLoader")
         .execute({
             userService.findUserById(it.ownerId)

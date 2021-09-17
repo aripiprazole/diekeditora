@@ -8,7 +8,7 @@ import graphql.relay.Connection
 import org.springframework.stereotype.Service
 
 @Service
-internal class CommentServiceImpl : CommentService {
+class CommentServiceImpl : CommentService {
     override suspend fun findComments(
         manga: Manga,
         first: Int,

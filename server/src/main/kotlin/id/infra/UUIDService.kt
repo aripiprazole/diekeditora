@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import java.util.UUID
 
 @Service
-internal class UUIDService : UniqueIdService {
+class UUIDService : UniqueIdService {
     override fun generateUniqueId(): UniqueId {
         return UniqueId(UUID.randomUUID().toString())
     }

@@ -14,7 +14,7 @@ import org.springframework.security.util.SimpleMethodInvocation
 import kotlin.reflect.KFunction
 import kotlin.reflect.jvm.javaMethod
 
-internal class SecuredDirectiveWiring : KotlinSchemaDirectiveWiring {
+class SecuredDirectiveWiring : KotlinSchemaDirectiveWiring {
     private val handler = DefaultMethodSecurityExpressionHandler()
 
     override fun onField(environment: KotlinFieldDirectiveEnvironment): GraphQLFieldDefinition {

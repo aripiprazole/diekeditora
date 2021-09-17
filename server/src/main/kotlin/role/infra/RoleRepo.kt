@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-internal interface RoleRepo : CursorBasedPaginationRepository<Role, UUID> {
+interface RoleRepo : CursorBasedPaginationRepository<Role, UUID> {
     suspend fun findByName(name: String): Role?
 }

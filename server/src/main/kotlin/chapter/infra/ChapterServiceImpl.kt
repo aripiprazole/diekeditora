@@ -8,7 +8,7 @@ import graphql.relay.Connection
 import org.springframework.stereotype.Service
 
 @Service
-internal class ChapterServiceImpl : ChapterService {
+class ChapterServiceImpl : ChapterService {
     override suspend fun findChapterByUid(uid: UniqueId): Chapter? {
         TODO("Not yet implemented")
     }
