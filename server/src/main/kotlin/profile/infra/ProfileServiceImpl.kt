@@ -5,7 +5,7 @@ import com.diekeditora.profile.domain.Gender
 import com.diekeditora.profile.domain.Profile
 import com.diekeditora.profile.domain.ProfileService
 import com.diekeditora.user.domain.User
-import com.diekeditora.utils.logger
+import com.diekeditora.shared.infra.logger
 import org.springframework.stereotype.Service
 
 @Service

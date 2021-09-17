@@ -7,7 +7,7 @@ import com.diekeditora.profile.domain.Profile
 import com.diekeditora.profile.domain.ProfileService
 import com.diekeditora.security.domain.Secured
 import com.diekeditora.user.domain.UserService
-import com.diekeditora.utils.toByteArray
+import com.diekeditora.shared.infra.toByteArray
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
 import org.springframework.security.access.prepost.PreAuthorize

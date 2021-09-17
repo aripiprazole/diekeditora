@@ -2,7 +2,7 @@ package com.diekeditora
 
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.page.domain.Cursor
-import com.diekeditora.utils.findPropertyByAnnotation
+import com.diekeditora.shared.infra.findPropertyByAnnotation
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
 

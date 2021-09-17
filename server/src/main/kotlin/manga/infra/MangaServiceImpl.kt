@@ -8,7 +8,7 @@ import com.diekeditora.manga.domain.MangaService
 import com.diekeditora.manga.domain.MangaSort
 import com.diekeditora.profile.domain.Profile
 import com.diekeditora.user.domain.User
-import com.diekeditora.utils.findAllAsConnection
+import com.diekeditora.shared.infra.findAllAsConnection
 import graphql.relay.Connection
 import org.springframework.data.domain.Sort
 import org.springframework.data.domain.Sort.Order.asc

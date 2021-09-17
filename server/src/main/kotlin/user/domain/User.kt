@@ -9,8 +9,8 @@ import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.profile.domain.Profile
 import com.diekeditora.role.domain.Role
 import com.diekeditora.security.domain.Secured
-import com.diekeditora.utils.PaginationArg
-import com.diekeditora.utils.toPaginationArg
+import com.diekeditora.shared.infra.PaginationArg
+import com.diekeditora.shared.infra.toPaginationArg
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations

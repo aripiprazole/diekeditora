@@ -5,8 +5,8 @@ package com.diekeditora.authority.infra
 import com.diekeditora.authority.domain.AuthorityService
 import com.diekeditora.role.domain.Role
 import com.diekeditora.user.domain.User
-import com.diekeditora.utils.PaginationArg
-import com.diekeditora.utils.dataLoader
+import com.diekeditora.shared.infra.PaginationArg
+import com.diekeditora.shared.infra.dataLoader
 import com.expediagroup.graphql.server.execution.KotlinDataLoader
 import graphql.relay.Connection
 import org.springframework.stereotype.Component

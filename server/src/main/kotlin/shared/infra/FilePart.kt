@@ -1,4 +1,4 @@
-package com.diekeditora.utils
+package com.diekeditora.shared.infra
 
 import kotlinx.coroutines.reactive.awaitFirst
 import org.springframework.http.codec.multipart.Part

@@ -5,8 +5,8 @@ import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.page.domain.PaginationQuery
 import com.diekeditora.repo.domain.ReactiveCursorBasedPaginationRepository
-import com.diekeditora.utils.findPropertiesByAnnotation
-import com.diekeditora.utils.findPropertyByAnnotation
+import com.diekeditora.shared.infra.findPropertiesByAnnotation
+import com.diekeditora.shared.infra.findPropertyByAnnotation
 import org.springframework.data.domain.Sort
 import org.springframework.data.mapping.model.MutablePersistentEntity
 import org.springframework.data.r2dbc.convert.R2dbcConverter

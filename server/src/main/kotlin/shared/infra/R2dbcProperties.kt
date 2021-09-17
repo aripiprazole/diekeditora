@@ -1,4 +1,4 @@
-package com.diekeditora.utils
+package com.diekeditora.shared.infra
 
 import io.r2dbc.spi.ConnectionFactoryOptions
 import io.r2dbc.spi.Option

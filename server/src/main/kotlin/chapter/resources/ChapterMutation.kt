@@ -13,7 +13,7 @@ import com.diekeditora.id.domain.UniqueIdService
 import com.diekeditora.manga.domain.MangaService
 import com.diekeditora.security.domain.Authenticated
 import com.diekeditora.security.domain.Secured
-import com.diekeditora.utils.toByteArray
+import com.diekeditora.shared.infra.toByteArray
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
 import org.springframework.security.access.prepost.PreAuthorize

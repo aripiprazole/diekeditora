@@ -3,8 +3,8 @@ package com.diekeditora.role.infra
 import com.diekeditora.role.domain.Role
 import com.diekeditora.role.domain.RoleService
 import com.diekeditora.user.domain.User
-import com.diekeditora.utils.findAllAsConnection
-import com.diekeditora.utils.logger
+import com.diekeditora.shared.infra.findAllAsConnection
+import com.diekeditora.shared.infra.logger
 import graphql.relay.Connection
 import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service

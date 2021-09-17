@@ -3,9 +3,9 @@ package com.diekeditora.user.infra
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.user.domain.User
 import com.diekeditora.user.domain.UserService
-import com.diekeditora.utils.findAllAsConnection
-import com.diekeditora.utils.generateRandomString
-import com.diekeditora.utils.logger
+import com.diekeditora.shared.infra.findAllAsConnection
+import com.diekeditora.shared.infra.generateRandomString
+import com.diekeditora.shared.infra.logger
 import com.google.firebase.auth.FirebaseToken
 import graphql.relay.Connection
 import org.springframework.data.domain.Sort

@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.diekeditora.utils
+package com.diekeditora.shared.infra
 
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.web.server.AuthorizeExchangeDsl

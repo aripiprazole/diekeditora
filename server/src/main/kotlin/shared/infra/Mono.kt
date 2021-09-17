@@ -1,4 +1,4 @@
-package com.diekeditora.utils
+package com.diekeditora.shared.infra
 
 import kotlinx.coroutines.reactive.awaitSingleOrNull
 import reactor.core.publisher.Mono

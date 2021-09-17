@@ -1,4 +1,4 @@
-package com.diekeditora.utils
+package com.diekeditora.shared.infra
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

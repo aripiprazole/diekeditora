@@ -1,4 +1,4 @@
-package com.diekeditora.utils
+package com.diekeditora.shared.infra
 
 private const val MIN_PAGE_SIZE = 1
 private const val MAX_PAGE_SIZE = 50

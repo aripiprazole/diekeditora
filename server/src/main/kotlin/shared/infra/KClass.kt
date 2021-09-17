@@ -1,4 +1,4 @@
-package com.diekeditora.utils
+package com.diekeditora.shared.infra
 
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1

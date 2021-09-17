@@ -1,4 +1,4 @@
-package com.diekeditora.utils
+package com.diekeditora.shared.infra
 
 import com.expediagroup.graphql.server.execution.KotlinDataLoader
 import kotlinx.coroutines.GlobalScope

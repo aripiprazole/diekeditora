@@ -1,4 +1,4 @@
-package com.diekeditora.utils
+package com.diekeditora.shared.infra
 
 import com.google.api.core.ApiFuture
 import com.google.api.core.ApiFutureCallback

@@ -1,4 +1,4 @@
-package com.diekeditora.utils
+package com.diekeditora.shared.infra
 
 import com.diekeditora.Entity
 import com.diekeditora.repo.domain.CursorBasedPaginationRepository

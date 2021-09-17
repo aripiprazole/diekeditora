@@ -1,6 +1,6 @@
 package graphql.infra
 
-import com.diekeditora.utils.toByteArray
+import com.diekeditora.shared.infra.toByteArray
 import com.expediagroup.graphql.server.spring.execution.SpringGraphQLRequestParser
 import com.expediagroup.graphql.server.types.GraphQLBatchRequest
 import com.expediagroup.graphql.server.types.GraphQLRequest
