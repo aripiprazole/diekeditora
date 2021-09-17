@@ -1,4 +1,4 @@
-package com.diekeditora.shared
+package utils
 
 import com.expediagroup.graphql.server.execution.KotlinDataLoader
 import kotlinx.coroutines.CoroutineName

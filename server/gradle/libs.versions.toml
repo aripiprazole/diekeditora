@@ -1,0 +1,63 @@
+[versions]
+springMockk = "3.0.1"
+mockk = "1.11.0"
+google-common = "1.10.3"
+firebase-admin = "7.3.0"
+kotlinFaker = "1.4.1"
+h2database = "1.4.200"
+jansi = "1.18"
+logback = "1.2.3"
+ktlint = "0.41.0"
+junit-jupiter = "5.6.0"
+graphQLKotlin = "4.1.0"
+reactor-common = "3.4.5"
+reactor-kotlin = "1.1.3"
+postgresql = "42.2.20"
+springBoot = "2.4.5"
+springSecurity = "5.5.0"
+slf4j = "1.7.25"
+kotlinx-coroutines = "1.4.3"
+classgraph = "4.8.105"
+r2dbc = "0.8.4.RELEASE"
+embeddedRedis = "0.7.3"
+awssdk = "2.17.3"
+valiktor = "0.12.0"
+
+[libraries]
+ninjaSquad-springMockk = { module = "com.ninja-squad:springmockk", version.ref = "springMockk" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+google-common = { module = "com.google.api:api-common", version.ref = "google-common" }
+firebase-admin = { module = "com.google.firebase:firebase-admin", version.ref = "firebase-admin" }
+serpro69-kotlinFaker = { module = "io.github.serpro69:kotlin-faker", version.ref = "kotlinFaker" }
+fusesource-jansi = { module = "org.fusesource.jansi:jansi", version.ref = "jansi" }
+h2database = { module = "com.h2database:h2", version.ref = "h2database" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+pinterest-ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
+junit-jupiterApi = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
+junit-jupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
+graphQLKotlin-springServer = { module = "com.expediagroup:graphql-kotlin-spring-server", version.ref = "graphQLKotlin" }
+reactor-test = { module = "io.projectreactor:reactor-test", version.ref = "reactor-common" }
+reactor-core = { module = "io.projectreactor:reactor-core", version.ref = "reactor-common" }
+reactor-kotlin = { module = "io.projectreactor.kotlin:reactor-kotlin-extensions", version.ref = "reactor-kotlin" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+springBoot-security = { module = "org.springframework.boot:spring-boot-starter-security", version.ref = "springBoot" }
+springBoot-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "springBoot" }
+springBoot-oauth2ResourceServer = { module = "org.springframework.boot:spring-boot-starter-oauth2-resource-server", version.ref = "springBoot" }
+springBoot-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux", version.ref = "springBoot" }
+springBoot-dataR2dbc = { module = "org.springframework.boot:spring-boot-starter-data-r2dbc", version.ref = "springBoot" }
+springBoot-dataRedisReactive = { module = "org.springframework.boot:spring-boot-starter-data-redis-reactive", version.ref = "springBoot" }
+springBoot-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "springBoot" }
+springBoot-configurationProcessor = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "springBoot" }
+springSecurity-oauth2Client = { module = "org.springframework.security:spring-security-oauth2-client", version.ref = "springSecurity" }
+springSecurity-test = { module = "org.springframework.security:spring-security-test", version.ref = "springSecurity" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+kotlinx-coroutinesReactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutinesJdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "kotlinx-coroutines" }
+classgraph = { module = "io.github.classgraph:classgraph", version.ref = "classgraph" }
+r2dbc-h2 = { module = "io.r2dbc:r2dbc-h2", version.ref = "r2dbc" }
+r2dbc-postgresql = { module = "io.r2dbc:r2dbc-postgresql", version.ref = "r2dbc" }
+ozimov-embeddedRedis = { module = "it.ozimov:embedded-redis", version.ref = "embeddedRedis" }
+awssdk-s3 = { module = "software.amazon.awssdk:s3", version.ref = "awssdk" }
+valiktor-core = { module = "org.valiktor:valiktor-core", version.ref = "valiktor" }
+valiktor-spring = { module = "org.valiktor:valiktor-spring", version.ref = "valiktor" }

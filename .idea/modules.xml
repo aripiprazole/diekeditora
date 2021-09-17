@@ -2,7 +2,17 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/composite-build/composite-build.main.iml" filepath="$PROJECT_DIR$/.idea/modules/composite-build/composite-build.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/composite-build/composite-build.test.iml" filepath="$PROJECT_DIR$/.idea/modules/composite-build/composite-build.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/diekeditora.iml" filepath="$PROJECT_DIR$/.idea/diekeditora.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/server.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/server.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/server.app.test.iml" filepath="$PROJECT_DIR$/.idea/modules/app/server.app.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/server.domain.main.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/server.domain.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/server.domain.test.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/server.domain.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/infra/server.infra.main.iml" filepath="$PROJECT_DIR$/.idea/modules/infra/server.infra.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/infra/server.infra.test.iml" filepath="$PROJECT_DIR$/.idea/modules/infra/server.infra.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/server.shared.main.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/server.shared.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/server.shared.test.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/server.shared.test.iml" />
     </modules>
   </component>
 </project>
