@@ -292,7 +292,7 @@ type Query {
   ): MangaConnection!
 
   # Returns current user context
-  me: User!
+  viewer: User!
 
   # Finds notification connection
   notifications(

@@ -2,7 +2,6 @@
   "name": "diekeditora",
   "private": true,
   "workspaces": [
-    "packages/graphql",
     "packages/studio",
     "packages/app"
   ],
@@ -51,7 +50,7 @@
     "studio:dev": "run-p graphql:dev studio:dev-start",
     "studio:dev-start": "yarn workspace @diekeditora/studio run dev",
     "studio:build": "yarn workspace @diekeditora/studio run build",
-    "graphql:dev": "yarn workspace @diekeditora/graphql run dev"
+    "studio:relay": "yarn workspace @diekeditora/studio run relay"
   },
   "dependencies": {
     "@chakra-ui/theme": "^1.10.0",

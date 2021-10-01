@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import DashboardApp from './pages/DashboardApp';
 import User from './pages/User';
 import NotFound from './pages/Page404';
+import Authenticated from './components/authentication/Authenticated';
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +18,14 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         {path: '/', element: <Navigate to="/dashboard/app" replace />},
-        {path: 'app', element: <DashboardApp />},
+        {
+          path: 'app',
+          element: (
+            <Authenticated>
+              <DashboardApp />
+            </Authenticated>
+          ),
+        },
         {path: 'user', element: <User />},
       ],
     },
