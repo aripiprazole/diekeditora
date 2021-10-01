@@ -1,8 +1,5 @@
 package com.diekeditora.database.infra
 
-import com.diekeditora.id.domain.UniqueId
-import com.diekeditora.shared.infra.PersistedRefIdConverter
-import com.diekeditora.shared.infra.RefIdConverter
 import com.diekeditora.database.domain.AuthorityId
 import com.diekeditora.database.domain.ChapterId
 import com.diekeditora.database.domain.GenreId
@@ -13,6 +10,9 @@ import com.diekeditora.database.domain.NotificationId
 import com.diekeditora.database.domain.ProfileId
 import com.diekeditora.database.domain.RoleId
 import com.diekeditora.database.domain.UserId
+import com.diekeditora.id.domain.UniqueId
+import com.diekeditora.shared.infra.PersistedRefIdConverter
+import com.diekeditora.shared.infra.RefIdConverter
 import io.r2dbc.pool.ConnectionPool
 import io.r2dbc.pool.ConnectionPoolConfiguration
 import io.r2dbc.spi.ConnectionFactory
@@ -37,7 +37,7 @@ class DatabaseConfig(
     val r2dbcProperties: R2dbcProperties,
 ) : AbstractR2dbcConfiguration() {
     override fun getCustomConverters(): List<Any> = buildList {
-        add(Converter<UniqueId, UUID> { id -> UUID.fromString(id.rawId) })
+        add(Converter<UniqueId, UUID> { id -> runCatching { UUID.fromString(id.rawId) }.getOrNull() })
         add(Converter<UUID, UniqueId> { value -> UniqueId(value.toString()) })
 
         add(RefIdConverter(AuthorityId.New::class))

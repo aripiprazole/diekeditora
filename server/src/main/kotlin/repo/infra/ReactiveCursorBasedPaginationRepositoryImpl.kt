@@ -73,6 +73,13 @@ class ReactiveCursorBasedPaginationRepositoryImpl<T : Entity<ID>, ID : RefId<*>>
         return operations.count(empty().sort(properties.orderBy), this.entity.javaType)
     }
 
+    override fun <S : T> save(objectToSave: S): Mono<S> {
+        return when (objectToSave.isNew) {
+            true -> operations.insert(objectToSave)
+            false -> operations.update(objectToSave)
+        }
+    }
+
     val paginationQuery: PaginationQuery? = runCatching {
         repositoryInterface
             .getDeclaredMethod(

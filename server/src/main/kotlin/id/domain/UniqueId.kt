@@ -6,6 +6,8 @@ open class UniqueId() {
     open lateinit var rawId: String
         protected set
 
+    val isNew: Boolean get() = runCatching { rawId }.isFailure
+
     constructor(rawId: String) : this() {
         this.rawId = rawId
     }

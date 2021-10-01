@@ -9,6 +9,9 @@ abstract class RefId<T : Comparable<T>> : UniqueId(), Comparable<RefId<T>> {
 
     override fun compareTo(other: RefId<T>): Int = value.compareTo(value)
 
-    override fun toString(): String = "${this::class.simpleName}(value=Secret)"
+    override fun toString(): String = when (isNew) {
+        true -> this::class.simpleName.toString()
+        false -> "${this::class.simpleName}(value=$value}"
+    }
 }
 

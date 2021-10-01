@@ -17,4 +17,6 @@ interface Entity<ID : RefId<*>> {
             ?.call(this)
             ?.toString()
             ?: error("Can not find cursor in entity ${this::class.simpleName}")
+
+    val isNew: Boolean get() = id.isNew
 }
