@@ -31,7 +31,5 @@ class UserQuery(val userService: UserService, val notificationService: Notificat
 
     @GraphQLDescription("Returns current user context")
     @Authenticated
-    fun me(ctx: AuthGraphQLContext): User {
-        return ctx.user
-    }
+    fun viewer(ctx: AuthGraphQLContext): User = ctx.user
 }
