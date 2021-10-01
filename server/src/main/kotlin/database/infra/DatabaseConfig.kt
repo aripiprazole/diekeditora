@@ -11,7 +11,6 @@ import com.diekeditora.database.domain.ProfileId
 import com.diekeditora.database.domain.RoleId
 import com.diekeditora.database.domain.UserId
 import com.diekeditora.id.domain.UniqueId
-import com.diekeditora.shared.infra.PersistedRefIdConverter
 import com.diekeditora.shared.infra.RefIdConverter
 import io.r2dbc.pool.ConnectionPool
 import io.r2dbc.pool.ConnectionPoolConfiguration
@@ -41,34 +40,34 @@ class DatabaseConfig(
         add(Converter<UUID, UniqueId> { value -> UniqueId(value.toString()) })
 
         add(RefIdConverter(AuthorityId.New::class))
-        add(PersistedRefIdConverter(AuthorityId::Persisted))
+        add(Converter<UUID, AuthorityId> { AuthorityId.Persisted(it) })
 
         add(RefIdConverter(ChapterId.New::class))
-        add(PersistedRefIdConverter(ChapterId::Persisted))
+        add(Converter<UUID, ChapterId> { ChapterId.Persisted(it) })
 
         add(RefIdConverter(GenreId.New::class))
-        add(PersistedRefIdConverter(GenreId::Persisted))
+        add(Converter<UUID, GenreId> { GenreId.Persisted(it) })
 
         add(RefIdConverter(InvoiceId.New::class))
-        add(PersistedRefIdConverter(InvoiceId::Persisted))
+        add(Converter<UUID, InvoiceId> { InvoiceId.Persisted(it) })
 
         add(RefIdConverter(MangaId.New::class))
-        add(PersistedRefIdConverter(MangaId::Persisted))
+        add(Converter<UUID, MangaId> { MangaId.Persisted(it) })
 
         add(RefIdConverter(NewsletterId.New::class))
-        add(PersistedRefIdConverter(NewsletterId::Persisted))
+        add(Converter<UUID, NewsletterId> { NewsletterId.Persisted(it) })
 
         add(RefIdConverter(NotificationId.New::class))
-        add(PersistedRefIdConverter(NotificationId::Persisted))
+        add(Converter<UUID, NotificationId> { NotificationId.Persisted(it) })
 
         add(RefIdConverter(ProfileId.New::class))
-        add(PersistedRefIdConverter(ProfileId::Persisted))
+        add(Converter<UUID, ProfileId> { ProfileId.Persisted(it) })
 
         add(RefIdConverter(RoleId.New::class))
-        add(PersistedRefIdConverter(RoleId::Persisted))
+        add(Converter<UUID, RoleId> { RoleId.Persisted(it) })
 
         add(RefIdConverter(UserId.New::class))
-        add(PersistedRefIdConverter(UserId::Persisted))
+        add(Converter<UUID, UserId> { UserId.Persisted(it) })
     }
 
     @Bean
