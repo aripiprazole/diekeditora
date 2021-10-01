@@ -31,9 +31,6 @@ class SecurityConfig {
         formLogin { disable() }
         logout { disable() }
 
-        anonymous {
-        }
-
         cors {
             configurationSource = CorsConfigurationSource { generalCorsConfig }
         }
