@@ -1,4 +1,4 @@
-package com.diekeditora.me.resources
+package com.diekeditora.notification.resources
 
 import com.diekeditora.graphql.infra.AuthGraphQLContext
 import com.diekeditora.notification.domain.Notification
@@ -14,7 +14,7 @@ import reactor.core.publisher.Flux
 
 @Component
 @OptIn(ExperimentalCoroutinesApi::class)
-class MeSubscription(val notificationService: NotificationService) : Subscription {
+class NotificationSubscription(val notificationService: NotificationService) : Subscription {
     @Secured
     @Authenticated
     @GraphQLDescription("Subscribes current user for its new notifications")
