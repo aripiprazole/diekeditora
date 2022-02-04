@@ -4,8 +4,8 @@ import com.diekeditora.id.domain.UniqueIdService
 import com.diekeditora.profile.domain.Gender
 import com.diekeditora.profile.domain.Profile
 import com.diekeditora.profile.domain.ProfileService
-import com.diekeditora.user.domain.User
 import com.diekeditora.shared.infra.logger
+import com.diekeditora.user.domain.User
 import org.springframework.stereotype.Service
 
 @Service

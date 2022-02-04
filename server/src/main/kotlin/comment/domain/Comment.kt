@@ -1,14 +1,14 @@
 package com.diekeditora.comment.domain
 
-import com.diekeditora.shared.domain.MutableEntity
-import com.diekeditora.shared.domain.BelongsTo
+import com.diekeditora.database.domain.CommentId
+import com.diekeditora.database.domain.MangaId
+import com.diekeditora.database.domain.UserId
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.profile.domain.Profile
-import com.diekeditora.database.domain.CommentId
-import com.diekeditora.database.domain.MangaId
-import com.diekeditora.database.domain.UserId
+import com.diekeditora.shared.domain.BelongsTo
+import com.diekeditora.shared.domain.MutableEntity
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations

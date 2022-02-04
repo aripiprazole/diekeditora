@@ -42,7 +42,7 @@ class DiekEditoraRepositoryFactory : R2dbcRepositoryFactory {
         @Suppress("UNCHECKED_CAST") val entityInformation =
             MappingRelationalEntityInformation<Any?, Any?>(
                 converter.mappingContext.getRequiredPersistentEntity(information.domainType)
-                        as RelationalPersistentEntity<Any?>
+                    as RelationalPersistentEntity<Any?>
             )
 
         return getTargetRepositoryViaReflection(

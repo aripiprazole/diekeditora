@@ -1,7 +1,7 @@
 package com.diekeditora.profile.domain
 
-import com.diekeditora.shared.domain.MutableEntity
-import com.diekeditora.shared.domain.BelongsTo
+import com.diekeditora.database.domain.ProfileId
+import com.diekeditora.database.domain.UserId
 import com.diekeditora.file.domain.AvatarKind
 import com.diekeditora.file.domain.FileKind
 import com.diekeditora.id.domain.UniqueId
@@ -9,8 +9,8 @@ import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.security.domain.Authenticated
 import com.diekeditora.security.domain.Secured
-import com.diekeditora.database.domain.ProfileId
-import com.diekeditora.database.domain.UserId
+import com.diekeditora.shared.domain.BelongsTo
+import com.diekeditora.shared.domain.MutableEntity
 import com.diekeditora.user.domain.User
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore

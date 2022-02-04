@@ -1,7 +1,7 @@
 package com.diekeditora.newsletter.domain
 
-import com.diekeditora.shared.domain.MutableEntity
 import com.diekeditora.database.domain.NewsletterId
+import com.diekeditora.shared.domain.MutableEntity
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.Id

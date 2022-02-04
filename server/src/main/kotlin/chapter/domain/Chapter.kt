@@ -1,14 +1,14 @@
 package com.diekeditora.chapter.domain
 
-import com.diekeditora.shared.domain.MutableEntity
-import com.diekeditora.shared.domain.BelongsTo
+import com.diekeditora.database.domain.ChapterId
+import com.diekeditora.database.domain.MangaId
 import com.diekeditora.file.domain.ChapterCoverKind
 import com.diekeditora.file.domain.FileKind
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
-import com.diekeditora.database.domain.ChapterId
-import com.diekeditora.database.domain.MangaId
+import com.diekeditora.shared.domain.BelongsTo
+import com.diekeditora.shared.domain.MutableEntity
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations

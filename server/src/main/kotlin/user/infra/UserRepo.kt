@@ -4,7 +4,6 @@ import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.repo.domain.CursorBasedPaginationRepository
 import com.diekeditora.user.domain.User
 import org.springframework.stereotype.Repository
-import java.util.UUID
 
 @Repository
 interface UserRepo : CursorBasedPaginationRepository<User, UniqueId> {

@@ -1,11 +1,11 @@
 package com.diekeditora.repo.infra
 
-import com.diekeditora.shared.domain.Entity
 import com.diekeditora.id.domain.RefId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.page.domain.PaginationQuery
 import com.diekeditora.repo.domain.ReactiveCursorBasedPaginationRepository
+import com.diekeditora.shared.domain.Entity
 import com.diekeditora.shared.infra.findPropertiesByAnnotation
 import com.diekeditora.shared.infra.findPropertyByAnnotation
 import org.springframework.data.domain.Sort

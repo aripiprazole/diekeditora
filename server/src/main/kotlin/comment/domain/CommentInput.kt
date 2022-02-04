@@ -1,8 +1,8 @@
 package com.diekeditora.comment.domain
 
-import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.database.domain.MangaId
 import com.diekeditora.database.domain.UserId
+import com.diekeditora.id.domain.UniqueId
 import org.valiktor.functions.hasSize
 import org.valiktor.validate
 

@@ -7,15 +7,14 @@ import com.diekeditora.manga.domain.MangaInput
 import com.diekeditora.manga.domain.MangaService
 import com.diekeditora.manga.domain.MangaSort
 import com.diekeditora.profile.domain.Profile
-import com.diekeditora.user.domain.User
 import com.diekeditora.shared.infra.findAllAsConnection
+import com.diekeditora.user.domain.User
 import graphql.relay.Connection
 import org.springframework.data.domain.Sort
 import org.springframework.data.domain.Sort.Order.asc
 import org.springframework.data.domain.Sort.Order.desc
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
 
 @Service
 class MangaServiceImpl(

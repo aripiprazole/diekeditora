@@ -1,8 +1,8 @@
 package com.diekeditora.graphql.infra
 
-import com.diekeditora.shared.domain.Entity
-import com.diekeditora.shared.domain.BelongsTo
 import com.diekeditora.id.domain.RefId
+import com.diekeditora.shared.domain.BelongsTo
+import com.diekeditora.shared.domain.Entity
 import com.diekeditora.user.domain.User
 import com.expediagroup.graphql.server.spring.execution.SpringGraphQLContext
 import org.springframework.security.access.AccessDeniedException

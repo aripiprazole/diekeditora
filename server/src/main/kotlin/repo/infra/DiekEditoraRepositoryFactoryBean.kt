@@ -23,4 +23,3 @@ class DiekEditoraRepositoryFactoryBean<T : Repository<S, ID>, S, ID : java.io.Se
         return DiekEditoraRepositoryFactory(repositoryInterface, client, dataAccessStrategy)
     }
 }
-

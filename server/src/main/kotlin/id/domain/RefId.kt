@@ -14,4 +14,3 @@ abstract class RefId<T : Comparable<T>> : UniqueId(), Comparable<RefId<T>> {
         false -> "${this::class.simpleName}(value=$value}"
     }
 }
-

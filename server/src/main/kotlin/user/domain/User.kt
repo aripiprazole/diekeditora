@@ -1,7 +1,6 @@
 package com.diekeditora.user.domain
 
-import com.diekeditora.shared.domain.MutableEntity
-import com.diekeditora.shared.domain.BelongsTo
+import com.diekeditora.database.domain.UserId
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.manga.domain.Manga
 import com.diekeditora.page.domain.Cursor
@@ -9,9 +8,10 @@ import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.profile.domain.Profile
 import com.diekeditora.role.domain.Role
 import com.diekeditora.security.domain.Secured
+import com.diekeditora.shared.domain.BelongsTo
+import com.diekeditora.shared.domain.MutableEntity
 import com.diekeditora.shared.infra.PaginationArg
 import com.diekeditora.shared.infra.toPaginationArg
-import com.diekeditora.database.domain.UserId
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations

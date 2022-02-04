@@ -1,15 +1,15 @@
 package com.diekeditora.manga.domain
 
-import com.diekeditora.shared.domain.MutableEntity
 import com.diekeditora.chapter.domain.Chapter
+import com.diekeditora.database.domain.MangaId
 import com.diekeditora.genre.domain.Genre
 import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.page.domain.Cursor
 import com.diekeditora.page.domain.OrderBy
 import com.diekeditora.profile.domain.Profile
+import com.diekeditora.shared.domain.MutableEntity
 import com.diekeditora.shared.infra.PaginationArg
 import com.diekeditora.shared.infra.toPaginationArg
-import com.diekeditora.database.domain.MangaId
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.annotations.GraphQLValidObjectLocations

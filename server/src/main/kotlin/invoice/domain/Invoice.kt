@@ -1,7 +1,7 @@
 package com.diekeditora.invoice.domain
 
-import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.database.domain.InvoiceId
+import com.diekeditora.id.domain.UniqueId
 import com.diekeditora.user.domain.User
 import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.fasterxml.jackson.annotation.JsonIgnore

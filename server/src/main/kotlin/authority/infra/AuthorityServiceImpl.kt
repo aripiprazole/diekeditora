@@ -3,9 +3,9 @@ package com.diekeditora.authority.infra
 import com.diekeditora.authority.domain.AuthorityService
 import com.diekeditora.page.infra.map
 import com.diekeditora.role.domain.Role
-import com.diekeditora.user.domain.User
 import com.diekeditora.shared.infra.findAllAsConnection
 import com.diekeditora.shared.infra.logger
+import com.diekeditora.user.domain.User
 import graphql.relay.Connection
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toSet
