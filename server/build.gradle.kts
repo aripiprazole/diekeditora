@@ -5,13 +5,13 @@ buildscript {
 }
 
 plugins {
-    kotlin("jvm") version "1.4.32"
-    kotlin("plugin.serialization") version "1.4.32"
-    kotlin("plugin.spring") version "1.4.32"
+    kotlin("jvm") version "1.6.10"
+    kotlin("plugin.serialization") version "1.6.10"
+    kotlin("plugin.spring") version "1.6.10"
     id("org.springframework.boot") version "2.4.4"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
-    id("io.gitlab.arturbosch.detekt") version "1.16.0"
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
+    id("io.gitlab.arturbosch.detekt") version "1.19.0"
     application
 }
 
