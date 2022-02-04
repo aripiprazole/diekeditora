@@ -19,6 +19,10 @@
       <module name="server.app" target="11" />
       <module name="server.app.main" target="11" />
       <module name="server.app.test" target="11" />
+      <module name="server.buildSrc" target="11" />
+      <module name="server.buildSrc.main" target="11" />
+      <module name="server.buildSrc.test" target="11" />
+      <module name="server.diekeditora" target="11" />
       <module name="server.diekeditora-domain" target="11" />
       <module name="server.diekeditora-domain.main" target="11" />
       <module name="server.diekeditora-domain.test" target="11" />
@@ -31,6 +35,8 @@
       <module name="server.diekeditora-web" target="11" />
       <module name="server.diekeditora-web.main" target="11" />
       <module name="server.diekeditora-web.test" target="11" />
+      <module name="server.diekeditora.main" target="11" />
+      <module name="server.diekeditora.test" target="11" />
       <module name="server.domain" target="11" />
       <module name="server.domain.main" target="11" />
       <module name="server.domain.test" target="11" />
