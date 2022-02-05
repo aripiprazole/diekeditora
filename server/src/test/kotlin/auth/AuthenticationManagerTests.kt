@@ -2,10 +2,10 @@ package com.diekeditora.app.tests.auth
 
 import com.diekeditora.app.tests.factories.TokenFactory
 import com.diekeditora.app.tests.factories.UserFactory
-import com.diekeditora.domain.authority.AuthorityService
-import com.diekeditora.domain.user.UserService
+import com.diekeditora.authority.domain.AuthorityService
 import com.diekeditora.security.infra.AuthenticationManager
-import com.diekeditora.utils.generateRandomString
+import com.diekeditora.shared.infra.generateRandomString
+import com.diekeditora.user.domain.UserService
 import com.google.api.core.ApiFutures
 import com.google.firebase.auth.FirebaseAuth
 import io.mockk.coEvery

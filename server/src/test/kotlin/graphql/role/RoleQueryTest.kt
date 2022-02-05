@@ -2,9 +2,9 @@ package com.diekeditora.app.tests.graphql.role
 
 import com.diekeditora.app.tests.factories.RoleFactory
 import com.diekeditora.app.tests.graphql.GraphQLTestClient
-import com.diekeditora.domain.role.Role
-import com.diekeditora.domain.role.RoleService
-import com.diekeditora.infra.redis.CacheProvider
+import com.diekeditora.redis.infra.CacheProvider
+import com.diekeditora.role.domain.Role
+import com.diekeditora.role.domain.RoleService
 import graphql.relay.Connection
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
