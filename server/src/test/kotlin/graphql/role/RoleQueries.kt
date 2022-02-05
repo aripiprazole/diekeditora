@@ -1,8 +1,8 @@
-package com.diekeditora.app.tests.graphql.role
+package com.diekeditora.tests.graphql.role
 
-import com.diekeditora.app.tests.graphql.TestQuery
 import com.diekeditora.page.infra.AppPage
 import com.diekeditora.role.domain.Role
+import com.diekeditora.tests.graphql.TestQuery
 
 data class RolesQuery(val first: Int, val after: String? = null) : TestQuery<AppPage<Role>>(
     """

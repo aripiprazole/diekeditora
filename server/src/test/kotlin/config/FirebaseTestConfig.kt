@@ -1,4 +1,4 @@
-package com.diekeditora.app.tests.config
+package com.diekeditora.tests.config
 
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp

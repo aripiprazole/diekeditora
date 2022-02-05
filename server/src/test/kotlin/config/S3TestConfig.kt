@@ -1,4 +1,4 @@
-package com.diekeditora.app.tests.config
+package com.diekeditora.tests.config
 
 import io.mockk.mockk
 import org.springframework.context.annotation.Bean

@@ -1,8 +1,8 @@
-package com.diekeditora.app.tests.graphql.authority
+package com.diekeditora.tests.graphql.authority
 
-import com.diekeditora.app.tests.graphql.TestQuery
 import com.diekeditora.page.infra.AppPage
 import com.diekeditora.role.domain.Role
+import com.diekeditora.tests.graphql.TestQuery
 import com.diekeditora.user.domain.User
 
 data class AuthoritiesQuery(val first: Int, val after: String? = null) : TestQuery<AppPage<String>>(

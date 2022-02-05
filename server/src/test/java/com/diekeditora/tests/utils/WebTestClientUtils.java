@@ -1,4 +1,4 @@
-package com.diekeditora.app.tests.utils;
+package com.diekeditora.tests.utils;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.test.web.reactive.server.MockServerConfigurer;

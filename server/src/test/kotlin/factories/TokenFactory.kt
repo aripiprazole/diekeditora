@@ -1,4 +1,4 @@
-package com.diekeditora.app.tests.factories
+package com.diekeditora.tests.factories
 
 import com.google.firebase.auth.FirebaseToken
 import io.github.serpro69.kfaker.Faker

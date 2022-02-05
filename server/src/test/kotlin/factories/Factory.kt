@@ -1,4 +1,4 @@
-package com.diekeditora.app.tests.factories
+package com.diekeditora.tests.factories
 
 interface Factory<T> {
     @OptIn(ExperimentalStdlibApi::class)

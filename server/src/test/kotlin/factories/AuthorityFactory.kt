@@ -1,4 +1,4 @@
-package com.diekeditora.app.tests.factories
+package com.diekeditora.tests.factories
 
 import com.diekeditora.shared.infra.generateRandomString
 import org.springframework.stereotype.Component

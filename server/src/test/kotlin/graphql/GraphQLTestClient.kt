@@ -1,6 +1,6 @@
-package com.diekeditora.app.tests.graphql
+package com.diekeditora.tests.graphql
 
-import com.diekeditora.app.tests.utils.AuthenticationMocker
+import com.diekeditora.tests.utils.AuthenticationMocker
 import com.expediagroup.graphql.generator.exceptions.GraphQLKotlinException
 import com.expediagroup.graphql.server.types.GraphQLRequest
 import com.expediagroup.graphql.server.types.GraphQLResponse

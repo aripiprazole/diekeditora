@@ -1,12 +1,12 @@
-package com.diekeditora.app.tests.graphql.authority
+package com.diekeditora.tests.graphql.authority
 
-import com.diekeditora.app.tests.factories.AuthorityFactory
-import com.diekeditora.app.tests.factories.RoleFactory
-import com.diekeditora.app.tests.factories.UserFactory
-import com.diekeditora.app.tests.graphql.GraphQLTestClient
 import com.diekeditora.authority.domain.AuthorityService
 import com.diekeditora.redis.infra.CacheProvider
 import com.diekeditora.role.domain.RoleService
+import com.diekeditora.tests.factories.AuthorityFactory
+import com.diekeditora.tests.factories.RoleFactory
+import com.diekeditora.tests.factories.UserFactory
+import com.diekeditora.tests.graphql.GraphQLTestClient
 import com.diekeditora.user.domain.UserService
 import graphql.relay.Connection
 import kotlinx.coroutines.runBlocking

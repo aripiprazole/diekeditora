@@ -40,7 +40,6 @@ class SerializerConfig {
                 .addDeserializer(LocalDate::class.java, LocalDateDeserializer())
                 .addSerializer(LocalDateTime::class.java, LocalDateTimeSerializer())
                 .addDeserializer(LocalDateTime::class.java, LocalDateTimeDeserializer())
-
                 .addAbstractTypeMapping(Connection::class.java, AppPage::class.java)
                 .addAbstractTypeMapping(Edge::class.java, AppEdge::class.java)
                 .addAbstractTypeMapping(PageInfo::class.java, AppPageInfo::class.java)

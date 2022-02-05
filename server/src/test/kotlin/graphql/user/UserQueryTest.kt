@@ -1,8 +1,8 @@
-package com.diekeditora.app.tests.graphql.user
+package com.diekeditora.tests.graphql.user
 
-import com.diekeditora.app.tests.factories.UserFactory
-import com.diekeditora.app.tests.graphql.GraphQLTestClient
 import com.diekeditora.redis.infra.CacheProvider
+import com.diekeditora.tests.factories.UserFactory
+import com.diekeditora.tests.graphql.GraphQLTestClient
 import com.diekeditora.user.domain.User
 import com.diekeditora.user.domain.UserService
 import graphql.relay.Connection
