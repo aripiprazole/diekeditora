@@ -1,9 +1,9 @@
 name: Server deployment to k8s
 
-on:
-  release:
-    types:
-      - created
+#on:
+#  release:
+#    types:
+#      - created
 
 env:
   IMAGE_NAME: registry.digitalocean.com/diekeditora/server
