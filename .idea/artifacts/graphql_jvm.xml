@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="graphql-jvm">
+    <output-path>$PROJECT_DIR$/server/modules/graphql/build/libs</output-path>
+    <root id="archive" name="graphql-jvm.jar">
+      <element id="module-output" name="server.modules.graphql.jvmMain" />
+    </root>
+  </artifact>
+</component>

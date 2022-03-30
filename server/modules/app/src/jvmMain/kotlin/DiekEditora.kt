@@ -1,4 +1,4 @@
-package com.diekeditora
+package com.diekeditora.app
 
 import com.diekeditora.graphql.DiekEditoraSchema
 import com.diekeditora.graphql.graphqlRoutes

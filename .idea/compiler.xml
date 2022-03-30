@@ -34,9 +34,11 @@
       <module name="server.infra" target="11" />
       <module name="server.infra.main" target="11" />
       <module name="server.infra.test" target="11" />
+      <module name="server.main" target="11" />
       <module name="server.shared" target="11" />
       <module name="server.shared.main" target="11" />
       <module name="server.shared.test" target="11" />
+      <module name="server.test" target="11" />
       <module name="server.web" target="11" />
       <module name="server.web.main" target="11" />
       <module name="server.web.test" target="11" />
