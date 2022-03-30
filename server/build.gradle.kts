@@ -1,5 +1,7 @@
 @file:Suppress("UnusedPrivateMember")
 
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 plugins {
   kotlin("multiplatform") version "1.6.10"
   kotlin("plugin.serialization") version "1.6.10"
@@ -20,7 +22,13 @@ application {
 }
 
 kotlin {
-  jvm()
+  jvm {
+    testRuns["test"].executionTask.configure {
+      useJUnitPlatform()
+      testLogging.showStandardStreams = true
+      testLogging.exceptionFormat = TestExceptionFormat.FULL
+    }
+  }
 
   sourceSets {
     all {
@@ -34,7 +42,10 @@ kotlin {
         implementation(libs.jansi)
         implementation(libs.logback.classic)
         implementation(libs.slf4j.api)
+        implementation(libs.ktor.serialization)
         implementation(libs.ktor.server.jetty)
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+        implementation("org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.2")
       }
     }
 
